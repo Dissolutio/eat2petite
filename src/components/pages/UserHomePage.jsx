@@ -1,6 +1,9 @@
 import React from 'react'
-import Gallery from './gallery/Gallery'
 
 export default function UserHomePage() {
-    return <Gallery />
+	return (
+		<div>
+			<h1>User Home Page!</h1>
+		</div>
+	)
 }

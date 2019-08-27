@@ -1,47 +1,17 @@
 html {
-    --text1: 16px;
-    --text2: 20px;
-    --text3: 24px;
-    --text4: 30px;
-    --text5: 2rem;
-    --gray1: #ccdad1; /*light gray */
-    --gray2: #9caea9; /* dark medium gray */
-    --gray3: #788585; /* old silver */
-    --gray4: #7c7a7a; /* trolley gray */
-    --gray5: #494949; /* outer space */
-    --black: rgb(18, 17, 17); /* licorice */
-    --black-dark: rgb(3, 3, 3);
-    --font-light: #ffffff; /* anti-flash white */
-    --font-dark: #1a1818; /* eerie black */
+	--gray1: #ccdad1; /*light gray */
+	--gray2: #9caea9; /* dark medium gray */
+	--gray3: #788585; /* old silver */
+	--gray4: #7c7a7a; /* trolley gray */
+	--gray5: #494949; /* outer space */
+	--black: rgb(18, 17, 17); /* licorice */
+	--black-dark: rgb(3, 3, 3);
+	--darkGray: rgb(49, 61, 66);
+	--transparent-gray: rgba(73, 91, 99, 0.9);
+	--light-gray: #b9b8b4;
+	--transparent-black: rgba(19, 17, 16, 0.904);
 
-    --darkGray: rgb(49, 61, 66);
-    --transparent-gray: rgba(73, 91, 99, 0.9);
-    --light-gray: #b9b8b4;
-    --transparent-black: rgba(19, 17, 16, 0.904);
-    --white: #f7faff;
-
-    --aquilla: #e0d50d;
-    --aquillaDark: hsl(57, 100%, 40%);
-    --jandar: #1a36cf;
-    --ullar: #008000;
-    --einar: #41165e;
-    --vydar: #219f82;
-    --utgar: #e70808;
-    --valkrill: #a7a13c;
-
-    --brown: #9b7f58;
-    --red: #962621;
-
-    --aquillaText: #fbef08;
-    --jandarText: rgb(26, 54, 207);
-    --ullarText: #008000;
-    --einarText: #6914aa;
-    --vydarText: hsl(166, 65%, 38%);
-    --utgarText: hsla(0, 99%, 53%, 1);
-
-    --cardLife: #621714;
-    --cardMove: #194917;
-    --cardRange: #6b6867;
-    --cardAttack: #e82b29;
-    --cardDefense: #142134;
+	--font-light: #ffffff; /* anti-flash white */
+	--font-dark: #1a1818; /* eerie black */
+	--white: #f7faff;
 }

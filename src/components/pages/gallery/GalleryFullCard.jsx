@@ -1,6 +1,5 @@
 import React from 'react'
 import { useDataContext } from '../../../modules/hooks/useDataContext'
-import { Image } from 'cloudinary-react'
 
 export default function GalleryFullCard(props) {
 	const { coreCards } = useDataContext()

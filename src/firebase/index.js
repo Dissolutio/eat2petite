@@ -1,4 +1,4 @@
 export { Firebase } from './firebase'
 export { FirebaseContext, useFirebaseContext } from './context'
 export { AuthUserContext, useAuthUserContext, useAuthListener } from './authentication'
-export { withAuthorizationHOC } from './withAuthorizationHOC'
+export { meetAuthConditionOrRedirectHOC } from './meetAuthConditionOrRedirectHOC'
