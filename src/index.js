@@ -1,12 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { CloudinaryContext } from 'cloudinary-react'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { Firebase, FirebaseContext, useFirebaseContext, AuthUserContext, useAuthListener } from './firebase'
+import { UIContextProvider } from './modules/hooks/useUIContext'
+import { DataContextProvider } from './modules/hooks/useDataContext'
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import App from './App'
+
+import 'normalize.css'
+import './theme.css'
+import * as serviceWorker from './serviceWorker'
+
+const firebaseApp = new Firebase()
+
+ReactDOM.render(
+    <CloudinaryContext cloudName="mystery-maintenance">
+        <FirebaseContext.Provider value={firebaseApp}>
+            <AppWrapper />
+        </FirebaseContext.Provider>
+    </CloudinaryContext>,
+    document.getElementById('root'),
+)
+
+function AppWrapper() {
+    const firebaseApp = useFirebaseContext()
+    const authState = useAuthListener(firebaseApp)
+    return (
+        <AuthUserContext.Provider value={authState}>
+            <UIContextProvider>
+                <DataContextProvider>
+                    <Router>
+                        <App />
+                    </Router>
+                </DataContextProvider>
+            </UIContextProvider>
+        </AuthUserContext.Provider>
+    )
+}
+
+serviceWorker.unregister()
