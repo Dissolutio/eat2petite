@@ -1,4 +1,4 @@
-const localStorageStateKey = 'heroscape-armory-app-state'
+const localStorageStateKey = process.env.REACT_APP_LOCAL_STORAGE_KEY
 
 export const getLocalState = () => {
     try {
