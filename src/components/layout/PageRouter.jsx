@@ -5,6 +5,7 @@ import { useAuthUserContext, meetAuthConditionOrRedirectHOC } from '../../fireba
 
 import LandingPage from '../pages/LandingPage'
 import UserHomePage from '../pages/UserHomePage'
+import ChallengesPage from '../pages/ChallengesPage'
 import AccountPage from '../pages/AccountPage'
 import AdminPage from '../pages/AdminPage'
 import AdminUserListPage from '../pages/AdminUserListPage'
@@ -37,6 +38,11 @@ export default function PageRouter() {
 			/>
 			<Route
 				exact
+				path={ROUTES.USER_HOME}
+				component={meetAuthConditionOrRedirectHOC(signedInCondition, ROUTES.LOGIN)(UserHomePage)}
+			/>
+			<Route
+				exact
 				path={ROUTES.VERIFY_EMAIL}
 				component={meetAuthConditionOrRedirectHOC(emailNotVerifiedCondition, ROUTES.LOGIN)(VerifyEmail)}
 			/>
@@ -54,10 +60,6 @@ export default function PageRouter() {
 				exact
 				path={ROUTES.ADMIN_USER_LIST}
 				component={meetAuthConditionOrRedirectHOC(adminCondition, ROUTES.USER_HOME)(AdminUserListPage)}
-			/>
-			<Route
-				path={ROUTES.USER_HOME}
-				component={meetAuthConditionOrRedirectHOC(signedInCondition, ROUTES.LOGIN)(UserHomePage)}
 			/>
 			<Route component={Page404NotFound} />
 		</Switch>
