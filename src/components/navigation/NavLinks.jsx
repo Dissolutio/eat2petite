@@ -3,11 +3,44 @@ import { Link } from 'react-router-dom'
 import { useAuthUserContext } from '../../firebase'
 import * as ROUTES from '../../routes'
 
-const NavLinks = () => {
+const NavLinks = props => {
 	const { user } = useAuthUserContext()
+	const { closeSidebarMenu } = props
+
 	const notSignedInCondition = !user
 	const signedInCondition = user
 	const adminCondition = user && user.userRole === `admin`
+
+	const NonAuthLinks = () => (
+		<>
+			<NavBarLink to={ROUTES.LANDING}>Home</NavBarLink>
+			<NavBarLink to={ROUTES.REGISTER}>Sign Up</NavBarLink>
+			<NavBarLink to={ROUTES.LOGIN}>Sign In</NavBarLink>
+		</>
+	)
+	const AuthLinks = () => (
+		<>
+			<NavBarLink to={ROUTES.LANDING}>Landing</NavBarLink>
+			<NavBarLink to={ROUTES.USER_HOMEPAGE}>User Dashboard</NavBarLink>
+			<NavBarLink to={ROUTES.USER_ACCOUNT}>Account</NavBarLink>
+		</>
+	)
+	const AdminLinks = () => (
+		<>
+			<NavBarLink to={ROUTES.ADMIN_DASHBOARD}>Dashboard</NavBarLink>
+			<NavBarLink to={ROUTES.ADMIN_CONTESTS_LIST}>Contests</NavBarLink>
+			<NavBarLink to={ROUTES.ADMIN_CHALLENGES_LIST}>Challenges</NavBarLink>
+			<NavBarLink to={ROUTES.ADMIN_USERS_LIST}>Users</NavBarLink>
+			<NavBarLink to={ROUTES.ADMIN_POSTS_LIST}>Posts</NavBarLink>
+		</>
+	)
+	const NavBarLink = ({ children, to }) => {
+		return (
+			<Link onClick={closeSidebarMenu} to={to}>
+				{children}
+			</Link>
+		)
+	}
 	return (
 		<nav>
 			{notSignedInCondition ? <NonAuthLinks /> : null}
@@ -16,25 +49,4 @@ const NavLinks = () => {
 		</nav>
 	)
 }
-
-const NonAuthLinks = () => (
-	<>
-		<Link to={ROUTES.LANDING}>Home</Link>
-		<Link to={ROUTES.REGISTER}>Sign Up</Link>
-		<Link to={ROUTES.LOGIN}>Sign In</Link>
-	</>
-)
-const AuthLinks = () => (
-	<>
-		<Link to={ROUTES.LANDING}>Landing</Link>
-		<Link to={ROUTES.USER_HOME}>User Dashboard</Link>
-		<Link to={ROUTES.USER_ACCOUNT}>Account</Link>
-	</>
-)
-const AdminLinks = () => (
-	<>
-		<Link to={ROUTES.ADMIN}>Admin</Link>
-		<Link to={ROUTES.ADMIN_USER_LIST}>Admin</Link>
-	</>
-)
 export default NavLinks

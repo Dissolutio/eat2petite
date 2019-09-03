@@ -1,4 +1,4 @@
-// 2 contests, 6 users, 6 challenges, 4 posts
+// 2 contests, 6 users, 6 challenges, 4 posts, and a 7th user who is the admin
 export const posts = [
 	{
 		uid: 'post_1',
@@ -109,47 +109,54 @@ export const contests = [
 		},
 	},
 ]
-export const users = [
+export const sampleUsers = [
 	{
 		uid: 'user_1',
 		name: 'Jane Doe 1',
 		email: 'user_1@example.com',
-		userRole: 'contestant',
+		userRole: 'default',
 		username: 'tH3_user_1',
 	},
 	{
 		uid: 'user_2',
 		name: 'Jane Doe 2',
 		email: 'user_2@example.com',
-		userRole: 'contestant',
+		userRole: 'default',
 		username: 'tH3_user_2',
 	},
 	{
 		uid: 'user_3',
 		name: 'Jane Doe 3',
 		email: 'user_3@example.com',
-		userRole: 'contestant',
+		userRole: 'default',
 		username: 'tH3_user_3',
 	},
 	{
 		uid: 'user_4',
 		name: 'Jane Doe 4',
 		email: 'user_4@example.com',
-		userRole: 'contestant',
+		userRole: 'default',
 		username: 'tH3_user_4',
 	},
 	{
 		uid: 'user_5',
 		name: 'Jane Doe 5',
 		email: 'user_5@example.com',
-		userRole: 'contestant',
+		userRole: 'default',
 		username: 'tH3_user_5',
 	},
 	{
 		uid: 'user_6',
 		name: 'Jane Doe 6',
 		email: 'user_6@example.com',
-		userRole: 'contestant',
+		userRole: 'default',
+		username: 'tH3_user_6',
+	},
+	{
+		uid: 'user_7',
+		name: 'EAT-2-PETITE',
+		email: 'eat-2-petite@example.com',
+		userRole: 'admin',
 		username: 'tH3_user_6',
 	},
 ]

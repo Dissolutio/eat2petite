@@ -29,6 +29,7 @@ class Firebase {
 
 	// *** Users API ***
 	dbAllUsers = () => this.db.ref(`/users`)
+	dbAllSampleUsers = () => this.db.ref(`/sampleUsers`)
 	dbUserById = uid => this.db.ref(`/users/${uid}`)
 	saveNewUser = user => {
 		const { uid, username, email, userRole } = user
@@ -38,5 +39,14 @@ class Firebase {
 			userRole,
 		})
 	}
+	// *** Contests API ***
+	dbAllContests = () => this.db.ref(`/contests`)
+	dbContestById = uid => this.db.ref(`/contests/${uid}`)
+	// *** Challenges API ***
+	dbAllChallenges = () => this.db.ref(`/challenges`)
+	dbChallengeById = uid => this.db.ref(`/challenges/${uid}`)
+	// *** Posts API ***
+	dbAllPosts = () => this.db.ref(`/posts`)
+	dbPostsById = uid => this.db.ref(`/posts/${uid}`)
 }
 export { Firebase }

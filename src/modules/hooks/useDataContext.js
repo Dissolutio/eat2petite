@@ -1,15 +1,17 @@
 import React, { useContext, useState } from 'react'
 import { useFirebaseContext } from '../../firebase'
 import { getLocalState, setLocalState } from '../localStorage'
-import { users, posts, challenges, contests } from '../../sampleData'
+import { sampleUsers, posts, challenges, contests } from '../../sampleData'
 
 const DataContext = React.createContext([{}, () => {}])
 
 const DataContextProvider = props => {
 	const [appData, setAppData] = useState(() => {
 		return {
-			cardsInGallery: [],
-			coreCards: [],
+			sampleUsers: [],
+			posts: [],
+			challenges: [],
+			contests: [],
 		}
 	})
 	return <DataContext.Provider value={[appData, setAppData]}>{props.children}</DataContext.Provider>
@@ -26,7 +28,6 @@ const useDataContext = () => {
 
 	const loadAppState = async () => {
 		const localData = await getLocalState()
-		console.log('HERE!')
 		if (localData) {
 			setAppData(localData)
 			return
@@ -39,9 +40,24 @@ const useDataContext = () => {
 			}
 		}
 	}
+	const setSampleDataToFirebase = () => {
+		function sendOff(array, firebaseRef) {
+			array.forEach(item =>
+				firebaseApp.db
+					.ref(`${firebaseRef}`)
+					.child(`${item.uid}`)
+					.set(item),
+			)
+		}
+		sendOff(appData.sampleUsers, 'sampleUsers')
+		sendOff(appData.posts, 'posts')
+		sendOff(appData.challenges, 'challenges')
+		sendOff(appData.contests, 'contests')
+	}
+
 	const loadSampleData = () => {
 		setAppData({
-			users,
+			sampleUsers,
 			posts,
 			challenges,
 			contests,
@@ -51,6 +67,7 @@ const useDataContext = () => {
 		appData,
 		loadAppState,
 		loadSampleData,
+		setSampleDataToFirebase,
 	}
 }
 
