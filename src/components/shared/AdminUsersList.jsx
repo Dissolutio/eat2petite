@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { AdminUserDetailLink } from '../navigation/Links'
+
 export default function AdminUsersList(props) {
 	const { users } = props
 	return (
@@ -11,7 +13,7 @@ export default function AdminUsersList(props) {
 					<ul>
 						<li>{`username: ${user.username}`}</li>
 						<li>
-							<Link to={`/user/admin/users/${user.uid}`}>{`uid: ${user.uid}`}</Link>
+							<AdminUserDetailLink id={user.uid} />
 						</li>
 						<li>{`name: ${user.name}`}</li>
 						<li>{`email: ${user.email}`}</li>

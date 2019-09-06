@@ -4,6 +4,7 @@ import SideNav from './components/navigation/SideNav'
 import Header from './components/layout/Header'
 import PageRouter from './components/layout/PageRouter'
 import { AppStyleContainer, PageStyleContainer } from './components/layout/AppStyle'
+import DevConsole from './components/shared/DevConsole'
 
 function App() {
 	const { initializing } = useAuthUserContext()
@@ -16,6 +17,7 @@ function App() {
 		<AppStyleContainer>
 			<SideNav />
 			<Header />
+			<DevConsole />
 			<PageStyleContainer>
 				<PageRouter />
 			</PageStyleContainer>

@@ -8,7 +8,7 @@ import UserDashboard from '../shared/UserDashboard'
 import AccountPage from '../pages/AccountPage'
 import UserChallengesList from '../shared/UserChallengesList'
 import UserPostsList from '../shared/UserPostsList'
-import UserPostDetailPage from '../pages/UserPostDetailPage'
+import UserPostDetail from '../shared/UserPostDetail'
 import UserChallengeDetail from '../shared/UserChallengeDetail'
 
 import * as ROUTES from '../../routes'
@@ -22,14 +22,14 @@ export default function UserHomePage() {
 	const userAppData = filterAppDataUser(appData)
 	const { posts, sampleUsers, challenges, contests } = userAppData
 	const { user } = useAuthUserContext()
+
 	const emailVerifiedCondition = () => !!user && user.emailVerified === true
 	const notAdminCondition = () => !!user && user.userRole !== `admin`
 
 	return (
 		<Switch>
-			<Route exact path={ROUTES.USER_HOMEPAGE} component={UserDashboard} />
 			<Route exact path={ROUTES.USER_POSTS} render={props => <UserPostsList posts={posts} />} />
-			<Route path={`${ROUTES.USER_POSTS}:id`} component={UserPostDetailPage} />
+			<Route path={`${ROUTES.USER_POSTS}:id`} component={UserPostDetail} />
 			<Route
 				exact
 				path={ROUTES.USER_CHALLENGES}
@@ -40,6 +40,11 @@ export default function UserHomePage() {
 				exact
 				path={ROUTES.USER_ACCOUNT}
 				component={meetAuthConditionOrRedirectHOC(emailVerifiedCondition, ROUTES.VERIFY_EMAIL)(AccountPage)}
+			/>
+			<Route
+				exact
+				path={ROUTES.USER_HOMEPAGE}
+				component={meetAuthConditionOrRedirectHOC(notAdminCondition, ROUTES.ADMIN_DASHBOARD)(UserDashboard)}
 			/>
 		</Switch>
 	)

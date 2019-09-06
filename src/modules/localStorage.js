@@ -13,6 +13,7 @@ export const getLocalState = () => {
 	}
 }
 export const setLocalState = async appState => {
+	console.log('setting local', appState)
 	try {
 		const serializedState = JSON.stringify(appState)
 		if (serializedState) {

@@ -8,7 +8,7 @@ import NavLinks from './NavLinks'
 import CurrentUserReadout from '../authentication/CurrentUserReadout'
 
 export default function SideNav() {
-	const { menuOpen, toggleMenuOpen, setMenuClose } = useUIContext()
+	const { menuOpen, setMenuClose } = useUIContext()
 	const navProps = useSpring({ width: menuOpen ? '250px' : '0px', opacity: menuOpen ? '1' : '0' })
 	const closeSidebarMenu = event => {
 		// event.preventDefault()

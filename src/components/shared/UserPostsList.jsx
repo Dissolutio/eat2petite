@@ -10,9 +10,6 @@ export default function UserPostsList(props) {
 			{posts.map(post => (
 				<li key={post.uid}>
 					<ul>
-						<li>
-							<Link to={`/user/admin/posts/${post.uid}`}>{`uid: ${post.uid}`}</Link>
-						</li>
 						<UserPostDetailLink id={post.uid} />
 						<li>{`contestId: ${post.contestId}`}</li>
 						<li>{`userId: ${post.userId}`}</li>

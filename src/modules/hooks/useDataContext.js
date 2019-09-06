@@ -20,26 +20,7 @@ const DataContextProvider = props => {
 const useDataContext = () => {
 	const firebaseApp = useFirebaseContext()
 	const [appData, setAppData] = useContext(DataContext)
-	React.useEffect(() => {
-		console.log('Loading sample data')
-		loadSampleData()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
 
-	const loadAppState = async () => {
-		const localData = await getLocalState()
-		if (localData) {
-			setAppData(localData)
-			return
-		} else {
-			const firebaseData = await firebaseApp.db.once('value')
-			if (firebaseData) {
-				setAppData(firebaseData)
-			} else {
-				return
-			}
-		}
-	}
 	const setSampleDataToFirebase = () => {
 		function sendOff(array, firebaseRef) {
 			array.forEach(item =>
@@ -57,16 +38,68 @@ const useDataContext = () => {
 
 	const loadSampleData = () => {
 		setAppData({
+			...appData,
 			sampleUsers,
 			posts,
 			challenges,
 			contests,
 		})
 	}
+	const loadLocalData = () => {
+		const localData = getLocalState()
+		if (localData) {
+			console.log('localData', localData)
+			setAppData(localData)
+		}
+	}
+	const setLocalData = () => {
+		setLocalState(appData)
+	}
+	const loadFirebaseData = () => {
+		firebaseApp.db
+			.ref('/')
+			.once('value')
+			.then(snapshot => {
+				let snapshotValue = snapshot.val()
+				if (snapshotValue === null || undefined) {
+					return {}
+				} else {
+					const data = Object.entries(snapshotValue).reduce((result, entry) => {
+						const key = entry[0]
+						const value = entry[1]
+						return {
+							...result,
+							[key]: { ...value },
+						}
+					}, {})
+					return data
+				}
+			})
+			.then(data => {
+				const challenges = Object.values(data.challenges)
+				const contests = Object.values(data.contests)
+				const posts = Object.values(data.posts)
+				const sampleUsers = Object.values(data.sampleUsers)
+				const newData = {
+					sampleUsers,
+					posts,
+					challenges,
+					contests,
+				}
+				console.log('firebaseData', newData)
+				setAppData({
+					...appData,
+					...newData,
+				})
+			})
+	}
+
 	return {
 		appData,
-		loadAppState,
 		loadSampleData,
+		loadLocalData,
+		setLocalData,
+		loadFirebaseData,
 		setSampleDataToFirebase,
 	}
 }
