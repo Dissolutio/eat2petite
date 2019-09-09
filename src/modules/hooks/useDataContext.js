@@ -36,6 +36,10 @@ const useDataContext = () => {
 		sendOff(appData.contests, 'contests')
 	}
 
+	const consoleLogAppData = () => {
+		console.log('current appData', appData)
+	}
+
 	const loadSampleData = () => {
 		setAppData({
 			...appData,
@@ -96,6 +100,7 @@ const useDataContext = () => {
 
 	return {
 		appData,
+		consoleLogAppData,
 		loadSampleData,
 		loadLocalData,
 		setLocalData,
