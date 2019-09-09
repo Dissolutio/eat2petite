@@ -41,13 +41,15 @@ const useDataContext = () => {
 	}
 
 	const loadSampleData = () => {
-		setAppData({
+		const sampleData = {
 			...appData,
 			sampleUsers,
 			posts,
 			challenges,
 			contests,
-		})
+		}
+		console.log('Loading sample data', sampleData)
+		setAppData(sampleData)
 	}
 	const loadLocalData = () => {
 		const localData = getLocalState()
