@@ -1,6 +1,8 @@
 import React from 'react'
 import { useDataContext } from '../../modules/hooks/useDataContext'
 
+import DoubleClickButton from '../shared/DoubleClickButton'
+
 export default function DevConsole(props) {
 	const {
 		setSampleDataToFirebase,
@@ -12,12 +14,12 @@ export default function DevConsole(props) {
 	} = useDataContext()
 	return (
 		<div>
-			<button onClick={setSampleDataToFirebase}>SET SAMPLE FIREBASE DATA </button>
-			<button onClick={loadFirebaseData}>LOAD FIREBASE DATA </button>
-			<button onClick={loadSampleData}>LOAD SAMPLE DATA </button>
-			<button onClick={setLocalData}>SET LOCAL DATA </button>
-			<button onClick={loadLocalData}>LOAD LOCAL DATA </button>
-			<button onClick={consoleLogAppData}>CONSOLE LOG APP DATA</button>
+			<DoubleClickButton doubleClickCallback={setSampleDataToFirebase} text="SET SAMPLE FIREBASE DATA" />
+			<DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD FIREBASE DATA " />
+			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD SAMPLE DATA " />
+			<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA " />
+			<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD LOCAL DATA " />
+			<DoubleClickButton doubleClickCallback={consoleLogAppData} text="CONSOLE LOG APP DATA" />
 		</div>
 	)
 }
