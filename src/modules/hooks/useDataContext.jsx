@@ -36,10 +36,11 @@ const useDataContext = () => {
 	// UPLOAD SAMPLE DATA TO FIREBASE
 
 	const setSampleDataToFirebase = () => {
-		const user1 = sampleUsers.find(sampleUser => sampleUser.sampleId === 'user_1')
-		sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
+		// const user1 = sampleUsers.find(sampleUser => sampleUser.sampleId === 'user_1')
+		// sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
+		sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
 		// sampleUsers.forEach(sampleUser => firebaseApp.doCreateNewUser(sampleUser))
-		firebaseApp.doCreateNewUser(user1)
+		// firebaseApp.doCreateNewUser(user1)
 		// createFirebaseUser(user1)
 	}
 	// LOG CURRENT DATA
@@ -78,6 +79,20 @@ const useDataContext = () => {
 				.then(snapshot => snapshot.val())
 		} else {
 			return {}
+		}
+	}
+	const getContests = () => {
+		if (user.userRole === 'admin') {
+			return firebaseApp
+				.dbAdminContests()
+				.once('value')
+				.then(snapshot => snapshot.val())
+		}
+		if (user.userRole === 'default') {
+			return firebaseApp
+				.dbUserContests()
+				.once('value')
+				.then(snapshot => snapshot.val())
 		}
 	}
 

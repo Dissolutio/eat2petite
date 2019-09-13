@@ -53,9 +53,9 @@ class Firebase {
 	// *** Contests API ***
 	dbContests = () => this.db.ref(`/contests`)
 	dbUserContests = uid => this.db.ref(`/users/${uid}/contests`)
-	dbAdminContests = uid => this.db.ref(`/contests`)
+	dbAdminContests = uid => this.db.ref(`admin/contests`)
 	dbSaveNewContest = contest => {
-		const newContestRef = this.dbContests().push()
+		const newContestRef = this.dbAdminContests().push()
 		console.log('newContestRef', newContestRef)
 		newContestRef.set({
 			...contest,
