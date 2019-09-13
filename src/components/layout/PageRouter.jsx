@@ -6,7 +6,8 @@ import { useAuthUserContext, meetAuthConditionOrRedirectHOC } from '../../fireba
 import LandingPage from '../pages/LandingPage'
 import VerifyEmail from '../authentication/VerifyEmail'
 import SignUpForm from '../authentication/SignUpForm'
-import SignInForm from '../authentication/SignInForm'
+// import SignInForm from '../authentication/SignInForm'
+import SignInForm_Dev from '../authentication/SignInForm_Dev'
 
 import UserHomePage from '../pages/UserHomePage'
 import AdminHomePage from '../pages/AdminHomePage'
@@ -19,7 +20,6 @@ export default function PageRouter() {
 	const { user } = useAuthUserContext()
 	const signedInCondition = () => !!user
 	const notSignedInCondition = () => !user
-	const signedInAndEmailVerifiedCondition = () => signedInCondition() && user.emailVerified === true
 	const emailNotVerifiedCondition = () => signedInCondition() && user.emailVerified === false
 	const adminCondition = () => signedInCondition() && user.userRole === `admin`
 
@@ -34,7 +34,8 @@ export default function PageRouter() {
 			<Route
 				exact
 				path={ROUTES.LOGIN}
-				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm)}
+				// component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm)}
+				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm_Dev)}
 			/>
 			<Route
 				exact
