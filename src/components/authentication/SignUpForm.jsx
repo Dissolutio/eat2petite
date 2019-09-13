@@ -1,39 +1,24 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { useFirebaseContext } from '../../firebase'
 import { useInputValue } from '../../modules/hooks/useInputValue'
+import { useDataContext } from '../../modules/hooks/useDataContext'
 
-const SignUpForm = props => {
-	const firebaseApp = useFirebaseContext()
+const SignUpForm = () => {
+	const { createFirebaseUser } = useDataContext()
+
 	const username = useInputValue('dissolutio')
 	const email = useInputValue('entity.john@gmail.com')
+	const [userRole, setUserRole] = useState('default')
 	const password = useInputValue('password')
 	const passwordVerify = useInputValue('password')
-	const [error, setError] = useState({
-		code: '#fake_error_code_666',
-		message: 'This is a sample error message, hard coded in the SignUpForm.',
-	})
 
 	const onFormSubmit = event => {
+		console.log('event.target: ', event.target)
 		event.preventDefault()
-		firebaseApp
-			.doCreateUserWithEmailAndPassword(email.value, password.value)
-			.then(result => {
-				console.log('Created User', result)
-				firebaseApp.saveNewUser({
-					email: email.value,
-					username: username.value,
-					userRole: 'default',
-					uid: result.user.uid,
-				})
-			})
-			.catch(error => {
-				console.log('Error creating user', error)
-				setError({
-					...error,
-				})
-			})
+		const user = { email: email.value, password: password.value, username: username.value, userRole }
+		createFirebaseUser(user)
 	}
+
 	const isInvalid =
 		password.value !== passwordVerify.value || password.value === '' || email.value === '' || username.value === ''
 	return (
@@ -70,11 +55,6 @@ const SignUpForm = props => {
 						Submit
 					</button>
 				</fieldset>
-				{error && (
-					<>
-						<p>{`Error code: ${error.code}`}</p> <p>{`Error message: ${error.message}`}</p>
-					</>
-				)}
 			</form>
 		</div>
 	)

@@ -16,8 +16,20 @@ class Firebase {
 		this.db = app.database()
 		this.EmailAuthProvider = app.auth.EmailAuthProvider
 	}
-
-	doCreateUserWithEmailAndPassword = (email, password) => this.auth.createUserWithEmailAndPassword(email, password)
+	doCreateNewUser = user => {
+		console.log('doCreateNewUser: ', user)
+		const { email, password, username, userRole } = user
+		this.auth.createUserWithEmailAndPassword(email, password).then(result => {
+			console.log('Created User', result)
+			const { uid, email } = result.user
+			this.dbSaveNewUser({
+				username,
+				userRole,
+				email,
+				uid,
+			})
+		})
+	}
 	doSignInWithEmailAndPassword = (email, password) => this.auth.signInWithEmailAndPassword(email, password)
 	doPasswordReset = email => this.auth.sendPasswordResetEmail(email)
 	doPasswordUpdate = password => this.auth.currentUser.updatePassword(password)
@@ -29,9 +41,8 @@ class Firebase {
 
 	// *** Users API ***
 	dbAllUsers = () => this.db.ref(`/users`)
-	dbAllSampleUsers = () => this.db.ref(`/sampleUsers`)
 	dbUserById = uid => this.db.ref(`/users/${uid}`)
-	saveNewUser = user => {
+	dbSaveNewUser = user => {
 		const { uid, username, email, userRole } = user
 		this.dbUserById(uid).set({
 			username,
@@ -40,13 +51,30 @@ class Firebase {
 		})
 	}
 	// *** Contests API ***
-	dbAllContests = () => this.db.ref(`/contests`)
-	dbContestById = uid => this.db.ref(`/contests/${uid}`)
+	dbContests = () => this.db.ref(`/contests`)
+	dbUserContests = uid => this.db.ref(`/users/${uid}/contests`)
+	dbAdminContests = uid => this.db.ref(`/contests`)
+	dbSaveNewContest = contest => {
+		const newContestRef = this.dbContests().push()
+		console.log('newContestRef', newContestRef)
+		newContestRef.set({
+			...contest,
+			uid: newContestRef.key,
+		})
+	}
+
 	// *** Challenges API ***
-	dbAllChallenges = () => this.db.ref(`/challenges`)
-	dbChallengeById = uid => this.db.ref(`/challenges/${uid}`)
+	dbChallenges = () => this.db.ref('/challenges')
+	dbSaveNewChallenge = challenge => {
+		const newChallengeRef = this.dbChallenges().push()
+		console.log('newChallengeRef', newChallengeRef)
+		newChallengeRef.set({
+			...challenge,
+			uid: newChallengeRef.key,
+		})
+	}
 	// *** Posts API ***
-	dbAllPosts = () => this.db.ref(`/posts`)
-	dbPostsById = uid => this.db.ref(`/posts/${uid}`)
+	dbPostsByUserId = uid => this.db.ref(`/posts/${uid}`)
 }
+
 export { Firebase }

@@ -1,19 +1,19 @@
 // 2 contests, 6 users, 6 challenges, 4 posts, and a 7th user who is the admin
-export const posts = [
+export const samplePosts = [
 	{
-		uid: 'post_1',
+		sampleId: 'post_1',
 		contestId: 'contest_1',
 		userId: 'user_1',
 		challengeId: 'challenge_1',
 		createdAt: 'Wed Aug 28 2019 22:00:00 GMT-0500 (Central Daylight Time)',
-		editedAt: 'Wed Aug 28 2019 22:00:00 GMT-0500 (Central Daylight Time)',
+		editedAt: 'Wed Aug 28 2019 22:01:00 GMT-0500 (Central Daylight Time)',
 		postData: {
 			quantity: '6.66',
 			quantityUnits: 'cups',
 		},
 	},
 	{
-		uid: 'post_2',
+		sampleId: 'post_2',
 		contestId: 'contest_1',
 		userId: 'user_2',
 		challengeId: 'challenge_1',
@@ -25,7 +25,7 @@ export const posts = [
 		},
 	},
 	{
-		uid: 'post_3',
+		sampleId: 'post_3',
 		contestId: 'contest_02',
 		userId: 'user_4',
 		challengeId: 'challenge_01',
@@ -37,7 +37,7 @@ export const posts = [
 		},
 	},
 	{
-		uid: 'post_4',
+		sampleId: 'post_4',
 		contestId: 'contest_02',
 		userId: 'user_5',
 		challengeId: 'challenge_01',
@@ -48,10 +48,22 @@ export const posts = [
 			quantityUnits: 'liters',
 		},
 	},
-]
-export const contests = [
 	{
-		uid: 'contest_1',
+		sampleId: 'post_5',
+		contestId: 'contest_1',
+		userId: 'user_1',
+		challengeId: 'challenge_1',
+		createdAt: 'Wed Aug 29 2019 22:00:00 GMT-0500 (Central Daylight Time)',
+		editedAt: 'Wed Aug 29 2019 22:01:00 GMT-0500 (Central Daylight Time)',
+		postData: {
+			quantity: '3',
+			quantityUnits: 'liters',
+		},
+	},
+]
+export const sampleContests = [
+	{
+		sampleId: 'contest_1',
 		title: 'The First Contest: 6 14-Day Challenges',
 		startDate: 'Wed Aug 28 2019 00:00:00 GMT-0500 (Central Daylight Time)',
 		numberOfChallenges: '6',
@@ -80,7 +92,7 @@ export const contests = [
 		},
 	},
 	{
-		uid: 'contest_2',
+		sampleId: 'contest_2',
 		title: 'The Second Contest: 6 3-Day Challenges',
 		startDate: 'Sun Aug 25 2019 00:00:00 GMT-0500 (Central Daylight Time)',
 		numberOfChallenges: '6',
@@ -111,71 +123,71 @@ export const contests = [
 ]
 export const sampleUsers = [
 	{
-		uid: 'user_1',
-		name: 'Jane Doe 1',
+		sampleId: 'user_1',
 		email: 'user_1@example.com',
+		password: 'password',
 		userRole: 'default',
-		username: 'tH3_user_1',
+		username: 'Jack',
 		contests: {
 			contest_1: true,
 		},
 	},
 	{
-		uid: 'user_2',
-		name: 'Jane Doe 2',
+		sampleId: 'user_2',
 		email: 'user_2@example.com',
+		password: 'password',
 		userRole: 'default',
-		username: 'tH3_user_2',
+		username: 'Jill',
 		contests: {
 			contest_1: true,
 		},
 	},
 	{
-		uid: 'user_3',
-		name: 'Jane Doe 3',
+		sampleId: 'user_3',
 		email: 'user_3@example.com',
+		password: 'password',
 		userRole: 'default',
-		username: 'tH3_user_3',
+		username: 'Joe',
 		contests: {
 			contest_1: true,
 		},
 	},
 	{
-		uid: 'user_4',
-		name: 'Jane Doe 4',
+		sampleId: 'user_4',
 		email: 'user_4@example.com',
+		password: 'password',
 		userRole: 'default',
-		username: 'tH3_user_4',
+		username: 'Jackie',
 		contests: {
 			contest_2: true,
 		},
 	},
 	{
-		uid: 'user_5',
-		name: 'Jane Doe 5',
+		sampleId: 'user_5',
 		email: 'user_5@example.com',
+		password: 'password',
 		userRole: 'default',
-		username: 'tH3_user_5',
+		username: 'Rebecca',
 		contests: {
 			contest_2: true,
 		},
 	},
 	{
-		uid: 'user_6',
-		name: 'Jane Doe 6',
+		sampleId: 'user_6',
 		email: 'user_6@example.com',
+		password: 'password',
 		userRole: 'default',
-		username: 'tH3_user_6',
+		username: 'Alejandro',
 		contests: {
 			contest_2: true,
 		},
 	},
 	{
-		uid: 'user_7',
-		name: 'EAT-2-PETITE',
+		sampleId: 'user_7',
 		email: 'eat-2-petite@example.com',
+		password: 'password',
 		userRole: 'admin',
-		username: 'tH3_user_6',
+		username: 'EAT-2-PETITE',
 		contests: {
 			contest_1: true,
 			contest_2: true,
@@ -183,9 +195,9 @@ export const sampleUsers = [
 	},
 ]
 
-export const challenges = [
+export const sampleChallenges = [
 	{
-		uid: 'challenge_1',
+		sampleId: 'challenge_1',
 		challengeName: 'Water Intake',
 		description:
 			'We should consume at least as much water as it takes to fill both of our shoes. We are like camels on the high dunes of the Sahara, high noon suns beckoning us to drink pure water today and tomorrow! No Money shall be vested in one supreme Court, and all other Powers vested by this Constitution in the Government and Regulation of the State Legislature.',
@@ -193,7 +205,7 @@ export const challenges = [
 		units: 'volume',
 	},
 	{
-		uid: 'challenge_2',
+		sampleId: 'challenge_2',
 		challengeName: 'Eat Vegetables',
 		description:
 			'Humans grew up as omnivores, and benefit greatly from a large amount of vegetables as a food source. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential for physical and mental fitness.',
@@ -204,7 +216,7 @@ export const challenges = [
 		},
 	},
 	{
-		uid: 'challenge_3',
+		sampleId: 'challenge_3',
 		challengeName: 'Eat Protein',
 		description:
 			'We should aim for a target protein level every day for the goals we want to achieve. Our bodies are built from them!',
@@ -212,7 +224,7 @@ export const challenges = [
 		units: 'weight',
 	},
 	{
-		uid: 'challenge_4',
+		sampleId: 'challenge_4',
 		challengeName: 'Get Active!',
 		description: `Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!`,
 		formulaForTarget: 'Some amount of time spent on some scale of intensity',
@@ -222,7 +234,7 @@ export const challenges = [
 		},
 	},
 	{
-		uid: 'challenge_5',
+		sampleId: 'challenge_5',
 		challengeName: 'Manage Carbohydrate Intake',
 		description:
 			'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
@@ -230,7 +242,7 @@ export const challenges = [
 		units: 'weight',
 	},
 	{
-		uid: 'challenge_6',
+		sampleId: 'challenge_6',
 		challengeName: 'Manage Sugar and Salt Intake',
 		description:
 			'The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.',

@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { useFirebaseContext } from '../../firebase'
+import { useFirebaseContext, useAuthUserContext } from '../../firebase'
 import { getLocalState, setLocalState } from '../localStorage'
-import { sampleUsers, posts, challenges, contests } from '../../sampleData'
-
+import { sampleUsers, samplePosts, sampleChallenges, sampleContests } from '../../sampleData'
 const DataContext = React.createContext([{}, () => {}])
 
 const DataContextProvider = props => {
 	const [appData, setAppData] = useState(() => {
 		return {
-			sampleUsers: [],
+			users: [],
 			posts: [],
 			challenges: [],
 			contests: [],
@@ -19,38 +18,36 @@ const DataContextProvider = props => {
 
 const useDataContext = () => {
 	const firebaseApp = useFirebaseContext()
+	const { user } = useAuthUserContext()
 	const [appData, setAppData] = useContext(DataContext)
 
-	const setSampleDataToFirebase = () => {
-		function sendOff(array, firebaseRef) {
-			array.forEach(item =>
-				firebaseApp.db
-					.ref(`${firebaseRef}`)
-					.child(`${item.uid}`)
-					.set(item),
-			)
-		}
-		sendOff(appData.sampleUsers, 'sampleUsers')
-		sendOff(appData.posts, 'posts')
-		sendOff(appData.challenges, 'challenges')
-		sendOff(appData.contests, 'contests')
-	}
-
-	const consoleLogAppData = () => {
-		console.log('current appData', appData)
-	}
-
+	// LOAD SAMPLE DATA
 	const loadSampleData = () => {
 		const sampleData = {
 			...appData,
 			sampleUsers,
-			posts,
-			challenges,
-			contests,
+			samplePosts,
+			sampleChallenges,
+			sampleContests,
 		}
 		console.log('Loading sample data', sampleData)
 		setAppData(sampleData)
 	}
+	// UPLOAD SAMPLE DATA TO FIREBASE
+
+	const setSampleDataToFirebase = () => {
+		const user1 = sampleUsers.find(sampleUser => sampleUser.sampleId === 'user_1')
+		sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
+		// sampleUsers.forEach(sampleUser => firebaseApp.doCreateNewUser(sampleUser))
+		firebaseApp.doCreateNewUser(user1)
+		// createFirebaseUser(user1)
+	}
+	// LOG CURRENT DATA
+	const consoleLogAppData = () => {
+		console.log('current appData', appData)
+	}
+
+	// LOAD LOCAL DATA
 	const loadLocalData = () => {
 		const localData = getLocalState()
 		if (localData) {
@@ -58,56 +55,50 @@ const useDataContext = () => {
 			setAppData(localData)
 		}
 	}
+	// SAVE DATA TO LOCAL
 	const setLocalData = () => {
 		setLocalState(appData)
 	}
-	const loadFirebaseData = () => {
-		firebaseApp.db
-			.ref('/')
+
+	// LOAD FIREBASE DATA
+	const getUserChallenges = () => {
+		return firebaseApp.db
+			.ref('/challenges')
 			.once('value')
-			.then(snapshot => {
-				let snapshotValue = snapshot.val()
-				if (snapshotValue === null || undefined) {
-					return {}
-				} else {
-					const data = Object.entries(snapshotValue).reduce((result, entry) => {
-						const key = entry[0]
-						const value = entry[1]
-						return {
-							...result,
-							[key]: { ...value },
-						}
-					}, {})
-					return data
-				}
-			})
-			.then(data => {
-				const challenges = Object.values(data.challenges)
-				const contests = Object.values(data.contests)
-				const posts = Object.values(data.posts)
-				const sampleUsers = Object.values(data.sampleUsers)
-				const newData = {
-					sampleUsers,
-					posts,
-					challenges,
-					contests,
-				}
-				console.log('firebaseData', newData)
-				setAppData({
-					...appData,
-					...newData,
-				})
-			})
+			.then(snapshot => snapshot.val())
 	}
 
+	const loadFirebaseData = async () => {
+		const challenges = await getUserChallenges()
+		// const contests = Object.values(data.contests)
+		// const posts = () => {
+		// 	const userKeyRing = Object.keys(data.posts)
+		// 	userKeyRing.filter(key => user && user.uid === key)
+		// 	return {}
+		// }
+		// const users = Object.values(data.users)
+		const newData = {
+			// users,
+			// posts: posts(),
+			challenges,
+			// contests,
+		}
+		console.log('firebaseData', newData)
+		setAppData({
+			...appData,
+			...newData,
+		})
+	}
 	return {
+		// INITIALIZE
 		appData,
-		consoleLogAppData,
 		loadSampleData,
+		setSampleDataToFirebase,
 		loadLocalData,
 		setLocalData,
 		loadFirebaseData,
-		setSampleDataToFirebase,
+		consoleLogAppData,
+		// METHODS
 	}
 }
 
