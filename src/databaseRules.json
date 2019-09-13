@@ -3,12 +3,12 @@
 		"users": {
 			"$uid": {
 				".read": "auth != null && auth.uid == $uid",
-				".write": "auth != null && auth.uid == $uid"
+				".write": "auth != null && auth.uid == $uid || auth.uid == 'q2l9TRODkWQMsH6opE13qlrlYFB3'"
 			}
 		},
 		"challenges": {
 			".read": "auth != null",
-			".write": "auth != null"
+			".write": "auth != null && auth.uid == 'q2l9TRODkWQMsH6opE13qlrlYFB3'"
 		},
 		"admin": {
 			"contests": {
