@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useInputValue } from '../../modules/hooks/useInputValue'
-import { useDataContext } from '../../modules/hooks/useDataContext'
+import { useFirebaseContext } from '../../firebase'
 
 const SignUpForm = () => {
-	const { createFirebaseUser } = useDataContext()
+	const firebaseApp = useFirebaseContext()
 
 	const username = useInputValue('dissolutio')
 	const email = useInputValue('entity.john@gmail.com')
@@ -16,7 +16,7 @@ const SignUpForm = () => {
 		console.log('event.target: ', event.target)
 		event.preventDefault()
 		const user = { email: email.value, password: password.value, username: username.value, userRole }
-		createFirebaseUser(user)
+		firebaseApp.doCreateNewUser(user)
 	}
 
 	const isInvalid =

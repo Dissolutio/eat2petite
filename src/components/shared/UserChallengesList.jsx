@@ -6,21 +6,25 @@ export default function UserChallengesList(props) {
 	return (
 		<ul>
 			<h2>Sample Challenges List</h2>
-			{challenges.map(challenge => (
-				<li key={challenge.uid}>
-					<ul>
-						<li>
-							<UserChallengeDetailLink id={challenge.uid} />
-						</li>
-						<li>{`challengeName: ${challenge.challengeName}`}</li>
-						<li>
-							<p>{`description: ${challenge.description}`}</p>
-						</li>
-						<li>{`formulaForTarget: ${challenge.formulaForTarget}`}</li>
-						<li>{`units: ${challenge.units}`}</li>
-					</ul>
-				</li>
-			))}
+			{Object.keys(challenges).map(challengeKey => {
+				const challenge = challenges[challengeKey]
+				const { uid, challengeName, description, formulaForTarget, units } = challenge
+				return (
+					<li key={uid}>
+						<ul>
+							<li>
+								<UserChallengeDetailLink id={uid} />
+							</li>
+							<li>{`challengeName: ${challengeName}`}</li>
+							<li>
+								<p>{`description: ${description}`}</p>
+							</li>
+							<li>{`formulaForTarget: ${formulaForTarget}`}</li>
+							<li>{`units: ${units}`}</li>
+						</ul>
+					</li>
+				)
+			})}
 		</ul>
 	)
 }

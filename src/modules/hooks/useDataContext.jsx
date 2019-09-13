@@ -61,15 +61,29 @@ const useDataContext = () => {
 	}
 
 	// LOAD FIREBASE DATA
-	const getUserChallenges = () => {
+	const getChallenges = () => {
+		if (user.userRole === 'default') {
+		}
 		return firebaseApp.db
 			.ref('/challenges')
 			.once('value')
 			.then(snapshot => snapshot.val())
 	}
+	const getUsers = () => {
+		console.log(user.userRole)
+		if (user.userRole === 'default') {
+			return firebaseApp.db
+				.ref(`/users/${user.uid}`)
+				.once('value')
+				.then(snapshot => snapshot.val())
+		} else {
+			return {}
+		}
+	}
 
 	const loadFirebaseData = async () => {
-		const challenges = await getUserChallenges()
+		const challenges = await getChallenges()
+		const users = await getUsers()
 		// const contests = Object.values(data.contests)
 		// const posts = () => {
 		// 	const userKeyRing = Object.keys(data.posts)
@@ -78,7 +92,7 @@ const useDataContext = () => {
 		// }
 		// const users = Object.values(data.users)
 		const newData = {
-			// users,
+			users,
 			// posts: posts(),
 			challenges,
 			// contests,

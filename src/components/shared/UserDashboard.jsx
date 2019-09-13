@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDataContext } from '../../modules/hooks/useDataContext'
 
-import UserPostsList from './UserPostsList'
+// import UserPostsList from './UserPostsList'
 import UserChallengesList from './UserChallengesList'
 
 function filterAppDataUser(data) {
@@ -11,12 +11,12 @@ function filterAppDataUser(data) {
 export default function UserDashboard() {
 	const { appData } = useDataContext()
 	const userAppData = filterAppDataUser(appData)
-	const { posts, sampleUsers, challenges, contests } = userAppData
+	const { challenges } = userAppData
 	return (
 		<div>
 			<h1>User Dashboard</h1>
 			<UserChallengesList challenges={challenges} />
-			<UserPostsList posts={posts} />
+			{/* <UserPostsList posts={posts} /> */}
 		</div>
 	)
 }
