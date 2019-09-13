@@ -13,14 +13,9 @@ import UserChallengeDetail from '../shared/UserChallengeDetail'
 
 import * as ROUTES from '../../routes'
 
-function filterAppDataUser(data) {
-	return { ...data }
-}
-
 export default function UserHomePage() {
 	const { appData } = useDataContext()
-	const userAppData = filterAppDataUser(appData)
-	const { posts, sampleUsers, challenges, contests } = userAppData
+	const { posts, users, challenges, contests } = appData
 	const { user } = useAuthUserContext()
 
 	const emailVerifiedCondition = () => !!user && user.emailVerified === true

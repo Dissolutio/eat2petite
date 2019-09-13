@@ -16,27 +16,30 @@ import * as serviceWorker from './serviceWorker'
 
 const firebaseApp = new Firebase()
 
-ReactDOM.render(
-	<FirebaseContext.Provider value={firebaseApp}>
-		<AppWrapper />
-	</FirebaseContext.Provider>,
-	document.getElementById('root'),
-)
-
-function AppWrapper() {
+function FirebaseWrapper({ children }) {
+	return <FirebaseContext.Provider value={firebaseApp}>{children}</FirebaseContext.Provider>
+}
+function AuthWrapper({ children }) {
 	const firebaseApp = useFirebaseContext()
 	const authState = useAuthListener(firebaseApp)
+	return <AuthUserContext.Provider value={authState}>{children}</AuthUserContext.Provider>
+}
+
+function AppWrapper() {
 	return (
-		<AuthUserContext.Provider value={authState}>
-			<UIContextProvider>
-				<DataContextProvider>
-					<Router>
-						<App />
-					</Router>
-				</DataContextProvider>
-			</UIContextProvider>
-		</AuthUserContext.Provider>
+		<FirebaseWrapper>
+			<AuthWrapper>
+				<UIContextProvider>
+					<DataContextProvider>
+						<Router>
+							<App />
+						</Router>
+					</DataContextProvider>
+				</UIContextProvider>
+			</AuthWrapper>
+		</FirebaseWrapper>
 	)
 }
+ReactDOM.render(<AppWrapper />, document.getElementById('root'))
 
 serviceWorker.unregister()

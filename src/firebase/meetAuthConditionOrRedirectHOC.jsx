@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import { useAuthUserContext } from './authentication'
+import { useAuthUserContext } from './index'
 
 export const meetAuthConditionOrRedirectHOC = (condition, redirectTo) => Component => {
 	const AuthorizationHOC = props => {
