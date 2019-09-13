@@ -1,0 +1,19 @@
+{
+	"rules": {
+		"users": {
+			"$uid": {
+				".read": "auth != null && auth.uid == $uid",
+				".write": "auth != null && auth.uid == $uid"
+			}
+		},
+		"challenges": {
+			".read": "auth != null",
+			".write": "auth != null"
+		},
+		"admin": {
+			"contests": {
+				".write": "auth != null && auth.uid == 'q2l9TRODkWQMsH6opE13qlrlYFB3'"
+			}
+		}
+	}
+}
