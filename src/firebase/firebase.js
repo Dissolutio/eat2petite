@@ -55,12 +55,21 @@ class Firebase {
 	dbUserContests = uid => this.db.ref(`/users/${uid}/contests`)
 	dbAdminContests = uid => this.db.ref(`admin/contests`)
 	dbSaveNewContest = contest => {
-		const newContestRef = this.dbAdminContests().push()
-		console.log('newContestRef', newContestRef)
+		const newContestRef = this.dbContests().push()
 		newContestRef.set({
 			...contest,
 			uid: newContestRef.key,
 		})
+	}
+	dbEnrollUserInContest = (user, contest) => {
+		const updatedRole = { ...contest.enrolledUsers, userId: true }
+		const updatedContest = { ...contest, enrolledUsers: updatedRole }
+		let updates = {}
+		updates['/contests/' + contest.uid] = updatedContest
+		updates['/users/' + user.uid + '/contests/' + contest.uid] = true
+		return this.db()
+			.ref()
+			.update(updates)
 	}
 
 	// *** Challenges API ***
