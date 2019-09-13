@@ -15,10 +15,10 @@ export default function DevConsole(props) {
 	return (
 		<div>
 			<DoubleClickButton doubleClickCallback={setSampleDataToFirebase} text="SET SAMPLE FIREBASE DATA" />
-			<DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD FIREBASE DATA " />
-			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD SAMPLE DATA " />
+			<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
+			<DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD SAMPLE DATA " />
 			<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA " />
-			<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD LOCAL DATA " />
+			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA " />
 			<DoubleClickButton doubleClickCallback={consoleLogAppData} text="CONSOLE LOG APP DATA" />
 		</div>
 	)
