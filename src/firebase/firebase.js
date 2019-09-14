@@ -48,6 +48,7 @@ class Firebase {
 			username,
 			email,
 			userRole,
+			uid,
 		})
 	}
 	// *** Contests API ***
@@ -62,14 +63,12 @@ class Firebase {
 		})
 	}
 	dbEnrollUserInContest = (user, contest) => {
-		const updatedRole = { ...contest.enrolledUsers, userId: true }
+		const updatedRole = { ...contest.enrolledUsers, [user.uid]: true }
 		const updatedContest = { ...contest, enrolledUsers: updatedRole }
 		let updates = {}
 		updates['/contests/' + contest.uid] = updatedContest
 		updates['/users/' + user.uid + '/contests/' + contest.uid] = true
-		return this.db()
-			.ref()
-			.update(updates)
+		return this.db.ref().update(updates)
 	}
 
 	// *** Challenges API ***

@@ -21,7 +21,6 @@ const useDataContext = () => {
 	const { user } = useAuthUserContext()
 	const [appData, setAppData] = useContext(DataContext)
 
-	// LOAD SAMPLE DATA
 	const loadSampleData = () => {
 		const sampleData = {
 			...appData,
@@ -33,8 +32,6 @@ const useDataContext = () => {
 		console.log('Loading sample data', sampleData)
 		setAppData(sampleData)
 	}
-	// UPLOAD SAMPLE DATA TO FIREBASE
-
 	const setSampleDataToFirebase = () => {
 		// const user1 = sampleUsers.find(sampleUser => sampleUser.sampleId === 'user_1')
 		// sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
@@ -63,8 +60,6 @@ const useDataContext = () => {
 
 	// LOAD FIREBASE DATA
 	const getChallenges = () => {
-		if (user.userRole === 'default') {
-		}
 		return firebaseApp.db
 			.ref('/challenges')
 			.once('value')
@@ -77,40 +72,29 @@ const useDataContext = () => {
 				.ref(`/users/${user.uid}`)
 				.once('value')
 				.then(snapshot => snapshot.val())
+		} else if (user.userRole === 'admin') {
+			return firebaseApp
+				.dbAllUsers()
+				.once('value')
+				.then(snapshot => snapshot.val())
 		} else {
 			return {}
 		}
 	}
-	const getContests = () => {
-		if (user.userRole === 'admin') {
-			return firebaseApp
-				.dbAdminContests()
-				.once('value')
-				.then(snapshot => snapshot.val())
-		}
-		if (user.userRole === 'default') {
-			return firebaseApp
-				.dbUserContests()
-				.once('value')
-				.then(snapshot => snapshot.val())
-		}
-	}
+	const getContests = () =>
+		firebaseApp
+			.dbContests()
+			.once('value')
+			.then(snapshot => snapshot.val())
 
 	const loadFirebaseData = async () => {
 		const challenges = await getChallenges()
 		const users = await getUsers()
-		// const contests = Object.values(data.contests)
-		// const posts = () => {
-		// 	const userKeyRing = Object.keys(data.posts)
-		// 	userKeyRing.filter(key => user && user.uid === key)
-		// 	return {}
-		// }
-		// const users = Object.values(data.users)
+		const contests = await getContests()
 		const newData = {
 			users,
-			// posts: posts(),
 			challenges,
-			// contests,
+			contests,
 		}
 		console.log('firebaseData', newData)
 		setAppData({
@@ -118,8 +102,10 @@ const useDataContext = () => {
 			...newData,
 		})
 	}
+	const enrollUserInContest = (user, contest) => {
+		firebaseApp.dbEnrollUserInContest(user, contest)
+	}
 	return {
-		// INITIALIZE
 		appData,
 		loadSampleData,
 		setSampleDataToFirebase,
@@ -127,7 +113,7 @@ const useDataContext = () => {
 		setLocalData,
 		loadFirebaseData,
 		consoleLogAppData,
-		// METHODS
+		enrollUserInContest,
 	}
 }
 
