@@ -14,7 +14,11 @@ import UserChallengeDetail from '../shared/UserChallengeDetail'
 import * as ROUTES from '../../routes'
 
 export default function UserHomePage() {
-	const { appData } = useDataContext()
+	const { loadFirebaseData, appData } = useDataContext()
+	React.useEffect(() => {
+		loadFirebaseData()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 	const { posts, users, challenges, contests } = appData
 	const { user } = useAuthUserContext()
 
