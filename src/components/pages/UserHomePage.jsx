@@ -19,7 +19,7 @@ export default function UserHomePage() {
 		loadFirebaseData()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	const { posts, users, challenges, contests } = appData
+	const { posts, challenges } = appData
 	const { user } = useAuthUserContext()
 
 	const emailVerifiedCondition = () => !!user && user.emailVerified === true

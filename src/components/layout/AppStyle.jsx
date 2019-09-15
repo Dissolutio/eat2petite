@@ -1,9 +1,10 @@
 import styled from 'styled-components'
-
-export const AppStyleContainer = styled.div`
+import { Container } from 'reactstrap'
+export const AppStyleContainer = styled(Container)`
 	min-height: 100%;
-	color: var(--font-dark, #111);
+	color: var(--font-light, #fff);
+	background-color: var(--E2P-dark-gray, gray);
 `
-export const PageStyleContainer = styled.div`
+export const PageStyleContainer = styled(Container)`
 	min-height: 100vh;
 `

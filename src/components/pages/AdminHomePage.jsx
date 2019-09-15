@@ -31,7 +31,6 @@ export default function AdminHomePage() {
 
 	return (
 		<div>
-			AdminHomePage
 			<Switch>
 				<Route exact path={ROUTES.ADMIN_DASHBOARD} component={AdminDashboard} />
 				<Route exact path={ROUTES.ADMIN_CONTESTS} render={props => <AdminContestsList contests={contests} />} />
