@@ -1,19 +1,40 @@
 {
 	"rules": {
 		"users": {
+			".read": "auth.uid == 'ADMIN_UID'",
 			"$uid": {
 				".read": "auth != null && auth.uid == $uid",
-				".write": "auth != null && auth.uid == $uid || auth.uid == 'q2l9TRODkWQMsH6opE13qlrlYFB3'"
+				".write": "auth != null && auth.uid == $uid || auth.uid == 'ADMIN_UID'"
+			}
+		},
+		"publicUsers": {
+			".write": "auth.uid == 'ADMIN_UID'",
+			".read": "auth != null",
+			"$uid": {
+				".read": "auth != null && auth.uid == $uid",
+				".write": "auth != null && auth.uid == $uid || auth.uid == 'ADMIN_UID'"
+			}
+		},
+		"posts": {
+			".read": "auth != null && auth.uid == 'ADMIN_UID'",
+			"$uid": {
+				".read": "auth != null && auth.uid == $uid || auth.uid == 'ADMIN_UID'",
+				".write": "auth != null && auth.uid == $uid || auth.uid == 'ADMIN_UID'"
 			}
 		},
 		"challenges": {
 			".read": "auth != null",
-			".write": "auth != null && auth.uid == 'q2l9TRODkWQMsH6opE13qlrlYFB3'"
+			".write": "auth != null && auth.uid == 'ADMIN_UID'"
 		},
 		"admin": {
 			"contests": {
-				".write": "auth != null && auth.uid == 'q2l9TRODkWQMsH6opE13qlrlYFB3'"
+				".read": "auth != null",
+				".write": "auth != null && auth.uid == 'ADMIN_UID'"
 			}
+		},
+		"contests": {
+			".read": "auth != null",
+			".write": "auth != null && auth.uid == 'ADMIN_UID'"
 		}
 	}
 }
