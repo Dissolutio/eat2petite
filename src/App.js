@@ -12,15 +12,14 @@ function App() {
 		// TODO make this a cool loader
 		return <h1>Initializing Authentication</h1>
 	}
-
 	return (
 		<AppStyleContainer>
 			<SideNav />
 			<Header />
-			<DevConsole />
 			<PageStyleContainer>
 				<PageRouter />
 			</PageStyleContainer>
+			<DevConsole />
 		</AppStyleContainer>
 	)
 }

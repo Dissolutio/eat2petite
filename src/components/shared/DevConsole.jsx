@@ -2,7 +2,7 @@ import React from 'react'
 import { useDataContext } from '../../modules/hooks/useDataContext'
 
 import DoubleClickButton from '../shared/DoubleClickButton'
-import { Button } from 'reactstrap'
+import { Button, ButtonGroup, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 export default function DevConsole(props) {
 	const {
 		appData,
@@ -20,16 +20,15 @@ export default function DevConsole(props) {
 	// 	enrollUserInContest(userToEnroll, contest)
 	// }
 	return (
-		<div>
-			<DoubleClickButton doubleClickCallback={setSampleDataToFirebase} text="SET SAMPLE FIREBASE DATA" />
+		<ButtonGroup vertical style={{ width: '100%' }}>
+			<Button color="primary" onClick={consoleLogAppData}>
+				CONSOLE LOG APP DATA
+			</Button>
 			<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
-			<DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD SAMPLE DATA " />
+			<DoubleClickButton doubleClickCallback={setSampleDataToFirebase} text="SET SAMPLE FIREBASE DATA" />
 			<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA " />
 			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA " />
-			<DoubleClickButton doubleClickCallback={consoleLogAppData} text="CONSOLE LOG APP DATA" />
-			{/* <Button color="primary" size="lg" onClick={enrollOnClick}>
-				Enroll user_1 in contest_1
-			</Button> */}
-		</div>
+			<DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD SAMPLE DATA " />
+		</ButtonGroup>
 	)
 }
