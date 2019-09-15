@@ -16,18 +16,16 @@ class Firebase {
 		this.db = app.database()
 		this.EmailAuthProvider = app.auth.EmailAuthProvider
 	}
-	doCreateNewUser = user => {
-		console.log('doCreateNewUser: ', user)
-		const { email, password, username, userRole } = user
-		this.auth.createUserWithEmailAndPassword(email, password).then(result => {
+	doCreateNewUser = (formUser, userPassword) => {
+		const { email } = formUser
+		this.auth.createUserWithEmailAndPassword(email, userPassword).then(result => {
 			console.log('Created User', result)
-			const { uid, email } = result.user
 			this.dbSaveNewUser({
-				username,
-				userRole,
-				email,
-				uid,
+				...formUser,
+				uid: result.user.uid,
+				email: result.user.email,
 			})
+			return result.user.uid
 		})
 	}
 	doSignInWithEmailAndPassword = (email, password) => this.auth.signInWithEmailAndPassword(email, password)
@@ -40,15 +38,18 @@ class Firebase {
 		})
 
 	// *** Users API ***
-	dbAllUsers = () => this.db.ref(`/users`)
-	dbUserById = uid => this.db.ref(`/users/${uid}`)
+	dbPrivateUsers = () => this.db.ref(`/users`)
+	dbPublicUsers = () => this.db.ref(`/publicUsers`)
+	dbPublicUserById = uid => this.db.ref(`/publicUsers/${uid}`)
+	dbPrivateUserById = uid => this.db.ref(`/users/${uid}`)
 	dbSaveNewUser = user => {
-		const { uid, username, email, userRole } = user
-		this.dbUserById(uid).set({
-			username,
-			email,
-			userRole,
-			uid,
+		const { uid } = user
+		this.dbPrivateUserById(uid).set({
+			...user,
+		})
+		this.dbPublicUserById(uid).set({
+			...user,
+			email: null,
 		})
 	}
 	// *** Contests API ***
@@ -63,10 +64,8 @@ class Firebase {
 		})
 	}
 	dbEnrollUserInContest = (user, contest) => {
-		const updatedRole = { ...contest.enrolledUsers, [user.uid]: true }
-		const updatedContest = { ...contest, enrolledUsers: updatedRole }
 		let updates = {}
-		updates['/contests/' + contest.uid] = updatedContest
+		updates['/contests/' + contest.uid + '/enrolledUsers/' + user.uid] = true
 		updates['/users/' + user.uid + '/contests/' + contest.uid] = true
 		return this.db.ref().update(updates)
 	}
@@ -82,7 +81,12 @@ class Firebase {
 		})
 	}
 	// *** Posts API ***
+	dbPosts = () => this.db.ref('posts')
 	dbPostsByUserId = uid => this.db.ref(`/posts/${uid}`)
+	dbCreateUserPost = post => {
+		const newPostRef = this.dbPostsByUserId(post.author).push()
+		newPostRef.set({ ...post })
+	}
 }
 
 export { Firebase }

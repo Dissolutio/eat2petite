@@ -14,11 +14,11 @@ export default function DevConsole(props) {
 		consoleLogAppData,
 		enrollUserInContest,
 	} = useDataContext()
-	function enrollOnClick() {
-		const userToEnroll = appData.users['xv870nS3Y0X2dQxCOIly1yv9RDv1']
-		const contest = appData.contests['-Lokofx3E7_ITlRokybx']
-		enrollUserInContest(userToEnroll, contest)
-	}
+	// function enrollOnClick() {
+	// 	const userToEnroll = appData.users[process.env.REACT_APP_USER1_FIRE_UID]
+	// 	const contest = appData.contests[process.env.REACT_APP_CONTEST1_FIRE_UID]
+	// 	enrollUserInContest(userToEnroll, contest)
+	// }
 	return (
 		<div>
 			<DoubleClickButton doubleClickCallback={setSampleDataToFirebase} text="SET SAMPLE FIREBASE DATA" />
@@ -27,9 +27,9 @@ export default function DevConsole(props) {
 			<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA " />
 			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA " />
 			<DoubleClickButton doubleClickCallback={consoleLogAppData} text="CONSOLE LOG APP DATA" />
-			<Button color="primary" size="lg" onClick={enrollOnClick}>
+			{/* <Button color="primary" size="lg" onClick={enrollOnClick}>
 				Enroll user_1 in contest_1
-			</Button>
+			</Button> */}
 		</div>
 	)
 }

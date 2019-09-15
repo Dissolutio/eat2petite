@@ -32,13 +32,21 @@ const useDataContext = () => {
 		console.log('Loading sample data', sampleData)
 		setAppData(sampleData)
 	}
-	const setSampleDataToFirebase = () => {
-		// const user1 = sampleUsers.find(sampleUser => sampleUser.sampleId === 'user_1')
+	const setSampleDataToFirebase = async () => {
+		// const exampleUser = sampleUsers.find(sampleUser => sampleUser.username === 'Jill')
+		// const userId = await firebaseApp.doCreateNewUser(exampleUser)
+		samplePosts.forEach(post => {
+			const newPost = {
+				...post,
+				author: 'xv870nS3Y0X2dQxCOIly1yv9RDv1', // username: Jack
+				// author: '8uuaKHW0ccTMu5seVAKUMmFv3b73', // username: Jill
+			}
+
+			firebaseApp.dbCreateUserPost(newPost)
+		})
 		// sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
-		sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
+		// sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
 		// sampleUsers.forEach(sampleUser => firebaseApp.doCreateNewUser(sampleUser))
-		// firebaseApp.doCreateNewUser(user1)
-		// createFirebaseUser(user1)
 	}
 	// LOG CURRENT DATA
 	const consoleLogAppData = () => {
@@ -59,6 +67,23 @@ const useDataContext = () => {
 	}
 
 	// LOAD FIREBASE DATA
+	const loadFirebaseData = async () => {
+		const challenges = await getChallenges()
+		const users = await getUsers()
+		const contests = await getContests()
+		const posts = await getPosts()
+		const newData = {
+			users,
+			challenges,
+			contests,
+			posts,
+		}
+		console.log('firebaseData', newData)
+		setAppData({
+			...appData,
+			...newData,
+		})
+	}
 	const getChallenges = () => {
 		return firebaseApp.db
 			.ref('/challenges')
@@ -66,7 +91,19 @@ const useDataContext = () => {
 			.then(snapshot => snapshot.val())
 	}
 	const getUsers = () => {
-		console.log(user.userRole)
+		if (user.userRole === 'admin') {
+			return firebaseApp
+				.dbPrivateUsers()
+				.once('value')
+				.then(snapshot => snapshot.val())
+		} else {
+			return firebaseApp
+				.dbPublicUsers()
+				.once('value')
+				.then(snapshot => snapshot.val())
+		}
+	}
+	const getPosts = () => {
 		if (user.userRole === 'default') {
 			return firebaseApp.db
 				.ref(`/users/${user.uid}`)
@@ -74,7 +111,7 @@ const useDataContext = () => {
 				.then(snapshot => snapshot.val())
 		} else if (user.userRole === 'admin') {
 			return firebaseApp
-				.dbAllUsers()
+				.dbPosts()
 				.once('value')
 				.then(snapshot => snapshot.val())
 		} else {
@@ -87,24 +124,13 @@ const useDataContext = () => {
 			.once('value')
 			.then(snapshot => snapshot.val())
 
-	const loadFirebaseData = async () => {
-		const challenges = await getChallenges()
-		const users = await getUsers()
-		const contests = await getContests()
-		const newData = {
-			users,
-			challenges,
-			contests,
-		}
-		console.log('firebaseData', newData)
-		setAppData({
-			...appData,
-			...newData,
-		})
-	}
 	const enrollUserInContest = (user, contest) => {
 		firebaseApp.dbEnrollUserInContest(user, contest)
 	}
+	const createUserPost = post => {
+		firebaseApp.dbCreateUserPost(post)
+	}
+
 	return {
 		appData,
 		loadSampleData,
@@ -114,6 +140,7 @@ const useDataContext = () => {
 		loadFirebaseData,
 		consoleLogAppData,
 		enrollUserInContest,
+		createUserPost,
 	}
 }
 

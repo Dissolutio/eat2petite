@@ -15,8 +15,10 @@ const useAuthListener = firebaseApp => {
 	})
 	async function onChange(user) {
 		if (user) {
-			const snapshot = await firebaseApp.dbUserById(user.uid).once('value')
-			const dbUser = snapshot.val()
+			const dbUser = await firebaseApp
+				.dbPublicUserById(user.uid)
+				.once('value')
+				.then(snapshot => snapshot.val())
 			const { username, userRole } = dbUser
 			const mergedUser = {
 				uid: user.uid,
