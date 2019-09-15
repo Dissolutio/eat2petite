@@ -15,8 +15,9 @@ const SignUpForm = () => {
 	const onFormSubmit = event => {
 		console.log('event.target: ', event.target)
 		event.preventDefault()
-		const user = { email: email.value, password: password.value, username: username.value, userRole }
-		firebaseApp.doCreateNewUser(user)
+		const user = { email: email.value, username: username.value, userRole }
+		const userPassword = password.value
+		firebaseApp.doCreateNewUser(user, userPassword)
 	}
 
 	const isInvalid =
