@@ -37,9 +37,8 @@ const SlidingSidebar = styled(animated.div)`
 		position: absolute;
 		top: 0;
 		right: 25px;
-		font-size: 36px;
+		font-size: 26px;
 		margin-left: 50px;
-
 		background-color: #111;
 		color: inherit;
 		border: none;
@@ -48,7 +47,7 @@ const SlidingSidebar = styled(animated.div)`
 		cursor: pointer;
 	}
 	p {
-		padding: 8px 8px 8px 32px;
+		padding: 30px 8px 8px 32px;
 	}
 	a {
 		padding: 8px 8px 8px 32px;

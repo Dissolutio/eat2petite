@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Container } from 'reactstrap'
-export const AppStyleContainer = styled(Container)`
+export const AppStyleContainer = styled.div`
 	min-height: 100%;
 	color: var(--font-light, #fff);
 	background-color: var(--E2P-dark-gray, gray);
