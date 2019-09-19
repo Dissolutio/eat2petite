@@ -27,3 +27,5 @@ yarn-error.log*
 \.eslintrc\.json
 
 \.env
+
+\.vscode/
