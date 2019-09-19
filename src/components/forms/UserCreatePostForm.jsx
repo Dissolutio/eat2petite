@@ -1,6 +1,8 @@
 import React from 'react'
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
+const moment = require('moment')
 
 export default function UserCreatePostForm() {
 	const { createUserPost } = useDataContext()
@@ -18,18 +20,23 @@ export default function UserCreatePostForm() {
 		}
 		createUserPost(newPost)
 	}
+	const today = moment().format('YYYY-MM-DD')
 	return (
-		<div>
-			<form onSubmit={createPostOnSubmit}>
-				<input name="createdAt" type="date" />
-				<input name="quantity" type="text" placeholder="quantity" />
-				<select name="units" defaultValue="ounces">
+		<>
+			<Form onSubmit={createPostOnSubmit}>
+				<h2>Create Post Form</h2>
+				<FormGroup>
+					<Label for="quantity">Quantity</Label>
+					<Input name="quantity" type="number" placeholder="quantity" />
+				</FormGroup>
+				<Input name="postDate" type="date" defaultValue={today} />
+				<Input type="select" name="quantityUnits" defaultValue="cups">
 					<option value="cups">Cups</option>
 					<option value="ounces">Ounces</option>
 					<option value="liters">Liters</option>
-				</select>
-				<button type="submit">Submit</button>
-			</form>
-		</div>
+				</Input>
+				<Button type="submit">Submit</Button>
+			</Form>
+		</>
 	)
 }
