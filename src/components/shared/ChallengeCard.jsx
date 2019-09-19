@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
-import { Link } from 'react-router-dom'
 import { ChallengeCardLink } from '../navigation/Links'
+
 export default props => {
 	const { challenge, match } = props
 	const { uid, challengeName, description, formulaForTarget, units } = challenge
