@@ -106,8 +106,8 @@ const useDataContext = () => {
 	}
 	const getPosts = () => {
 		if (user.userRole === 'default') {
-			return firebaseApp.db
-				.ref(`/users/${user.uid}`)
+			return firebaseApp
+				.dbPostsByUserId(user.uid)
 				.once('value')
 				.then(snapshot => snapshot.val())
 		} else if (user.userRole === 'admin') {
