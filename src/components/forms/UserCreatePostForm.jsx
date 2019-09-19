@@ -1,6 +1,6 @@
 import React from 'react'
-import { useDataContext } from '../../modules/hooks/useDataContext'
-import { useAuthUserContext } from '../../firebase'
+import { useDataContext } from '../../contexts/useDataContext'
+import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 
 export default function UserCreatePostForm() {
 	const { createUserPost } = useDataContext()

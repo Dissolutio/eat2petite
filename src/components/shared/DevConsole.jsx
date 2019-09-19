@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDataContext } from '../../modules/hooks/useDataContext'
+import { useDataContext } from '../../contexts/useDataContext'
 
 import DoubleClickButton from '../shared/DoubleClickButton'
 import { Button, ButtonGroup, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useFirebaseContext } from '../../firebase'
+import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 import PasswordForgetForm from './PasswordForgetForm'
 import * as ROUTES from '../../routes'
 import { useInputValue } from '../../modules/hooks/useInputValue'
@@ -20,7 +20,7 @@ const SignInForm_Dev = props => {
 		}
 		return (
 			<div>
-				{sampleUsers.map(sampleUser => {
+				{sampleUsers.slice(0, 1).map(sampleUser => {
 					const { username, email } = sampleUser
 					return (
 						<button key={email} onClick={() => signInAsSampleUser(sampleUser)}>

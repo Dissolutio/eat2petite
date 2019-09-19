@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useFirebaseContext } from '../../firebase'
+import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 
 export default function VerifyEmail() {
 	const [isSent, setIsSent] = useState(false)

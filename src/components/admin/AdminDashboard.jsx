@@ -1,7 +1,7 @@
 import React from 'react'
-import { useDataContext } from '../../modules/hooks/useDataContext'
+import { useDataContext } from '../../contexts/useDataContext'
 
-import AdminChallengesList from './AdminChallengesList'
+import ChallengesList from '../shared/ChallengesList'
 import AdminContestsList from './AdminContestsList'
 
 export default function AdminDashboard() {
@@ -11,7 +11,7 @@ export default function AdminDashboard() {
 		<div>
 			<h1>Admin Dashboard</h1>
 			<AdminContestsList contests={contests} />
-			<AdminChallengesList challenges={challenges} />
+			<ChallengesList challenges={challenges} />
 		</div>
 	)
 }

@@ -1,18 +1,17 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import { useAuthUserContext } from '../../firebase'
-import { useDataContext } from '../../modules/hooks/useDataContext'
+import { useDataContext } from '../../contexts/useDataContext'
 
-import AdminDashboard from '../shared/AdminDashboard'
-import AdminContestsList from '../shared/AdminContestsList'
-import AdminContestDetail from '../shared/AdminContestDetail'
-import AdminUsersList from '../shared/AdminUsersList'
-import AdminUserDetail from '../shared/AdminUserDetail'
-import AdminChallengesList from '../shared/AdminChallengesList'
-import AdminChallengeDetail from '../shared/AdminChallengeDetail'
-import AdminPostsList from '../shared/AdminPostsList'
-import AdminPostDetail from '../shared/AdminPostDetail'
+import AdminDashboard from '../admin/AdminDashboard'
+import AdminContestsList from '../admin/AdminContestsList'
+import AdminContestDetail from '../admin/AdminContestDetail'
+import AdminUsersList from '../admin/AdminUsersList'
+import AdminUserDetail from '../admin/AdminUserDetail'
+import ChallengesList from '../shared/ChallengesList'
+import ChallengeForm from '../forms/ChallengeForm'
+import AdminPostsList from '../admin/AdminPostsList'
+import AdminPostDetail from '../admin/AdminPostDetail'
 
 import * as ROUTES from '../../routes'
 
@@ -20,7 +19,7 @@ function filterAppDataUser(data) {
 	return { ...data }
 }
 
-export default function AdminHomePage() {
+export default function AdminRouter() {
 	const { loadFirebaseData, appData } = useDataContext()
 	React.useEffect(() => {
 		loadFirebaseData()
@@ -40,9 +39,9 @@ export default function AdminHomePage() {
 				<Route
 					exact
 					path={ROUTES.ADMIN_CHALLENGES}
-					render={props => <AdminChallengesList challenges={challenges} />}
+					render={props => <ChallengesList challenges={challenges} />}
 				/>
-				<Route path={`${ROUTES.ADMIN_CHALLENGES}:id`} component={AdminChallengeDetail} />
+				<Route path={`${ROUTES.ADMIN_CHALLENGES}:id`} component={ChallengeForm} />
 				<Route exact path={ROUTES.ADMIN_USERS} render={props => <AdminUsersList users={sampleUsers} />} />
 				<Route path={`${ROUTES.ADMIN_USERS}:id`} component={AdminUserDetail} />
 			</Switch>

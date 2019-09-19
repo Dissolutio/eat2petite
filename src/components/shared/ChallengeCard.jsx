@@ -1,24 +1,42 @@
 import React from 'react'
-import { Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
-
-export default ({ challenge }) => {
+import { Badge, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
+import { Link } from 'react-router-dom'
+import { ChallengeCardLink } from '../navigation/Links'
+export default props => {
+	const { challenge, match } = props
 	const { uid, challengeName, description, formulaForTarget, units } = challenge
+	const inDetailMode = match && match.params.id === uid
+	console.log(props)
 	return (
 		challenge && (
 			<Col sm="6">
-				<Card color="primary" key={uid} body>
+				<Card color="primary" outline key={uid} body>
 					<CardHeader>
 						<CardTitle>
-							<h3>{`challengeName: ${challengeName}`}</h3>
+							<h3>{challengeName}</h3>
 						</CardTitle>
 					</CardHeader>
 					<CardBody>
-						<CardText>{`uid: ${uid}`}</CardText>
-						<CardText>{`description: ${description}`}</CardText>
-						<CardText>{`units: ${units}`}</CardText>
+						{inDetailMode ? null : (
+							<CardText>
+								<Badge color="secondary">
+									<ChallengeCardLink text="View Details / Edit" />
+								</Badge>
+							</CardText>
+						)}
+						<CardText>
+							<p>Description</p>
+							<p>{description}</p>
+						</CardText>
+						<CardText>
+							<p>{`Units: ${units}`}</p>
+						</CardText>
 					</CardBody>
 					<CardFooter>
-						<CardText>{`formulaForTarget: ${formulaForTarget}`}</CardText>
+						<CardText>
+							<p>Formula For Target</p>
+							<p>{formulaForTarget}</p>
+						</CardText>
 					</CardFooter>
 				</Card>
 			</Col>

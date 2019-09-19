@@ -1,19 +1,20 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import { useAuthUserContext, meetAuthConditionOrRedirectHOC } from '../../firebase'
-import { useDataContext } from '../../modules/hooks/useDataContext'
+import { useAuthUserContext } from '../../contexts/useAuthUserContext'
+import { meetAuthConditionOrRedirectHOC } from '../../components//authentication/meetAuthConditionOrRedirectHOC'
+import { useDataContext } from '../../contexts/useDataContext'
 
-import UserDashboard from '../shared/UserDashboard'
+import UserDashboard from '../user/UserDashboard'
 import AccountPage from '../pages/AccountPage'
-import UserChallengesList from '../shared/UserChallengesList'
-import UserPostsList from '../shared/UserPostsList'
-import UserPostDetail from '../shared/UserPostDetail'
-import UserChallengeDetail from '../shared/UserChallengeDetail'
+import UserChallengesList from '../user/UserChallengesList'
+import UserPostsList from '../user/UserPostsList'
+import UserPostDetail from '../user/UserPostDetail'
+import UserChallengeDetail from '../user/UserChallengeDetail'
 
 import * as ROUTES from '../../routes'
 
-export default function UserHomePage() {
+export default function UserRouter() {
 	const { loadFirebaseData, appData } = useDataContext()
 	React.useEffect(() => {
 		loadFirebaseData()

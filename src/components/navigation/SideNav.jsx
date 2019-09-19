@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useSpring, animated } from 'react-spring'
 
-import { useUIContext } from '../../modules/hooks/useUIContext'
+import { useUIContext } from '../../contexts/useUIContext'
 
 import NavLinks from './NavLinks'
 import CurrentUserReadout from '../authentication/CurrentUserReadout'

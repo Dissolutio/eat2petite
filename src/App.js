@@ -1,9 +1,10 @@
 import React from 'react'
-import { useAuthUserContext } from './firebase'
+import { useAuthUserContext } from './contexts/useAuthUserContext'
 import SideNav from './components/navigation/SideNav'
 import Header from './components/layout/Header'
-import PageRouter from './components/layout/PageRouter'
-import { AppStyleContainer, PageStyleContainer } from './components/layout/AppStyle'
+import AppRouter from './components/layout/AppRouter'
+import AppStyle from './components/layout/AppStyle'
+import PageStyle from './components/layout/PageStyle'
 import DevConsole from './components/shared/DevConsole'
 
 function App() {
@@ -13,14 +14,14 @@ function App() {
 		return <h1>Initializing Authentication</h1>
 	}
 	return (
-		<AppStyleContainer>
+		<AppStyle>
 			<SideNav />
 			<Header />
-			<PageStyleContainer>
-				<PageRouter />
-			</PageStyleContainer>
+			<PageStyle>
+				<AppRouter />
+			</PageStyle>
 			<DevConsole />
-		</AppStyleContainer>
+		</AppStyle>
 	)
 }
 export default App

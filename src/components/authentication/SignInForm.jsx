@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useFirebaseContext } from '../../firebase'
+import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 import PasswordForgetForm from './PasswordForgetForm'
 import * as ROUTES from '../../routes'
 import { useInputValue } from '../../modules/hooks/useInputValue'

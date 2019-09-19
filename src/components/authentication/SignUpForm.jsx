@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useInputValue } from '../../modules/hooks/useInputValue'
-import { useFirebaseContext } from '../../firebase'
+import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 
 const SignUpForm = () => {
 	const firebaseApp = useFirebaseContext()

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useAuthUserContext } from '../../firebase'
+import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import * as ROUTES from '../../routes'
 
 const NavLinks = props => {

@@ -1,5 +1,6 @@
 import React from 'react'
-import { useAuthUserContext, useFirebaseContext } from '../../firebase'
+import { useFirebaseContext } from '../../contexts/useFirebaseContext'
+import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 
 export default function AccountPage(props) {
 	const firebaseApp = useFirebaseContext()

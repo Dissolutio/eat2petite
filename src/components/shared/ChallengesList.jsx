@@ -4,7 +4,7 @@ import { Row } from 'reactstrap'
 
 import ChallengeCard from './ChallengeCard'
 
-export default function AdminChallengesList(props) {
+export default function ChallengesList(props) {
 	const { challenges } = props
 	const challengesArray = Object.keys(challenges).map(challengeKey => challenges[challengeKey])
 	const challengeChunks = chunk(challengesArray, 2)

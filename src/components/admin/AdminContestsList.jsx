@@ -11,7 +11,7 @@ export default function ContestsList(props) {
 
 	return (
 		<ul>
-			<h2>Sample Contests List</h2>
+			<h2>Admin Contests List</h2>
 			{contests &&
 				contestsArray.map(contest => (
 					<Card color="primary" key={contest.uid}>

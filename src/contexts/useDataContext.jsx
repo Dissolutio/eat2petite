@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
-import { useFirebaseContext, useAuthUserContext } from '../../firebase'
-import { getLocalState, setLocalState } from '../localStorage'
-import { sampleUsers, samplePosts, sampleChallenges, sampleContests } from '../../sampleData'
+import { useFirebaseContext } from '../contexts//useFirebaseContext'
+import { useAuthUserContext } from '../contexts//useAuthUserContext'
+import { getLocalState, setLocalState } from '../modules/localStorage'
+import { sampleUsers, samplePosts, sampleChallenges, sampleContests } from '../sampleData'
 const DataContext = React.createContext([{}, () => {}])
 
 const DataContextProvider = props => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDataContext } from '../../modules/hooks/useDataContext'
+import { useDataContext } from '../../contexts/useDataContext'
 
 // import UserPostsList from './UserPostsList'
 import UserChallengesList from './UserChallengesList'

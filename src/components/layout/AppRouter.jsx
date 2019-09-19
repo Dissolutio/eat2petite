@@ -1,7 +1,8 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import { useAuthUserContext, meetAuthConditionOrRedirectHOC } from '../../firebase'
+import { useAuthUserContext } from '../../contexts/useAuthUserContext'
+import { meetAuthConditionOrRedirectHOC } from '../../components/authentication/meetAuthConditionOrRedirectHOC'
 
 import LandingPage from '../pages/LandingPage'
 import VerifyEmail from '../authentication/VerifyEmail'
@@ -9,14 +10,14 @@ import SignUpForm from '../authentication/SignUpForm'
 // import SignInForm from '../authentication/SignInForm'
 import SignInForm_Dev from '../authentication/SignInForm_Dev'
 
-import UserHomePage from '../pages/UserHomePage'
-import AdminHomePage from '../pages/AdminHomePage'
+import UserRouter from './UserRouter'
+import AdminRouter from './AdminRouter'
 
 import Page404NotFound from '../pages/Page404NotFound'
 
 import * as ROUTES from '../../routes'
 
-export default function PageRouter() {
+export default function AppRouter() {
 	const { user } = useAuthUserContext()
 	const signedInCondition = () => !!user
 	const notSignedInCondition = () => !user
@@ -44,11 +45,11 @@ export default function PageRouter() {
 			/>
 			<Route
 				path={ROUTES.USER_HOMEPAGE}
-				component={meetAuthConditionOrRedirectHOC(signedInCondition, ROUTES.LOGIN)(UserHomePage)}
+				component={meetAuthConditionOrRedirectHOC(signedInCondition, ROUTES.LOGIN)(UserRouter)}
 			/>
 			<Route
 				path={ROUTES.ADMIN_DASHBOARD}
-				component={meetAuthConditionOrRedirectHOC(adminCondition, ROUTES.USER_HOMEPAGE)(AdminHomePage)}
+				component={meetAuthConditionOrRedirectHOC(adminCondition, ROUTES.USER_HOMEPAGE)(AdminRouter)}
 			/>
 			<Route component={Page404NotFound} />
 		</Switch>

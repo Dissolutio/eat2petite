@@ -2,9 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 
-import { Firebase, FirebaseContext, useFirebaseContext, AuthUserContext, useAuthListener } from './firebase'
-import { UIContextProvider } from './modules/hooks/useUIContext'
-import { DataContextProvider } from './modules/hooks/useDataContext'
+import { Firebase } from './modules/firebase'
+import { FirebaseContext, useFirebaseContext } from './contexts/useFirebaseContext'
+import { AuthUserContext, useAuthListener } from './contexts/useAuthUserContext'
+import { UIContextProvider } from './contexts/useUIContext'
+import { DataContextProvider } from './contexts/useDataContext'
 
 import App from './App'
 

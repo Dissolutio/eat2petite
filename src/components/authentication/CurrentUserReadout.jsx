@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Badge, Button } from 'reactstrap'
-import { useAuthUserContext, useFirebaseContext } from '../../firebase'
+import { useAuthUserContext } from '../../contexts/useAuthUserContext'
+import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 
 const CurrentUserReadout = () => {
 	const firebaseApp = useFirebaseContext()

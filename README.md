@@ -23,7 +23,7 @@ It is a game-aid for players of the boardgame Heroscape. It is built with create
 
 Routes are defined in `routes.js`, where public routes are under the root domain(`/`) and the subdomains `/authenticated` and `/authenticated/admin` each have their own conditions for authorization.
 
-`<PageRouter>` dishes up our different pages, and some may have their own internal routing, like the `<Gallery>` component using the `<GalleryRouter>`.
+`<AppRouter>` dishes up our different pages, and some may have their own internal routing, like the `<Gallery>` component using the `<GalleryRouter>`.
 
 ## Style
 
