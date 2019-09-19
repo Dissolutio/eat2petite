@@ -1,24 +1,26 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Badge, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
 import { UserPostDetailLink } from '../navigation/Links'
-
 export default function UserPostsList(props) {
-	const { posts } = props
+	const { posts, currentUser } = props
+	const postsArray = Object.keys(posts).map(key => ({ ...posts[key], uid: key }))
 	return (
-		<ul>
-			<h2>Sample Posts List</h2>
-			{posts.map(post => (
-				<li key={post.uid}>
-					<ul>
-						<UserPostDetailLink id={post.uid} />
-						<li>{`contestId: ${post.contestId}`}</li>
-						<li>{`userId: ${post.userId}`}</li>
-						<li>{`challengeId: ${post.challengeId}`}</li>
-						<li>{`postDate: ${post.postDate}`}</li>
-						{/* <li>{post.postData}</li> */}
-					</ul>
-				</li>
+		<>
+			<h2>User Posts List</h2>
+			{postsArray.map(post => (
+				<Col sm="6" key={post.uid}>
+					<Card color="primary" outline body>
+						<CardHeader>
+							<UserPostDetailLink id={post.uid}></UserPostDetailLink>
+						</CardHeader>
+						<CardBody>
+							<CardText>{`Post Date: ${post.postDate}`}</CardText>
+							<CardText>{`Author: ${currentUser.username}`}</CardText>
+							<CardText>{`quantity: ${post.postData.quantity}, units: ${post.postData.quantityUnits}`}</CardText>
+						</CardBody>
+					</Card>
+				</Col>
 			))}
-		</ul>
+		</>
 	)
 }
