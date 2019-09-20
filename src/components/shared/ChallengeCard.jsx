@@ -20,7 +20,7 @@ export default props => {
 						{inDetailMode ? null : (
 							<CardText>
 								<Badge color="secondary">
-									<ChallengeCardLink text="View Details / Edit" />
+									<ChallengeCardLink uid={uid} text="View Details / Edit" />
 								</Badge>
 							</CardText>
 						)}
