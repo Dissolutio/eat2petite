@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
-import { useInputValue } from '../../modules/hooks/useInputValue'
+import useInputValue from '../../modules/hooks/useInputValue'
 
 const PasswordForgetForm = () => {
 	const email = useInputValue('')

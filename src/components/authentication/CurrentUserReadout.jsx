@@ -11,7 +11,7 @@ const CurrentUserReadout = () => {
 		<Container>
 			{user ? (
 				<>
-					<p>
+					<p style={{ color: 'var(--E2P-ginger' }}>
 						<small>
 							Current User:
 							<Badge color="primary">{user.username}</Badge>
@@ -23,7 +23,7 @@ const CurrentUserReadout = () => {
 					</p>
 				</>
 			) : (
-				<small>You are not signed in.</small>
+				<small style={{ color: 'var(--E2P-ginger' }}>You are not signed in.</small>
 			)}
 		</Container>
 	)

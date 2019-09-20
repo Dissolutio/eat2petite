@@ -7,8 +7,8 @@ import { meetAuthConditionOrRedirectHOC } from '../../components/authentication/
 import LandingPage from '../pages/LandingPage'
 import VerifyEmail from '../authentication/VerifyEmail'
 import SignUpForm from '../authentication/SignUpForm'
-// import SignInForm from '../authentication/SignInForm'
-import SignInForm_Dev from '../authentication/SignInForm_Dev'
+import SignInForm from '../authentication/SignInForm'
+// import SignInForm_Dev from '../authentication/SignInForm_Dev'
 
 import UserRouter from './UserRouter'
 import AdminRouter from './AdminRouter'
@@ -36,7 +36,7 @@ export default function AppRouter() {
 				exact
 				path={ROUTES.LOGIN}
 				// component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm)}
-				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm_Dev)}
+				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm)}
 			/>
 			<Route
 				exact

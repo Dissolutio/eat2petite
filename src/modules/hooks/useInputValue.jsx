@@ -1,5 +1,5 @@
 import { useState } from 'react'
-export const useInputValue = initialValue => {
+const useInputValue = initialValue => {
 	const [value, setValue] = useState(initialValue)
 	return {
 		value,
@@ -8,3 +8,4 @@ export const useInputValue = initialValue => {
 		},
 	}
 }
+export default useInputValue

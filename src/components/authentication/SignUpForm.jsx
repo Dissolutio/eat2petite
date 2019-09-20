@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { useInputValue } from '../../modules/hooks/useInputValue'
+import useInputValue from '../../modules/hooks/useInputValue'
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 
 const SignUpForm = () => {

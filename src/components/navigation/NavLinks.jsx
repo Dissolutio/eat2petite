@@ -1,11 +1,12 @@
 import React from 'react'
+import { NavItem } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
+import CurrentUserReadout from '../authentication/CurrentUserReadout'
 import * as ROUTES from '../../routes'
 
 const NavLinks = props => {
 	const { user } = useAuthUserContext()
-	const { closeSidebarMenu } = props
 
 	const notSignedInCondition = !user
 	const signedInNonAdminCondition = !!user && user.userRole === `default`
@@ -36,9 +37,11 @@ const NavLinks = props => {
 	)
 	const NavBarLink = ({ children, to }) => {
 		return (
-			<Link onClick={closeSidebarMenu} to={to}>
-				{children}
-			</Link>
+			<NavItem>
+				<Link to={to} style={{ color: 'var(--E2P-orange' }}>
+					{children}
+				</Link>
+			</NavItem>
 		)
 	}
 	return (
@@ -46,6 +49,7 @@ const NavLinks = props => {
 			{notSignedInCondition ? <NonAuthLinks /> : null}
 			{signedInNonAdminCondition ? <AuthLinks /> : null}
 			{adminCondition ? <AdminLinks /> : null}
+			<CurrentUserReadout />
 		</nav>
 	)
 }
