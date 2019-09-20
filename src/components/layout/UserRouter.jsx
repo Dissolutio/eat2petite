@@ -14,22 +14,29 @@ import UserChallengeDetail from '../user/UserChallengeDetail'
 
 import * as ROUTES from '../../routes'
 
-export default function UserRouter() {
+export default function UserRouter(props) {
 	const { loadFirebaseData, appData } = useDataContext()
 	React.useEffect(() => {
 		loadFirebaseData()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	const { posts, challenges } = appData
+	const { posts, challenges, users } = appData
 	const { user } = useAuthUserContext()
-
+	const currentUser = users[user.uid]
 	const emailVerifiedCondition = () => !!user && user.emailVerified === true
 	const notAdminCondition = () => !!user && user.userRole !== `admin`
-
 	return (
 		<Switch>
 			<Route exact path={ROUTES.USER_POSTS} render={props => <UserPostsList posts={posts} />} />
-			<Route path={`${ROUTES.USER_POSTS}:id`} component={UserPostDetail} />
+			<Route
+				path={`${ROUTES.USER_POSTS}:id`}
+				render={props => {
+					const postId = props.match.params.id
+					const post = { ...posts[postId], uid: postId }
+					debugger
+					return <UserPostDetail currentUser={currentUser} post={post} />
+				}}
+			/>
 			<Route
 				exact
 				path={ROUTES.USER_CHALLENGES}
