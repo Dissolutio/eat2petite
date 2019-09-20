@@ -6,11 +6,11 @@ import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 const SignUpForm = () => {
 	const firebaseApp = useFirebaseContext()
 
-	const username = useInputValue('dissolutio')
-	const email = useInputValue('entity.john@gmail.com')
+	const username = useInputValue('')
+	const email = useInputValue('')
 	const [userRole, setUserRole] = useState('default')
-	const password = useInputValue('password')
-	const passwordVerify = useInputValue('password')
+	const password = useInputValue('')
+	const passwordVerify = useInputValue('')
 
 	const onFormSubmit = event => {
 		console.log('event.target: ', event.target)
