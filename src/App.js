@@ -7,7 +7,6 @@ import Header from './components/layout/Header'
 import AppRouter from './components/layout/AppRouter'
 import AppStyle from './components/layout/AppStyle'
 import PageStyle from './components/layout/PageStyle'
-import DevConsole from './components/shared/DevConsole'
 
 function App(props) {
 	const { initializing } = useAuthUserContext()
@@ -21,7 +20,6 @@ function App(props) {
 			<PageStyle>
 				<AppRouter />
 			</PageStyle>
-			<DevConsole />
 		</AppStyle>
 	)
 }
