@@ -22,9 +22,7 @@ const CurrentUserReadout = () => {
 						</small>
 					</p>
 				</>
-			) : (
-				<small style={{ color: 'var(--E2P-ginger' }}>You are not signed in.</small>
-			)}
+			) : null}
 		</Container>
 	)
 }
