@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Row, Col, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from 'reactstrap'
+import { Link } from 'react-router-dom'
+import { Collapse, Navbar, NavbarToggler, Nav } from 'reactstrap'
 import { useUIContext } from '../../contexts/useUIContext'
 import NavLinks from '../navigation/NavLinks'
 
@@ -9,9 +10,9 @@ export default function Header() {
 	return (
 		<StyledHeader>
 			<Navbar color="light" light expand="md">
-				<NavbarBrand style={{ color: 'var(--E2P-ginger)' }} href="/">
+				<Link style={{ color: 'var(--E2P-ginger)', fontSize: '2rem' }} to="/">
 					Eat-2-Petite
-				</NavbarBrand>
+				</Link>
 				<NavbarToggler onClick={toggleMenuOpen} />
 				<Collapse isOpen={menuOpen} navbar>
 					<Nav className="ml-auto" navbar>

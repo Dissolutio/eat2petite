@@ -15,7 +15,7 @@ function App(props) {
 	return (
 		<AppStyle>
 			<Header />
-			<PageStyle>
+			<PageStyle className="p-2 m-2">
 				<AppRouter />
 			</PageStyle>
 		</AppStyle>

@@ -43,7 +43,7 @@ const SignInForm = props => {
 					</Button>
 				</FormGroup>
 			</Form>
-			<Container className="mt-">
+			<Container className="mt-1">
 				{sampleUsers.slice(0, 2).map(sampleUser => {
 					const { username, email } = sampleUser
 					return (

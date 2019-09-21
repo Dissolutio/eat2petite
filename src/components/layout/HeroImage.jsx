@@ -32,7 +32,7 @@ const HeroText = styled.div`
 	top: 50%;
 	left: 60%;
 	transform: translate(-50%, -50%);
-	color: var(--E2P-orange);
+	color: var(--black);
 	h1 {
 		font-size: 50px;
 	}
@@ -42,12 +42,12 @@ const HeroText = styled.div`
 		display: inline-block;
 		padding: 10px 25px;
 		color: black;
-		background-color: #ddd;
+		background-color: var(--E2P-orange);
 		text-align: center;
 		cursor: pointer;
 	}
 	button:hover {
-		background-color: #555;
+		background-color: var(--gray5);
 		color: white;
 	}
 `
