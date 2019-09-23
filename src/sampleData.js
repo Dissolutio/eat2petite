@@ -39,7 +39,7 @@ export const samplePosts = [
 export const sampleContests = [
 	{
 		title: 'The First Contest: 6 14-Day Challenges',
-		startDate: '2019-09-15',
+		startDate: '2019-09-01',
 		numberOfChallenges: '6',
 		daysPerChallenge: '14',
 		enrollmentCap: '3',
@@ -115,9 +115,7 @@ export const sampleChallenges = [
 			'Humans grew up as omnivores, and benefit greatly from a large amount of vegetables as a food source. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential for physical and mental fitness.',
 		formulaForTarget: `5 servings a day, adjusted to the individual's situation or goal`,
 		units: [`servings`],
-		data: {
-			typesOfVegetables: ['leafy greens', 'non-green'],
-		},
+		typesOfVegetables: ['leafy-greens', 'non-green'],
 	},
 	{
 		challengeName: 'Eat Protein',
@@ -131,9 +129,7 @@ export const sampleChallenges = [
 		description: `Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!`,
 		formulaForTarget: 'Some amount of time spent on some scale of intensity',
 		units: 'intensity',
-		data: {
-			intensities: ['light', 'medium', 'high'],
-		},
+		intensities: ['light', 'medium', 'high'],
 	},
 	{
 		challengeName: 'Manage Carbohydrate Intake',
@@ -141,6 +137,7 @@ export const sampleChallenges = [
 			'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
 		formulaForTarget: `The person's weight multiplied by some constant, adjusted by individual need.`,
 		units: 'weight',
+		typesOfCarbohydrate: ['simple', 'complex'],
 	},
 	{
 		challengeName: 'Manage Sugar and Salt Intake',

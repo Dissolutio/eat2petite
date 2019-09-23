@@ -2,17 +2,19 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card, CardHeader, CardText } from 'reactstrap'
 
-export default function ContestsList(props) {
+export default function AdminContestsList(props) {
 	const { contests } = props
-	const contestsArray = Object.keys(contests).map(contestKey => {
-		console.log(contests[contestKey])
-		return contests[contestKey]
-	})
+	const contestsArray =
+		contests &&
+		Object.keys(contests).map(contestKey => {
+			console.log(contests[contestKey])
+			return contests[contestKey]
+		})
 
 	return (
 		<ul>
-			<h2>Admin Contests List</h2>
-			{contests &&
+			<h3>Admin Contests List</h3>
+			{(contests &&
 				contestsArray.map(contest => (
 					<Card color="primary" key={contest.uid}>
 						<CardHeader color="secondary">
@@ -31,7 +33,7 @@ export default function ContestsList(props) {
 						<CardText>{`enrollmentCap: ${contest.enrollmentCap}`}</CardText>
 						<CardText>{`numberOfChallenges: ${contest.numberOfChallenges}`}</CardText>
 					</Card>
-				))}
+				))) || <div>No contests found.</div>}
 		</ul>
 	)
 }

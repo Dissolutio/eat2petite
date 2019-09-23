@@ -39,16 +39,16 @@ const useDataContext = () => {
 	const setSampleDataToFirebase = async () => {
 		// const exampleUser = sampleUsers.find(sampleUser => sampleUser.username === 'Jill')
 		// const userId = await firebaseApp.doCreateNewUser(exampleUser)
-		samplePosts.forEach(post => {
-			const newPost = {
-				...post,
-				author: 'xv870nS3Y0X2dQxCOIly1yv9RDv1', // username: Jack
-				// author: '8uuaKHW0ccTMu5seVAKUMmFv3b73', // username: Jill
-			}
+		// samplePosts.forEach(post => {
+		// 	const newPost = {
+		// 		...post,
+		// 		author: 'xv870nS3Y0X2dQxCOIly1yv9RDv1', // username: Jack
+		// 		author: '8uuaKHW0ccTMu5seVAKUMmFv3b73', // username: Jill
+		// 	}
 
-			firebaseApp.dbCreateUserPost(newPost)
-		})
-		// sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
+		// 	firebaseApp.dbCreateUserPost(newPost)
+		// })
+		sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
 		// sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
 		// sampleUsers.forEach(sampleUser => firebaseApp.doCreateNewUser(sampleUser))
 	}

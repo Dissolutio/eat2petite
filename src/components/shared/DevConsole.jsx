@@ -2,8 +2,8 @@ import React from 'react'
 import { useDataContext } from '../../contexts/useDataContext'
 
 import DoubleClickButton from '../shared/DoubleClickButton'
-import { Button, ButtonGroup, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-export default function DevConsole(props) {
+import { Button, ButtonGroup } from 'reactstrap'
+export default function DevConsole() {
 	const {
 		appData,
 		setSampleDataToFirebase,
@@ -28,7 +28,7 @@ export default function DevConsole(props) {
 			<DoubleClickButton doubleClickCallback={setSampleDataToFirebase} text="SET SAMPLE FIREBASE DATA" />
 			<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA " />
 			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA " />
-			<DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD SAMPLE DATA " />
+			{/* <DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD SAMPLE DATA " /> */}
 		</ButtonGroup>
 	)
 }

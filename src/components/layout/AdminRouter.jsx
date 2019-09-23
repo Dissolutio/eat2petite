@@ -8,10 +8,10 @@ import AdminContestsList from '../admin/AdminContestsList'
 import AdminContestDetail from '../admin/AdminContestDetail'
 import AdminUsersList from '../admin/AdminUsersList'
 import AdminUserDetail from '../admin/AdminUserDetail'
-import ChallengesList from '../shared/ChallengesList'
-import ChallengeForm from '../forms/ChallengeForm'
+import AdminChallengesList from '../admin/AdminChallengesList'
 import AdminPostsList from '../admin/AdminPostsList'
 import AdminPostDetail from '../admin/AdminPostDetail'
+import ChallengeForm from '../forms/ChallengeForm'
 
 import * as ROUTES from '../../routes'
 
@@ -39,7 +39,7 @@ export default function AdminRouter() {
 				<Route
 					exact
 					path={ROUTES.ADMIN_CHALLENGES}
-					render={props => <ChallengesList challenges={challenges} />}
+					render={props => <AdminChallengesList challenges={challenges} />}
 				/>
 				<Route path={`${ROUTES.ADMIN_CHALLENGES}:id`} component={ChallengeForm} />
 				<Route exact path={ROUTES.ADMIN_USERS} render={props => <AdminUsersList users={sampleUsers} />} />
