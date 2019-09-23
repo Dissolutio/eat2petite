@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Container, Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 import useInputValue from '../../modules/hooks/useInputValue'
@@ -6,10 +7,9 @@ import useInputValue from '../../modules/hooks/useInputValue'
 const PasswordForgetForm = () => {
 	const email = useInputValue('')
 	const [formData, setFormData] = useState({
-		error: null,
 		isSent: false,
 	})
-	const { error, isSent } = formData
+	const { isSent } = formData
 	const firebaseApp = useFirebaseContext()
 
 	const onSubmit = event => {
@@ -19,23 +19,20 @@ const PasswordForgetForm = () => {
 	}
 	const isInvalid = email === ''
 	return isSent ? (
-		<div>Password Reset Email Sent!</div>
+		<Alert color="success">Password Reset Email Sent!</Alert>
 	) : (
-		<form onSubmit={onSubmit}>
-			<fieldset>
-				<legend>Password Reset</legend>
-				<div>
-					<label htmlFor="email">
-						Email address:
-						<input type="text" placeholder="Email" {...email} />
-					</label>
-				</div>
-				<button disabled={isInvalid} type="submit">
-					Send Password Reset Email
-				</button>
-			</fieldset>
-			{error && <p>{error.message}</p>}
-		</form>
+		<Form onSubmit={onSubmit}>
+			<h3 className="text-center">Password Reset</h3>
+			<FormGroup>
+				<Label htmlFor="email">
+					Email address:
+					<Input type="email" placeholder="Email" {...email} />
+				</Label>
+			</FormGroup>
+			<Button disabled={isInvalid} type="submit" color="success" outline>
+				Send Password Reset Email
+			</Button>
+		</Form>
 	)
 }
 export default PasswordForgetForm

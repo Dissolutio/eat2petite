@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import { Container, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 import useInputValue from '../../modules/hooks/useInputValue'
+
 import PasswordForgetForm from './PasswordForgetForm'
+
 import * as ROUTES from '../../routes'
 import { sampleUsers } from '../../sampleData'
 
@@ -24,7 +26,20 @@ const SignInForm = props => {
 	return (
 		<Container className="p-1">
 			<Form className="p-2 border border-primary rounded" onSubmit={onFormSubmit}>
-				<h2>Sign In</h2>
+				<h2 className="text-center">Sign In</h2>
+				{sampleUsers.slice(0, 2).map(sampleUser => {
+					const { username, email } = sampleUser
+					return (
+						<Button
+							key={email}
+							onClick={() => signInAsSampleUser(sampleUser)}
+							block
+							size="sm"
+							color="warning">
+							Sign in as {`${username}`}
+						</Button>
+					)
+				})}
 				<FormGroup>
 					<Label htmlFor="email">
 						Email:
@@ -38,25 +53,16 @@ const SignInForm = props => {
 					</Label>
 				</FormGroup>
 				<FormGroup className="text-center">
-					<Button size="lg" color="primary" type="submit" disabled={isInvalid}>
+					<Button scolor="primary" type="submit" disabled={isInvalid}>
 						Submit
 					</Button>
 				</FormGroup>
 			</Form>
-			<Container className="mt-1">
-				{sampleUsers.slice(0, 2).map(sampleUser => {
-					const { username, email } = sampleUser
-					return (
-						<Button key={email} onClick={() => signInAsSampleUser(sampleUser)}>
-							Sign in as {`${username}`}
-						</Button>
-					)
-				})}
-			</Container>
-			<Container>
-				<p>
+			<Container className="mt-1"></Container>
+			<Container className="mt-4 mb-5">
+				<p className="text-center">
 					Don't have an account?{' '}
-					<Button>
+					<Button size="lg" outline block>
 						<Link to={ROUTES.REGISTER}>Sign Up!</Link>
 					</Button>
 				</p>

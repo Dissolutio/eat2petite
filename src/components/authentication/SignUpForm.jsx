@@ -1,21 +1,20 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import useInputValue from '../../modules/hooks/useInputValue'
+import { Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
+import useInputValue from '../../modules/hooks/useInputValue'
 
 const SignUpForm = () => {
 	const firebaseApp = useFirebaseContext()
-
 	const username = useInputValue('')
 	const email = useInputValue('')
-	const [userRole, setUserRole] = useState('default')
 	const password = useInputValue('')
 	const passwordVerify = useInputValue('')
 
 	const onFormSubmit = event => {
-		console.log('event.target: ', event.target)
 		event.preventDefault()
-		const user = { email: email.value, username: username.value, userRole }
+		const user = { email: email.value, username: username.value, userRole: 'default' }
 		const userPassword = password.value
 		firebaseApp.doCreateNewUser(user, userPassword)
 	}
@@ -23,41 +22,40 @@ const SignUpForm = () => {
 	const isInvalid =
 		password.value !== passwordVerify.value || password.value === '' || email.value === '' || username.value === ''
 	return (
-		<div>
-			<form onSubmit={onFormSubmit}>
+		<Container>
+			<Form onSubmit={onFormSubmit}>
 				<fieldset>
 					<legend>Register</legend>
-					<div>
-						<label htmlFor="username">
+					<FormGroup>
+						<Label htmlFor="username">
 							Username:
-							<input type="text" placeholder="Username" {...username} />
-						</label>
-					</div>
-					<div>
-						<label htmlFor="email">
+							<Input type="text" placeholder="Username" {...username} />
+						</Label>
+					</FormGroup>
+					<FormGroup>
+						<Label htmlFor="email">
 							Email address:
-							<input type="text" placeholder="Email" {...email} />
-						</label>
-					</div>
-
-					<div>
-						<label htmlFor="password">
+							<Input type="text" placeholder="Email" {...email} />
+						</Label>
+					</FormGroup>
+					<FormGroup>
+						<Label htmlFor="password">
 							Password:
-							<input type="password" placeholder="Password" {...password} />
-						</label>
-					</div>
-					<div>
-						<label htmlFor="passwordVerify">
+							<Input type="password" placeholder="Password" {...password} />
+						</Label>
+					</FormGroup>
+					<FormGroup>
+						<Label htmlFor="passwordVerify">
 							Confirm password:
-							<input type="password" placeholder="Verify Password" {...passwordVerify} />
-						</label>
-					</div>
-					<button type="submit" disabled={isInvalid}>
+							<Input type="password" placeholder="Verify Password" {...passwordVerify} />
+						</Label>
+					</FormGroup>
+					<Button type="submit" disabled={isInvalid}>
 						Submit
-					</button>
+					</Button>
 				</fieldset>
-			</form>
-		</div>
+			</Form>
+		</Container>
 	)
 }
 
