@@ -16,6 +16,7 @@ const SignInForm = props => {
 	const firebaseApp = useFirebaseContext()
 
 	const onFormSubmit = async event => {
+		event.preventDefault()
 		firebaseApp.doSignInWithEmailAndPassword(email.value, password.value).catch(error => console.log(error))
 	}
 	const signInAsSampleUser = sampleUser => {
