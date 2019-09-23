@@ -74,7 +74,6 @@ class Firebase {
 	dbChallenges = () => this.db.ref('/challenges')
 	dbSaveNewChallenge = challenge => {
 		const newChallengeRef = this.dbChallenges().push()
-		console.log('newChallengeRef', newChallengeRef)
 		newChallengeRef.set({
 			...challenge,
 			uid: newChallengeRef.key,
