@@ -1,8 +1,12 @@
 import React from 'react'
 import { NavItem } from 'reactstrap'
 import { Link } from 'react-router-dom'
+
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
+import { useUIContext } from '../../contexts/useUIContext'
+
 import CurrentUserReadout from '../authentication/CurrentUserReadout'
+
 import * as ROUTES from '../../routes'
 
 const NavLinks = props => {
@@ -36,9 +40,10 @@ const NavLinks = props => {
 		</>
 	)
 	const NavBarLink = ({ children, to }) => {
+		const { toggleMenuOpen } = useUIContext()
 		return (
 			<NavItem>
-				<Link to={to} style={{ color: 'var(--E2P-orange' }}>
+				<Link onClick={toggleMenuOpen} to={to} style={{ color: 'var(--E2P-orange' }}>
 					{children}
 				</Link>
 			</NavItem>
