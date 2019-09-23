@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react'
+import { Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+
 import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
 import { getLocalState, setLocalState } from '../modules/localStorage'
 import { sampleUsers, samplePosts, sampleChallenges, sampleContests } from '../sampleData'
+
 const DataContext = React.createContext([{}, () => {}])
 
 const DataContextProvider = props => {
