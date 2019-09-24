@@ -38,13 +38,13 @@ export const samplePosts = [
 ]
 export const sampleContests = [
 	{
-		title: 'The First Contest: 6 14-Day Challenges',
-		startDate: '2019-09-01',
+		title: 'The First Contest: 6 1-Day Challenges',
 		numberOfChallenges: '6',
-		daysPerChallenge: '14',
+		daysPerChallenge: '1',
 		enrollmentCap: '3',
 		enrolledUsers: {},
 		orderOfChallenges: {},
+		startDate: new Date(2019, 8, 1),
 	},
 	{
 		title: 'The Second Contest: 6 3-Day Challenges',
