@@ -14,20 +14,27 @@ const SignInForm = props => {
 	const email = useInputValue('')
 	const password = useInputValue('')
 	const firebaseApp = useFirebaseContext()
-
+	const [formError, setFormError] = React.useState({ code: '42FAKE', message: `Don't Panic` })
 	const onFormSubmit = async event => {
 		event.preventDefault()
-		firebaseApp.doSignInWithEmailAndPassword(email.value, password.value).catch(error => console.log(error))
+		firebaseApp.doSignInWithEmailAndPassword(email.value, password.value).catch(error => {
+			console.log(error)
+			setFormError(error)
+		})
 	}
 	const signInAsSampleUser = sampleUser => {
 		const { email, password } = sampleUser
-		firebaseApp.doSignInWithEmailAndPassword(email, password).catch(error => console.log(error))
+		firebaseApp.doSignInWithEmailAndPassword(email, password).catch(error => {
+			console.log(error)
+			setFormError(error)
+		})
 	}
 	const isInvalid = password === '' || email === ''
 	return (
 		<Container className="p-1">
 			<Form className="p-2 border border-primary rounded" onSubmit={onFormSubmit}>
 				<h2 className="text-center">Sign In</h2>
+				{formError ? <p>Error: "{formError.message}"</p> : null}
 				{sampleUsers.slice(0, 2).map(sampleUser => {
 					const { username, email } = sampleUser
 					return (
