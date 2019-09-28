@@ -6,7 +6,6 @@ export default props => {
 	const { challenge, match } = props
 	const { uid, challengeName, description, formulaForTarget, units } = challenge
 	const inDetailMode = match && match.params.id === uid
-	console.log(props)
 	return (
 		challenge && (
 			<Col sm="6">
@@ -25,17 +24,15 @@ export default props => {
 							</CardText>
 						)}
 						<CardText>
-							<p>Description</p>
-							<p>{description}</p>
+							Description
+							{description}
 						</CardText>
-						<CardText>
-							<p>{`Units: ${units}`}</p>
-						</CardText>
+						<CardText>{`Units: ${units}`}</CardText>
 					</CardBody>
 					<CardFooter>
 						<CardText>
-							<p>Formula For Target</p>
-							<p>{formulaForTarget}</p>
+							Formula For Target
+							{formulaForTarget}
 						</CardText>
 					</CardFooter>
 				</Card>

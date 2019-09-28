@@ -1,6 +1,5 @@
 import React from 'react'
-import { Badge, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
-import { ChallengeCardLink } from '../navigation/Links'
+import { Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
 
 export default function UserChallengeDetail(props) {

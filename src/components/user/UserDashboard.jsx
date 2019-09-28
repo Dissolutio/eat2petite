@@ -1,47 +1,44 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Calendar from 'react-calendar'
-
+import { Container } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
 
 import WaterChallengePostForm from '../forms/WaterChallengePostForm'
 import UserContestsList from './UserContestsList'
 import UserPostsList from './UserPostsList'
 import UserChallengesList from './UserChallengesList'
-import DevConsole from '../shared/DevConsole'
 
-// 1. Categorize all the days
+// 1. DONE !!!!! Categorize all the days
 // 2. Find matching post for each day
 /// 3. Display latest six days
 // 4. Display quick post form for today
 
-const challenge = () => ({
-	challengeName: 'Manage Sugar and Salt Intake',
-	description:
-		'The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.',
-	formulaForTarget: 'Some amount of weight per human',
-	uid: '-LpZo0UXFp8B7C8X5EMW',
-	units: 'weight',
-})
 const getDateArray = (start, end) => {
-	const arr = new Array()
+	let arr = []
 	const dt = new Date(start)
 	while (dt <= end) {
-		arr.push(new Date(dt))
+		arr.push({
+			date: new Date(dt),
+		})
 		dt.setDate(dt.getDate() + 1)
 	}
 	return arr
 }
 const DashboardCalendar = props => {
-	const [selectedDate, setSelectedDate] = React.useState(new Date(2019, 8, 1))
-	const changeHandler = date => setSelectedDate({ date })
-
+	const { startDate, endDate } = props
+	console.log('startDate', startDate, 'endDate', endDate())
+	const [selectedDate, setSelectedDate] = React.useState(new Date(2019, 8, 10))
+	const changeHandler = date => {
+		setSelectedDate(date)
+	}
 	return (
 		<div>
 			<Calendar
 				onChange={changeHandler}
 				value={selectedDate}
-				minDate={new Date(2019, 8, 1)}
-				maxDate={new Date(2019, 8, 30)}
+				calendarType="US"
+				minDate={new Date(props.startDate)}
+				maxDate={new Date(props.endDate())}
 			/>
 		</div>
 	)
@@ -50,16 +47,46 @@ const DashboardCalendar = props => {
 export default function UserDashboard() {
 	const { appData } = useDataContext()
 	const { contests, challenges, posts } = appData
+	const makeOrderOfChallenges = () =>
+		challenges &&
+		Object.keys(challenges).reduce((acc, challengeUid, index) => {
+			return { ...acc, [challengeUid]: (index + 1).toString() }
+		}, {})
+	const orderOfChallenges = makeOrderOfChallenges()
+	const selectedContest = {
+		title: 'The First Contest: 6 1-Day Challenges',
+		numberOfChallenges: '6',
+		daysPerChallenge: '2',
+		enrollmentCap: '3',
+		enrolledUsers: {},
+		startDate: new Date('2019/09/01'),
+		orderOfChallenges,
+	}
+	const { startDate, daysPerChallenge } = selectedContest
+	const numberOfChallenges = orderOfChallenges && Object.keys(orderOfChallenges).length
+	const endDate = () =>
+		new Date(startDate).setDate(
+			startDate.getDate() + (parseInt(numberOfChallenges) || 1) * (parseInt(daysPerChallenge) || 1) - 1,
+		)
+	const dateArray = getDateArray(new Date(startDate), endDate()).map((date, index) => {
+		const challengeId = Object.keys(orderOfChallenges).find(challengeId => {
+			return (
+				index + 1 <= parseInt(orderOfChallenges[challengeId]) * daysPerChallenge &&
+				index + 1 > (parseInt(orderOfChallenges[challengeId]) - 1) * daysPerChallenge
+			)
+		})
+		return { date, challengeId: challengeId }
+	})
+	console.log(dateArray)
 	return (
-		<div>
+		<Container>
 			<h1 className="text-center">User Dashboard</h1>
 			<hr />
-			<DashboardCalendar />
-			<DevConsole></DevConsole>
+			<DashboardCalendar challenges={challenges} startDate={startDate} endDate={() => endDate()} />
 			<UserContestsList contests={contests} />
 			<UserPostsList posts={posts} />
 			<UserChallengesList challenges={challenges} />
 			<WaterChallengePostForm />
-		</div>
+		</Container>
 	)
 }

@@ -1,18 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card, CardHeader, CardText } from 'reactstrap'
-
+import { Container, Card, CardHeader, CardText } from 'reactstrap'
 export default function AdminContestsList(props) {
 	const { contests } = props
 	const contestsArray =
 		contests &&
 		Object.keys(contests).map(contestKey => {
-			console.log(contests[contestKey])
 			return contests[contestKey]
 		})
 
 	return (
-		<ul>
+		<Container>
 			<h3>Admin Contests List</h3>
 			{(contests &&
 				contestsArray.map(contest => (
@@ -34,6 +32,6 @@ export default function AdminContestsList(props) {
 						<CardText>{`numberOfChallenges: ${contest.numberOfChallenges}`}</CardText>
 					</Card>
 				))) || <div>No contests found.</div>}
-		</ul>
+		</Container>
 	)
 }

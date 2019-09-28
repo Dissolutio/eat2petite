@@ -12,6 +12,7 @@ import AdminChallengesList from '../admin/AdminChallengesList'
 import AdminPostsList from '../admin/AdminPostsList'
 import AdminPostDetail from '../admin/AdminPostDetail'
 import ChallengeForm from '../forms/ChallengeForm'
+import ContestCreateForm from '../forms/ContestCreateForm'
 
 import * as ROUTES from '../../routes'
 
@@ -26,13 +27,22 @@ export default function AdminRouter() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 	const userAppData = filterAppDataUser(appData)
-	const { posts, sampleUsers, challenges, contests } = userAppData
+	const { posts, users, challenges, contests } = userAppData
 
 	return (
 		<div>
 			<Switch>
 				<Route exact path={ROUTES.ADMIN_DASHBOARD} component={AdminDashboard} />
-				<Route exact path={ROUTES.ADMIN_CONTESTS} render={props => <AdminContestsList contests={contests} />} />
+				<Route
+					exact
+					path={ROUTES.ADMIN_CONTESTS}
+					render={props => (
+						<>
+							<AdminContestsList contests={contests} />
+							<ContestCreateForm />
+						</>
+					)}
+				/>
 				<Route path={`${ROUTES.ADMIN_CONTESTS}:id`} component={AdminContestDetail} />
 				<Route exact path={ROUTES.ADMIN_POSTS} render={props => <AdminPostsList posts={posts} />} />
 				<Route path={`${ROUTES.ADMIN_POSTS}:id`} component={AdminPostDetail} />
@@ -42,8 +52,8 @@ export default function AdminRouter() {
 					render={props => <AdminChallengesList challenges={challenges} />}
 				/>
 				<Route path={`${ROUTES.ADMIN_CHALLENGES}:id`} component={ChallengeForm} />
-				<Route exact path={ROUTES.ADMIN_USERS} render={props => <AdminUsersList users={sampleUsers} />} />
-				<Route path={`${ROUTES.ADMIN_USERS}:id`} component={AdminUserDetail} />
+				<Route exact path={ROUTES.ADMIN_USERS} render={props => <AdminUsersList users={users} />} />
+				<Route path={`${ROUTES.ADMIN_USERS}:id`} render={props => <AdminUserDetail users={users} />} />
 			</Switch>
 		</div>
 	)
