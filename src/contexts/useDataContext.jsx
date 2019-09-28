@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import { Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
 
 import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
@@ -37,20 +36,34 @@ const useDataContext = () => {
 		setAppData(sampleData)
 	}
 	const setSampleDataToFirebase = async () => {
-		// const exampleUser = sampleUsers.find(sampleUser => sampleUser.username === 'Jill')
-		// const userId = await firebaseApp.doCreateNewUser(exampleUser)
-		// samplePosts.forEach(post => {
+		const exampleUser = sampleUsers.find(sampleUser => sampleUser.username === 'Jack')
+		const examplePassword = 'password'
+		const userId = await firebaseApp.doCreateNewUser(exampleUser, examplePassword)
+		console.log(`Jill's new ID`, userId)
+		// const getDateArray = (start, end) => {
+		// 	const arr = new Array()
+		// 	const dt = new Date(start)
+		// 	while (dt <= end) {
+		// 		arr.push({
+		// 			date: new Date(dt),
+		// 		})
+		// 		dt.setDate(dt.getDate() + 1)
+		// 	}
+		// 	return arr
+		// }
+
+		// const sampleStartDate = new Date(2019, 8, 1)
+		// const sampleEndDate = new Date(2019, 8, 4)
+		// getDateArray(sampleStartDate, sampleEndDate).forEach(post => {
 		// 	const newPost = {
 		// 		...post,
 		// 		author: 'xv870nS3Y0X2dQxCOIly1yv9RDv1', // username: Jack
-		// 		author: '8uuaKHW0ccTMu5seVAKUMmFv3b73', // username: Jill
+		// 		// author: '8uuaKHW0ccTMu5seVAKUMmFv3b73', // username: Jill
 		// 	}
-
 		// 	firebaseApp.dbCreateUserPost(newPost)
 		// })
 		sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
-		// sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
-		// sampleUsers.forEach(sampleUser => firebaseApp.doCreateNewUser(sampleUser))
+		sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
 	}
 	// LOG CURRENT DATA
 	const consoleLogAppData = () => {
@@ -122,14 +135,18 @@ const useDataContext = () => {
 			return {}
 		}
 	}
-	const getContests = () =>
-		firebaseApp
+	const getContests = () => {
+		return firebaseApp
 			.dbContests()
 			.once('value')
 			.then(snapshot => snapshot.val())
+	}
 
-	const enrollUserInContest = (user, contest) => {
-		firebaseApp.dbEnrollUserInContest(user, contest)
+	const enrollUserInContest = (userId, contestId) => {
+		return firebaseApp.dbEnrollUserInContest(userId, contestId)
+	}
+	const createContest = contest => {
+		return firebaseApp.dbSaveNewContest(contest)
 	}
 	const createUserPost = post => {
 		firebaseApp.dbCreateUserPost(post)
@@ -145,6 +162,7 @@ const useDataContext = () => {
 		consoleLogAppData,
 		enrollUserInContest,
 		createUserPost,
+		createContest,
 	}
 }
 

@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { useSpring, animated } from 'react-spring'
 
-import { useUIContext } from '../../contexts/useUIContext'
+import { useUIContext } from '../src/contexts/useUIContext'
 
-import NavLinks from './NavLinks'
-import CurrentUserReadout from '../authentication/CurrentUserReadout'
+import NavLinks from '../src/components/navigation/NavLinks'
+import CurrentUserReadout from '../src/components/authentication/CurrentUserReadout'
 
 export default function SideNav() {
 	const { menuOpen, setMenuClose } = useUIContext()

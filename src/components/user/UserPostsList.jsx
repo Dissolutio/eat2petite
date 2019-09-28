@@ -12,7 +12,7 @@ export default function UserPostsList(props) {
 			{postsArray ? (
 				postsArray.map(post => <UserPostCard key={post.uid} post={post} currentUser={currentUser} />)
 			) : (
-				<div>No users found.</div>
+				<div>No user posts found.</div>
 			)}
 		</>
 	)
