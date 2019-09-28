@@ -20,7 +20,7 @@ export default function AdminContestsList(props) {
 						<CardHeader color="secondary">
 							<h3>{`title: ${contest.title}`}</h3>
 							<Link
-								to={`/user/admin/contests/${contest.uid}`}
+								to={`/admin/contests/${contest.uid}`}
 								style={{
 									color: 'var(--font-light)',
 								}}>{`Detail Page of Contest ${contest.uid}`}</Link>
