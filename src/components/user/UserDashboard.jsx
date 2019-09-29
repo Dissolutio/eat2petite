@@ -82,10 +82,8 @@ export default function UserDashboard() {
 		<Container>
 			<h1 className="text-center">User Dashboard</h1>
 			<hr />
-			<DashboardCalendar challenges={challenges} startDate={startDate} endDate={() => endDate()} />
 			<UserContestsList contests={contests} />
-			<UserPostsList posts={posts} />
-			<UserChallengesList challenges={challenges} />
+			<DashboardCalendar challenges={challenges} startDate={startDate} endDate={() => endDate()} />
 			<WaterChallengePostForm />
 		</Container>
 	)
