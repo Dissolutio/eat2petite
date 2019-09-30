@@ -11,8 +11,8 @@ import AdminUserDetail from '../admin/AdminUserDetail'
 import AdminChallengesList from '../admin/AdminChallengesList'
 import AdminPostsList from '../admin/AdminPostsList'
 import AdminPostDetail from '../admin/AdminPostDetail'
-import ChallengeForm from '../forms/ChallengeForm'
-import ContestCreateForm from '../forms/ContestCreateForm'
+import ChallengeForm from '../admin/ChallengeForm'
+import CreateContestForm from '../admin/CreateContestForm'
 
 import * as ROUTES from '../../routes'
 
@@ -39,7 +39,7 @@ export default function AdminRouter() {
 					render={props => (
 						<>
 							<AdminContestsList contests={contests} />
-							<ContestCreateForm />
+							<CreateContestForm />
 						</>
 					)}
 				/>
