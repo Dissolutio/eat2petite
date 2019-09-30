@@ -25,7 +25,6 @@ class Firebase {
 				uid: result.user.uid,
 				email: result.user.email,
 			})
-			return result.user.uid
 		})
 	}
 	doSignInWithEmailAndPassword = (email, password) => this.auth.signInWithEmailAndPassword(email, password)
