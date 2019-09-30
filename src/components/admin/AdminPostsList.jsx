@@ -6,8 +6,8 @@ export default function AdminPostsList(props) {
 	const { posts } = props
 	return (
 		<ul>
-			<h2>Sample Posts List</h2>
-			{posts.map(post => (
+			<h2>Posts List</h2>
+			{posts ? posts.map(post => (
 				<li key={post.uid}>
 					<ul>
 						<li>
@@ -21,7 +21,9 @@ export default function AdminPostsList(props) {
 						{/* <li>{post.postData}</li> */}
 					</ul>
 				</li>
-			))}
+			))
+				: 'No Posts Found'
+			}
 		</ul>
 	)
 }

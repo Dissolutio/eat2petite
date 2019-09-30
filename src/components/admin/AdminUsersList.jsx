@@ -1,30 +1,39 @@
 import React from 'react'
-import { Container } from 'reactstrap'
+import { Container, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap'
 import { AdminUserDetailLink } from '../navigation/Links'
 
 export default function AdminUsersList(props) {
 	const { users } = props
 	return (
-		(users && (
-			<Container>
-				<h2>Admin Users List</h2>
-				{Object.keys(users).map(userKey => {
+		<Container>
+			<h2>Admin Users List</h2>
+			<ListGroup>
+				{users && Object.keys(users).map(userKey => {
 					const user = users[userKey]
 					return (
-						<li key={user.uid}>
-							<ul>
-								<li>{`username: ${user.username}`}</li>
-								<li>
-									<AdminUserDetailLink id={user.uid} />
-								</li>
-								<li>{`name: ${user.name}`}</li>
-								<li>{`email: ${user.email}`}</li>
-								<li>{`userRole: ${user.userRole}`}</li>
-							</ul>
-						</li>
+						<ListGroupItem key={user.uid}>
+							<ListGroupItemHeading>
+								<AdminUserDetailLink id={user.uid}>
+									{`${user.firstName || ''} ${user.lastName || user.username}`}
+								</AdminUserDetailLink>
+							</ListGroupItemHeading>
+							<ListGroupItemText>
+								{`${user.username || (user.firstName + ' ' + user.lastName)}`}
+							</ListGroupItemText>
+							<ListGroupItemText>
+								{`@${user.email}`}
+							</ListGroupItemText>
+							<ListGroupItemText>
+								{`${user.userHeightFeet || '?'}' ${user.userHeightInches || '?'}"`}
+							</ListGroupItemText>
+							<ListGroupItemText>
+								{`${user.userWeight || '?'} lbs`}
+							</ListGroupItemText>
+						</ListGroupItem>
 					)
-				})}
-			</Container>
-		)) || <Container>No Users Found</Container>
+				})
+				}
+			</ListGroup>
+		</Container>
 	)
 }
