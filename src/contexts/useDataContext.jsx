@@ -36,7 +36,7 @@ const useDataContext = () => {
 		setAppData(sampleData)
 	}
 	const setSampleDataToFirebase = async () => {
-		const exampleUser = sampleUsers.find(sampleUser => sampleUser.username === 'Jack')
+		const exampleUser = sampleUsers.find(sampleUser => sampleUser.username === 'Jill')
 		const examplePassword = 'password'
 		const userId = await firebaseApp.doCreateNewUser(exampleUser, examplePassword)
 		console.log(`Jill's new ID`, userId)
@@ -62,8 +62,8 @@ const useDataContext = () => {
 		// 	}
 		// 	firebaseApp.dbCreateUserPost(newPost)
 		// })
-		sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
-		sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
+		// sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
+		// sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
 	}
 	// LOG CURRENT DATA
 	const consoleLogAppData = () => {
