@@ -5,12 +5,13 @@ import AdminChallengesList from './AdminChallengesList'
 import AdminContestsList from './AdminContestsList'
 import AdminUsersList from './AdminUsersList'
 import DevConsole from '../shared/DevConsole'
-import ContestCreateForm from '../forms/ContestCreateForm'
+import CreateContestForm from './CreateContestForm'
 import { AdminContestDetailLink } from '../navigation/Links'
 
 export default function AdminDashboard() {
 	const { appData } = useDataContext()
 	const { users, posts, challenges, contests } = appData
+	console.log(process.env)
 	return (
 		<div>
 			<h2>Admin Dashboard</h2>
@@ -28,7 +29,6 @@ export default function AdminDashboard() {
 				</ul>
 			)}
 			<AdminContestsList contests={contests} />
-			<AdminChallengesList challenges={challenges} />
 			<AdminUsersList users={users}></AdminUsersList>
 			{((process.env.NODE_ENV === 'development') && (<DevConsole />))}
 		</div>
