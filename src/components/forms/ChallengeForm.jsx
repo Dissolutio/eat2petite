@@ -8,7 +8,7 @@ import ChallengeCard from '../shared/ChallengeCard'
 export default function ChallengeForm(props) {
 	// TODO Use FirebaseApp or useDataContext to save/update challenge
 	const { firebaseApp } = useFirebaseContext
-	const { appData } = useDataContext()
+	const { appData, updateChallenge, loadFirebaseData } = useDataContext()
 	const { match } = props
 	const challenge = appData.challenges[match.params.id]
 	const [formData, setFormData] = React.useState({ ...challenge, activeEdit: false })
@@ -29,11 +29,12 @@ export default function ChallengeForm(props) {
 		const saveChallenge = event => {
 			event.preventDefault()
 			const newChallenge = {
+				...challenge,
 				challengeName: event.target.challengeName.value,
 				description: event.target.description.value,
 				formulaForTarget: event.target.formulaForTarget.value,
 			}
-			// updateFBChallenge(newChallenge)
+			updateChallenge(newChallenge).then(() => loadFirebaseData()).catch(error => console.log(error))
 			setFormData({ ...formData, activeEdit: !formData.activeEdit })
 		}
 		return (
@@ -42,26 +43,24 @@ export default function ChallengeForm(props) {
 					<Button type="submit">Save and Exit Edit Mode</Button>
 					<FormGroup>
 						<Label for="challengeName">Title</Label>
-						<Input type="text" name="challengeName" defaultValue={challenge && challenge.challengeName} />
+						<Input type="text" name="challengeName" defaultValue={challenge.challengeName} />
 					</FormGroup>
 					<FormGroup>
 						<Label for="description">Description</Label>
-						<Input type="textarea" name="description" defaultValue={challenge && challenge.description} />
+						<Input type="textarea" name="description" defaultValue={ challenge.description} />
 					</FormGroup>
 					<FormGroup>
 						<Label for="formulaForTarget">Formula For Target</Label>
 						<Input
 							type="textarea"
 							name="formulaForTarget"
-							defaultValue={challenge && challenge.formulaForTarget}
+							defaultValue={challenge.formulaForTarget}
 						/>
 					</FormGroup>
-					<p>Units: {challenge && challenge.units}</p>
+					<p>Units: {challenge.units}</p>
 					<ul>
 						<h6>Extra Units</h6>
-						{challenge &&
-							challenge.data &&
-							challenge.data.extraUnits &&
+						{challenge.data && challenge.data.extraUnits &&
 							challenge.data.extraUnits.map((extraUnit, index) => <li key={index}>{extraUnit}</li>)}
 					</ul>
 				</Form>

@@ -141,6 +141,7 @@ const useDataContext = () => {
 			.once('value')
 			.then(snapshot => snapshot.val())
 	}
+	const updateChallenge = (updatedChallenge) => firebaseApp.dbUpdateChallenge(updatedChallenge)
 
 	const enrollUserInContest = (userId, contestId) => {
 		return firebaseApp.dbEnrollUserInContest(userId, contestId)
@@ -163,6 +164,7 @@ const useDataContext = () => {
 		enrollUserInContest,
 		createUserPost,
 		createContest,
+		updateChallenge,
 	}
 }
 

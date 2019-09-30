@@ -78,6 +78,7 @@ class Firebase {
 			uid: newChallengeRef.key,
 		})
 	}
+	dbUpdateChallenge = (updatedChallenge) => this.db.ref(`/challenges/${updatedChallenge.uid}`).set(updatedChallenge)
 	// *** Posts API ***
 	dbPosts = () => this.db.ref('posts')
 	dbPostsByUserId = uid => this.db.ref(`/posts/${uid}`)
