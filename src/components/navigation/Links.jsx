@@ -14,7 +14,7 @@ export const UserChallengeDetailLink = props => {
 	const { id } = props
 	return <Link to={`${ROUTES.USER_CHALLENGES}${id}`}>{props.children}</Link>
 }
-export const ChallengeCardLink = ({ uid }) => <Link to={`${ROUTES.ADMIN_CHALLENGES}${uid}`}>View Details / Edit</Link>
+export const ChallengeCardLink = ({ uid, children }) => <Link to={`${ROUTES.ADMIN_CHALLENGES}${uid}`}>{children}</Link>
 
 export const AdminUserDetailLink = props => {
 	const { id } = props
