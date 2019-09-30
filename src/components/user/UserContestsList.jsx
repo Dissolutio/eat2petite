@@ -14,7 +14,7 @@ export default function UserContestsList(props) {
 			<div>
 				{userContestsArray
 					? userContestsArray.map((contest, index) => <UserContestCard key={index} contest={contest} />)
-					: 'You have not enrolled in any contests.'}
+					: 'You are not enrolled in any contests.'}
 			</div>
 		</Container>
 	)
