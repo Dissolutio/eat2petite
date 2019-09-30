@@ -30,7 +30,7 @@ export default function AdminDashboard() {
 			<AdminContestsList contests={contests} />
 			<AdminChallengesList challenges={challenges} />
 			<AdminUsersList users={users}></AdminUsersList>
-			<DevConsole />
+			{((process.env.NODE_ENV === 'development') && (<DevConsole />))}
 		</div>
 	)
 }
