@@ -25,7 +25,6 @@ const NavLinks = props => {
 	)
 	const AuthLinks = () => (
 		<>
-			<NavBarLink to={ROUTES.LANDING}>Landing</NavBarLink>
 			<NavBarLink to={ROUTES.USER_HOMEPAGE}>Home</NavBarLink>
 			<NavBarLink to={ROUTES.USER_POSTS}>Posts</NavBarLink>
 			<NavBarLink to={ROUTES.USER_CHALLENGES}>Challenges</NavBarLink>
