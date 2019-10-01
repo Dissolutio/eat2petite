@@ -11,7 +11,7 @@ export default function HeroImage() {
 			<HeroText>
 				<p>Every body is unique...</p>
 				<p>...Shouldn't your diet be?</p>
-				<Button size="sm">Join Up!</Button>
+				<Button size="sm">Sign Up!</Button>
 			</HeroText>
 		</HeroContainer>
 	)
