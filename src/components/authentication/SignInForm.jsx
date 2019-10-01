@@ -32,7 +32,7 @@ const SignInForm = props => {
 	const isInvalid = password === '' || email === ''
 	return (
 		<Container className="p-1">
-			<Form className="p-2 border border-primary rounded" onSubmit={onFormSubmit}>
+			<Form className="p-2 text-center border border-primary rounded" onSubmit={onFormSubmit}>
 				<h2 className="text-center">Sign In</h2>
 				{formError && formError.message ? <Alert color="danger">{formError.message}</Alert> : null}
 				{(process.env.NODE_ENV === 'development') ? sampleUsers.slice(0, 2).map(sampleUser => {
