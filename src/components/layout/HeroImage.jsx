@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button } from 'reactstrap'
-
+import { Link } from 'react-router-dom'
 import FoodPhoto from '../../assets/ThreeUnsplashEat2PetiteImages/photoByBrookeLarkOnUnsplash504x400.jpg'
 
 export default function HeroImage() {
@@ -11,7 +11,10 @@ export default function HeroImage() {
 			<HeroText>
 				<p>Every body is unique...</p>
 				<p>...Shouldn't your diet be?</p>
-				<Button size="sm">Sign Up!</Button>
+				<Link style={{ color: 'var(--E2P-ginger)', fontSize: '1.5rem' }} to="/register">
+
+					<Button size="sm">Sign Up!</Button>
+				</Link>
 			</HeroText>
 		</HeroContainer>
 	)
