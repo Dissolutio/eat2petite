@@ -29,7 +29,7 @@ const SignUpForm = () => {
     }
     const userPassword = password.value
     console.log("Sign Up, User", user)
-    firebaseApp.doCreateNewUser(user, userPassword)
+    firebaseApp.doCreateNewUser(user, userPassword).then(response => console.log(response)).catch(error => setFormError(error))
   }
 
   const isInvalid =
@@ -44,7 +44,10 @@ const SignUpForm = () => {
         onSubmit={onFormSubmit}>
         <h2>Sign Up</h2>
         {formError && formError.message ? (
-          <Alert color='danger'>{formError.message}</Alert>
+          <Alert color='danger'>
+            <h6>{formError.code}</h6>
+            <p>{formError.message}\</p>
+          </Alert>
         ) : null}
         <FormGroup>
           <Label htmlFor='username'>

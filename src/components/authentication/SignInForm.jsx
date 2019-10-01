@@ -23,8 +23,8 @@ const SignInForm = props => {
 		})
 	}
 	const signInAsSampleUser = sampleUser => {
-		const { email, password } = sampleUser
-		firebaseApp.doSignInWithEmailAndPassword(email, password).catch(error => {
+		const { email } = sampleUser
+		firebaseApp.doSignInWithEmailAndPassword(email, 'password').catch(error => {
 			console.log(error)
 			setFormError(error)
 		})

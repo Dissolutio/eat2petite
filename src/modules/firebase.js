@@ -16,17 +16,16 @@ class Firebase {
 		this.db = app.database()
 		this.EmailAuthProvider = app.auth.EmailAuthProvider
 	}
-	doCreateNewUser = (formUser, userPassword) => {
-		const { email } = formUser
-		this.auth.createUserWithEmailAndPassword(email, userPassword).then(result => {
+	doCreateNewUser = (formUser, userPassword) => (
+		this.auth.createUserWithEmailAndPassword(formUser.email, userPassword).then(result => {
 			console.log('Created User', result)
 			this.dbSaveNewUser({
 				...formUser,
 				uid: result.user.uid,
 				email: result.user.email,
 			})
-		})
-	}
+		}).catch(error => error)
+	)
 	doSignInWithEmailAndPassword = (email, password) => this.auth.signInWithEmailAndPassword(email, password)
 	doPasswordReset = email => this.auth.sendPasswordResetEmail(email)
 	doPasswordUpdate = password => this.auth.currentUser.updatePassword(password)

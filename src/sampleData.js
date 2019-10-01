@@ -39,32 +39,20 @@ export const samplePosts = [
 export const sampleContests = [
 	{
 		title: 'The First Contest: 6 2-Day Challenges',
-		startDate: new Date(2019, 8, 16).toDateString(),
-		daysPerChallenge: '1',
-		enrollmentCap: '2',
+		startDate: new Date(2019, 9, 20).toDateString(),
+		daysPerChallenge: '2',
 		enrolledUsers: {},
-		orderOfChallenges: {
-			'-LpZo0UKPklILam4VLSB': '1',
-			'-LpZo0UQFmqo5Jr7a478': '2',
-			'-LpZo0UTvj822SSdAIlT': '3',
-			'-LpZo0UUrRdi-hHCiaLy': '4',
-			'-LpZo0UWH8HwSmq1b09L': '5',
-			'-LpZo0UXFp8B7C8X5EMW': '6',
+		numberOfChallenges: 6,
+		challenges: {
 		},
 	},
 	{
-		title: 'The Second Contest: 6 3-Day Challenges',
+		title: 'The Second Contest: 6 14-Day Challenges',
 		startDate: new Date(2019, 10, 1).toDateString(),
 		daysPerChallenge: '3',
-		enrollmentCap: '5',
 		enrolledUsers: {},
-		orderOfChallenges: {
-			'-LpZo0UKPklILam4VLSB': '1',
-			'-LpZo0UQFmqo5Jr7a478': '2',
-			'-LpZo0UTvj822SSdAIlT': '3',
-			'-LpZo0UUrRdi-hHCiaLy': '4',
-			'-LpZo0UWH8HwSmq1b09L': '5',
-			'-LpZo0UXFp8B7C8X5EMW': '6',
+		numberOfChallenges: 6,
+		challenges: {
 		},
 	},
 ]
