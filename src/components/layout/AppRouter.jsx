@@ -35,7 +35,6 @@ export default function AppRouter() {
 			<Route
 				exact
 				path={ROUTES.LOGIN}
-				// component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm)}
 				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm)}
 			/>
 			<Route
