@@ -41,10 +41,10 @@ const NavLinks = props => {
 		</>
 	)
 	const NavBarLink = ({ children, to }) => {
-		const { toggleMenuOpen } = useUIContext()
+		const { setMenuClose } = useUIContext()
 		return (
 			<NavItem>
-				<Link onClick={toggleMenuOpen} to={to} style={{ color: 'var(--E2P-orange' }}>
+				<Link onClick={setMenuClose} to={to} style={{ color: 'var(--E2P-orange' }}>
 					{children}
 				</Link>
 			</NavItem>
