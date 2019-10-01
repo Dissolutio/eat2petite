@@ -79,7 +79,7 @@ export default function UserDashboard() {
 	})
 	console.log(dateArray)
 	return (
-		<Container>
+		<Container className="text-center">
 			<h1 className="text-center">User Dashboard</h1>
 			<hr />
 			<UserContestsList contests={contests} />

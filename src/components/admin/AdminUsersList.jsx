@@ -21,7 +21,7 @@ export default function AdminUsersList(props) {
 								{`${user.username || (user.firstName + ' ' + user.lastName)}`}
 							</ListGroupItemText>
 							<ListGroupItemText>
-								{`@${user.email}`}
+								{`${user.email}`}
 							</ListGroupItemText>
 							<ListGroupItemText>
 								{`${user.userHeightFeet || '?'}' ${user.userHeightInches || '?'}"`}

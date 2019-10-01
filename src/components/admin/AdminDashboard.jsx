@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDataContext } from '../../contexts/useDataContext'
-
+import { Container } from 'reactstrap'
 import AdminChallengesList from './AdminChallengesList'
 import AdminContestsList from './AdminContestsList'
 import AdminUsersList from './AdminUsersList'
@@ -13,7 +13,7 @@ export default function AdminDashboard() {
 	const { users, posts, challenges, contests } = appData
 	console.log(process.env)
 	return (
-		<div>
+		<Container>
 			<h2>Admin Dashboard</h2>
 			{contests && (
 				<ul>
@@ -31,6 +31,6 @@ export default function AdminDashboard() {
 			<AdminContestsList contests={contests} />
 			<AdminUsersList users={users}></AdminUsersList>
 			{((process.env.NODE_ENV === 'development') && (<DevConsole />))}
-		</div>
+		</Container>
 	)
 }
