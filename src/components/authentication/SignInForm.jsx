@@ -35,7 +35,7 @@ const SignInForm = props => {
 			<Form className="p-2 border border-primary rounded" onSubmit={onFormSubmit}>
 				<h2 className="text-center">Sign In</h2>
 				{formError && formError.message ? <Alert color="danger">{formError.message}</Alert> : null}
-				{sampleUsers.slice(0, 2).map(sampleUser => {
+				{(process.env.NODE_ENV === 'development') ? sampleUsers.slice(0, 2).map(sampleUser => {
 					const { username, email } = sampleUser
 					return (
 						<Button
@@ -47,7 +47,7 @@ const SignInForm = props => {
 							Sign in as {`${username}`}
 						</Button>
 					)
-				})}
+				}) : null}
 				<FormGroup>
 					<Label htmlFor="email">
 						Email:
