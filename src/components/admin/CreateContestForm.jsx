@@ -28,7 +28,7 @@ export default function ContestCreateForm() {
 			})
 		}
 	}
-	const today = moment()
+	const today = moment().format('YYYY-MM-DD')
 	return (
 		<Container>
 			<Form onSubmit={createContestOnSubmit} className="border border-primary rounded p-4 mt-4 mb-3 text-center">
