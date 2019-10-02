@@ -28,7 +28,6 @@ export default function AdminDashboard() {
 				</ul>
 			) || <p>No Contests Found</p>}
 			<CreateContestForm></CreateContestForm>
-			<AdminUsersList users={users}></AdminUsersList>
 			{((process.env.NODE_ENV === 'development') && (<DevConsole />))}
 		</Container>
 	)
