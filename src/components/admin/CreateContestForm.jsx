@@ -48,12 +48,12 @@ export default function ContestCreateForm() {
 				{users && (
 					<FormGroup>
 						Enrolled Users:
-						{Object.keys(users).map(userKey => {
+						{Object.keys(users).filter(userKey => users[userKey].userRole === 'default').map(userKey => {
 							const user = users[userKey]
 							return (
 								<FormGroup key={userKey} check inline>
 									<Label check>
-										{user.username}
+										{`${user.firstName} ${user.lastName}`}
 										<Input type="checkbox" value={userKey} name="enrolledUsers" />
 									</Label>
 								</FormGroup>
