@@ -11,7 +11,6 @@ import { AdminContestDetailLink } from '../navigation/Links'
 export default function AdminDashboard() {
 	const { appData } = useDataContext()
 	const { users, posts, challenges, contests } = appData
-	console.log(process.env)
 	return (
 		<Container>
 			<h2>Admin Dashboard</h2>
