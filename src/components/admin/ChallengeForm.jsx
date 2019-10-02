@@ -6,19 +6,17 @@ import { useDataContext } from '../../contexts/useDataContext'
 import ChallengeCard from '../shared/ChallengeCard'
 
 export default function ChallengeForm(props) {
-	// TODO Use FirebaseApp or useDataContext to save/update challenge
 	const { firebaseApp } = useFirebaseContext
 	const { appData, updateChallenge, loadFirebaseData } = useDataContext()
 	const { match } = props
 	const challenge = appData.challenges[match.params.id]
 	const [formData, setFormData] = React.useState({ ...challenge, activeEdit: false })
-
 	if (formData.activeEdit === false) {
 		return (
 			(challenge && (
 				<>
-					<Button onClick={() => setFormData({ ...formData, activeEdit: !formData.activeEdit })}>
-						Toggle Edit Mode
+					<Button color='info' block onClick={() => setFormData({ ...formData, activeEdit: !formData.activeEdit })}>
+						Edit Challenge info
 					</Button>
 					<ChallengeCard challenge={challenge} match={match} />
 				</>
@@ -40,14 +38,15 @@ export default function ChallengeForm(props) {
 		return (
 			challenge && (
 				<Form onSubmit={event => saveChallenge(event)}>
-					<Button type="submit">Save and Exit Edit Mode</Button>
+					<Button type="submit" size='lg' color='success' block>Save Changes</Button>
+					<Button type="button" size='sm' className='mt-4 mb-4' color='danger' block>Discard Changes</Button>
 					<FormGroup>
 						<Label for="challengeName">Title</Label>
 						<Input type="text" name="challengeName" defaultValue={challenge.challengeName} />
 					</FormGroup>
 					<FormGroup>
 						<Label for="description">Description</Label>
-						<Input type="textarea" name="description" defaultValue={ challenge.description} />
+						<Input type="textarea" name="description" defaultValue={challenge.description} />
 					</FormGroup>
 					<FormGroup>
 						<Label for="formulaForTarget">Formula For Target</Label>

@@ -5,7 +5,7 @@ import { useAuthUserContext } from '../contexts//useAuthUserContext'
 import { getLocalState, setLocalState } from '../modules/localStorage'
 import { sampleUsers, samplePosts, sampleChallenges, sampleContests } from '../sampleData'
 
-const DataContext = React.createContext([{}, () => {}])
+const DataContext = React.createContext([{}, () => { }])
 
 const DataContextProvider = props => {
 	const [appData, setAppData] = useState(() => {

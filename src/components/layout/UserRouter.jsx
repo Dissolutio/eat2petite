@@ -33,7 +33,6 @@ export default function UserRouter(props) {
 				render={props => {
 					const postId = props.match.params.id
 					const post = { ...posts[postId], uid: postId }
-					debugger
 					return <UserPostDetail currentUser={currentUser} post={post} />
 				}}
 			/>

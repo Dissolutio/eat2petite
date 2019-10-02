@@ -14,11 +14,6 @@ export default function DevConsole() {
 		consoleLogAppData,
 		enrollUserInContest,
 	} = useDataContext()
-	// function enrollOnClick() {
-	// 	const userToEnroll = appData.users[process.env.REACT_APP_USER1_FIRE_UID]
-	// 	const contest = appData.contests[process.env.REACT_APP_CONTEST1_FIRE_UID]
-	// 	enrollUserInContest(userToEnroll, contest)
-	// }
 	return (
 		<ButtonGroup vertical style={{ width: '100%' }}>
 			<Button color="primary" onClick={consoleLogAppData}>
@@ -28,7 +23,6 @@ export default function DevConsole() {
 			<DoubleClickButton doubleClickCallback={setSampleDataToFirebase} text="SET SAMPLE FIREBASE DATA" />
 			<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA " />
 			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA " />
-			{/* <DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD SAMPLE DATA " /> */}
 		</ButtonGroup>
 	)
 }
