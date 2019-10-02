@@ -5,7 +5,7 @@ import { ChallengeCardLink } from '../navigation/Links'
 export default props => {
 	const { challenge, match } = props
 	const { uid, challengeName, description, formulaForTarget, units } = challenge
-	const inDetailMode = match && match.params.id === uid
+	const showEditLink = match && match.params.id === uid
 	return (
 		challenge && (
 			<Col sm="6">
@@ -16,9 +16,9 @@ export default props => {
 						</CardTitle>
 					</CardHeader>
 					<CardBody>
-						{inDetailMode ? null : (
+						{showEditLink ? null : (
 							<CardText>
-									<ChallengeCardLink uid={uid}>Edit Challenge</ChallengeCardLink>
+								<ChallengeCardLink uid={uid}>Edit Challenge</ChallengeCardLink>
 							</CardText>
 						)}
 						<CardText>
