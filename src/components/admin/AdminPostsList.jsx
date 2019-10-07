@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { AdminPostDetailLink } from '../navigation/Links'
+import { AdminPostDetailLink } from '../layout/Links'
 
 export default function AdminPostsList(props) {
 	const { posts } = props

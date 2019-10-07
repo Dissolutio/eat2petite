@@ -3,7 +3,7 @@ import Calendar from 'react-calendar'
 import { Container } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
 
-import WaterChallengePostForm from '../forms/WaterChallengePostForm'
+import WaterChallengePostForm from './WaterChallengePostForm'
 import UserContestsList from './UserContestsList'
 import UserPostsList from './UserPostsList'
 import UserChallengesList from './UserChallengesList'

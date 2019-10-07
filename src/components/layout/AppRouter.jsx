@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { meetAuthConditionOrRedirectHOC } from '../../components/authentication/meetAuthConditionOrRedirectHOC'
 
-import LandingPage from '../pages/LandingPage'
+import LandingPage from './LandingPage'
 import VerifyEmail from '../authentication/VerifyEmail'
 import SignUpForm from '../authentication/SignUpForm'
 import SignInForm from '../authentication/SignInForm'
@@ -13,7 +13,7 @@ import SignInForm from '../authentication/SignInForm'
 import UserRouter from './UserRouter'
 import AdminRouter from './AdminRouter'
 
-import Page404NotFound from '../pages/Page404NotFound'
+import Page404NotFound from './Page404NotFound'
 
 import * as ROUTES from '../../routes'
 

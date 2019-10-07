@@ -1,6 +1,6 @@
 import React from 'react'
 import { ListGroup, ListGroupItem } from 'reactstrap'
-import { UserChallengeDetailLink } from '../navigation/Links'
+import { UserChallengeDetailLink } from '../layout/Links'
 
 export default function UserChallengesList(props) {
 	const { challenges } = props
@@ -22,8 +22,8 @@ export default function UserChallengesList(props) {
 					})}
 				</ListGroup>
 			) : (
-				<div>No challenges found</div>
-			)}
+					<div>No challenges found</div>
+				)}
 		</ul>
 	)
 }

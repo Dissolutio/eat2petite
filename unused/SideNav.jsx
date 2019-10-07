@@ -4,7 +4,7 @@ import { useSpring, animated } from 'react-spring'
 
 import { useUIContext } from '../src/contexts/useUIContext'
 
-import NavLinks from '../src/components/navigation/NavLinks'
+import NavLinks from '../src/components/layout/NavLinks'
 import CurrentUserReadout from '../src/components/authentication/CurrentUserReadout'
 
 export default function SideNav() {

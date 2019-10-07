@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Collapse, Navbar, NavbarToggler, Nav } from 'reactstrap'
 import { useUIContext } from '../../contexts/useUIContext'
-import NavLinks from '../navigation/NavLinks'
+import NavLinks from '../layout/NavLinks'
 
 export default function Header() {
 	const { menuOpen, toggleMenuOpen } = useUIContext()

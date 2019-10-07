@@ -3,7 +3,7 @@ import { Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from
 
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 
-import { UserPostDetailLink } from '../navigation/Links'
+import { UserPostDetailLink } from '../layout/Links'
 
 export default function UserPostCard(props) {
 	const { user } = useAuthUserContext()

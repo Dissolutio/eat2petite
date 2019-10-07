@@ -1,6 +1,6 @@
 import React from 'react'
 import { Badge, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
-import { ChallengeCardLink } from '../navigation/Links'
+import { ChallengeCardLink } from '../layout/Links'
 
 export default props => {
 	const { challenge, match } = props

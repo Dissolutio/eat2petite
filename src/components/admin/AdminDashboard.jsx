@@ -6,7 +6,7 @@ import AdminContestsList from './AdminContestsList'
 import AdminUsersList from './AdminUsersList'
 import DevConsole from '../shared/DevConsole'
 import CreateContestForm from './CreateContestForm'
-import { AdminContestDetailLink } from '../navigation/Links'
+import { AdminContestDetailLink } from '../layout/Links'
 
 export default function AdminDashboard() {
 	const { appData } = useDataContext()
