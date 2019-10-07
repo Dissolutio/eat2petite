@@ -5,12 +5,26 @@ import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 import { useDataContext } from '../../contexts/useDataContext'
 import ChallengeCard from '../shared/ChallengeCard'
 
-export default function ChallengeForm(props) {
+export default function AdminChallengeDetail(props) {
 	const { firebaseApp } = useFirebaseContext
 	const { appData, updateChallenge, loadFirebaseData } = useDataContext()
 	const { match } = props
 	const challenge = appData.challenges[match.params.id]
 	const [formData, setFormData] = React.useState({ ...challenge, activeEdit: false })
+	const saveChallenge = event => {
+		event.preventDefault()
+		const newChallenge = {
+			...challenge,
+			challengeName: event.target.challengeName.value,
+			description: event.target.description.value,
+			formulaForTarget: event.target.formulaForTarget.value,
+		}
+		updateChallenge(newChallenge).then(() => loadFirebaseData()).catch(error => console.log(error))
+		setFormData({ ...formData, activeEdit: !formData.activeEdit })
+	}
+	const discardChanges = event => {
+		setFormData({ ...challenge, activeEdit: false })
+	}
 	if (formData.activeEdit === false) {
 		return (
 			(challenge && (
@@ -24,22 +38,11 @@ export default function ChallengeForm(props) {
 			null
 		)
 	} else {
-		const saveChallenge = event => {
-			event.preventDefault()
-			const newChallenge = {
-				...challenge,
-				challengeName: event.target.challengeName.value,
-				description: event.target.description.value,
-				formulaForTarget: event.target.formulaForTarget.value,
-			}
-			updateChallenge(newChallenge).then(() => loadFirebaseData()).catch(error => console.log(error))
-			setFormData({ ...formData, activeEdit: !formData.activeEdit })
-		}
 		return (
 			challenge && (
 				<Form onSubmit={event => saveChallenge(event)}>
 					<Button type="submit" size='lg' color='success' block>Save Changes</Button>
-					<Button type="button" size='sm' className='mt-4 mb-4' color='danger' block>Discard Changes</Button>
+					<Button type="button" size='sm' className='mt-4 mb-4' color='danger' block onClick={discardChanges}>Discard Changes</Button>
 					<FormGroup>
 						<Label for="challengeName">Title</Label>
 						<Input type="text" name="challengeName" defaultValue={challenge.challengeName} />
