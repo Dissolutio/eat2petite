@@ -35,7 +35,7 @@ const SignInForm = props => {
 			<Form className="p-2 text-center border border-primary rounded" onSubmit={onFormSubmit}>
 				<h2 className="text-center">Sign In</h2>
 				{formError && formError.message ? <Alert color="danger">{formError.message}</Alert> : null}
-				{(process.env.NODE_ENV === 'development') ? sampleUsers.slice(0, 2).map(sampleUser => {
+				{(process.env.NODE_ENV === 'development') ? sampleUsers.slice(0, 3).map(sampleUser => {
 					const { username, email } = sampleUser
 					return (
 						<Button
