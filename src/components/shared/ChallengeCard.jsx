@@ -1,5 +1,5 @@
 import React from 'react'
-import { Badge, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
+import { Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
 import { ChallengeCardLink } from '../layout/Links'
 
 export default props => {

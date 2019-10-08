@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
+import { Col, Card, CardHeader, CardBody, CardText } from 'reactstrap'
 
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 

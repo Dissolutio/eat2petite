@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap'
+import { Container } from 'reactstrap'
 import HeroImage from './HeroImage'
 export default function LandingPage() {
 	return (

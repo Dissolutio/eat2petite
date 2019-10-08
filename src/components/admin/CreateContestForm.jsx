@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import { Container, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import useInputValue from '../../modules/hooks/useInputValue'
 import * as ROUTES from '../../routes'
 const moment = require('moment')
 
 const ContestCreateForm = (props) => {
-	const { user } = useAuthUserContext()
 	const { appData, createContest, enrollUserInContest } = useDataContext()
-	const { users, posts, contests, challenges } = appData
+	const { users, challenges } = appData
 	const [numberOfChallenges, setNumberOfChallenges] = useState(6)
 	const generateChallengeOrderInputLength = () => {
 		var array = [];
@@ -43,7 +41,7 @@ const ContestCreateForm = (props) => {
 		if (newContestId) {
 			await Promise.all(enrolledUsers.map(userId => {
 				console.log(newContestId)
-				enrollUserInContest(userId, newContestId)
+				return enrollUserInContest(userId, newContestId)
 			}))
 			props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
 		}

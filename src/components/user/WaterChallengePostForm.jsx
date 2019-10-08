@@ -1,11 +1,11 @@
 import React from 'react'
-import { Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
-import { useDataContext } from '../../contexts/useDataContext'
+import { Container, Button, Form, FormGroup, Label, Input } from 'reactstrap'
+// import { useDataContext } from '../../contexts/useDataContext'
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 const moment = require('moment')
 
 export default function WaterChallengePostForm() {
-	const { createUserPost } = useDataContext()
+	// const { createUserPost } = useDataContext()
 	const { user } = useAuthUserContext()
 	const createPostOnSubmit = event => {
 		event.preventDefault()
