@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
 import { Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import useInputValue from '../../modules/hooks/useInputValue'
+import * as ROUTES from '../../routes'
 const moment = require('moment')
 
-export default function ContestCreateForm() {
+const ContestCreateForm = (props) => {
 	const { user } = useAuthUserContext()
 	const { appData, createContest, enrollUserInContest } = useDataContext()
 	const { users, posts, contests, challenges } = appData
-	const [numberOfChallenges, setNumberOfChallenges] = React.useState(6)
+	const [numberOfChallenges, setNumberOfChallenges] = useState(6)
 	const generateChallengeOrderInputLength = () => {
 		var array = [];
 		for (var i = 1; i <= numberOfChallenges; i++) {
@@ -20,31 +22,32 @@ export default function ContestCreateForm() {
 	const challengeInputNames = generateChallengeOrderInputLength().map((input, index) => `Challenge${index + 1}`)
 	const title = useInputValue('Sample1')
 	const daysPerChallenge = useInputValue(14)
+
 	const createContestOnSubmit = async event => {
 		event.preventDefault()
+		const enrolledUsers = [...event.target.enrolledUsers].filter(input => input.checked).map(input => input.value)
 		const orderOfChallenges = () => {
 			return challengeInputNames.reduce((orderOfChallenges, inputName, currIndex) => {
 				orderOfChallenges[currIndex + 1] = event.target[inputName].value
 				return orderOfChallenges
 			}, {})
 		}
-		const enrolledUsers = [...event.target.enrolledUsers].filter(input => input.checked).map(input => input.value)
-		let newContest = {
+		const newContest = {
 			title: title.value,
 			startDate: event.target.startDate.value,
 			daysPerChallenge: daysPerChallenge.value,
 			orderOfChallenges: orderOfChallenges(),
 			numberOfChallenges,
 		}
-		console.log('new Contest:', newContest)
-		// const newContestId = await createContest(newContest)
+		const newContestId = await createContest(newContest)
+		if (newContestId) {
+			await Promise.all(enrolledUsers.map(userId => {
+				console.log(newContestId)
+				enrollUserInContest(userId, newContestId)
+			}))
+			props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
+		}
 
-		// if (newContestId) {
-		// 	enrolledUsers.forEach(userId => {
-		// 		console.log(newContestId)
-		// 		enrollUserInContest(userId, newContestId)
-		// 	})
-		// }
 	}
 	const today = moment().format('YYYY-MM-DD')
 	return (
@@ -70,17 +73,19 @@ export default function ContestCreateForm() {
 				{users && (
 					<FormGroup>
 						Enrolled Users:
-						{Object.keys(users).filter(userKey => users[userKey].userRole === 'default').map(userKey => {
-							const user = users[userKey]
-							return (
-								<FormGroup key={userKey} check >
-									<Label check>
-										<Input type="checkbox" value={userKey} name="enrolledUsers" />
-										{`${user.firstName} ${user.lastName}`}
-									</Label>
-								</FormGroup>
-							)
-						})}
+						{Object.keys(users)
+							.filter(userKey => users[userKey].userRole === 'default')
+							.map(userKey => {
+								const user = users[userKey]
+								return (
+									<FormGroup key={userKey} check >
+										<Label check>
+											<Input type="checkbox" value={userKey} name="enrolledUsers" />
+											{`${user.firstName} ${user.lastName}`}
+										</Label>
+									</FormGroup>
+								)
+							})}
 					</FormGroup>
 				)}
 				{
@@ -91,10 +96,13 @@ export default function ContestCreateForm() {
 								<Label for={inputName}>{`Challenge ${orderIndex + 1}`}</Label>
 								<Input type="select" name={inputName} id="exampleSelect">
 									{
-										challenges && Object.keys(challenges).map(challengeKey => {
-											const challenge = challenges[challengeKey]
-											return (<option key={`${orderIndex}--${challengeKey}`} value={challenge.uid}>{challenge.challengeName}</option>)
-										})
+										challenges && Object.keys(challenges)
+											.map(challengeKey => {
+												const challenge = challenges[challengeKey]
+												return (
+													<option key={`${orderIndex}--${challengeKey}`} value={challenge.uid}>{challenge.challengeName}</option>
+												)
+											})
 									}
 								</Input>
 							</FormGroup>
@@ -106,3 +114,4 @@ export default function ContestCreateForm() {
 		</Container>
 	)
 }
+export default withRouter(ContestCreateForm)
