@@ -41,13 +41,14 @@ class Firebase {
 	dbPublicUserById = uid => this.db.ref(`/publicUsers/${uid}`)
 	dbPrivateUserById = uid => this.db.ref(`/users/${uid}`)
 	dbSaveNewUser = user => {
-		const { uid } = user
+		const { uid, userRole, username } = user
 		this.dbPrivateUserById(uid).set({
 			...user,
 		})
 		this.dbPublicUserById(uid).set({
-			...user,
-			email: null,
+			uid,
+			userRole,
+			username,
 		})
 	}
 	// *** Contests API ***
