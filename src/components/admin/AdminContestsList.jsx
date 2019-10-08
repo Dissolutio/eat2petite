@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Card, CardHeader, CardText } from 'reactstrap'
+import { Container, Card, CardHeader, CardText, ListGroup, ListGroupItem } from 'reactstrap'
+import { AdminContestDetailLink } from '../layout/Links'
 export default function AdminContestsList(props) {
 	const { contests } = props
 	const contestsArray =
@@ -9,29 +10,18 @@ export default function AdminContestsList(props) {
 			return contests[contestKey]
 		})
 
-	return (
-		<Container>
-			<h3>Admin Contests List</h3>
-			{(contests &&
-				contestsArray.map(contest => (
-					<Card color="primary" key={contest.uid}>
-						<CardHeader color="secondary">
-							<h3>{`title: ${contest.title}`}</h3>
-							<Link
-								to={`/admin/contests/${contest.uid}`}
-								style={{
-									color: 'var(--font-light)',
-								}}>{`Detail Page of Contest ${contest.uid}`}</Link>
-						</CardHeader>
-						<CardText>{`startDate: ${contest.startDate}`}</CardText>
-						<CardText>{`daysPerChallenge: ${contest.daysPerChallenge}`}</CardText>
-						<CardText>{`enrolledUsers object: ${contest.enrolledUsers}`}</CardText>
-						<CardText>{`challenges object: ${contest.challenges}`}</CardText>
-						<CardText>{`orderOfChallenges object: ${contest.orderOfChallenges}`}</CardText>
-						<CardText>{`enrollmentCap: ${contest.enrollmentCap}`}</CardText>
-						<CardText>{`numberOfChallenges: ${contest.numberOfChallenges}`}</CardText>
-					</Card>
-				))) || <div>No contests found.</div>}
-		</Container>
-	)
+	return contests ? (
+		<ListGroup>
+			<h3>Contests:</h3>
+			{Object.keys(contests).map(contestKey => {
+				const contest = contests[contestKey]
+				const id = contest.uid
+				return (
+					<ListGroupItem key={id}>
+						<AdminContestDetailLink id={id}>{contest.title}</AdminContestDetailLink>
+					</ListGroupItem>
+				)
+			})}
+		</ListGroup>
+	) : (<p>No Contests Found</p>)
 }
