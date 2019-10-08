@@ -21,7 +21,7 @@ const ContestCreateForm = (props) => {
 	const title = useInputValue('Sample1')
 	const daysPerChallenge = useInputValue(14)
 
-	const createContestOnSubmit = async event => {
+	const createContestOnSubmit = event => {
 		event.preventDefault()
 		const enrolledUsers = [...event.target.enrolledUsers].filter(input => input.checked).map(input => input.value)
 		const orderOfChallenges = () => {
@@ -37,15 +37,12 @@ const ContestCreateForm = (props) => {
 			orderOfChallenges: orderOfChallenges(),
 			numberOfChallenges,
 		}
-		const newContestId = await createContest(newContest)
-		if (newContestId) {
-			await Promise.all(enrolledUsers.map(userId => {
-				console.log(newContestId)
-				return enrollUserInContest(userId, newContestId)
-			}))
+		createContest(newContest).then((newContestId) => {
+			enrolledUsers.forEach(userId => {
+				enrollUserInContest(userId, newContestId)
+			})
 			props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
-		}
-
+		})
 	}
 	const today = moment().format('YYYY-MM-DD')
 	return (

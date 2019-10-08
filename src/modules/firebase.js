@@ -53,14 +53,13 @@ class Firebase {
 	}
 	// *** Contests API ***
 	dbContests = () => this.db.ref(`/contests`)
-	dbSaveNewContest = contest => {
-		const newContestRef = this.dbContests().push()
-		newContestRef.set({
+	dbSaveNewContest = contest => this.dbContests().push().then(ref => {
+		ref.set({
 			...contest,
-			uid: newContestRef.key,
+			uid: ref.key,
 		})
-		return newContestRef.key
-	}
+		return ref.key
+	})
 	dbEnrollUserInContest = (userId, contestId) => {
 		let updates = {}
 		updates['/contests/' + contestId + '/enrolledUsers/' + userId] = true

@@ -144,11 +144,9 @@ const useDataContext = () => {
 	const updateChallenge = (updatedChallenge) => firebaseApp.dbUpdateChallenge(updatedChallenge)
 
 	const enrollUserInContest = (userId, contestId) => {
-		return firebaseApp.dbEnrollUserInContest(userId, contestId)
+		firebaseApp.dbEnrollUserInContest(userId, contestId)
 	}
-	const createContest = contest => {
-		return firebaseApp.dbSaveNewContest(contest)
-	}
+	const createContest = contest => firebaseApp.dbSaveNewContest(contest)
 	const createUserPost = post => {
 		firebaseApp.dbCreateUserPost(post)
 	}
