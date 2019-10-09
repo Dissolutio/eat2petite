@@ -36,10 +36,11 @@ const useDataContext = () => {
 		setAppData(sampleData)
 	}
 	const setSampleDataToFirebase = async () => {
-		const exampleUser = sampleUsers.find(sampleUser => sampleUser.username === 'Jill')
-		const examplePassword = 'password'
-		const userId = await firebaseApp.doCreateNewUser(exampleUser, examplePassword)
-		console.log(`Jill's new ID`, userId)
+		console.log("Setting sample data.... But you can configure what that means in useDataContext")
+		// const exampleUser = sampleUsers.find(sampleUser => sampleUser.firstName === 'Jill')
+		// const examplePassword = 'password'
+		// const userId = await firebaseApp.doCreateNewUser(exampleUser, examplePassword)
+		// console.log(`New User's new ID`, userId)
 		// const getDateArray = (start, end) => {
 		// 	const arr = new Array()
 		// 	const dt = new Date(start)
