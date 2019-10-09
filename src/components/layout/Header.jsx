@@ -10,7 +10,7 @@ export default function Header() {
 	return (
 		<StyledHeader>
 			<Navbar color="light" light expand="md">
-				<Link style={{ color: 'var(--E2P-ginger)', fontSize: '1.5rem' }} to="/">
+				<Link to="/">
 					Eat-2-Petite
 				</Link>
 				<NavbarToggler onClick={toggleMenuOpen} />
@@ -27,4 +27,9 @@ export default function Header() {
 const StyledHeader = styled.header`
 	background-color: var(--white);
 	color: var(--font-dark);
+	a {
+		font-family: 'Sofia', cursive;
+		color: var(--E2P-ginger);
+		font-size: 1.5rem;
+	}
 `
