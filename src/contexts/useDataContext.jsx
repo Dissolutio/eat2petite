@@ -151,6 +151,7 @@ const useDataContext = () => {
 	const createUserPost = post => {
 		firebaseApp.dbCreateUserPost(post)
 	}
+	const updateUserChallengeTarget = (userId, challengeId, target) => firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target)
 
 	return {
 		appData,
@@ -164,6 +165,7 @@ const useDataContext = () => {
 		createUserPost,
 		createContest,
 		updateChallenge,
+		updateUserChallengeTarget,
 	}
 }
 

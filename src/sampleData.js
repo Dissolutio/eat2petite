@@ -106,6 +106,7 @@ export const sampleChallenges = [
 			'We should consume at least as much water as it takes to fill both of our shoes. We are like camels on the high dunes of the Sahara, high noon suns beckoning us to drink pure water today and tomorrow! No Money shall be vested in one supreme Court, and all other Powers vested by this Constitution in the Government and Regulation of the State Legislature.',
 		formulaForTarget: `The person's weight multiplied by a constant. This constant will depend on the individual: are they a beginner? do they work outside or sweat a lot every day?`,
 		units: 'volume',
+		defaultTarget: { quantity: 8, units: 'cups' },
 	},
 	{
 		challengeName: 'Eat Vegetables',

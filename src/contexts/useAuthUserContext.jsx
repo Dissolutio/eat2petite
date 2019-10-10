@@ -19,7 +19,7 @@ const useAuthListener = firebaseApp => {
 				.dbPrivateUserById(user.uid)
 				.once('value')
 				.then(snapshot => snapshot.val())
-			const { username, userRole, contests } = dbUser
+			const { username, userRole, contests, challengeTargets } = dbUser
 			const mergedUser = {
 				uid: user.uid,
 				email: user.email,
@@ -28,6 +28,7 @@ const useAuthListener = firebaseApp => {
 				username,
 				userRole,
 				contests,
+				challengeTargets,
 			}
 			localStorage.setItem('authUser', JSON.stringify(mergedUser))
 			setAuthState({ initializing: false, user: mergedUser })

@@ -51,6 +51,7 @@ class Firebase {
 			username,
 		})
 	}
+	dbSetUserChallengeTarget = (userId, challengeId, target) => this.dbPrivateUsers().child(`${userId}/challengeTargets/${challengeId}`).set(target)
 	// *** Contests API ***
 	dbContests = () => this.db.ref(`/contests`)
 	dbSaveNewContest = contest => this.dbContests().push().then(ref => {

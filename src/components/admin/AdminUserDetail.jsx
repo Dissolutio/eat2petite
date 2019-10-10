@@ -1,22 +1,26 @@
 import React from 'react'
-import { Container } from 'reactstrap'
+import { Container, ListGroup, ListGroupItem, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
-
+import { useDataContext } from '../../contexts/useDataContext'
+import UserChallengeTargetsForm from './UserChallengeTargetsForm'
 function AdminUserDetail(props) {
-	const { users } = props
+	const { appData } = useDataContext()
+	const { users } = appData
 	const { id } = props.match.params
 	const user = users && users[id]
-
 	return (
 		(user && (
 			<Container key={user.uid}>
-				<ul>
-					<li>{`username: ${user.username}`}</li>
-					<li>{`email: ${user.email}`}</li>
-					<li>{`userRole: ${user.userRole}`}</li>
-				</ul>
+				<h3>{`${user.firstName} ${user.lastName}`}</h3>
+				<ListGroup>
+					<ListGroupItem>{`Username: ${user.username}`}</ListGroupItem>
+					<ListGroupItem>{`Email: ${user.email}`}</ListGroupItem>
+					<ListGroupItem>{`Weight: ${user.userWeight} lbs`}</ListGroupItem>
+					<ListGroupItem>{`Height: ${user.userHeightFeet}' ${user.userHeightInches}"`}</ListGroupItem>
+					<UserChallengeTargetsForm user={user} />
+				</ListGroup>
 			</Container>
-		)) || <div>No User Found</div>
+		)) || <Container>No User Found</Container>
 	)
 }
 
