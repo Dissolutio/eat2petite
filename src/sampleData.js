@@ -88,29 +88,14 @@ export const sampleUsers = [
 		userHeightInches: '10',
 	},
 	{
-		email: 'user_4@example.com',
-		userRole: 'default',
-		username: 'Joanna',
-		firstName: 'Joanna',
-		lastName: 'Jones',
-		userWeight: '200',
-		userHeightFeet: '5',
-		userHeightInches: '10',
-	},
-	{
-		email: 'user_5@example.com',
-		userRole: 'default',
-		username: 'Rebecca',
-	},
-	{
-		email: 'user_6@example.com',
-		userRole: 'default',
-		username: 'Alejandro',
-	},
-	{
-		email: 'eat-2-petite@example.com',
+		email: 'entity.john@gmail.com',
 		userRole: 'admin',
-		username: 'EAT-2-PETITE',
+		username: 'dissolutio',
+		firstName: 'John',
+		lastName: 'Moen',
+		userWeight: '140',
+		userHeightFeet: '5',
+		userHeightInches: '8',
 	},
 ]
 
