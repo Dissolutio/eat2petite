@@ -10,7 +10,7 @@ import AccountPage from '../user/AccountPage'
 import UserChallengesList from '../user/UserChallengesList'
 import UserPostsList from '../user/UserPostsList'
 import UserPostDetail from '../user/UserPostDetail'
-import UserChallengeDetail from '../user/UserChallengeDetail'
+import ChallengeCard from '../shared/ChallengeCard'
 
 import * as ROUTES from '../../routes'
 
@@ -41,7 +41,7 @@ export default function UserRouter(props) {
 				path={ROUTES.USER_CHALLENGES}
 				render={props => <UserChallengesList challenges={challenges} />}
 			/>
-			<Route path={`${ROUTES.USER_CHALLENGES}:id`} component={UserChallengeDetail} />
+			<Route path={`${ROUTES.USER_CHALLENGES}:id`} render={props => <ChallengeCard challenge={challenges[props.match.params.id]} />} />
 			<Route
 				exact
 				path={ROUTES.USER_ACCOUNT}

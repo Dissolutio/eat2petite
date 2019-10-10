@@ -7,7 +7,7 @@ export default function UserChallengeDetail(props) {
 	const { appData } = useDataContext()
 	const { challenges } = appData
 	const challenge = challenges[id]
-	const { uid, challengeName, description, formulaForTarget, units } = challenge
+	const { uid, challengeName, description, units } = challenge
 	return (
 		challenge && (
 			<Col sm="6">
@@ -18,13 +18,11 @@ export default function UserChallengeDetail(props) {
 						</CardTitle>
 					</CardHeader>
 					<CardBody>
-						<CardText>Description</CardText>
+						<h6>Description:</h6>
 						<CardText>{description}</CardText>
 						<CardText>{`Units: ${units}`}</CardText>
 					</CardBody>
 					<CardFooter>
-						<CardText>Formula For Target</CardText>
-						<CardText>{formulaForTarget}</CardText>
 					</CardFooter>
 				</Card>
 			</Col>

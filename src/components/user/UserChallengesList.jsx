@@ -6,14 +6,14 @@ export default function UserChallengesList(props) {
 	const { challenges } = props
 	return (
 		<ul>
-			<h2>User Challenges List</h2>
+			<h2>All Challenges:</h2>
 			{challenges ? (
 				<ListGroup>
 					{Object.keys(challenges).map(challengeKey => {
 						const challenge = challenges[challengeKey]
 						const { uid, challengeName } = challenge
 						return (
-							<ListGroupItem color="primary" outline key={uid}>
+							<ListGroupItem color="primary" key={uid}>
 								<UserChallengeDetailLink id={uid}>
 									<h3>{challengeName}</h3>
 								</UserChallengeDetailLink>

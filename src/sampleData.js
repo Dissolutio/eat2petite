@@ -104,7 +104,6 @@ export const sampleChallenges = [
 		challengeName: 'Water Intake',
 		description:
 			'We should consume at least as much water as it takes to fill both of our shoes. We are like camels on the high dunes of the Sahara, high noon suns beckoning us to drink pure water today and tomorrow! No Money shall be vested in one supreme Court, and all other Powers vested by this Constitution in the Government and Regulation of the State Legislature.',
-		formulaForTarget: `The person's weight multiplied by a constant. This constant will depend on the individual: are they a beginner? do they work outside or sweat a lot every day?`,
 		units: 'volume',
 		defaultTarget: { quantity: 8, units: 'cups' },
 	},
@@ -112,7 +111,6 @@ export const sampleChallenges = [
 		challengeName: 'Eat Vegetables',
 		description:
 			'Humans grew up as omnivores, and benefit greatly from a large amount of vegetables as a food source. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential for physical and mental fitness.',
-		formulaForTarget: `5 servings a day, adjusted to the individual's situation or goal`,
 		units: [`servings`],
 		typesOfVegetables: ['leafy-greens', 'non-green'],
 	},
@@ -120,13 +118,11 @@ export const sampleChallenges = [
 		challengeName: 'Eat Protein',
 		description:
 			'We should aim for a target protein level every day for the goals we want to achieve. Our bodies are built from them!',
-		formulaForTarget: `A person's weight multiplied by a constant. The constant may vary depending on the individual's needs.`,
 		units: 'weight',
 	},
 	{
 		challengeName: 'Get Active!',
 		description: `Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!`,
-		formulaForTarget: 'Some amount of time spent on some scale of intensity',
 		units: 'intensity',
 		intensities: ['light', 'medium', 'high'],
 	},
@@ -134,7 +130,6 @@ export const sampleChallenges = [
 		challengeName: 'Manage Carbohydrate Intake',
 		description:
 			'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
-		formulaForTarget: `The person's weight multiplied by some constant, adjusted by individual need.`,
 		units: 'weight',
 		typesOfCarbohydrate: ['simple', 'complex'],
 	},
@@ -142,7 +137,6 @@ export const sampleChallenges = [
 		challengeName: 'Manage Sugar and Salt Intake',
 		description:
 			'The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.',
-		formulaForTarget: 'Some amount of weight per human',
 		units: 'weight',
 	},
 ]

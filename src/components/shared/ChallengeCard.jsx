@@ -1,40 +1,27 @@
 import React from 'react'
 import { Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
-import { ChallengeCardLink } from '../layout/Links'
 
 export default props => {
-	const { challenge, match } = props
-	const { uid, challengeName, description, formulaForTarget, units } = challenge
-	const showEditLink = match && match.params.id === uid
+	const { challenge } = props
+	const { uid, challengeName, description, units } = challenge
 	return (
 		challenge && (
-			<Col sm="6">
-				<Card color="primary" outline key={uid} body>
-					<CardHeader>
-						<CardTitle>
-							<h3>{challengeName}</h3>
-						</CardTitle>
-					</CardHeader>
-					<CardBody>
-						{showEditLink ? null : (
-							<CardText>
-								<ChallengeCardLink uid={uid}>Edit Challenge</ChallengeCardLink>
-							</CardText>
-						)}
-						<CardText>
-							Description
-							{description}
-						</CardText>
-						<CardText>{`Units: ${units}`}</CardText>
-					</CardBody>
-					<CardFooter>
-						<CardText>
-							Formula For Target
-							{formulaForTarget}
-						</CardText>
-					</CardFooter>
-				</Card>
-			</Col>
+			<Card color="primary" outline key={uid} body>
+				<CardHeader>
+					<CardTitle>
+						<h3>{challengeName}</h3>
+					</CardTitle>
+				</CardHeader>
+				<CardBody>
+					<h5>Description</h5>
+					<CardText>
+						{description}
+					</CardText>
+					<CardText>{`Units: ${units}`}</CardText>
+				</CardBody>
+				<CardFooter>
+				</CardFooter>
+			</Card>
 		)
 	)
 }

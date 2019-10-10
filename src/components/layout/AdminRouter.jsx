@@ -11,12 +11,12 @@ import AdminUserDetail from '../admin/AdminUserDetail'
 import AdminChallengesList from '../admin/AdminChallengesList'
 import AdminPostsList from '../admin/AdminPostsList'
 import AdminPostDetail from '../admin/AdminPostDetail'
-import AdminChallengeDetail from '../admin/AdminChallengeDetail'
+import ChallengeCard from '../shared/ChallengeCard'
 import CreateContestForm from '../admin/CreateContestForm'
 
 import * as ROUTES from '../../routes'
 
-export default function AdminRouter() {
+export default function AdminRouter(props) {
 	const { loadFirebaseData, appData } = useDataContext()
 	React.useEffect(() => {
 		loadFirebaseData()
@@ -46,7 +46,7 @@ export default function AdminRouter() {
 					path={ROUTES.ADMIN_CHALLENGES}
 					render={props => <AdminChallengesList challenges={challenges} />}
 				/>
-				<Route path={`${ROUTES.ADMIN_CHALLENGES}:id`} component={AdminChallengeDetail} />
+				<Route path={`${ROUTES.ADMIN_CHALLENGES}:id`} render={props => <ChallengeCard challenge={challenges[props.match.params.id]} />} />
 				<Route exact path={ROUTES.ADMIN_USERS} render={props => <AdminUsersList users={users} />} />
 				<Route path={`${ROUTES.ADMIN_USERS}:id`} component={AdminUserDetail} />
 			</Switch>
