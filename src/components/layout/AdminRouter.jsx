@@ -16,18 +16,13 @@ import CreateContestForm from '../admin/CreateContestForm'
 
 import * as ROUTES from '../../routes'
 
-function filterAppDataUser(data) {
-	return { ...data }
-}
-
 export default function AdminRouter() {
 	const { loadFirebaseData, appData } = useDataContext()
 	React.useEffect(() => {
 		loadFirebaseData()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	const userAppData = filterAppDataUser(appData)
-	const { posts, users, challenges, contests } = userAppData
+	const { posts, users, challenges, contests } = appData
 
 	return (
 		<div>
@@ -53,7 +48,7 @@ export default function AdminRouter() {
 				/>
 				<Route path={`${ROUTES.ADMIN_CHALLENGES}:id`} component={AdminChallengeDetail} />
 				<Route exact path={ROUTES.ADMIN_USERS} render={props => <AdminUsersList users={users} />} />
-				<Route path={`${ROUTES.ADMIN_USERS}:id`} render={props => <AdminUserDetail users={users} />} />
+				<Route path={`${ROUTES.ADMIN_USERS}:id`} component={AdminUserDetail} />
 			</Switch>
 		</div>
 	)
