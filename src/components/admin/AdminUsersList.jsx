@@ -17,18 +17,18 @@ export default function AdminUsersList(props) {
 									{`${user.firstName || ''} ${user.lastName || user.username}`}
 								</AdminUserDetailLink>
 							</ListGroupItemHeading>
-							<ListGroupItemText>
-								{`${user.username || (user.firstName + ' ' + user.lastName)}`}
+							<ListGroupItemText className='text-secondary'>
+								<small>
+									{`${user.username || (user.firstName + ' ' + user.lastName)}`}
+								</small>
 							</ListGroupItemText>
-							<ListGroupItemText>
-								{`${user.email}`}
-							</ListGroupItemText>
-							<ListGroupItemText>
-								{`${user.userHeightFeet || '?'}' ${user.userHeightInches || '?'}"`}
-							</ListGroupItemText>
-							<ListGroupItemText>
-								{`${user.userWeight || '?'} lbs`}
-							</ListGroupItemText>
+							{user.userRole === 'admin' ?
+								<ListGroupItemText className='text-info'>
+									<small>
+										Administrator
+								</small>
+								</ListGroupItemText>
+								: null}
 						</ListGroupItem>
 					)
 				})
