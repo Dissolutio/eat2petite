@@ -16,8 +16,13 @@ html {
 	--white: #f7faff;
 
 	--E2P-bright-orange: rgba(255, 192, 0, 1);
+	/* --E2P-bright-orange: #ffc000; */
 	--E2P-orange: rgba(232, 153, 0, 1);
+	/* --E2P-orange: #e89900; */
 	--E2P-ginger: rgba(181, 119, 0, 1);
+	/* --E2P-ginger: #b57700; */
 	--E2P-light-gray: rgba(166, 166, 166, 1);
+	/* --E2P-light-gray: #a6a6a6; */
 	--E2P-dark-gray: rgba(128, 128, 128, 1);
+	/* --E2P-dark-gray: #808080; */
 }
