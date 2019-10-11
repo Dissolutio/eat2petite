@@ -1,42 +1,43 @@
-export const samplePosts = [
-	{
+export const samplePosts = {
+	post1: {
 		postDate: '2019-09-11',
 		postData: {
 			quantity: '6.66',
 			quantityUnits: 'cups',
 		},
 	},
-	{
+	post2: {
 		postDate: '2019-09-12',
 		postData: {
 			quantity: '6.66',
 			quantityUnits: 'liters',
 		},
 	},
-	{
+	post3: {
 		postDate: '2019-09-13',
 		postData: {
 			quantity: '6.66',
 			quantityUnits: 'cups',
 		},
 	},
-	{
+	post4: {
 		postDate: '2019-09-14',
 		postData: {
 			quantity: '6.66',
 			quantityUnits: 'ounces',
 		},
 	},
-	{
+	post5: {
 		postDate: '2019-09-15',
 		postData: {
 			quantity: '3',
 			quantityUnits: 'liters',
 		},
 	},
-]
-export const sampleContests = [
-	{
+}
+export const sampleContests = {
+
+	contest1: {
 		title: 'The First Contest: 6 2-Day Challenges',
 		startDate: new Date(2019, 9, 20).toDateString(),
 		daysPerChallenge: '2',
@@ -52,7 +53,7 @@ export const sampleContests = [
 			6: 'challenge6',
 		},
 	},
-	{
+	contest2: {
 		title: 'The Second Contest: 6 14-Day Challenges',
 		startDate: new Date(2019, 10, 1).toDateString(),
 		daysPerChallenge: '3',
@@ -68,9 +69,9 @@ export const sampleContests = [
 			6: 'challenge6',
 		},
 	},
-]
-export const sampleUsers = [
-	{
+}
+export const sampleUsers = {
+	user1: {
 		email: 'user_1@example.com',
 		userRole: 'default',
 		uid: 'user1',
@@ -81,7 +82,7 @@ export const sampleUsers = [
 		userHeightFeet: '5',
 		userHeightInches: '10',
 	},
-	{
+	user2: {
 		email: 'user_2@example.com',
 		userRole: 'default',
 		uid: 'user2',
@@ -92,7 +93,7 @@ export const sampleUsers = [
 		userHeightFeet: '5',
 		userHeightInches: '10',
 	},
-	{
+	user3: {
 		email: 'user_3@example.com',
 		userRole: 'default',
 		uid: 'user3',
@@ -103,7 +104,7 @@ export const sampleUsers = [
 		userHeightFeet: '5',
 		userHeightInches: '10',
 	},
-	{
+	user4: {
 		email: 'entity.john@gmail.com',
 		userRole: 'admin',
 		uid: 'user4',
@@ -114,10 +115,10 @@ export const sampleUsers = [
 		userHeightFeet: '5',
 		userHeightInches: '8',
 	},
-]
+}
 
-export const sampleChallenges = [
-	{
+export const sampleChallenges = {
+	challenge1: {
 		challengeName: 'Water Intake',
 		uid: 'challenge1',
 		description:
@@ -125,7 +126,7 @@ export const sampleChallenges = [
 		units: 'volume',
 		defaultTarget: { quantity: 8, units: 'cups' },
 	},
-	{
+	challenge2: {
 		challengeName: 'Eat Vegetables',
 		uid: 'challenge',
 		description:
@@ -133,21 +134,21 @@ export const sampleChallenges = [
 		units: [`servings`],
 		typesOfVegetables: ['leafy-greens', 'non-green'],
 	},
-	{
+	challenge3: {
 		challengeName: 'Eat Protein',
 		uid: 'challenge2',
 		description:
 			'We should aim for a target protein level every day for the goals we want to achieve. Our bodies are built from them!',
 		units: 'weight',
 	},
-	{
+	challenge4: {
 		challengeName: 'Get Active!',
 		uid: 'challenge3',
 		description: `Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!`,
 		units: 'intensity',
 		intensities: ['light', 'medium', 'high'],
 	},
-	{
+	challenge5: {
 		challengeName: 'Manage Carbohydrate Intake',
 		uid: 'challenge4',
 		description:
@@ -155,11 +156,11 @@ export const sampleChallenges = [
 		units: 'weight',
 		typesOfCarbohydrate: ['simple', 'complex'],
 	},
-	{
+	challenge6: {
 		challengeName: 'Manage Sugar and Salt Intake',
 		uid: 'challenge5',
 		description:
 			'The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.',
 		units: 'weight',
 	},
-]
+}
