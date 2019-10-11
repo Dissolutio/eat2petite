@@ -156,16 +156,16 @@ const useDataContext = () => {
 
 	return {
 		appData,
+		consoleLogAppData,
 		loadSampleData,
 		setSampleDataToFirebase,
 		loadLocalData,
 		setLocalData,
 		loadFirebaseData,
-		consoleLogAppData,
-		enrollUserInContest,
 		createUserPost,
 		createContest,
 		updateChallenge,
+		enrollUserInContest,
 		updateUserChallengeTarget,
 	}
 }

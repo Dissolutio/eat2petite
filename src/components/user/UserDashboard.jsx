@@ -5,13 +5,6 @@ import { useDataContext } from '../../contexts/useDataContext'
 
 import WaterChallengePostForm from './WaterChallengePostForm'
 import UserContestsList from './UserContestsList'
-import UserPostsList from './UserPostsList'
-import UserChallengesList from './UserChallengesList'
-
-// 1. DONE !!!!! Categorize all the days
-// 2. Find matching post for each day
-/// 3. Display latest six days
-// 4. Display quick post form for today
 
 const getDateArray = (start, end) => {
 	let arr = []
@@ -46,7 +39,7 @@ const DashboardCalendar = props => {
 
 export default function UserDashboard() {
 	const { appData } = useDataContext()
-	const { contests, challenges, posts } = appData
+	const { contests, challenges } = appData
 	const makeOrderOfChallenges = () =>
 		challenges &&
 		Object.keys(challenges).reduce((acc, challengeUid, index) => {
