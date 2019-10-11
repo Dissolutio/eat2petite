@@ -26,11 +26,10 @@ const useDataContext = () => {
 
 	const loadSampleData = () => {
 		const sampleData = {
-			...appData,
-			sampleUsers,
-			samplePosts,
-			sampleChallenges,
-			sampleContests,
+			users: sampleUsers,
+			posts: samplePosts,
+			challenges: sampleChallenges,
+			contests: sampleContests,
 		}
 		console.log('Loading sample data', sampleData)
 		setAppData(sampleData)
@@ -77,6 +76,8 @@ const useDataContext = () => {
 		if (localData) {
 			console.log('localData', localData)
 			setAppData(localData)
+		} else {
+			console.log('No local data found')
 		}
 	}
 	// SAVE DATA TO LOCAL

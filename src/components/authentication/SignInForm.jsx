@@ -5,10 +5,10 @@ import { Container, Alert, Button, Form, FormGroup, Label, Input } from 'reactst
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 import useInputValue from '../../modules/hooks/useInputValue'
 
+import SignInDevConsole from './SignInDevConsole'
 import PasswordForgetForm from './PasswordForgetForm'
 
 import * as ROUTES from '../../routes'
-import { sampleUsers } from '../../sampleData'
 
 const SignInForm = props => {
 	const email = useInputValue('')
@@ -22,32 +22,13 @@ const SignInForm = props => {
 			setFormError(error)
 		})
 	}
-	const signInAsSampleUser = sampleUser => {
-		const { email } = sampleUser
-		firebaseApp.doSignInWithEmailAndPassword(email, 'password').catch(error => {
-			console.log(error)
-			setFormError(error)
-		})
-	}
 	const isInvalid = password === '' || email === ''
 	return (
 		<Container className="p-1">
 			<Form className="p-2 text-center border border-primary rounded" onSubmit={onFormSubmit}>
 				<h2 className="text-center">Sign In</h2>
 				{formError && formError.message ? <Alert color="danger">{formError.message}</Alert> : null}
-				{(process.env.NODE_ENV === 'development') ? sampleUsers.slice(0, 4).map(sampleUser => {
-					const { username, email } = sampleUser
-					return (
-						<Button
-							key={email}
-							onClick={() => signInAsSampleUser(sampleUser)}
-							block
-							size="sm"
-							color="warning">
-							Sign in as {`${username}`}
-						</Button>
-					)
-				}) : null}
+				{(process.env.NODE_ENV === 'development') ? <SignInDevConsole setFormError={setFormError} /> : null}
 				<FormGroup>
 					<Label htmlFor="email">
 						Email:
