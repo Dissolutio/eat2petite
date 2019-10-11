@@ -4,7 +4,7 @@ import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
 import { getLocalState, setLocalState } from '../modules/localStorage'
 import { sampleUsers, samplePosts, sampleChallenges, sampleContests } from '../sampleData'
-import * as devFunctions from './devFunctions'
+
 const DataContext = React.createContext([{}, () => { }])
 
 const DataContextProvider = props => {
@@ -18,27 +18,19 @@ const DataContextProvider = props => {
 	})
 	return <DataContext.Provider value={[appData, setAppData]}>{props.children}</DataContext.Provider>
 }
+
 const useDataContext = () => {
 	const firebaseApp = useFirebaseContext()
 	const { user } = useAuthUserContext()
 	const [appData, setAppData] = useContext(DataContext)
-	const loadInitialData = () => {
-		const localData = getLocalState
-		if (localData) {
-			setAppData(localData)
-			console.log('set app Data to localData', localData)
-			return
-		}
-		console.log("No local data found :\(")
-		loadSampleData()
 
-	}
 	const loadSampleData = () => {
 		const sampleData = {
-			users: sampleUsers,
-			posts: samplePosts,
-			challenges: sampleChallenges,
-			contests: sampleContests,
+			...appData,
+			sampleUsers,
+			samplePosts,
+			sampleChallenges,
+			sampleContests,
 		}
 		console.log('Loading sample data', sampleData)
 		setAppData(sampleData)
@@ -74,9 +66,18 @@ const useDataContext = () => {
 		// sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
 		// sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
 	}
+	// LOG CURRENT DATA
+	const consoleLogAppData = () => {
+		console.log('current appData', appData)
+	}
+
 	// LOAD LOCAL DATA
 	const loadLocalData = () => {
-		return getLocalState()
+		const localData = getLocalState()
+		if (localData) {
+			console.log('localData', localData)
+			setAppData(localData)
+		}
 	}
 	// SAVE DATA TO LOCAL
 	const setLocalData = () => {
@@ -159,7 +160,7 @@ const useDataContext = () => {
 		loadLocalData,
 		setLocalData,
 		loadFirebaseData,
-		consoleLogAppData: () => devFunctions.consoleLogAppData(appData),
+		consoleLogAppData,
 		enrollUserInContest,
 		createUserPost,
 		createContest,

@@ -30,25 +30,25 @@ export default function AppRouter() {
 			<Route
 				exact
 				path={ROUTES.REGISTER}
-				component={SignUpForm}
+				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignUpForm)}
 			/>
 			<Route
 				exact
 				path={ROUTES.LOGIN}
-				component={SignInForm}
+				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm)}
 			/>
 			<Route
 				exact
 				path={ROUTES.VERIFY_EMAIL}
-				component={VerifyEmail}
+				component={meetAuthConditionOrRedirectHOC(emailNotVerifiedCondition, ROUTES.LOGIN)(VerifyEmail)}
 			/>
 			<Route
 				path={ROUTES.USER_HOMEPAGE}
-				component={UserRouter}
+				component={meetAuthConditionOrRedirectHOC(signedInCondition, ROUTES.LOGIN)(UserRouter)}
 			/>
 			<Route
 				path={ROUTES.ADMIN_DASHBOARD}
-				component={AdminRouter}
+				component={meetAuthConditionOrRedirectHOC(adminCondition, ROUTES.USER_HOMEPAGE)(AdminRouter)}
 			/>
 			<Route component={Page404NotFound} />
 		</Switch>
