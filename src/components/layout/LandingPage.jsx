@@ -2,11 +2,12 @@ import React from 'react'
 import { Container } from 'reactstrap'
 import HeroImage from './HeroImage'
 import styled from 'styled-components'
-
+import DevConsole from '../shared/DevConsole'
 export default function LandingPage() {
 	return (
 		<>
 			<HeroImage />
+			{((process.env.NODE_ENV === 'development') && (<DevConsole />))}
 			<Container>
 				<h2 className='text-center'>About Eat-2-Petite</h2>
 				<p>
@@ -27,7 +28,7 @@ export default function LandingPage() {
 					</p>
 				<h2 className='text-center'>About the coach</h2>
 				<p>
-					Jennifer Dotson has a passion for keeping people healthy. From the operating room to her consulting services, she has immersed herself in a world where sharing her knowledge, skills, and just a little push, she can help people eat their way to a healthy life.
+					Jennifer Dotson has a passion for keeping people healthy. From the operating room to her consulting services, she has immersed herself in a world where sharing her knowledge, skills, and just a little push, she can help people on their journey towards improved health.
 					</p>
 			</Container>
 		</>
