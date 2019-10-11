@@ -23,6 +23,7 @@ export default function DevConsole() {
 			<DoubleClickButton doubleClickCallback={setSampleDataToFirebase} text="SET SAMPLE FIREBASE DATA" />
 			<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA " />
 			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA " />
+			<DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD SAMPLE DATA " />
 		</ButtonGroup>
 	)
 }
