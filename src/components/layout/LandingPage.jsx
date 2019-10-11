@@ -15,11 +15,9 @@ export default function LandingPage() {
 					</p>
 				<Blockquote>
 					I need to lose weight, but I cannot stop eating!
-					<span>-Everybody</span>
+					I wish I could just eat my way to thin...
+					<span>Everybody</span>
 				</Blockquote>
-				<p>
-					I wish I could just eat my way to thin.
-					</p>
 				<p>
 					Eat 2 Petite is not a one-size-fits-all diet plan. Here, we believe that every person’s life, environment, tastes, and economic situations are unique.
 				</p>
@@ -39,7 +37,7 @@ const Blockquote = styled.blockquote`
 	margin:50px auto;
 	color: #555555;
 	padding:1.2rem;
-	border-left:8px solid #78C0A8 ;
+	border-left:8px solid var(--E2P-bright-orange) ;
 	position: relative;
 	background:#EDEDED;
 	span {
