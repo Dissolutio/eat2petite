@@ -1,5 +1,6 @@
 export const samplePosts = {
 	post1: {
+		uid: 'post1',
 		postDate: '2019-09-11',
 		postData: {
 			quantity: '6.66',
@@ -7,6 +8,7 @@ export const samplePosts = {
 		},
 	},
 	post2: {
+		uid: 'post2',
 		postDate: '2019-09-12',
 		postData: {
 			quantity: '6.66',
@@ -14,6 +16,7 @@ export const samplePosts = {
 		},
 	},
 	post3: {
+		uid: 'post3',
 		postDate: '2019-09-13',
 		postData: {
 			quantity: '6.66',
@@ -21,6 +24,7 @@ export const samplePosts = {
 		},
 	},
 	post4: {
+		uid: 'post4',
 		postDate: '2019-09-14',
 		postData: {
 			quantity: '6.66',
@@ -28,6 +32,8 @@ export const samplePosts = {
 		},
 	},
 	post5: {
+		uid: 'post5',
+		uid: 'post5',
 		postDate: '2019-09-15',
 		postData: {
 			quantity: '3',
