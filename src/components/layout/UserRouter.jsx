@@ -9,7 +9,7 @@ import { UserDashboard } from '../user/UserDashboard/'
 import AccountPage from '../user/AccountPage'
 import UserChallengesList from '../user/UserChallengesList'
 import UserPostsList from '../user/UserPostsList'
-import UserPostDetail from '../user/UserPostDetail'
+import UserPostCard from '../user/UserPostCard'
 import ChallengeCard from '../shared/ChallengeCard'
 
 import * as ROUTES from '../../routes'
@@ -26,7 +26,9 @@ export default function UserRouter(props) {
 	const notAdminCondition = () => !!user && user.userRole !== `admin`
 	return (
 		<Switch>
-			<Route exact path={ROUTES.USER_POSTS} render={props => <UserPostsList posts={posts} />} />
+			<Route exact path={ROUTES.USER_POSTS}
+				render={props => <UserPostsList posts={posts} />}
+			/>
 			<Route
 				path={`${ROUTES.USER_POSTS}:id`}
 				render={props => {
@@ -40,7 +42,9 @@ export default function UserRouter(props) {
 				path={ROUTES.USER_CHALLENGES}
 				render={props => <UserChallengesList challenges={challenges} />}
 			/>
-			<Route path={`${ROUTES.USER_CHALLENGES}:id`} render={props => <ChallengeCard challenge={challenges[props.match.params.id]} />} />
+			<Route path={`${ROUTES.USER_CHALLENGES}:id`}
+				render={props => <ChallengeCard challenge={challenges[props.match.params.id]} />}
+			/>
 			<Route
 				exact
 				path={ROUTES.USER_ACCOUNT}

@@ -26,7 +26,6 @@ export default function UserPostCard(props) {
 									(keyIndex >= Object.keys(post.postData.data).length - 1 ? ',' : '')
 								)
 							})}]`}
-							}
 						</CardText>
 					)}
 				</CardBody>
