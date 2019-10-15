@@ -4,7 +4,7 @@ import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
 import { getLocalState, setLocalState } from '../modules/localStorage'
 import { sampleUsers, samplePosts, sampleChallenges, sampleContests } from '../sampleData'
-
+import savePoint from '../assets/savePoint'
 const DataContext = React.createContext([{}, () => { }])
 
 const DataContextProvider = props => {
@@ -35,42 +35,15 @@ const useDataContext = () => {
 		setAppData(sampleData)
 	}
 	const setSampleDataToFirebase = async () => {
-		console.log("Setting sample data.... But you can configure what that means in useDataContext")
-		// const exampleUser = sampleUsers.find(sampleUser => sampleUser.firstName === 'Jill')
-		// const examplePassword = 'password'
-		// const userId = await firebaseApp.doCreateNewUser(exampleUser, examplePassword)
-		// console.log(`New User's new ID`, userId)
-		// const getDateArray = (start, end) => {
-		// 	const arr = new Array()
-		// 	const dt = new Date(start)
-		// 	while (dt <= end) {
-		// 		arr.push({
-		// 			date: new Date(dt),
-		// 		})
-		// 		dt.setDate(dt.getDate() + 1)
-		// 	}
-		// 	return arr
-		// }
-
-		// const sampleStartDate = new Date(2019, 8, 1)
-		// const sampleEndDate = new Date(2019, 8, 4)
-		// getDateArray(sampleStartDate, sampleEndDate).forEach(post => {
-		// 	const newPost = {
-		// 		...post,
-		// 		author: 'xv870nS3Y0X2dQxCOIly1yv9RDv1', // username: Jack
-		// 		// author: '8uuaKHW0ccTMu5seVAKUMmFv3b73', // username: Jill
-		// 	}
-		// 	firebaseApp.dbCreateUserPost(newPost)
-		// })
-		// sampleChallenges.forEach(challenge => firebaseApp.dbSaveNewChallenge(challenge))
-		// sampleContests.forEach(contest => firebaseApp.dbSaveNewContest(contest))
+		console.log("Setting sample data....")
+		// firebaseApp.dbBlowItAllAway()
+		firebaseApp.db.ref().set(savePoint)
 	}
-	// LOG CURRENT DATA
+
 	const consoleLogAppData = () => {
 		console.log('current appData', appData)
 	}
 
-	// LOAD LOCAL DATA
 	const loadLocalData = () => {
 		const localData = getLocalState()
 		if (localData) {
@@ -80,12 +53,12 @@ const useDataContext = () => {
 			console.log('No local data found')
 		}
 	}
-	// SAVE DATA TO LOCAL
+
 	const setLocalData = () => {
 		setLocalState(appData)
 	}
 
-	// LOAD FIREBASE DATA
+
 	const loadFirebaseData = async () => {
 		const challenges = await getChallenges()
 		const users = await getUsers()
@@ -103,12 +76,14 @@ const useDataContext = () => {
 			...newData,
 		})
 	}
+
 	const getChallenges = () => {
 		return firebaseApp.db
 			.ref('/challenges')
 			.once('value')
 			.then(snapshot => snapshot.val())
 	}
+
 	const getUsers = () => {
 		if (user.userRole === 'admin') {
 			return firebaseApp
@@ -122,6 +97,7 @@ const useDataContext = () => {
 				.then(snapshot => snapshot.val())
 		}
 	}
+
 	const getPosts = () => {
 		if (user.userRole === 'default') {
 			return firebaseApp
@@ -137,21 +113,26 @@ const useDataContext = () => {
 			return {}
 		}
 	}
+
 	const getContests = () => {
 		return firebaseApp
 			.dbContests()
 			.once('value')
 			.then(snapshot => snapshot.val())
 	}
+
 	const updateChallenge = (updatedChallenge) => firebaseApp.dbUpdateChallenge(updatedChallenge)
 
 	const enrollUserInContest = (userId, contestId) => {
 		firebaseApp.dbEnrollUserInContest(userId, contestId)
 	}
+
 	const createContest = contest => firebaseApp.dbSaveNewContest(contest)
+
 	const createUserPost = post => {
 		firebaseApp.dbCreateUserPost(post)
 	}
+
 	const updateUserChallengeTarget = (userId, challengeId, target) => firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target)
 
 	return {
