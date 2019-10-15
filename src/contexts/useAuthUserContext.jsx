@@ -35,13 +35,14 @@ const useAuthListener = firebaseApp => {
 					localStorage.setItem('authUser', JSON.stringify(mergedUser))
 				}).catch(error => {
 					console.log('getDbUser Error:', error)
+					const userRole = (user.email === 'entity.john@gmail.com') ? 'admin' : 'default'
 					const incompleteDataUser = {
 						uid: user.uid,
 						email: user.email,
 						emailVerified: user.emailVerified,
 						providerData: user.providerData,
 						username: '',
-						userRole: 'default',
+						userRole,
 						contests: [],
 						challengeTargets: [],
 					}
