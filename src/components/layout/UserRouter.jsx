@@ -5,7 +5,7 @@ import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { meetAuthConditionOrRedirectHOC } from '../../components//authentication/meetAuthConditionOrRedirectHOC'
 import { useDataContext } from '../../contexts/useDataContext'
 
-import UserDashboard from '../user/UserDashboard'
+import { UserDashboard } from '../user/UserDashboard/'
 import AccountPage from '../user/AccountPage'
 import UserChallengesList from '../user/UserChallengesList'
 import UserPostsList from '../user/UserPostsList'
