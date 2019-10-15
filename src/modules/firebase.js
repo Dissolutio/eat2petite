@@ -35,6 +35,9 @@ class Firebase {
 			url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT,
 		})
 
+	// *** Dev API ***
+	dbBlowItAllAway = () => this.db.ref().set(null)
+
 	// *** Users API ***
 	dbPrivateUsers = () => this.db.ref(`/users`)
 	dbPublicUsers = () => this.db.ref(`/publicUsers`)
