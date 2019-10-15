@@ -8,6 +8,13 @@ import { useAuthUserContext } from '../../../contexts/useAuthUserContext'
 import { UserDashboardCalendar } from './UserDashboardCalendar'
 import UserContestsList from '../UserContestsList'
 
+function sortByMostCurrentStartDate(a, b) {
+    if (isAfter(new Date(a.startDate), new Date(b.startDate))) {
+        return -1
+    } else {
+        return 1
+    }
+}
 export const UserDashboard = () => {
     const { appData } = useDataContext()
     const { contests } = appData
@@ -19,38 +26,43 @@ export const UserDashboard = () => {
     console.log('HERE', userEnrolledContests)
     const [userSelectedContest, setUserSelectedContest] = React.useState()
     const [selectedDate, setSelectedDate] = React.useState(new Date())
+    const [hasFiredAutoSelect, setHasFiredAutoSelect] = React.useState(false)
+
+    const sortedByMostRecent = [...userEnrolledContests.sort(sortByMostCurrentStartDate)]
+    const autoSelectedContest = userEnrolledContests && sortedByMostRecent[0]
+    console.log('autoSelectedContest', autoSelectedContest)
+    console.log('userEnrolledContests', userEnrolledContests)
+    if (autoSelectedContest && hasFiredAutoSelect === false) {
+        console.log("FIRE AUTOSELECT")
+        setHasFiredAutoSelect(true)
+        setUserSelectedContest(autoSelectedContest)
+    }
+
     if (userSelectedContest) {
-        const { startDate, daysPerChallenge, numberOfChallenges } = userSelectedContest
-        const sortByMostCurrentStartDate = (a, b) => {
-            if (isAfter(new Date(a.startDate), new Date(b.startDate))) {
-                return -1
-            } else {
-                return 1
-            }
-        }
-        const sortedByMostRecent = [...userEnrolledContests.sort(sortByMostCurrentStartDate)]
-        console.log(sortedByMostRecent)
-        setUserSelectedContest(sortedByMostRecent[0])
+        const { daysPerChallenge, numberOfChallenges } = userSelectedContest
         const contestLengthInDays = daysPerChallenge * numberOfChallenges
-        const endDate = new Date(addDays(new Date(startDate), contestLengthInDays))
-        const allContestDays = eachDayOfInterval({ start: startDate, end: endDate })
+        const startDate = new Date(userSelectedContest.startDate)
+        const endDate = new Date(addDays(startDate, contestLengthInDays))
+        console.log("startDate", startDate)
+        console.log("endDate", endDate)
+        // const allContestDays = eachDayOfInterval({ start: startDate, end: endDate })
         console.log("CONTESTS", contests)
         return (
-            <Container className="text-center">
-                <h1 className="text-center">User Dashboard</h1>
-                <hr />
-                <UserContestsList contests={contests} />
-                <Container>
-                    <UserDashboardCalendar
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectedDate={selectedDate}
-                        setSelectedDate={setSelectedDate}
-                    />
-                </Container>
+            <Container>
+                {userSelectedContest.startDate && <UserDashboardCalendar
+                    startDate={startDate}
+                    endDate={endDate}
+                    selectedDate={selectedDate}
+                    setSelectedDate={setSelectedDate}
+                />}
             </Container>
         )
-    } else {
-        return (<div>No contest selected</div>)
     }
+    return (
+        <Container className="text-center">
+            <h1 className="text-center">User Dashboard</h1>
+            <hr />
+            <UserContestsList contests={contests} />
+        </Container>
+    )
 }
