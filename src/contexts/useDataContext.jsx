@@ -34,12 +34,14 @@ const useDataContext = () => {
 		console.log('Loading sample data', sampleData)
 		setAppData(sampleData)
 	}
-	const setSampleDataToFirebase = async () => {
-		console.log("Setting sample data....")
-		// firebaseApp.dbBlowItAllAway()
+	const dbClear = () => {
+		firebaseApp.dbBlowItAllAway()
+		console.log("Blowing away all DB Data....")
+	}
+	const dbLoadSavePoint = () => {
+		console.log("Setting DB to SavePoint JSON file")
 		firebaseApp.db.ref().set(savePoint)
 	}
-
 	const consoleLogAppData = () => {
 		console.log('current appData', appData)
 	}
@@ -139,7 +141,8 @@ const useDataContext = () => {
 		appData,
 		consoleLogAppData,
 		loadSampleData,
-		setSampleDataToFirebase,
+		dbClear,
+		dbLoadSavePoint,
 		loadLocalData,
 		setLocalData,
 		loadFirebaseData,

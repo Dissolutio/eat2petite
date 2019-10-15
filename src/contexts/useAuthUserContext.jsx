@@ -15,23 +15,39 @@ const useAuthListener = firebaseApp => {
 	})
 	async function onChange(user) {
 		if (user) {
-			const dbUser = await firebaseApp
+			firebaseApp
 				.dbPrivateUserById(user.uid)
 				.once('value')
-				.then(snapshot => snapshot.val())
-			const { username, userRole, contests, challengeTargets } = dbUser
-			const mergedUser = {
-				uid: user.uid,
-				email: user.email,
-				emailVerified: user.emailVerified,
-				providerData: user.providerData,
-				username,
-				userRole,
-				contests,
-				challengeTargets,
-			}
-			localStorage.setItem('authUser', JSON.stringify(mergedUser))
-			setAuthState({ initializing: false, user: mergedUser })
+				.then(snapshot => {
+					const dbUser = snapshot.val()
+					const { username, userRole, contests, challengeTargets } = dbUser
+					const mergedUser = {
+						uid: user.uid,
+						email: user.email,
+						emailVerified: user.emailVerified,
+						providerData: user.providerData,
+						username,
+						userRole,
+						contests,
+						challengeTargets,
+					}
+					setAuthState({ initializing: false, user: mergedUser })
+					localStorage.setItem('authUser', JSON.stringify(mergedUser))
+				}).catch(error => {
+					console.log('getDbUser Error:', error)
+					const incompleteDataUser = {
+						uid: user.uid,
+						email: user.email,
+						emailVerified: user.emailVerified,
+						providerData: user.providerData,
+						username: '',
+						userRole: 'default',
+						contests: [],
+						challengeTargets: [],
+					}
+					setAuthState({ initializing: false, user: incompleteDataUser })
+					localStorage.setItem('authUser', JSON.stringify(incompleteDataUser))
+				})
 		} else {
 			localStorage.removeItem('authUser')
 			setAuthState({ initializing: false, user: null })

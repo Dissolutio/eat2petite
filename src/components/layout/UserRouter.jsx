@@ -22,7 +22,6 @@ export default function UserRouter(props) {
 	}, [])
 	const { posts, challenges, users } = appData
 	const { user } = useAuthUserContext()
-	const currentUser = users[user.uid]
 	const emailVerifiedCondition = () => !!user && user.emailVerified === true
 	const notAdminCondition = () => !!user && user.userRole !== `admin`
 	return (
@@ -33,7 +32,7 @@ export default function UserRouter(props) {
 				render={props => {
 					const postId = props.match.params.id
 					const post = { ...posts[postId], uid: postId }
-					return <UserPostDetail currentUser={currentUser} post={post} />
+					return <UserPostCard currentUser={user} post={post} />
 				}}
 			/>
 			<Route

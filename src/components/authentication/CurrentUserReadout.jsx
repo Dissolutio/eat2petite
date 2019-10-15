@@ -14,7 +14,7 @@ const CurrentUserReadout = () => {
 					<p style={{ color: 'var(--E2P-ginger' }}>
 						<small>
 							Current User:
-							<Badge color="primary">{user.username}</Badge>
+							<Badge color="primary">{user.username || user.email}</Badge>
 							<br />
 							<Button size="sm" block onClick={onSignOutButtonClick}>
 								Sign Out
