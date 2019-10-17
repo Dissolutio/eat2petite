@@ -19,34 +19,23 @@ export const UserDashboard = () => {
     const { appData } = useDataContext()
     const { contests } = appData
     const { user } = useAuthUserContext()
-    console.log('user', user)
-    const userEnrolledContests = user.contests && Object.keys(user.contests).map(contestKey => {
-        return contests[contestKey]
-    })
-    console.log('HERE', userEnrolledContests)
+    const userEnrolledContests = user.contests && Object.keys(user.contests).map(contestKey => (contests[contestKey]))
     const [userSelectedContest, setUserSelectedContest] = React.useState()
     const [selectedDate, setSelectedDate] = React.useState(new Date())
     const [hasFiredAutoSelect, setHasFiredAutoSelect] = React.useState(false)
 
     const sortedByMostRecent = [...userEnrolledContests.sort(sortByMostCurrentStartDate)]
     const autoSelectedContest = userEnrolledContests && sortedByMostRecent[0]
-    console.log('autoSelectedContest', autoSelectedContest)
-    console.log('userEnrolledContests', userEnrolledContests)
     if (autoSelectedContest && hasFiredAutoSelect === false) {
-        console.log("FIRE AUTOSELECT")
         setHasFiredAutoSelect(true)
         setUserSelectedContest(autoSelectedContest)
     }
-
     if (userSelectedContest) {
         const { daysPerChallenge, numberOfChallenges } = userSelectedContest
         const contestLengthInDays = daysPerChallenge * numberOfChallenges
         const startDate = new Date(userSelectedContest.startDate)
         const endDate = new Date(addDays(startDate, contestLengthInDays))
-        console.log("startDate", startDate)
-        console.log("endDate", endDate)
         // const allContestDays = eachDayOfInterval({ start: startDate, end: endDate })
-        console.log("CONTESTS", contests)
         return (
             <Container>
                 {userSelectedContest.startDate && <UserDashboardCalendar
