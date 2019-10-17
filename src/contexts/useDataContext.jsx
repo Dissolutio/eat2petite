@@ -120,7 +120,24 @@ const useDataContext = () => {
 		return firebaseApp
 			.dbContests()
 			.once('value')
-			.then(snapshot => snapshot.val())
+			.then(snapshot => {
+				return Object.entries(snapshot.val()).reduce((acc, entry) => {
+					const uid = entry[0]
+					const contest = entry[1]
+					const orderOfChallenges = contest.orderOfChallenges.filter(memberOfArray => {
+						if (memberOfArray) { return true }
+						else { return false }
+					})
+					const newContest = {
+						...contest,
+						orderOfChallenges,
+					}
+					return {
+						...acc,
+						[uid]: newContest
+					}
+				}, {})
+			})
 	}
 
 	const updateChallenge = (updatedChallenge) => firebaseApp.dbUpdateChallenge(updatedChallenge)
