@@ -36,15 +36,11 @@ const ContestCreateForm = (props) => {
     const enrolledUsers = [...event.target.enrolledUsers]
       .filter((input) => input.checked)
       .map((input) => input.value)
-    const orderOfChallenges = () => {
-      return challengeInputNames.reduce(
-        (orderOfChallenges, inputName, currIndex) => {
-          orderOfChallenges[currIndex + 1] = event.target[inputName].value
-          return orderOfChallenges
-        },
-        {},
-      )
-    }
+    const orderOfChallenges = () => challengeInputNames.reduce(
+      (orderOfChallenges, inputName, currIndex) => {
+        orderOfChallenges[currIndex + 1] = event.target[inputName].value
+        return orderOfChallenges
+      }, {})
     const newContest = {
       title: title.value,
       startDate,
