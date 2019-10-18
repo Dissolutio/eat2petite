@@ -14,6 +14,7 @@ export const UserDashboardCalendar = props => {
             calendarType="US"
             minDate={startDate}
             maxDate={endDate}
+            minDetail={'month'}
         />
     )
 }
