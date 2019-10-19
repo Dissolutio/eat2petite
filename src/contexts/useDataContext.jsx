@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react'
 import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
 import { getLocalState, setLocalState } from '../modules/localStorage'
-import { sampleUsers, samplePosts, sampleChallenges, sampleContests } from '../sampleData'
+import { sampleUsers, samplePublicUsers, samplePosts, sampleChallenges, sampleContests } from '../sampleData'
 import savePoint from '../assets/savePoint'
 const DataContext = React.createContext([{}, () => { }])
 
@@ -24,19 +24,27 @@ const useDataContext = () => {
 	const { user } = useAuthUserContext()
 	const [appData, setAppData] = useContext(DataContext)
 
-	const loadSampleData = () => {
-		const sampleData = {
-			users: sampleUsers,
-			posts: samplePosts,
-			challenges: sampleChallenges,
-			contests: sampleContests,
-		}
-		console.log('Loading sample data', sampleData)
-		setAppData(sampleData)
-	}
-	const dbClear = () => {
-		firebaseApp.dbBlowItAllAway()
-		console.log("Blowing away all DB Data....")
+	const dbResetToSample = async () => {
+		await firebaseApp.dbBlowItAllAway()
+		Object.values(sampleChallenges).forEach(challenge => firebaseApp.dbSetChallenge(challenge))
+		Object.values(sampleContests).forEach(contest => firebaseApp.dbSaveNewContest(contest))
+		firebaseApp.dbPrivateUsers().set(sampleUsers)
+		firebaseApp.dbPublicUsers().set(samplePublicUsers)
+		await loadFirebaseData()
+		await Object.values(appData.users).forEach(user => {
+			if (user.userRole === 'admin') {
+				return
+			}
+			if (user.userRole === 'default') {
+				Object.values(appData.contests).forEach(contest => {
+					firebaseApp.dbEnrollUserInContest(user.uid, contest.uid)
+					console.log("TCL: dbResetToSample -> contest.uid", contest.uid)
+					console.log("TCL: dbResetToSample -> user.uid", user.uid)
+				})
+			}
+		})
+		await loadFirebaseData()
+		return
 	}
 	const dbLoadSavePoint = () => {
 		console.log("Setting DB to SavePoint JSON file")
@@ -121,10 +129,10 @@ const useDataContext = () => {
 			.dbContests()
 			.once('value')
 			.then(snapshot => {
-				return Object.entries(snapshot.val()).reduce((acc, entry) => {
+				return snapshot.val() && Object.entries(snapshot.val()).reduce((acc, entry) => {
 					const uid = entry[0]
 					const contest = entry[1]
-					const orderOfChallenges = contest.orderOfChallenges.filter(memberOfArray => {
+					const orderOfChallenges = contest.orderOfChallenges && contest.orderOfChallenges.filter(memberOfArray => {
 						if (memberOfArray) { return true }
 						else { return false }
 					})
@@ -157,8 +165,7 @@ const useDataContext = () => {
 	return {
 		appData,
 		consoleLogAppData,
-		loadSampleData,
-		dbClear,
+		dbResetToSample,
 		dbLoadSavePoint,
 		loadLocalData,
 		setLocalData,

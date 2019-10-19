@@ -36,7 +36,18 @@ class Firebase {
 		})
 
 	// *** Dev API ***
-	dbBlowItAllAway = () => this.db.ref().set(null)
+	dbBlowItAllAway = async () => {
+		await this.db.ref('/challenges').remove()
+		await this.db.ref('/contests').set(null)
+		await this.db.ref('/posts').remove()
+		await this.db.ref('/users').once('value').then(snapshot => {
+			Object.keys(snapshot.val()).forEach(userKey => {
+				this.db.ref(`/users/${userKey}/contests`).remove()
+				this.db.ref(`/users/${userKey}/challengeTargets`).remove()
+			})
+		})
+		return
+	}
 
 	// *** Users API ***
 	dbPrivateUsers = () => this.db.ref(`/users`)
@@ -57,13 +68,16 @@ class Firebase {
 	dbSetUserChallengeTarget = (userId, challengeId, target) => this.dbPrivateUsers().child(`${userId}/challengeTargets/${challengeId}`).set(target)
 	// *** Contests API ***
 	dbContests = () => this.db.ref(`/contests`)
-	dbSaveNewContest = contest => this.dbContests().push().then(ref => {
-		ref.set({
-			...contest,
-			uid: ref.key,
+	dbSaveNewContest = contest => {
+		console.log("TCL: Firebase -> contest", contest)
+		this.dbContests().push().then(ref => {
+			ref.set({
+				...contest,
+				uid: ref.key,
+			})
+			return ref.key
 		})
-		return ref.key
-	})
+	}
 	dbEnrollUserInContest = (userId, contestId) => {
 		let updates = {}
 		updates['/contests/' + contestId + '/enrolledUsers/' + userId] = true
@@ -73,13 +87,8 @@ class Firebase {
 
 	// *** Challenges API ***
 	dbChallenges = () => this.db.ref('/challenges')
-	dbSaveNewChallenge = challenge => {
-		const newChallengeRef = this.dbChallenges().push()
-		newChallengeRef.set({
-			...challenge,
-			uid: newChallengeRef.key,
-		})
-	}
+	dbSetChallenge = challenge => this.dbChallenges().child(`/${challenge.uid}`).set(challenge)
+
 	dbUpdateChallenge = (updatedChallenge) => this.db.ref(`/challenges/${updatedChallenge.uid}`).set(updatedChallenge)
 	// *** Posts API ***
 	dbPosts = () => this.db.ref('posts')
@@ -87,6 +96,10 @@ class Firebase {
 	dbCreateUserPost = post => {
 		const newPostRef = this.dbPostsByUserId(post.author).push()
 		newPostRef.set({ ...post })
+	}
+	dbUserUpdatePost = (post) => {
+		const postRef = this.db.ref(`posts/${post.author}/${post.uid}`);
+		postRef.update({ editedAt: new Date() });
 	}
 }
 
