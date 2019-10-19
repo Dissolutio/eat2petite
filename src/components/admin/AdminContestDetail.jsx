@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText, ListGroup, ListGroupItem } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
-
+import { AdminUserDetailLink } from '../layout/Links'
 export default function AdminContestDetail(props) {
 
 	const { appData } = useDataContext()
@@ -31,7 +31,9 @@ export default function AdminContestDetail(props) {
 					<CardFooter>
 						{enrolledUsersArray ? (
 							<ListGroup><h4>Enrolled Users</h4>
-								{enrolledUsersArray.map(user => <ListGroupItem key={user.uid}>{user.username}</ListGroupItem>)}
+								{enrolledUsersArray.map(user => <ListGroupItem key={user.uid}>
+									<AdminUserDetailLink id={user.uid}>{user.username}</AdminUserDetailLink>
+								</ListGroupItem>)}
 							</ListGroup>
 						)
 							: (<CardText>No users enrolled yet!</CardText>)
