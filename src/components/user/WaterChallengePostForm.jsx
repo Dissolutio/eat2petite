@@ -20,6 +20,7 @@ export default function WaterChallengePostForm(props) {
 		event.preventDefault()
 		let newPost = {
 			author: user.uid,
+			userId: user.uid,
 			createdAt: new Date(),
 			postDate: selectedDate,
 			contestId: userSelectedContest.uid,
