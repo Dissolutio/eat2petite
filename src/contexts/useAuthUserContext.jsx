@@ -15,40 +15,37 @@ const useAuthListener = firebaseApp => {
 	})
 	async function onChange(user) {
 		if (user) {
-			firebaseApp
+			const dbUser = await firebaseApp
 				.dbPrivateUserById(user.uid)
 				.once('value')
-				.then(snapshot => {
-					const dbUser = snapshot.val()
-					const { username, userRole, contests, challengeTargets } = dbUser
-					const mergedUser = {
-						uid: user.uid,
-						email: user.email,
-						emailVerified: user.emailVerified,
-						providerData: user.providerData,
-						username,
-						userRole,
-						contests,
-						challengeTargets,
-					}
-					setAuthState({ initializing: false, user: mergedUser })
-					localStorage.setItem('authUser', JSON.stringify(mergedUser))
-				}).catch(error => {
-					console.log('getDbUser Error:', error)
-					const userRole = (user.email === 'entity.john@gmail.com') ? 'admin' : 'default'
-					const incompleteDataUser = {
-						uid: user.uid,
-						email: user.email,
-						emailVerified: user.emailVerified,
-						providerData: user.providerData,
-						username: '',
-						userRole,
-						contests: [],
-						challengeTargets: [],
-					}
-					setAuthState({ initializing: false, user: incompleteDataUser })
-					localStorage.setItem('authUser', JSON.stringify(incompleteDataUser))
-				})
+				.then(snapshot => snapshot.val())
+			if (dbUser) {
+				const { username, userRole, contests, challengeTargets } = dbUser
+				const mergedUser = {
+					uid: user.uid,
+					email: user.email,
+					emailVerified: user.emailVerified,
+					providerData: user.providerData,
+					username,
+					userRole,
+					contests,
+					challengeTargets,
+				}
+				setAuthState({ initializing: false, user: mergedUser })
+				localStorage.setItem('authUser', JSON.stringify(mergedUser))
+				return
+			}
+			setAuthState({
+				initializing: false, user: {
+					uid: user.uid,
+					email: user.email,
+					emailVerified: user.emailVerified,
+					providerData: user.providerData,
+					username: user.email,
+					userRole: 'default',
+				}
+			})
+			localStorage.setItem('authUser', JSON.stringify(user))
 		} else {
 			localStorage.removeItem('authUser')
 			setAuthState({ initializing: false, user: null })
