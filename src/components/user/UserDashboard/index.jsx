@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container } from 'reactstrap'
+import { Container, Button } from 'reactstrap'
 import {
   format,
   eachDayOfInterval,
@@ -23,16 +23,16 @@ function sortByMostCurrentStartDate(a, b) {
   }
 }
 export const UserDashboard = (props) => {
-  const { appData } = useDataContext()
-  const { contests, posts } = appData
-  const { user } = useAuthUserContext()
-  const { contestChosen } = props
-  const userEnrolledContests =
-    user.contests &&
-    Object.keys(user.contests).map((contestKey) => contests[contestKey])
   const [userSelectedContest, setUserSelectedContest] = React.useState()
   const [selectedDate, setSelectedDate] = React.useState(new Date())
   const [hasFiredAutoSelect, setHasFiredAutoSelect] = React.useState(false)
+
+  const { appData } = useDataContext()
+  const { contests, posts, me } = appData
+  const { contestChosen } = props
+  const userEnrolledContests =
+    me.contests &&
+    Object.keys(me.contests).map((contestKey) => contests[contestKey])
   if (contestChosen && !hasFiredAutoSelect) {
     setHasFiredAutoSelect(true)
     setUserSelectedContest(contestChosen)
@@ -42,6 +42,7 @@ export const UserDashboard = (props) => {
     ...userEnrolledContests.sort(sortByMostCurrentStartDate),
   ]
   const autoSelectedContest = userEnrolledContests && sortedByMostRecent[0]
+
   if (autoSelectedContest && !hasFiredAutoSelect && !contestChosen) {
     setHasFiredAutoSelect(true)
     setUserSelectedContest(autoSelectedContest)
@@ -67,9 +68,12 @@ export const UserDashboard = (props) => {
       )
       return daysStartToPostDate
     }
+    const handlePostsButtonClick = (event) => {
+      console.log(event.target)
+    }
     return (
       <Container>
-        {userSelectedContest.startDate && (
+        {userSelectedContest && (
           <UserDashboardCalendar
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
@@ -77,6 +81,13 @@ export const UserDashboard = (props) => {
             endDate={contestEndDate}
           />
         )}
+        <Button
+          onClick={handlePostsButtonClick}
+          color="warning"
+          block
+          size="lg">
+          Make Posts
+        </Button>
         <WaterChallengePostForm
           userSelectedContest={userSelectedContest}
           selectedDate={format(new Date(selectedDate), 'yyyy-MM-dd')}
@@ -85,7 +96,7 @@ export const UserDashboard = (props) => {
           contestEndDate={contestEndDate}
         />
         <UserContestsList
-          contests={contests}
+          userEnrolledContests={userEnrolledContests}
           setUserSelectedContest={setUserSelectedContest}
         />
       </Container>
