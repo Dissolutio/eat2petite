@@ -7,13 +7,12 @@ import {
   isAfter,
   differenceInDays,
 } from 'date-fns'
-
 import { useDataContext } from '../../../contexts/useDataContext'
 import { useAuthUserContext } from '../../../contexts/useAuthUserContext'
-
 import { UserDashboardCalendar } from './UserDashboardCalendar'
 import UserContestsList from '../UserContestsList'
 import WaterChallengePostForm from '../WaterChallengePostForm'
+import { random } from 'lodash'
 
 function sortByMostCurrentStartDate(a, b) {
   if (isAfter(new Date(a.startDate), new Date(b.startDate))) {
@@ -27,7 +26,7 @@ export const UserDashboard = (props) => {
   const [selectedDate, setSelectedDate] = React.useState(new Date())
   const [hasFiredAutoSelect, setHasFiredAutoSelect] = React.useState(false)
 
-  const { appData } = useDataContext()
+  const { appData, createUserPost } = useDataContext()
   const { contests, posts, me } = appData
   const { contestChosen } = props
   const userEnrolledContests =
@@ -70,6 +69,22 @@ export const UserDashboard = (props) => {
     }
     const handlePostsButtonClick = (event) => {
       console.log(event.target)
+      const dateInterval = eachDayOfInterval({ start: new Date(userSelectedContest.startDate), end: new Date(format(addDays(new Date(), -1), 'P')) })
+      dateInterval.forEach(dateToPost => {
+        let newPost = {
+          author: me.uid,
+          userId: me.uid,
+          createdAt: new Date(),
+          postDate: dateToPost,
+          contestId: userSelectedContest.uid,
+          postData: {
+            quantity: random(1, 10),
+            quantityUnits: 'cups',
+          },
+        }
+        console.log("TCL: handlePostsButtonClick -> newPost.postData.quantity", newPost.postData.quantity)
+        // createUserPost(newPost)
+      })
     }
     return (
       <Container>
