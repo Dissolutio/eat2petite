@@ -5,15 +5,12 @@ import DoubleClickButton from '../shared/DoubleClickButton'
 import { Button, ButtonGroup } from 'reactstrap'
 export default function DevConsole() {
 	const {
-		appData,
-		dbClear,
+		dbResetToSample,
 		dbLoadSavePoint,
-		loadSampleData,
 		loadLocalData,
 		setLocalData,
 		loadFirebaseData,
 		consoleLogAppData,
-		enrollUserInContest,
 	} = useDataContext()
 	return (
 		<ButtonGroup vertical style={{ width: '100%' }}>
@@ -27,13 +24,10 @@ export default function DevConsole() {
 			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA "
 				firstColor="primary" secondColor="warning"
 			/>
-			<DoubleClickButton doubleClickCallback={loadSampleData} text="LOAD SAMPLE DATA "
-				firstColor="primary" secondColor="warning"
-			/>
 			<DoubleClickButton doubleClickCallback={dbLoadSavePoint} text="LOAD DB SAVE POINT"
 				firstColor="primary" secondColor="warning"
 			/>
-			<DoubleClickButton doubleClickCallback={dbClear} text="CLEAR DATABASE"
+			<DoubleClickButton doubleClickCallback={dbResetToSample} text="DB RESET TO SAMPLE"
 				firstColor="danger" secondColor="danger"
 			/>
 		</ButtonGroup>
