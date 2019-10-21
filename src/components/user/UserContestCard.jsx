@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardHeader, CardBody, CardText } from 'reactstrap'
 import { format } from 'date-fns'
 
-export default function UserContestCard(props) {
+export default function UserContestLinkButton(props) {
 	const { contest } = props
 	if (contest) {
 		const { daysPerChallenge, numberOfChallenges, startDate } = contest

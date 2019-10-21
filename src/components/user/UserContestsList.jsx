@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'reactstrap'
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
-import UserContestCard from './UserContestCard'
+import UserContestLinkButton from './UserContestCard'
 export default function UserContestsList(props) {
 	const { user } = useAuthUserContext()
 	const userContestsArray =
@@ -13,7 +13,7 @@ export default function UserContestsList(props) {
 			<h2>Your Contests</h2>
 			<div>
 				{userContestsArray
-					? userContestsArray.map((contest, index) => <UserContestCard key={index} contest={contest} />)
+					? userContestsArray.map((contest, index) => <UserContestLinkButton key={index} contest={contest} />)
 					: 'You are not enrolled in any contests.'}
 			</div>
 		</Container>
