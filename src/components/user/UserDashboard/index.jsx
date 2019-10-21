@@ -5,15 +5,17 @@ import { eachDayOfInterval, addDays, isAfter } from 'date-fns'
 import { useDataContext } from '../../../contexts/useDataContext'
 import { useAuthUserContext } from '../../../contexts/useAuthUserContext'
 
-import { UserDashboardCalendar } from './UserDashboardCalendar'
+import UserDashboardCalendar from './UserDashboardCalendar'
+import UserPostForm from './UserPostForm'
+
 import UserContestsList from '../UserContestsList'
 
 function sortByMostCurrentStartDate(a, b) {
-    if (isAfter(new Date(a.startDate), new Date(b.startDate))) {
-        return -1
-    } else {
-        return 1
-    }
+  if (isAfter(new Date(a.startDate), new Date(b.startDate))) {
+    return -1
+  } else {
+    return 1
+  }
 }
 export const UserDashboard = () => {
     const { appData } = useDataContext()
@@ -48,10 +50,25 @@ export const UserDashboard = () => {
         )
     }
     return (
-        <Container className="text-center">
-            <h1 className="text-center">User Dashboard</h1>
-            <hr />
-            <UserContestsList contests={contests} />
-        </Container>
+      <Container>
+        <UserDashboardCalendar
+          startDate={startDate}
+          endDate={endDate}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+        <UserPostForm
+          selectedDate={selectedDate}
+          selectedContest={selectedDate}
+        />
+      </Container>
     )
+  }
+  return (
+    <Container className="text-center">
+      <h1 className="text-center">User Dashboard</h1>
+      <hr />
+      <UserContestsList contests={contests} />
+    </Container>
+  )
 }
