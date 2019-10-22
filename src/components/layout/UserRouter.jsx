@@ -25,7 +25,7 @@ export default function UserRouter() {
 	return (
 		<Switch>
 			<Route exact path={ROUTES.USER_POSTS}
-				render={props => <UserPostsList posts={posts} />}
+				render={props => <UserPostsList posts={posts} currentUser={me} />}
 			/>
 			<Route
 				path={`${ROUTES.USER_POSTS}:id`}
