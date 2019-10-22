@@ -20,10 +20,9 @@ export default function UserRouter(props) {
 		loadFirebaseData()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	const { posts, challenges, users } = appData
-	const { user } = useAuthUserContext()
-	const emailVerifiedCondition = () => !!user && user.emailVerified === true
-	const notAdminCondition = () => !!user && user.userRole !== `admin`
+	const { posts, challenges, users, me } = appData
+	const emailVerifiedCondition = () => !!me && me.emailVerified === true
+	const notAdminCondition = () => !!me && me.userRole !== `admin`
 	return (
 		<Switch>
 			<Route exact path={ROUTES.USER_POSTS}
@@ -34,7 +33,7 @@ export default function UserRouter(props) {
 				render={props => {
 					const postId = props.match.params.id
 					const post = { ...posts[postId], uid: postId }
-					return <UserPostCard currentUser={user} post={post} />
+					return <UserPostCard currentUser={me} post={post} />
 				}}
 			/>
 			<Route
