@@ -14,12 +14,13 @@ const useAuthListener = firebaseApp => {
 		return { initializing: !user, user }
 	})
 	async function onChange(user) {
+		console.log('AUTH STATE CHANGED')
 		if (user) {
 			const dbUser = await firebaseApp
 				.dbPrivateUserById(user.uid)
 				.once('value')
 				.then(snapshot => snapshot.val())
-			if (dbUser) {
+			if (dbUser && dbUser.userRole) {
 				const { username, userRole, contests, challengeTargets } = dbUser
 				const mergedUser = {
 					uid: user.uid,
@@ -34,18 +35,9 @@ const useAuthListener = firebaseApp => {
 				setAuthState({ initializing: false, user: mergedUser })
 				localStorage.setItem('authUser', JSON.stringify(mergedUser))
 				return
+			} else {
+				setAuthState({ initializing: false, user })
 			}
-			setAuthState({
-				initializing: false, user: {
-					uid: user.uid,
-					email: user.email,
-					emailVerified: user.emailVerified,
-					providerData: user.providerData,
-					username: user.email,
-					userRole: 'default',
-				}
-			})
-			localStorage.setItem('authUser', JSON.stringify(user))
 		} else {
 			localStorage.removeItem('authUser')
 			setAuthState({ initializing: false, user: null })

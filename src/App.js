@@ -6,19 +6,38 @@ import Header from './components/layout/Header'
 import AppRouter from './components/layout/AppRouter'
 import AppStyle from './components/layout/AppStyle'
 import PageStyle from './components/layout/PageStyle'
+import LandingPage from './components/layout/LandingPage'
 
-function App(props) {
-	const { initializing } = useAuthUserContext()
-	if (initializing && props.location.pathname === '/') {
-		return <h1>Authenticating...</h1>
+function App() {
+	const { initializing, user } = useAuthUserContext()
+	if (initializing === true) {
+		return <NonAuthApp />
 	}
+	if (initializing === false) {
+		return <AuthApp user={user} />
+	}
+}
+
+const AuthApp = (props) => {
 	return (
 		<AppStyle>
-			<Header />
+			<Header user={props.user} />
 			<PageStyle className="p-2 m-2">
-				<AppRouter />
+				<AppRouter authUser={props.user} />
 			</PageStyle>
 		</AppStyle>
 	)
 }
+
+const NonAuthApp = () => {
+	return (
+		<AppStyle>
+			<Header />
+			<PageStyle className="p-2 m-2">
+				<LandingPage />
+			</PageStyle>
+		</AppStyle>
+	)
+}
+
 export default withRouter(App)

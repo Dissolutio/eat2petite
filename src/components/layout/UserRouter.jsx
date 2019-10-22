@@ -19,7 +19,7 @@ export default function UserRouter() {
 		loadFirebaseData()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	const { posts, challenges, users, me } = appData
+	const { posts, challenges, me } = appData
 	const emailVerifiedCondition = () => !!me && me.emailVerified === true
 	const notAdminCondition = () => !!me && me.userRole !== `admin`
 	return (

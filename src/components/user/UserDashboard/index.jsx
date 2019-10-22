@@ -9,7 +9,6 @@ import {
   isSameDay,
 } from 'date-fns'
 import { useDataContext } from '../../../contexts/useDataContext'
-import { useAuthUserContext } from '../../../contexts/useAuthUserContext'
 import { UserDashboardCalendar } from './UserDashboardCalendar'
 import UserContestsList from '../UserContestsList'
 import WaterChallengePostForm from '../WaterChallengePostForm'
