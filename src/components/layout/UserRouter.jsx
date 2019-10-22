@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { meetAuthConditionOrRedirectHOC } from '../../components//authentication/meetAuthConditionOrRedirectHOC'
 import { useDataContext } from '../../contexts/useDataContext'
 
@@ -14,7 +13,7 @@ import ChallengeCard from '../shared/ChallengeCard'
 
 import * as ROUTES from '../../routes'
 
-export default function UserRouter(props) {
+export default function UserRouter() {
 	const { loadFirebaseData, appData } = useDataContext()
 	React.useEffect(() => {
 		loadFirebaseData()
