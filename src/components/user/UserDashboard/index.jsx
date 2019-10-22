@@ -6,6 +6,7 @@ import {
   addDays,
   isAfter,
   differenceInDays,
+  isSameDay,
 } from 'date-fns'
 import { useDataContext } from '../../../contexts/useDataContext'
 import { useAuthUserContext } from '../../../contexts/useAuthUserContext'
@@ -32,6 +33,7 @@ export const UserDashboard = (props) => {
   const userEnrolledContests =
     me.contests &&
     Object.keys(me.contests).map((contestKey) => contests[contestKey])
+
   if (contestChosen && !hasFiredAutoSelect) {
     setHasFiredAutoSelect(true)
     setUserSelectedContest(contestChosen)
@@ -50,21 +52,24 @@ export const UserDashboard = (props) => {
     const { daysPerChallenge, numberOfChallenges } = userSelectedContest
     const contestLengthInDays = daysPerChallenge * numberOfChallenges
     const contestStartDate = new Date(userSelectedContest.startDate)
-    const contestEndDate = new Date(
-      addDays(contestStartDate, contestLengthInDays),
-    )
-    const getPostForDay = () => {
-      return
-    }
+    const contestEndDate = new Date(addDays(contestStartDate, contestLengthInDays))
     const allContestDays = eachDayOfInterval({
       start: contestStartDate,
       end: contestEndDate,
     })
-    const challengeForDay = () => {
-      const daysStartToPostDate = differenceInDays(
-        selectedDate,
-        contestStartDate,
-      )
+    const getPostForDay = (date) => {
+      const postsArray = Object.values(posts).filter(post => post.contestId === userSelectedContest.uid)
+      console.log("TCL: getPostForDay -> postsArray", postsArray)
+      console.log("TCL: getPostForDay -> selectedDate", selectedDate)
+      return postsArray.filter(post => isSameDay(new Date(post.postDate), new Date(selectedDate)))
+    }
+    console.log("TCL: getPostForDay -> getPostForDay", getPostForDay())
+    const daysStartToPostDate = differenceInDays(
+      selectedDate,
+      contestStartDate,
+    )
+    const getChallengeForDay = () => {
+      console.log("TCL: getChallengeForDay -> daysStartToPostDate", daysStartToPostDate)
       return daysStartToPostDate
     }
     const handlePostsButtonClick = (event) => {
@@ -74,16 +79,16 @@ export const UserDashboard = (props) => {
         let newPost = {
           author: me.uid,
           userId: me.uid,
-          createdAt: new Date(),
-          postDate: dateToPost,
+          createdAt: (new Date()).toString(),
+          postDate: format(dateToPost, 'P'),
           contestId: userSelectedContest.uid,
           postData: {
             quantity: random(1, 10),
             quantityUnits: 'cups',
           },
         }
-        console.log("TCL: handlePostsButtonClick -> newPost.postData.quantity", newPost.postData.quantity)
-        // createUserPost(newPost)
+        console.log("TCL: handlePostsButtonClick -> newPost", newPost)
+        createUserPost(newPost)
       })
     }
     return (
