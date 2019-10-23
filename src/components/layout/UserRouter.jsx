@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import { meetAuthConditionOrRedirectHOC } from '../../components//authentication/meetAuthConditionOrRedirectHOC'
 import { useDataContext } from '../../contexts/useDataContext'
 
-import { UserDashboard } from '../user/UserDashboard/'
+import { UserHomepage } from '../user/UserDashboard'
 import AccountPage from '../user/AccountPage'
 import UserChallengesList from '../user/UserChallengesList'
 import UserPostsList from '../user/UserPostsList'
@@ -51,7 +51,7 @@ export default function UserRouter() {
 			<Route
 				exact
 				path={ROUTES.USER_HOMEPAGE}
-				component={meetAuthConditionOrRedirectHOC(notAdminCondition, ROUTES.ADMIN_DASHBOARD)(UserDashboard)}
+				component={meetAuthConditionOrRedirectHOC(notAdminCondition, ROUTES.ADMIN_DASHBOARD)(UserHomepage)}
 			/>
 		</Switch>
 	)
