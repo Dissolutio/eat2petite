@@ -34,24 +34,6 @@ export default (props) => {
         console.log("TCL: getChallengeForDay -> daysStartToPostDate", daysStartToPostDate)
         return daysStartToPostDate
     }
-    const handlePostsButtonClick = (event) => {
-        console.log(event.target)
-        const dateInterval = eachDayOfInterval({ start: new Date(userSelectedContest.startDate), end: new Date(format(addDays(new Date(), -1), 'P')) })
-        dateInterval.forEach(dateToPost => {
-            let newPost = {
-                author: me.uid,
-                userId: me.uid,
-                createdAt: (new Date()).toString(),
-                postDate: format(dateToPost, 'P'),
-                contestId: userSelectedContest.uid,
-                quantityDrank: random(1, 10),
-                quantityDrankUnits: 'cups',
-            }
-            console.log("TCL: handlePostsButtonClick -> newPost", newPost)
-            createUserPost(newPost)
-            loadFirebaseData()
-        })
-    }
     return (
         <>
             <UserDashboardCalendar
@@ -59,13 +41,6 @@ export default (props) => {
                 setSelectedDate={setSelectedDate}
                 startDate={contestStartDate}
             />
-            <Button
-                onClick={handlePostsButtonClick}
-                color="warning"
-                block
-                size="lg">
-                Make Posts
-    </Button>
             <WaterChallengePostForm
                 userSelectedContest={userSelectedContest}
                 selectedDate={format(new Date(selectedDate), 'yyyy-MM-dd')}
