@@ -34,10 +34,8 @@ export default function WaterChallengePostForm(props) {
       createdAt: new Date(),
       postDate: selectedDate,
       contestId: userSelectedContest.uid,
-      postData: {
-        quantity: event.target.quantity.value || 0,
-        quantityUnits: event.target.quantityUnits.value,
-      },
+      quantityDrank: quantityDrank.value,
+      quantityDrankUnits: event.target.quantityUnits.value,
     }
     console.log('TCL: newPost', newPost)
     // createUserPost(newPost)

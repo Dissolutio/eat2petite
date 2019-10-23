@@ -46,10 +46,8 @@ export default (props) => {
                 createdAt: (new Date()).toString(),
                 postDate: format(dateToPost, 'P'),
                 contestId: userSelectedContest.uid,
-                postData: {
-                    quantity: random(1, 10),
-                    quantityUnits: 'cups',
-                },
+                quantityDrank: random(1, 10),
+                quantityDrankUnits: 'cups',
             }
             console.log("TCL: handlePostsButtonClick -> newPost", newPost)
             createUserPost(newPost)
