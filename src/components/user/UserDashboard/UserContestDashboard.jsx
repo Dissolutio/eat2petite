@@ -4,13 +4,11 @@ import {
     format,
     eachDayOfInterval,
     addDays,
-    isAfter,
     differenceInDays,
     isSameDay,
 } from 'date-fns'
 import { useDataContext } from '../../../contexts/useDataContext'
 import { UserDashboardCalendar } from './UserDashboardCalendar'
-import UserContestsList from '../UserContestsList'
 import WaterChallengePostForm from '../WaterChallengePostForm'
 import { random } from 'lodash'
 import { calculateContestData } from './utils'
@@ -18,14 +16,14 @@ import { calculateContestData } from './utils'
 
 export default (props) => {
     const [selectedDate, setSelectedDate] = React.useState(new Date())
-    const { appData, createUserPost } = useDataContext()
+    const { appData, createUserPost, loadFirebaseData } = useDataContext()
     const { posts, me } = appData
     const { userSelectedContest } = props
     const { daysPerChallenge, numberOfChallenges } = userSelectedContest
     const { contestLengthInDays, contestStartDate, contestEndDate, allContestDays } = calculateContestData(userSelectedContest)
-    const postsArray = Object.values(posts).filter(post => post.contestId === userSelectedContest.uid)
+    const postsArray = posts && Object.values(posts).filter(post => post.contestId === userSelectedContest.uid)
     const getPostForDay = (date) => {
-        return postsArray.filter(post => isSameDay(new Date(post.postDate), new Date(selectedDate)))
+        return postsArray && postsArray.filter(post => isSameDay(new Date(post.postDate), new Date(selectedDate)))
     }
     console.log("TCL: getPostForDay -> getPostForDay", getPostForDay())
     const daysStartToPostDate = differenceInDays(
@@ -51,6 +49,7 @@ export default (props) => {
             }
             console.log("TCL: handlePostsButtonClick -> newPost", newPost)
             createUserPost(newPost)
+            loadFirebaseData()
         })
     }
     return (
