@@ -185,7 +185,7 @@ const useDataContext = () => {
   const createContest = (contest) => firebaseApp.dbSaveNewContest(contest)
 
   const createUserPost = (post) => {
-    firebaseApp.dbCreateUserPost(post)
+    return firebaseApp.dbCreateUserPost(post)
   }
   const updateUserPost = (post) => {
     firebaseApp.dbUpdateUserPost(post)

@@ -112,7 +112,7 @@ class Firebase {
   dbPosts = () => this.db.ref('posts')
   dbPostsByUserId = (uid) => this.db.ref(`/posts/${uid}`)
   dbCreateUserPost = (post) => {
-    this.dbPostsByUserId(post.userId).push().then(ref => {
+    return this.dbPostsByUserId(post.userId).push().then(ref => {
       ref.set({ ...post, uid: ref.key })
     })
   }
