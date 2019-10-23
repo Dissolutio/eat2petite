@@ -61,7 +61,6 @@ export default (props) => {
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
                 startDate={contestStartDate}
-                endDate={contestEndDate}
             />
             <Button
                 onClick={handlePostsButtonClick}
