@@ -98,6 +98,7 @@ class Firebase {
     return this.db.ref().update(updates)
   }
 
+
   // *** Challenges API ***
   dbChallenges = () => this.db.ref('/challenges')
   dbSetChallenge = (challenge) =>
@@ -111,12 +112,12 @@ class Firebase {
   dbPosts = () => this.db.ref('posts')
   dbPostsByUserId = (uid) => this.db.ref(`/posts/${uid}`)
   dbCreateUserPost = (post) => {
-    const newPostRef = this.dbPostsByUserId(post.userId).push()
-    newPostRef.set({ ...post })
+    this.dbPostsByUserId(post.userId).push().then(ref => {
+      ref.set({ ...post, uid: ref.key })
+    })
   }
-  dbUserUpdatePost = (post) => {
-    const postRef = this.db.ref(`posts/${post.author}/${post.uid}`)
-    postRef.update({ editedAt: new Date() })
+  dbUpdateUserPost = (post) => {
+    this.db.ref(`posts/${post.userId}/${post.uid}`).update({ ...post })
   }
 }
 

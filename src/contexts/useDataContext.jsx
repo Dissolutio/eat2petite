@@ -11,7 +11,7 @@ import {
   sampleContests,
 } from '../sampleData'
 import savePoint from '../assets/savePoint'
-const DataContext = React.createContext([{}, () => {}])
+const DataContext = React.createContext([{}, () => { }])
 
 const DataContextProvider = (props) => {
   const [appData, setAppData] = useState(() => {
@@ -187,7 +187,9 @@ const useDataContext = () => {
   const createUserPost = (post) => {
     firebaseApp.dbCreateUserPost(post)
   }
-
+  const updateUserPost = (post) => {
+    firebaseApp.dbUpdateUserPost(post)
+  }
   const updateUserChallengeTarget = (userId, challengeId, target) =>
     firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target)
 
@@ -200,6 +202,7 @@ const useDataContext = () => {
     setLocalData,
     loadFirebaseData,
     createUserPost,
+    updateUserPost,
     createContest,
     updateChallenge,
     enrollUserInContest,
