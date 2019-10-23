@@ -23,7 +23,7 @@ export default (props) => {
     const { contestLengthInDays, contestStartDate, contestEndDate, allContestDays } = calculateContestData(userSelectedContest)
     const postsArray = posts && Object.values(posts).filter(post => post.contestId === userSelectedContest.uid)
     const getPostForDay = (date) => {
-        return postsArray && postsArray.filter(post => isSameDay(new Date(post.postDate), new Date(selectedDate)))
+        return postsArray && postsArray.find(post => isSameDay(new Date(post.postDate), new Date(selectedDate)))
     }
     console.log("TCL: getPostForDay -> getPostForDay", getPostForDay())
     const daysStartToPostDate = differenceInDays(
