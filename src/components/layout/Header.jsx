@@ -5,7 +5,9 @@ import { Collapse, Navbar, NavbarToggler, Nav } from 'reactstrap'
 import { useUIContext } from '../../contexts/useUIContext'
 import NavLinks from '../layout/NavLinks'
 
-export default function Header() {
+export default function Header(props) {
+	const { user } = props
+	console.log("TCL: Header -> user", user)
 	const { menuOpen, toggleMenuOpen } = useUIContext()
 	return (
 		<StyledHeader>
@@ -16,7 +18,7 @@ export default function Header() {
 				<NavbarToggler onClick={toggleMenuOpen} />
 				<Collapse isOpen={menuOpen} navbar>
 					<Nav className="ml-auto" navbar>
-						<NavLinks />
+						<NavLinks user={user} />
 					</Nav>
 				</Collapse>
 			</Navbar>

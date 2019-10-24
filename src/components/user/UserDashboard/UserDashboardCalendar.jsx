@@ -7,13 +7,14 @@ export const UserDashboardCalendar = props => {
     const changeHandler = date => {
         setSelectedDate(date)
     }
+    const today = new Date()
     return (
         <Calendar
             onChange={changeHandler}
             value={selectedDate}
             calendarType="US"
             minDate={startDate}
-            maxDate={endDate}
+            maxDate={today}
             minDetail={'month'}
         />
     )

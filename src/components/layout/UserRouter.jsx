@@ -1,11 +1,10 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { meetAuthConditionOrRedirectHOC } from '../../components//authentication/meetAuthConditionOrRedirectHOC'
 import { useDataContext } from '../../contexts/useDataContext'
 
-import { UserDashboard } from '../user/UserDashboard/'
+import { UserHomepage } from '../user/UserDashboard'
 import AccountPage from '../user/AccountPage'
 import UserChallengesList from '../user/UserChallengesList'
 import UserPostsList from '../user/UserPostsList'
@@ -14,27 +13,26 @@ import ChallengeCard from '../shared/ChallengeCard'
 
 import * as ROUTES from '../../routes'
 
-export default function UserRouter(props) {
+export default function UserRouter() {
 	const { loadFirebaseData, appData } = useDataContext()
 	React.useEffect(() => {
 		loadFirebaseData()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	const { posts, challenges, users } = appData
-	const { user } = useAuthUserContext()
-	const emailVerifiedCondition = () => !!user && user.emailVerified === true
-	const notAdminCondition = () => !!user && user.userRole !== `admin`
+	const { posts, challenges, me } = appData
+	const emailVerifiedCondition = () => !!me && me.emailVerified === true
+	const notAdminCondition = () => !!me && me.userRole !== `admin`
 	return (
 		<Switch>
 			<Route exact path={ROUTES.USER_POSTS}
-				render={props => <UserPostsList posts={posts} />}
+				render={props => <UserPostsList posts={posts} currentUser={me} />}
 			/>
 			<Route
 				path={`${ROUTES.USER_POSTS}:id`}
 				render={props => {
 					const postId = props.match.params.id
 					const post = { ...posts[postId], uid: postId }
-					return <UserPostCard currentUser={user} post={post} />
+					return <UserPostCard currentUser={me} post={post} />
 				}}
 			/>
 			<Route
@@ -53,7 +51,7 @@ export default function UserRouter(props) {
 			<Route
 				exact
 				path={ROUTES.USER_HOMEPAGE}
-				component={meetAuthConditionOrRedirectHOC(notAdminCondition, ROUTES.ADMIN_DASHBOARD)(UserDashboard)}
+				component={meetAuthConditionOrRedirectHOC(notAdminCondition, ROUTES.ADMIN_DASHBOARD)(UserHomepage)}
 			/>
 		</Switch>
 	)

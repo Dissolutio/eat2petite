@@ -1,11 +1,10 @@
 import React from 'react'
 import { Container, Badge, Button } from 'reactstrap'
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 
-const CurrentUserReadout = () => {
+const CurrentUserReadout = (props) => {
 	const firebaseApp = useFirebaseContext()
-	const { user } = useAuthUserContext()
+	const { user } = props
 	const onSignOutButtonClick = () => firebaseApp.doSignOut()
 	return (
 		<Container>

@@ -1,21 +1,25 @@
 import React from 'react'
-import { Container } from 'reactstrap'
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
-import UserContestCard from './UserContestCard'
+import { Container, Button, Card } from 'reactstrap'
+
 export default function UserContestsList(props) {
-	const { user } = useAuthUserContext()
-	const userContestsArray =
-		user.contests && props.contests
-			? Object.keys(user.contests).map(userContestsKey => props.contests[userContestsKey])
-			: null
-	return (
-		<Container>
-			<h2>Your Contests</h2>
-			<div>
-				{userContestsArray
-					? userContestsArray.map((contest, index) => <UserContestCard key={index} contest={contest} />)
-					: 'You are not enrolled in any contests.'}
-			</div>
-		</Container>
-	)
+  const { userEnrolledContests, setUserSelectedContest } = props
+
+  return (
+    <Container>
+      <h2>Your Contests</h2>
+      {userEnrolledContests
+        ? userEnrolledContests.map((contest, index) => {
+            return (
+              <Card key={index}>
+                <Button
+                  color="primary"
+                  onClick={() => setUserSelectedContest(contest)}>
+                  {contest.title}
+                </Button>
+              </Card>
+            )
+          })
+        : 'You are not enrolled in any contests.'}
+    </Container>
+  )
 }

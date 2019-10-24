@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { meetAuthConditionOrRedirectHOC } from '../../components/authentication/meetAuthConditionOrRedirectHOC'
 
 import LandingPage from './LandingPage'
@@ -17,12 +16,12 @@ import Page404NotFound from './Page404NotFound'
 
 import * as ROUTES from '../../routes'
 
-export default function AppRouter() {
-	const { user } = useAuthUserContext()
-	const signedInCondition = () => !!user
-	const notSignedInCondition = () => !user
-	const emailNotVerifiedCondition = () => signedInCondition() && user.emailVerified === false
-	const adminCondition = () => signedInCondition() && user.userRole === `admin`
+export default function AppRouter(props) {
+	const { authUser } = props
+	const signedInCondition = () => !!authUser
+	const notSignedInCondition = () => !authUser
+	const emailNotVerifiedCondition = () => signedInCondition() && authUser.emailVerified === false
+	const adminCondition = () => signedInCondition() && authUser.userRole === `admin`
 
 	return (
 		<Switch>

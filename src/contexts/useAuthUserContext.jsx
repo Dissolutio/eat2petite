@@ -14,41 +14,30 @@ const useAuthListener = firebaseApp => {
 		return { initializing: !user, user }
 	})
 	async function onChange(user) {
+		console.log('AUTH STATE CHANGED')
 		if (user) {
-			firebaseApp
+			const dbUser = await firebaseApp
 				.dbPrivateUserById(user.uid)
 				.once('value')
-				.then(snapshot => {
-					const dbUser = snapshot.val()
-					const { username, userRole, contests, challengeTargets } = dbUser
-					const mergedUser = {
-						uid: user.uid,
-						email: user.email,
-						emailVerified: user.emailVerified,
-						providerData: user.providerData,
-						username,
-						userRole,
-						contests,
-						challengeTargets,
-					}
-					setAuthState({ initializing: false, user: mergedUser })
-					localStorage.setItem('authUser', JSON.stringify(mergedUser))
-				}).catch(error => {
-					console.log('getDbUser Error:', error)
-					const userRole = (user.email === 'entity.john@gmail.com') ? 'admin' : 'default'
-					const incompleteDataUser = {
-						uid: user.uid,
-						email: user.email,
-						emailVerified: user.emailVerified,
-						providerData: user.providerData,
-						username: '',
-						userRole,
-						contests: [],
-						challengeTargets: [],
-					}
-					setAuthState({ initializing: false, user: incompleteDataUser })
-					localStorage.setItem('authUser', JSON.stringify(incompleteDataUser))
-				})
+				.then(snapshot => snapshot.val())
+			if (dbUser && dbUser.userRole) {
+				const { username, userRole, contests, challengeTargets } = dbUser
+				const mergedUser = {
+					uid: user.uid,
+					email: user.email,
+					emailVerified: user.emailVerified,
+					providerData: user.providerData,
+					username,
+					userRole,
+					contests,
+					challengeTargets,
+				}
+				setAuthState({ initializing: false, user: mergedUser })
+				localStorage.setItem('authUser', JSON.stringify(mergedUser))
+				return
+			} else {
+				setAuthState({ initializing: false, user })
+			}
 		} else {
 			localStorage.removeItem('authUser')
 			setAuthState({ initializing: false, user: null })

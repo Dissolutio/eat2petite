@@ -2,12 +2,10 @@ import React from 'react'
 import { Container } from 'reactstrap'
 import HeroImage from './HeroImage'
 import styled from 'styled-components'
-import DevConsole from '../shared/DevConsole'
 export default function LandingPage() {
 	return (
 		<>
 			<HeroImage />
-			{((process.env.NODE_ENV === 'development') && (<DevConsole />))}
 			<Container>
 				<h2 className='text-center'>About Eat-2-Petite</h2>
 				<p>
