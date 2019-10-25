@@ -10,7 +10,7 @@ import {
 import { useDataContext } from '../../../contexts/useDataContext'
 import { UserDashboardCalendar } from './UserDashboardCalendar'
 import WaterChallengePostForm from '../WaterChallengePostForm'
-import { random } from 'lodash'
+import { UserDevConsole } from '../../shared/DevConsole'
 import { calculateContestData } from './utils'
 
 
@@ -41,6 +41,7 @@ export default (props) => {
                 setSelectedDate={setSelectedDate}
                 startDate={contestStartDate}
             />
+            <UserDevConsole userSelectedContest={userSelectedContest} />
             <WaterChallengePostForm
                 userSelectedContest={userSelectedContest}
                 selectedDate={format(new Date(selectedDate), 'yyyy-MM-dd')}

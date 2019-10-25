@@ -56,7 +56,7 @@ export function UserDevConsole(props) {
 			start: new Date(userSelectedContest.startDate),
 			end: new Date(format(addDays(new Date(), -1), 'P'))
 		})
-		dateInterval.forEach(dateToPost => {
+		Promise.all(dateInterval.map(dateToPost => {
 			let newPost = {
 				author: me.uid,
 				userId: me.uid,
@@ -67,10 +67,10 @@ export function UserDevConsole(props) {
 				quantityDrankUnits: 'cups',
 			}
 			console.log("TCL: handlePostsButtonClick -> newPost", newPost)
-			createUserPost(newPost).then(() => (
-				loadFirebaseData()
-			))
-		})
+			return createUserPost(newPost)
+		})).then(() => (
+			loadFirebaseData()
+		))
 	}
 	return (
 		<ButtonGroup vertical style={{ width: '100%' }}>
@@ -78,7 +78,7 @@ export function UserDevConsole(props) {
 				CONSOLE LOG APP DATA
 			</Button>
 			<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
-			<DoubleClickButton doubleClickCallback={setLocalData} text="MAKE ALL PREVIOUS POSTS FOR USER IN SELECTED CONTEST "
+			<DoubleClickButton doubleClickCallback={handlePostsButtonClick} text="MAKE ALL PREVIOUS POSTS FOR USER IN SELECTED CONTEST "
 				firstColor="primary" secondColor="warning"
 			/>
 		</ButtonGroup>
