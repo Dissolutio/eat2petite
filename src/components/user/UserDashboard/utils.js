@@ -1,9 +1,11 @@
 import {
+    format,
     isAfter,
     addDays,
     eachDayOfInterval,
+    differenceInDays,
+    isSameDay,
 } from 'date-fns'
-
 export function sortByMostCurrentStartDate(a, b) {
     if (isAfter(new Date(a.startDate), new Date(b.startDate))) {
         return -1
@@ -12,14 +14,42 @@ export function sortByMostCurrentStartDate(a, b) {
     }
 }
 
-export function calculateContestData(userSelectedContest) {
+export function calculateContestData(userSelectedContest, postsArray) {
+    console.log("TCL: calculateContestData -> userSelectedContest", userSelectedContest)
     const { daysPerChallenge, numberOfChallenges } = userSelectedContest
     const contestLengthInDays = daysPerChallenge * numberOfChallenges
     const contestStartDate = new Date(userSelectedContest.startDate)
-    const contestEndDate = new Date(addDays(contestStartDate, contestLengthInDays))
+    const contestEndDate = new Date(addDays(contestStartDate, contestLengthInDays - 1))
+    console.log("TCL: calculateContestData -> contestEndDate", contestEndDate)
     const allContestDays = eachDayOfInterval({
         start: contestStartDate,
         end: contestEndDate,
     })
-    return { contestLengthInDays, contestStartDate, contestEndDate, allContestDays }
+
+    function getPostsForInterval(arrayOfDates) {
+        return arrayOfDates.map(date => {
+            const postForDate = postsArray.find(post => isSameDay(new Date(post.postDate), new Date(date)))
+            return {
+                postDate: date,
+                userPost: postForDate
+            }
+        })
+    }
+    function getChallengesForInterval(arrayOfDatePostObjects) {
+        return arrayOfDatePostObjects.map(datePostObject => {
+            const daysStartToPostDate = differenceInDays(
+                datePostObject.postDate,
+                contestStartDate,
+            )
+            const orderInChallenge = Math.floor(daysStartToPostDate / daysPerChallenge)
+            return {
+                ...datePostObject,
+                orderInChallenge,
+            }
+
+        })
+    }
+    const datePostObjects = getChallengesForInterval(getPostsForInterval(allContestDays))
+
+    return { contestLengthInDays, contestStartDate, contestEndDate, allContestDays, datePostObjects }
 }
