@@ -7,7 +7,6 @@ import NavLinks from '../layout/NavLinks'
 
 export default function Header(props) {
 	const { user } = props
-	console.log("TCL: Header -> user", user)
 	const { menuOpen, toggleMenuOpen } = useUIContext()
 	return (
 		<StyledHeader>
