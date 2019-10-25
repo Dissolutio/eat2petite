@@ -4,7 +4,7 @@ import { useDataContext } from '../../contexts/useDataContext'
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { format, addDays, isWithinInterval } from 'date-fns'
 import useInputValue from '../../modules/hooks/useInputValue'
-
+import { ReactComponent as CalendarIcon } from '../../assets/calendar-tool-variant-for-time-administration.svg'
 export default function WaterChallengePostForm(props) {
   const [formError, setFormError] = useState()
   const { saveUserPost } = useDataContext()
@@ -50,38 +50,36 @@ export default function WaterChallengePostForm(props) {
     // saveUserPost(newPost)
   }
   return (
-    <Container>
-      <Form
-        onSubmit={onSubmitForm}
-        className="border border-primary rounded p-4 mt-4 mb-3 text-center">
-        <h5 className='text-primary border-bottom border-primary'>Water Challenge</h5>
-        {formError && <Alert color="danger">{formError}</Alert>}
-        <InputGroup size="sm">
-          <Label for="postDate" hidden>Post Date</Label>
-          <InputGroupAddon addonType="prepend">Post for Date:</InputGroupAddon>
-          <Input
-            name="postDate"
-            type="date"
-            onChange={dateChangeHandler}
-            value={selectedDate}
-          />
-        </InputGroup>
-        <InputGroup size="sm">
-          <Label for="quantity" hidden>Quantity</Label>
-          <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
-          <Input name="quantity" type="number" bsSize='sm' {...quantityDrank} />
-        </InputGroup>
-        <InputGroup size="sm">
-          <Label for="quantityUnits" hidden>Units</Label>
-          <InputGroupAddon addonType="prepend">Units</InputGroupAddon>
-          <Input type="select" name="quantityUnits" defaultValue="cups" bsSize='sm'>
-            <option value="cups">Cups</option>
-            <option value="ounces">Ounces</option>
-            <option value="liters">Liters</option>
-          </Input>
-        </InputGroup>
-        <Button type="submit">Submit</Button>
-      </Form>
-    </Container>
+    <Form
+      onSubmit={onSubmitForm}
+      className="border border-primary rounded p-4 mt-4 mb-3 text-center">
+      <h5 className='text-primary border-bottom border-primary'>Water Challenge</h5>
+      {formError && <Alert color="danger">{formError}</Alert>}
+      <InputGroup size="sm">
+        <Label for="postDate" hidden>Post Date</Label>
+        <InputGroupAddon addonType="prepend"><CalendarIcon /></InputGroupAddon>
+        <Input
+          name="postDate"
+          type="date"
+          onChange={dateChangeHandler}
+          value={selectedDate}
+        />
+      </InputGroup>
+      <InputGroup size="sm">
+        <Label for="quantity" hidden>Quantity</Label>
+        <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
+        <Input name="quantity" type="number" bsSize='sm' {...quantityDrank} />
+      </InputGroup>
+      <InputGroup size="sm">
+        <Label for="quantityUnits" hidden>Units</Label>
+        <InputGroupAddon addonType="prepend">Units</InputGroupAddon>
+        <Input type="select" name="quantityUnits" defaultValue="cups" bsSize='sm'>
+          <option value="cups">Cups</option>
+          <option value="ounces">Ounces</option>
+          <option value="liters">Liters</option>
+        </Input>
+      </InputGroup>
+      <Button type="submit">Submit</Button>
+    </Form>
   )
 }
