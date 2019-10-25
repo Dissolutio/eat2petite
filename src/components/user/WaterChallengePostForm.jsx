@@ -1,11 +1,12 @@
-import React from 'react'
-import { Container, Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
+import React, { useState } from 'react'
+import { Container, Alert, Button, Form, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
 import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { format, addDays, isWithinInterval } from 'date-fns'
 import useInputValue from '../../modules/hooks/useInputValue'
 
 export default function WaterChallengePostForm(props) {
+  const [formError, setFormError] = useState()
   const { saveUserPost } = useDataContext()
   const { user } = useAuthUserContext()
   const {
@@ -21,13 +22,16 @@ export default function WaterChallengePostForm(props) {
   const dateChangeHandler = (event) => {
     // add one day, because the date input rounds downa day for some reason
     const newDate = addDays(new Date(event.target.value), 1)
-    if (
-      isWithinInterval(newDate, {
-        start: contestStartDate,
-        end: new Date(),
-      })
-    ) {
+    const isBetweenStartAndToday = isWithinInterval(newDate, {
+      start: contestStartDate,
+      end: new Date(),
+    })
+    if (!isBetweenStartAndToday) {
+      setFormError(`The date you selected (${format(newDate, 'P')}) is not a valid choice -- please choose a contest day past or present.`)
+    }
+    if (isBetweenStartAndToday) {
       setSelectedDate(newDate)
+      setFormError(``)
     }
   }
   const quantityDrank = useInputValue(0)
@@ -51,16 +55,17 @@ export default function WaterChallengePostForm(props) {
         onSubmit={onSubmitForm}
         className="border border-primary rounded p-4 mt-4 mb-3 text-center">
         <h5 className='text-primary border-bottom border-primary'>Water Challenge</h5>
-        <FormGroup>
-          <Label for="postDate">Post Date</Label>
-          <span className='small d-block text-muted'>{`${contestStartDateText} - ${todaysDateText}`}</span>
+        {formError && <Alert color="danger">{formError}</Alert>}
+        <InputGroup size="sm">
+          <Label for="postDate" hidden>Post Date</Label>
+          <InputGroupAddon addonType="prepend">Post for Date:</InputGroupAddon>
           <Input
             name="postDate"
             type="date"
             onChange={dateChangeHandler}
             value={selectedDate}
           />
-        </FormGroup>
+        </InputGroup>
         <InputGroup size="sm">
           <Label for="quantity" hidden>Quantity</Label>
           <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
