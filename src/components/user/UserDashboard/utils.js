@@ -15,12 +15,10 @@ export function sortByMostCurrentStartDate(a, b) {
 }
 
 export function calculateContestData(userSelectedContest, postsArray) {
-    console.log("TCL: calculateContestData -> userSelectedContest", userSelectedContest)
     const { daysPerChallenge, numberOfChallenges } = userSelectedContest
     const contestLengthInDays = daysPerChallenge * numberOfChallenges
     const contestStartDate = new Date(userSelectedContest.startDate)
     const contestEndDate = new Date(addDays(contestStartDate, contestLengthInDays - 1))
-    console.log("TCL: calculateContestData -> contestEndDate", contestEndDate)
     const allContestDays = eachDayOfInterval({
         start: contestStartDate,
         end: contestEndDate,
