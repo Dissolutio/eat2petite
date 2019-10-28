@@ -33,7 +33,6 @@ export const UserHomepage = (props) => {
         <UserContestsList
           userEnrolledContests={userEnrolledContests}
           userSelectedContest={userSelectedContest}
-          setUserSelectedContest={setUserSelectedContest}
         />
       </Container>
     )
@@ -42,7 +41,7 @@ export const UserHomepage = (props) => {
     <Container className="text-center">
       <h1 className="text-center">User Dashboard</h1>
       <hr />
-      <UserContestsList contests={contests} userSelectedContest={userSelectedContest} setUserSelectedContest={setUserSelectedContest} />
+      <UserContestsList contests={contests} userSelectedContest={userSelectedContest} />
     </Container>
   )
 }
