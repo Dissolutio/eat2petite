@@ -9,7 +9,7 @@ import { calculateContestData } from './utils'
 
 const UserContestDashboard = (props) => {
     const [selectedDate, setSelectedDate] = React.useState(new Date())
-    const [formError, setFormError] = useState('')
+    const [formDisabled, setFormDisabled] = useState(false)
     const { userSelectedContest, me, posts, challenges } = props
     const postsArray = posts &&
         Object.values(posts).filter(
@@ -23,29 +23,35 @@ const UserContestDashboard = (props) => {
     }
     const dateFormOnChange = (event) => {
         // add one day, because the  reactstrap Input value seems to round down a day, for some reason
-        const newDate = addDays(new Date(event.target.value), 1)
+        const newDate = format(addDays(new Date(event.target.value), 1), 'P')
         dateChangeHandler(newDate)
     }
     const dateChangeHandler = (date) => {
-        const formattedNewDate = format(new Date(date), 'P')
         const isBetweenStartAndToday = isWithinInterval(date, {
             start: contestStartDate,
             end: new Date(),
         })
         if (!isBetweenStartAndToday) {
-            setFormError(`You selected: ${formattedNewDate}. Please choose a date between the contest start day and today.`)
-            setTimeout(() => {
-                setFormError('')
-            }, 5000);
+            setFormDisabled(true)
         }
         if (isBetweenStartAndToday) {
-            setSelectedDate(date)
-            setFormError(``)
+            setFormDisabled(false)
         }
+        setSelectedDate(date)
     }
 
     return (
         <>
+            <ChallengePost
+                userSelectedContest={userSelectedContest}
+                selectedDate={format(new Date(selectedDate), 'yyyy-MM-dd')}
+                dateChangeHandler={dateFormOnChange}
+                formDisabled={formDisabled}
+                contestStartDate={contestStartDate}
+                contestEndDate={contestEndDate}
+                currentPost={currentPost}
+                me={me}
+            />
             <UserDashboardCalendar
                 selectedDate={selectedDate}
                 dateChangeHandler={dateChangeHandler}
@@ -55,16 +61,6 @@ const UserContestDashboard = (props) => {
             {process.env.NODE_ENV === 'development'
                 ? <UserDevConsole userSelectedContest={userSelectedContest} />
                 : null}
-            <ChallengePost
-                userSelectedContest={userSelectedContest}
-                selectedDate={format(new Date(selectedDate), 'yyyy-MM-dd')}
-                dateChangeHandler={dateFormOnChange}
-                formError={formError}
-                contestStartDate={contestStartDate}
-                contestEndDate={contestEndDate}
-                currentPost={currentPost}
-                me={me}
-            />
         </>
     )
 }
