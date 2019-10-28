@@ -11,7 +11,7 @@ export const UserHomepage = (props) => {
   const [hasInitialized, setHasInitialized] = React.useState(false)
 
   const { appData } = useDataContext()
-  const { contests, posts, me } = appData
+  const { contests, posts, me, challenges } = appData
   const queryParams = queryString.parse(props.location.search)
   const userEnrolledContests = me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
   const sortedByMostRecent = userEnrolledContests && [...userEnrolledContests.sort(sortByMostCurrentStartDate)]
@@ -29,7 +29,7 @@ export const UserHomepage = (props) => {
   if (userSelectedContest) {
     return (
       <Container>
-        <UserContestDashboard me={me} userSelectedContest={userSelectedContest} posts={posts} />
+        <UserContestDashboard me={me} userSelectedContest={userSelectedContest} challenges={challenges} posts={posts} />
         <UserContestsList
           userEnrolledContests={userEnrolledContests}
           userSelectedContest={userSelectedContest}

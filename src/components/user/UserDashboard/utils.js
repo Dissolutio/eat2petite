@@ -1,10 +1,7 @@
 import {
-    format,
     isAfter,
     addDays,
     eachDayOfInterval,
-    differenceInDays,
-    isSameDay,
 } from 'date-fns'
 export function sortByMostCurrentStartDate(a, b) {
     if (isAfter(new Date(a.startDate), new Date(b.startDate))) {
@@ -24,30 +21,5 @@ export function calculateContestData(userSelectedContest, postsArray) {
         end: contestEndDate,
     })
 
-    function getPostsForInterval(arrayOfDates) {
-        return arrayOfDates.map(date => {
-            const postForDate = postsArray.find(post => isSameDay(new Date(post.postDate), new Date(date)))
-            return {
-                postDate: date,
-                userPost: postForDate
-            }
-        })
-    }
-    function getChallengesForInterval(arrayOfDatePostObjects) {
-        return arrayOfDatePostObjects.map(datePostObject => {
-            const daysStartToPostDate = differenceInDays(
-                datePostObject.postDate,
-                contestStartDate,
-            )
-            const orderInChallenge = Math.floor(daysStartToPostDate / daysPerChallenge)
-            return {
-                ...datePostObject,
-                orderInChallenge,
-            }
-
-        })
-    }
-    const datePostObjects = getChallengesForInterval(getPostsForInterval(allContestDays))
-
-    return { contestLengthInDays, contestStartDate, contestEndDate, allContestDays, datePostObjects }
+    return { contestLengthInDays, contestStartDate, contestEndDate, allContestDays }
 }

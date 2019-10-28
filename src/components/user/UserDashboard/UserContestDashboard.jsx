@@ -1,7 +1,7 @@
 import React from 'react'
-import { format } from 'date-fns'
+import { format, isSameDay, differenceInCalendarDays } from 'date-fns'
 
-import { useDataContext } from '../../../contexts/useDataContext'
+import UserDashboardCalendar from './UserDashboardCalendar'
 import ChallengePost from './ChallengePost'
 import { UserDevConsole } from '../../shared/DevConsole'
 
@@ -9,16 +9,16 @@ import { calculateContestData } from './utils'
 
 const UserContestDashboard = (props) => {
     const [selectedDate, setSelectedDate] = React.useState(new Date())
-    const { appData, createUserPost, loadFirebaseData } = useDataContext()
-    const { posts, me } = appData
-    const { userSelectedContest } = props
+    const { userSelectedContest, me, posts, challenges } = props
     const postsArray = posts &&
         Object.values(posts).filter(
             post => post.contestId === userSelectedContest.uid
         )
-    const { contestStartDate, contestEndDate, datePostObjects } = calculateContestData(userSelectedContest, postsArray)
-    console.log("TCL: UserContestDashboard -> datePostObjects", datePostObjects)
-
+    const { contestStartDate, contestEndDate } = calculateContestData(userSelectedContest, postsArray)
+    const currentPost = postsArray.find(post => isSameDay(new Date(post.postDate), new Date(selectedDate)))
+    const currentChallenge = () => {
+        const diffStartPost = differenceInCalendarDays(contestStartDate, selectedDate)
+    }
     return (
         <>
             <UserDashboardCalendar
@@ -27,13 +27,17 @@ const UserContestDashboard = (props) => {
                 startDate={contestStartDate}
                 contestEndDate={contestEndDate}
             />
-            <UserDevConsole userSelectedContest={userSelectedContest} />
-            <WaterChallengePostForm
+            {process.env.NODE_ENV === 'development'
+                ? <UserDevConsole userSelectedContest={userSelectedContest} />
+                : null}
+            <ChallengePost
                 userSelectedContest={userSelectedContest}
                 selectedDate={format(new Date(selectedDate), 'yyyy-MM-dd')}
                 setSelectedDate={setSelectedDate}
                 contestStartDate={contestStartDate}
                 contestEndDate={contestEndDate}
+                currentPost={currentPost}
+                me={me}
             />
         </>
     )

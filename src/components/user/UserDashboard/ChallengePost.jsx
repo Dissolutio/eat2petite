@@ -7,13 +7,20 @@ import useInputValue from '../../../modules/hooks/useInputValue'
 
 import { ReactComponent as CalendarIcon } from '../../../assets/calendar-tool-variant-for-time-administration.svg'
 
-export default function WaterChallengePostForm(props) {
-  const [formError, setFormError] = useState()
+export default function ChallengePost(props) {
+  const [formError, setFormError] = useState('')
+  const [formDisabled, setFormDisabled] = useState(false)
+  const [quantityDrank, setQuantityDrank] = useState(0)
+  console.log("TCL: ChallengePost -> quantityDrank", quantityDrank)
   const { saveUserPost } = useDataContext()
-  const { userSelectedContest, selectedDate, setSelectedDate, contestStartDate, contestEndDate, datePostObjects, me } = props
-
+  const { userSelectedContest, selectedDate, setSelectedDate, contestStartDate, contestEndDate, me, currentPost } = props
+  const currentQuantityDrank = currentPost && currentPost.quantityDrank
+  React.useEffect(() => {
+    setQuantityDrank(currentQuantityDrank)
+  }, [currentQuantityDrank, currentPost])
   const contestStartDateText = format(contestStartDate, 'LLL d')
   const todaysDateText = format(new Date(), 'LLL d')
+  
   const dateChangeHandler = (event) => {
     // add one day, because the date input rounds downa day for some reason
     const newDate = addDays(new Date(event.target.value), 1)
@@ -21,27 +28,34 @@ export default function WaterChallengePostForm(props) {
       start: contestStartDate,
       end: new Date(),
     })
-    const currentDatePostObject = datePostObjects.find(post => post.postDate === selectedDate)
-    console.log("TCL: ChallengePost -> currentDatePostObject", currentDatePostObject)
     if (!isBetweenStartAndToday) {
-      setFormError(`The date you selected (${format(newDate, 'P')}) is not a valid choice -- please choose a contest day past or present.`)
+      setFormError(`You selected: ${format(newDate, 'P')}. Please choose a date between the contest start day and today.`)
+      setFormDisabled(true)
+      setTimeout(() => {
+        setFormError('')
+      }, 5000);
     }
     if (isBetweenStartAndToday) {
       setSelectedDate(newDate)
       setFormError(``)
+      setFormDisabled(false)
     }
   }
-  const quantityDrank = useInputValue(0)
+
+  const handleQuantityDrankInput = (event) => {
+    setQuantityDrank(event.target.value)
+  }
   const onSubmitForm = (event) => {
     event.preventDefault()
     let newPost = {
       author: me.uid,
       userId: me.uid,
+      uid: currentPost.uid,
       createdAt: new Date(),
       postDate: selectedDate,
       contestId: userSelectedContest.uid,
-      quantityDrank: quantityDrank.value,
-      quantityDrankUnits: event.target.quantityUnits.value,
+      quantityDrank: quantityDrank,
+      quantityDrankUnits: event.target.quantityDrankUnits.value,
     }
     console.log('TCL: newPost', newPost)
     // saveUserPost(newPost)
@@ -50,7 +64,7 @@ export default function WaterChallengePostForm(props) {
     <Form
       onSubmit={onSubmitForm}
       className="border border-primary rounded p-4 mt-4 mb-3 text-center">
-      <h5 className='text-primary border-bottom border-primary'>Water Challenge</h5>
+      <h5 className='text-primary border-bottom border-primary'>Water Intake Challenge</h5>
       {formError && <Alert color="danger">{formError}</Alert>}
       <InputGroup size="sm">
         <Label for="postDate" hidden>Post Date</Label>
@@ -65,12 +79,12 @@ export default function WaterChallengePostForm(props) {
       <InputGroup size="sm">
         <Label for="quantity" hidden>Quantity</Label>
         <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
-        <Input name="quantity" type="number" bsSize='sm' {...quantityDrank} />
+        <Input name="quantity" type="number" disabled={formDisabled} bsSize='sm' defaultValue={currentQuantityDrank} onChange={handleQuantityDrankInput} />
       </InputGroup>
       <InputGroup size="sm">
         <Label for="quantityUnits" hidden>Units</Label>
         <InputGroupAddon addonType="prepend">Units</InputGroupAddon>
-        <Input type="select" name="quantityUnits" defaultValue="cups" bsSize='sm'>
+        <Input type="select" name="quantityDrankUnits" defaultValue={currentPost ? currentPost.quantityDrankUnits : 'cups'} bsSize='sm'>
           <option value="cups">Cups</option>
           <option value="ounces">Ounces</option>
           <option value="liters">Liters</option>
