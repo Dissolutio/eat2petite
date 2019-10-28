@@ -3,8 +3,8 @@ import Calendar from 'react-calendar'
 
 
 const UserDashboardCalendar = props => {
-  const { startDate, contestEndDate, selectedDate, setSelectedDate } = props
-  const changeHandler = date => setSelectedDate(date)
+  const { startDate, contestEndDate, selectedDate, dateChangeHandler } = props
+  const changeHandler = date => dateChangeHandler(date)
   return (
     <Calendar
       onChange={changeHandler}

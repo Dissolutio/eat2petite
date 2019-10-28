@@ -116,9 +116,7 @@ class Firebase {
       ref.set({ ...post, uid: ref.key })
     })
   }
-  dbUpdateUserPost = (post) => {
-    this.db.ref(`posts/${post.userId}/${post.uid}`).update({ ...post })
-  }
+  dbUpdateUserPost = (post) => this.db.ref(`posts/${post.userId}/${post.uid}`).update({ ...post })
 }
 
 export { Firebase }

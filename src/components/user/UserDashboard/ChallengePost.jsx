@@ -3,44 +3,24 @@ import { Alert, Button, Form, Label, Input, InputGroup, InputGroupAddon } from '
 import { format, addDays, isWithinInterval } from 'date-fns'
 
 import { useDataContext } from '../../../contexts/useDataContext'
-import useInputValue from '../../../modules/hooks/useInputValue'
 
 import { ReactComponent as CalendarIcon } from '../../../assets/calendar-tool-variant-for-time-administration.svg'
 
 export default function ChallengePost(props) {
-  const [formError, setFormError] = useState('')
-  const [formDisabled, setFormDisabled] = useState(false)
+
   const [quantityDrank, setQuantityDrank] = useState(0)
-  console.log("TCL: ChallengePost -> quantityDrank", quantityDrank)
-  const { saveUserPost } = useDataContext()
-  const { userSelectedContest, selectedDate, setSelectedDate, contestStartDate, contestEndDate, me, currentPost } = props
-  const currentQuantityDrank = currentPost && currentPost.quantityDrank
+  const { savePost } = useDataContext()
+  const { userSelectedContest, selectedDate, formError, dateChangeHandler, me, currentPost } = props
+  console.log("TCL: ChallengePost -> currentPost", currentPost)
+  const currentQuantityDrank = (currentPost && currentPost.quantityDrank) || 0
   React.useEffect(() => {
     setQuantityDrank(currentQuantityDrank)
-  }, [currentQuantityDrank, currentPost])
-  const contestStartDateText = format(contestStartDate, 'LLL d')
-  const todaysDateText = format(new Date(), 'LLL d')
-  
-  const dateChangeHandler = (event) => {
-    // add one day, because the date input rounds downa day for some reason
-    const newDate = addDays(new Date(event.target.value), 1)
-    const isBetweenStartAndToday = isWithinInterval(newDate, {
-      start: contestStartDate,
-      end: new Date(),
-    })
-    if (!isBetweenStartAndToday) {
-      setFormError(`You selected: ${format(newDate, 'P')}. Please choose a date between the contest start day and today.`)
-      setFormDisabled(true)
-      setTimeout(() => {
-        setFormError('')
-      }, 5000);
-    }
-    if (isBetweenStartAndToday) {
-      setSelectedDate(newDate)
-      setFormError(``)
-      setFormDisabled(false)
-    }
-  }
+  }, [selectedDate, currentQuantityDrank])
+
+  // const contestStartDateText = format(contestStartDate, 'LLL d')
+  // const todaysDateText = format(new Date(), 'LLL d')
+
+
 
   const handleQuantityDrankInput = (event) => {
     setQuantityDrank(event.target.value)
@@ -50,15 +30,15 @@ export default function ChallengePost(props) {
     let newPost = {
       author: me.uid,
       userId: me.uid,
-      uid: currentPost.uid,
+      uid: (currentPost && currentPost.uid) || null,
       createdAt: new Date(),
-      postDate: selectedDate,
+      postDate: format(addDays(new Date(selectedDate), 1), 'P'),
       contestId: userSelectedContest.uid,
       quantityDrank: quantityDrank,
       quantityDrankUnits: event.target.quantityDrankUnits.value,
     }
     console.log('TCL: newPost', newPost)
-    // saveUserPost(newPost)
+    savePost(newPost)
   }
   return (
     <Form
@@ -79,7 +59,7 @@ export default function ChallengePost(props) {
       <InputGroup size="sm">
         <Label for="quantity" hidden>Quantity</Label>
         <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
-        <Input name="quantity" type="number" disabled={formDisabled} bsSize='sm' defaultValue={currentQuantityDrank} onChange={handleQuantityDrankInput} />
+        <Input name="quantity" type="number" bsSize='sm' value={quantityDrank} onChange={handleQuantityDrankInput} />
       </InputGroup>
       <InputGroup size="sm">
         <Label for="quantityUnits" hidden>Units</Label>

@@ -48,7 +48,7 @@ export function UserDevConsole(props) {
 	const {
 		appData,
 		loadLocalData,
-		createUserPost,
+		savePost,
 		setLocalData,
 		loadFirebaseData,
 		consoleLogAppData,
@@ -70,7 +70,7 @@ export function UserDevConsole(props) {
 				quantityDrank: random(1, 10),
 				quantityDrankUnits: 'cups',
 			}
-			return createUserPost(newPost)
+			return savePost(newPost)
 		})).then(() => (
 			loadFirebaseData()
 		))

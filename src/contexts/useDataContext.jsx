@@ -183,12 +183,17 @@ const useDataContext = () => {
   }
 
   const createContest = (contest) => firebaseApp.dbSaveNewContest(contest)
-
-  const createUserPost = (post) => {
-    return firebaseApp.dbCreateUserPost(post)
-  }
-  const updateUserPost = (post) => {
-    firebaseApp.dbUpdateUserPost(post)
+  const createUserPost = (post) => firebaseApp.dbCreateUserPost(post)
+  const updateUserPost = (post) => firebaseApp.dbUpdateUserPost(post)
+  const savePost = (post) => {
+    if (post && post.uid) {
+      console.log("TCL: savePost -> post", post)
+      console.log("TCL: savePost -> post.uid", post.uid)
+      return updateUserPost(post).then(() => loadFirebaseData())
+    } else {
+      console.log('Making a new post')
+      return createUserPost(post).then(() => loadFirebaseData())
+    }
   }
   const updateUserChallengeTarget = (userId, challengeId, target) =>
     firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target)
@@ -201,8 +206,7 @@ const useDataContext = () => {
     loadLocalData,
     setLocalData,
     loadFirebaseData,
-    createUserPost,
-    updateUserPost,
+    savePost,
     createContest,
     updateChallenge,
     enrollUserInContest,
