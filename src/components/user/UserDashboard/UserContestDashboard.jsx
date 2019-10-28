@@ -2,8 +2,7 @@ import React from 'react'
 import { format } from 'date-fns'
 
 import { useDataContext } from '../../../contexts/useDataContext'
-import { UserDashboardCalendar } from './UserDashboardCalendar'
-import WaterChallengePostForm from '../WaterChallengePostForm'
+import ChallengePost from './ChallengePost'
 import { UserDevConsole } from '../../shared/DevConsole'
 
 import { calculateContestData } from './utils'

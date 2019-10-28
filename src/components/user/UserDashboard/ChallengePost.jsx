@@ -1,21 +1,16 @@
 import React, { useState } from 'react'
-import { Container, Alert, Button, Form, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
-import { useDataContext } from '../../contexts/useDataContext'
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
+import { Alert, Button, Form, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 import { format, addDays, isWithinInterval } from 'date-fns'
-import useInputValue from '../../modules/hooks/useInputValue'
-import { ReactComponent as CalendarIcon } from '../../assets/calendar-tool-variant-for-time-administration.svg'
+
+import { useDataContext } from '../../../contexts/useDataContext'
+import useInputValue from '../../../modules/hooks/useInputValue'
+
+import { ReactComponent as CalendarIcon } from '../../../assets/calendar-tool-variant-for-time-administration.svg'
+
 export default function WaterChallengePostForm(props) {
   const [formError, setFormError] = useState()
   const { saveUserPost } = useDataContext()
-  const { user } = useAuthUserContext()
-  const {
-    selectedDate,
-    setSelectedDate,
-    contestStartDate,
-    contestEndDate,
-    userSelectedContest,
-  } = props
+  const { userSelectedContest, selectedDate, setSelectedDate, contestStartDate, contestEndDate, datePostObjects, me } = props
 
   const contestStartDateText = format(contestStartDate, 'LLL d')
   const todaysDateText = format(new Date(), 'LLL d')
@@ -26,6 +21,8 @@ export default function WaterChallengePostForm(props) {
       start: contestStartDate,
       end: new Date(),
     })
+    const currentDatePostObject = datePostObjects.find(post => post.postDate === selectedDate)
+    console.log("TCL: ChallengePost -> currentDatePostObject", currentDatePostObject)
     if (!isBetweenStartAndToday) {
       setFormError(`The date you selected (${format(newDate, 'P')}) is not a valid choice -- please choose a contest day past or present.`)
     }
@@ -38,8 +35,8 @@ export default function WaterChallengePostForm(props) {
   const onSubmitForm = (event) => {
     event.preventDefault()
     let newPost = {
-      author: user.uid,
-      userId: user.uid,
+      author: me.uid,
+      userId: me.uid,
       createdAt: new Date(),
       postDate: selectedDate,
       contestId: userSelectedContest.uid,
