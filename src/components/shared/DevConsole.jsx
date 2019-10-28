@@ -20,24 +20,26 @@ export function AdminDevConsole() {
 		consoleLogAppData,
 	} = useDataContext()
 	return (
-		<ButtonGroup vertical style={{ width: '100%' }}>
-			<Button color="primary" onClick={consoleLogAppData}>
-				CONSOLE LOG APP DATA
+		<Container className="border border-secondary p-3 m-2">
+			<ButtonGroup vertical style={{ width: '100%' }}>
+				<Button color="primary" onClick={consoleLogAppData}>
+					CONSOLE LOG APP DATA
 			</Button>
-			<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
-			<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA "
-				firstColor="primary" secondColor="warning"
-			/>
-			<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA "
-				firstColor="primary" secondColor="warning"
-			/>
-			<DoubleClickButton doubleClickCallback={dbLoadSavePoint} text="LOAD DB SAVE POINT"
-				firstColor="primary" secondColor="warning"
-			/>
-			<DoubleClickButton doubleClickCallback={dbResetToSample} text="DB RESET TO SAMPLE"
-				firstColor="danger" secondColor="danger"
-			/>
-		</ButtonGroup>
+				<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
+				<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA "
+					firstColor="primary" secondColor="warning"
+				/>
+				<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA "
+					firstColor="primary" secondColor="warning"
+				/>
+				<DoubleClickButton doubleClickCallback={dbLoadSavePoint} text="LOAD DB SAVE POINT"
+					firstColor="primary" secondColor="warning"
+				/>
+				<DoubleClickButton doubleClickCallback={dbResetToSample} text="DB RESET TO SAMPLE"
+					firstColor="danger" secondColor="danger"
+				/>
+			</ButtonGroup>
+		</Container>
 	)
 }
 
@@ -74,15 +76,18 @@ export function UserDevConsole(props) {
 		))
 	}
 	return (
-		<ButtonGroup vertical style={{ width: '100%' }}>
-			<Button color="primary" onClick={consoleLogAppData}>
-				CONSOLE LOG APP DATA
+		<Container className="border border-secondary p-3 m-2">
+			<h4 className="text-center">Dev Console</h4>
+			<ButtonGroup vertical style={{ width: '100%' }}>
+				<Button color="primary" onClick={consoleLogAppData}>
+					CONSOLE LOG APP DATA
 			</Button>
-			<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
-			<DoubleClickButton doubleClickCallback={createABunchOfPosts} text="MAKE ALL PREVIOUS POSTS FOR USER IN SELECTED CONTEST "
-				firstColor="primary" secondColor="warning"
-			/>
-		</ButtonGroup>
+				<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
+				<DoubleClickButton doubleClickCallback={createABunchOfPosts} text="MAKE ALL PREVIOUS POSTS FOR USER IN SELECTED CONTEST "
+					firstColor="primary" secondColor="warning"
+				/>
+			</ButtonGroup>
+		</Container>
 	)
 }
 
