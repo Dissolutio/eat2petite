@@ -8,6 +8,7 @@ import { useDataContext } from '../../contexts/useDataContext'
 import DoubleClickButton from '../shared/DoubleClickButton'
 
 import { sampleUsers } from '../../sampleData'
+import { isYesterday } from 'date-fns/esm'
 
 export function AdminDevConsole() {
 	const {
@@ -51,10 +52,11 @@ export function UserDevConsole(props) {
 		consoleLogAppData,
 	} = useDataContext()
 	const { me } = appData
-	const handlePostsButtonClick = (event) => {
+	const yesterday = new Date(format(addDays(new Date(), -1), 'P'))
+	const createABunchOfPosts = (event) => {
 		const dateInterval = eachDayOfInterval({
 			start: new Date(userSelectedContest.startDate),
-			end: new Date(format(addDays(new Date(), -1), 'P'))
+			end: yesterday,
 		})
 		Promise.all(dateInterval.map(dateToPost => {
 			let newPost = {
@@ -66,7 +68,6 @@ export function UserDevConsole(props) {
 				quantityDrank: random(1, 10),
 				quantityDrankUnits: 'cups',
 			}
-			console.log("TCL: handlePostsButtonClick -> newPost", newPost)
 			return createUserPost(newPost)
 		})).then(() => (
 			loadFirebaseData()
@@ -78,7 +79,7 @@ export function UserDevConsole(props) {
 				CONSOLE LOG APP DATA
 			</Button>
 			<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
-			<DoubleClickButton doubleClickCallback={handlePostsButtonClick} text="MAKE ALL PREVIOUS POSTS FOR USER IN SELECTED CONTEST "
+			<DoubleClickButton doubleClickCallback={createABunchOfPosts} text="MAKE ALL PREVIOUS POSTS FOR USER IN SELECTED CONTEST "
 				firstColor="primary" secondColor="warning"
 			/>
 		</ButtonGroup>
