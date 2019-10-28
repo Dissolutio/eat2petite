@@ -1,10 +1,10 @@
 import React from 'react'
-import { Container, Card } from 'reactstrap'
+import { Container, Card, Button } from 'reactstrap'
 import { UserContestDashboardLink } from '../layout/Links'
 
 export default function UserContestsList(props) {
-  const { userEnrolledContests } = props
-
+  const { userEnrolledContests, userSelectedContest } = props
+  const currentUid = userSelectedContest && userSelectedContest.uid
   if (userEnrolledContests) {
     return (
       <Container>
@@ -12,7 +12,9 @@ export default function UserContestsList(props) {
         {userEnrolledContests.map((contest, index) => (
           <Card key={index}>
             <UserContestDashboardLink contestId={contest.uid}>
-              Contest: {contest.title}
+              <Button color="primary" disabled={contest.uid === currentUid ? true : false}>
+                Contest: {contest.title}
+              </Button>
             </UserContestDashboardLink>
           </Card>
         )
