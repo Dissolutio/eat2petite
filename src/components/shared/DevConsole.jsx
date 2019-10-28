@@ -8,7 +8,6 @@ import { useDataContext } from '../../contexts/useDataContext'
 import DoubleClickButton from '../shared/DoubleClickButton'
 
 import { sampleUsers } from '../../sampleData'
-import { isYesterday } from 'date-fns/esm'
 
 export function AdminDevConsole() {
 	const {
@@ -47,9 +46,7 @@ export function UserDevConsole(props) {
 	const { userSelectedContest } = props
 	const {
 		appData,
-		loadLocalData,
 		savePost,
-		setLocalData,
 		loadFirebaseData,
 		consoleLogAppData,
 	} = useDataContext()
