@@ -14,7 +14,7 @@ export default function UserChallengesList(props) {
 						const { uid, challengeName } = challenge
 						return (
 							<ListGroupItem color="primary" key={uid}>
-								<UserChallengeDetailLink id={uid}>
+								<UserChallengeDetailLink challengeId={uid}>
 									<h3>{challengeName}</h3>
 								</UserChallengeDetailLink>
 							</ListGroupItem>

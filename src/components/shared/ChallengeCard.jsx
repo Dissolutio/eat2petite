@@ -1,11 +1,12 @@
 import React from 'react'
-import { Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
+import { Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
 
-export default props => {
+export default function ChallengeCard(props) {
 	const { challenge } = props
-	const { uid, challengeName, description, units } = challenge
-	return (
-		challenge && (
+	if (challenge) {
+
+		const { uid, challengeName, description, units } = challenge
+		return (
 			<Card color="primary" outline key={uid} body>
 				<CardHeader>
 					<CardTitle>
@@ -23,5 +24,7 @@ export default props => {
 				</CardFooter>
 			</Card>
 		)
-	)
+	} else {
+		return "No Challenge"
+	}
 }

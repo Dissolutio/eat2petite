@@ -1,11 +1,10 @@
 import React from 'react'
 import { Container, Badge, Button } from 'reactstrap'
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 
-const CurrentUserReadout = () => {
+const CurrentUserReadout = (props) => {
 	const firebaseApp = useFirebaseContext()
-	const { user } = useAuthUserContext()
+	const { user } = props
 	const onSignOutButtonClick = () => firebaseApp.doSignOut()
 	return (
 		<Container>
@@ -14,7 +13,7 @@ const CurrentUserReadout = () => {
 					<p style={{ color: 'var(--E2P-ginger' }}>
 						<small>
 							Current User:
-							<Badge color="primary">{user.username}</Badge>
+							<Badge color="primary">{user.username || user.email}</Badge>
 							<br />
 							<Button size="sm" block onClick={onSignOutButtonClick}>
 								Sign Out

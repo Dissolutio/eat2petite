@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import FoodPhoto from '../../assets/ThreeUnsplashEat2PetiteImages/photoByBrookeLarkOnUnsplash504x400.jpg'
 
 export default function HeroImage() {
-	console.log('FoodPhoto import:', FoodPhoto)
 	return (
 		<HeroContainer img={FoodPhoto}>
 			<HeroText>

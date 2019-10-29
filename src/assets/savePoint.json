@@ -1,0 +1,155 @@
+{
+  "challenges" : {
+    "challenge1" : {
+      "challengeName" : "Water Intake",
+      "defaultTarget" : {
+        "quantity" : 8,
+        "units" : "cups"
+      },
+      "description" : "We should consume at least as much water as it takes to fill both of our shoes.",
+      "uid" : "challenge1",
+      "units" : "volume"
+    },
+    "challenge2" : {
+      "challengeName" : "Eat Vegetables",
+      "description" : "Humans grew up as omnivores, and benefit greatly from a large amount of vegetables as a food source. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential for physical and mental fitness.",
+      "typesOfVegetables" : [ "leafy-greens", "non-green" ],
+      "uid" : "challenge2",
+      "units" : [ "servings" ]
+    },
+    "challenge3" : {
+      "challengeName" : "Eat Protein",
+      "description" : "We should aim for a target protein level every day for the goals we want to achieve. Our bodies are built from them!",
+      "uid" : "challenge3",
+      "units" : "weight"
+    },
+    "challenge4" : {
+      "challengeName" : "Get Active!",
+      "description" : "Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!",
+      "intensities" : [ "light", "medium", "high" ],
+      "uid" : "challenge4",
+      "units" : "intensity"
+    },
+    "challenge5" : {
+      "challengeName" : "Manage Carbohydrate Intake",
+      "description" : "Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.",
+      "typesOfCarbohydrate" : [ "simple", "complex" ],
+      "uid" : "challenge5",
+      "units" : "weight"
+    },
+    "challenge6" : {
+      "challengeName" : "Manage Sugar and Salt Intake",
+      "description" : "The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.",
+      "uid" : "challenge6",
+      "units" : "weight"
+    }
+  },
+  "contests" : {
+    "-Lrj26IOIQMP-HuI5lTD" : {
+      "daysPerChallenge" : "14",
+      "enrolledUsers" : {
+        "8A0KxSxtWJPhQ3slflHc8tgRiT52" : true,
+        "MtAwR5hQ18SpTXI5wEjbkzx5pLE3" : true,
+        "me9wM0JJs9QDAG390wu3CoQ9ayi2" : true
+      },
+      "numberOfChallenges" : 6,
+      "orderOfChallenges" : [ null, "challenge1", "challenge2", "challenge3", "challenge4", "challenge5", "challenge6" ],
+      "startDate" : "10/12/2019",
+      "title" : "The First Contest: 6 14-Day Challenges",
+      "uid" : "-Lrj26IOIQMP-HuI5lTD"
+    },
+    "-Lrj26IP2WRBX-q3zxS3" : {
+      "daysPerChallenge" : "2",
+      "enrolledUsers" : {
+        "8A0KxSxtWJPhQ3slflHc8tgRiT52" : true,
+        "MtAwR5hQ18SpTXI5wEjbkzx5pLE3" : true,
+        "me9wM0JJs9QDAG390wu3CoQ9ayi2" : true
+      },
+      "numberOfChallenges" : 6,
+      "orderOfChallenges" : [ null, "challenge1", "challenge2", "challenge3", "challenge4", "challenge5", "challenge6" ],
+      "startDate" : "10/06/2019",
+      "title" : "The Old Contest: 6 2-Day Challenges",
+      "uid" : "-Lrj26IP2WRBX-q3zxS3"
+    }
+  },
+  "publicUsers" : {
+    "8A0KxSxtWJPhQ3slflHc8tgRiT52" : {
+      "uid" : "8A0KxSxtWJPhQ3slflHc8tgRiT52",
+      "userRole" : "default",
+      "username" : "JillPickle"
+    },
+    "MtAwR5hQ18SpTXI5wEjbkzx5pLE3" : {
+      "uid" : "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
+      "userRole" : "default",
+      "username" : "JackieChan"
+    },
+    "iNgYAcuUyeVPO83DzReVtv6hWn03" : {
+      "uid" : "iNgYAcuUyeVPO83DzReVtv6hWn03",
+      "userRole" : "admin",
+      "username" : "dissolutio"
+    },
+    "me9wM0JJs9QDAG390wu3CoQ9ayi2" : {
+      "uid" : "me9wM0JJs9QDAG390wu3CoQ9ayi2",
+      "userRole" : "default",
+      "username" : "Joe"
+    }
+  },
+  "users" : {
+    "8A0KxSxtWJPhQ3slflHc8tgRiT52" : {
+      "contests" : {
+        "-Lrj26IOIQMP-HuI5lTD" : true,
+        "-Lrj26IP2WRBX-q3zxS3" : true
+      },
+      "email" : "user_2@example.com",
+      "firstName" : "Jill",
+      "lastName" : "Jones",
+      "uid" : "8A0KxSxtWJPhQ3slflHc8tgRiT52",
+      "userHeightFeet" : "5",
+      "userHeightInches" : "10",
+      "userRole" : "default",
+      "userWeight" : "120",
+      "username" : "JillPickle"
+    },
+    "MtAwR5hQ18SpTXI5wEjbkzx5pLE3" : {
+      "contests" : {
+        "-Lrj26IOIQMP-HuI5lTD" : true,
+        "-Lrj26IP2WRBX-q3zxS3" : true
+      },
+      "email" : "user_1@example.com",
+      "firstName" : "Jack",
+      "lastName" : "Jones",
+      "uid" : "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
+      "userHeightFeet" : "5",
+      "userHeightInches" : "10",
+      "userRole" : "default",
+      "userWeight" : "200",
+      "username" : "JackieChan"
+    },
+    "iNgYAcuUyeVPO83DzReVtv6hWn03" : {
+      "email" : "entity.john@gmail.com",
+      "firstName" : "John",
+      "lastName" : "Moen",
+      "uid" : "iNgYAcuUyeVPO83DzReVtv6hWn03",
+      "userHeightFeet" : "5",
+      "userHeightInches" : "8",
+      "userRole" : "admin",
+      "userWeight" : "140",
+      "username" : "dissolutio"
+    },
+    "me9wM0JJs9QDAG390wu3CoQ9ayi2" : {
+      "contests" : {
+        "-Lrj26IOIQMP-HuI5lTD" : true,
+        "-Lrj26IP2WRBX-q3zxS3" : true
+      },
+      "email" : "user_3@example.com",
+      "firstName" : "Joe",
+      "lastName" : "Jones",
+      "uid" : "me9wM0JJs9QDAG390wu3CoQ9ayi2",
+      "userHeightFeet" : "5",
+      "userHeightInches" : "10",
+      "userRole" : "default",
+      "userWeight" : "200",
+      "username" : "Joe"
+    }
+  }
+}
