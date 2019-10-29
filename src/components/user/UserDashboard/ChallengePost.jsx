@@ -13,6 +13,7 @@ export default function ChallengePost(props) {
 
   const currentQuantityDrank = (currentPost && currentPost.quantityDrank) || 0
   const currentQuantityDrankUnits = (currentPost && currentPost.quantityDrankUnits) || 'cups'
+
   React.useEffect(() => {
     setQuantityDrank(currentQuantityDrank)
     setQuantityDrankUnits(currentQuantityDrankUnits)
