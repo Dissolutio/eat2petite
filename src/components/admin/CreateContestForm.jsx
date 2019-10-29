@@ -31,7 +31,7 @@ const ContestCreateForm = (props) => {
   const title = useInputValue('Sample1')
   const daysPerChallenge = useInputValue(14)
 
-  const createContestOnSubmit = (event) => {
+  const createContestOnSubmit = async (event) => {
     event.preventDefault()
     const enrolledUsers = [...event.target.enrolledUsers]
       .filter((input) => input.checked)
@@ -48,7 +48,7 @@ const ContestCreateForm = (props) => {
       orderOfChallenges: orderOfChallenges(),
       numberOfChallenges,
     }
-    createContest(newContest).then((newContestId) => {
+    const newContestId = await createContest(newContest)
       enrolledUsers.forEach((userId) => {
         enrollUserInContest(userId, newContestId)
       })
