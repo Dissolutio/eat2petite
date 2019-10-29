@@ -4,8 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { useAuthUserContext } from './contexts/useAuthUserContext'
 import Header from './components/layout/Header'
 import AppRouter from './components/layout/AppRouter'
-import AppStyle from './components/layout/AppStyle'
-import PageStyle from './components/layout/PageStyle'
+import { PageStyle, AppStyle } from './components/layout/StyleWrappers'
 import LandingPage from './components/layout/LandingPage'
 
 function App() {
