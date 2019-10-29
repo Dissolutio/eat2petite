@@ -50,12 +50,12 @@ export const sampleContests = {
     enrolledUsers: {},
     numberOfChallenges: 6,
     orderOfChallenges: {
-      '1': 'challenge1',
-      '2': 'challenge2',
-      '3': 'challenge3',
-      '4': 'challenge4',
-      '5': 'challenge5',
-      '6': 'challenge6',
+      challenge1: '1',
+      challenge2: '2',
+      challenge3: '3',
+      challenge4: '4',
+      challenge5: '5',
+      challenge6: '6',
     },
   },
   contest2: {
@@ -65,17 +65,17 @@ export const sampleContests = {
     enrolledUsers: {},
     numberOfChallenges: 6,
     orderOfChallenges: {
-      '1': 'challenge1',
-      '2': 'challenge2',
-      '3': 'challenge3',
-      '4': 'challenge4',
-      '5': 'challenge5',
-      '6': 'challenge6',
+      challenge1: '1',
+      challenge2: '2',
+      challenge3: '3',
+      challenge4: '4',
+      challenge5: '5',
+      challenge6: '6',
     },
   },
 }
 export const sampleUsers = {
-  MtAwR5hQ18SpTXI5wEjbkzx5pLE3: {
+  'MtAwR5hQ18SpTXI5wEjbkzx5pLE3': {
     email: 'user_1@example.com',
     userRole: 'default',
     uid: 'MtAwR5hQ18SpTXI5wEjbkzx5pLE3',
@@ -97,7 +97,7 @@ export const sampleUsers = {
     userHeightFeet: '5',
     userHeightInches: '10',
   },
-  me9wM0JJs9QDAG390wu3CoQ9ayi2: {
+  'me9wM0JJs9QDAG390wu3CoQ9ayi2': {
     email: 'user_3@example.com',
     userRole: 'default',
     uid: 'me9wM0JJs9QDAG390wu3CoQ9ayi2',
@@ -108,7 +108,7 @@ export const sampleUsers = {
     userHeightFeet: '5',
     userHeightInches: '10',
   },
-  iNgYAcuUyeVPO83DzReVtv6hWn03: {
+  'iNgYAcuUyeVPO83DzReVtv6hWn03': {
     email: 'entity.john@gmail.com',
     userRole: 'admin',
     uid: 'iNgYAcuUyeVPO83DzReVtv6hWn03',
@@ -169,7 +169,7 @@ export const sampleChallenges = {
   },
 }
 export const samplePublicUsers = {
-  MtAwR5hQ18SpTXI5wEjbkzx5pLE3: {
+  'MtAwR5hQ18SpTXI5wEjbkzx5pLE3': {
     userRole: 'default',
     uid: 'MtAwR5hQ18SpTXI5wEjbkzx5pLE3',
     username: 'JackieChan',
@@ -179,12 +179,12 @@ export const samplePublicUsers = {
     uid: '8A0KxSxtWJPhQ3slflHc8tgRiT52',
     username: 'JillPickle',
   },
-  me9wM0JJs9QDAG390wu3CoQ9ayi2: {
+  'me9wM0JJs9QDAG390wu3CoQ9ayi2': {
     userRole: 'default',
     uid: 'me9wM0JJs9QDAG390wu3CoQ9ayi2',
     username: 'Joe',
   },
-  iNgYAcuUyeVPO83DzReVtv6hWn03: {
+  'iNgYAcuUyeVPO83DzReVtv6hWn03': {
     userRole: 'admin',
     uid: 'iNgYAcuUyeVPO83DzReVtv6hWn03',
     username: 'dissolutio',

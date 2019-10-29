@@ -38,15 +38,21 @@ export default function AdminContestDetail(props) {
 						)
 							: (<CardText>No users enrolled yet!</CardText>)
 						}
-						{orderOfChallenges ? (<ListGroup><h4>Challenge Order</h4>
-							{Object.keys(orderOfChallenges).map(order => {
-								const challengeId = orderOfChallenges[order]
-								const challenge = challenges[challengeId]
-								return (
-									<ListGroupItem key={challenge.uid}><span>{`${order}: `}</span><span>{`${challenge.challengeName}`}</span></ListGroupItem>
-								)
-							})}
-						</ListGroup>) : (<CardText>No Challenges added!</CardText>)}
+						{orderOfChallenges
+							? (<ListGroup><h4>Challenge Order</h4>
+								{Object.entries(orderOfChallenges).map((entry) => {
+									const challengeId = entry[0]
+									const challengeOrder = entry[1]
+									const challenge = challenges[challengeId]
+									return (
+										<ListGroupItem key={challenge.uid}>
+											<span>{`${challengeOrder}: `}</span>
+											<span>{`${challenge.challengeName}`}</span>
+										</ListGroupItem>
+									)
+								})}
+							</ListGroup>)
+							: (<CardText>No Challenges added!</CardText>)}
 					</CardFooter>
 				</Card>
 			</Container>

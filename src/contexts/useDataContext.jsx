@@ -153,18 +153,8 @@ const useDataContext = () => {
           Object.entries(snapshot.val()).reduce((acc, entry) => {
             const uid = entry[0]
             const contest = entry[1]
-            const orderOfChallenges =
-              contest.orderOfChallenges &&
-              contest.orderOfChallenges.filter((memberOfArray) => {
-                if (memberOfArray) {
-                  return true
-                } else {
-                  return false
-                }
-              })
             const newContest = {
               ...contest,
-              orderOfChallenges,
             }
             return {
               ...acc,
