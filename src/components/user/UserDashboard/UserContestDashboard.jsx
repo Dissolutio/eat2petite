@@ -5,7 +5,6 @@ import UserDashboardCalendar from './UserDashboardCalendar'
 import ChallengePost from './ChallengePost'
 import { UserDevConsole } from '../../shared/DevConsole'
 
-import { calculateContestData } from './utils'
 
 const UserContestDashboard = (props) => {
     const [selectedDate, setSelectedDate] = React.useState(new Date())
@@ -15,7 +14,7 @@ const UserContestDashboard = (props) => {
         Object.values(posts).filter(
             post => post.contestId === userSelectedContest.uid
         )
-    const { contestStartDate, contestEndDate } = calculateContestData(userSelectedContest, postsArray)
+    const { startDate, endDate, orderOfChallenges, daysPerChallenge, numberOfChallenges } = userSelectedContest
     const currentPost = postsArray && postsArray.find(post => isSameDay(new Date(post.postDate), new Date(selectedDate)))
     console.log("TCL: UserContestDashboard -> currentPost", currentPost)
     const currentChallenge = () => {
@@ -28,7 +27,7 @@ const UserContestDashboard = (props) => {
     }
     const dateChangeHandler = (date) => {
         const isBetweenStartAndToday = isWithinInterval(date, {
-            start: contestStartDate,
+            start: new Date(startDate),
             end: new Date(),
         })
         if (!isBetweenStartAndToday) {
@@ -47,16 +46,16 @@ const UserContestDashboard = (props) => {
                 selectedDate={format(new Date(selectedDate), 'yyyy-MM-dd')}
                 dateChangeHandler={dateFormOnChange}
                 formDisabled={formDisabled}
-                contestStartDate={contestStartDate}
-                contestEndDate={contestEndDate}
+                contestStartDate={new Date(startDate)}
+                contestEndDate={new Date(endDate)}
                 currentPost={currentPost}
                 me={me}
             />
             <UserDashboardCalendar
                 selectedDate={selectedDate}
                 dateChangeHandler={dateChangeHandler}
-                startDate={contestStartDate}
-                contestEndDate={contestEndDate}
+                contestStartDate={new Date(startDate)}
+                contestEndDate={new Date(endDate)}
             />
             {process.env.NODE_ENV === 'development'
                 ? <UserDevConsole userSelectedContest={userSelectedContest} />
