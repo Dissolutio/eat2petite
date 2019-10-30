@@ -23,7 +23,7 @@ export const sampleChallenges = {
     metric: 'volume',
     defaultMeasurementUnits: 'cups',
     defaultTarget: {
-      quickDescription: '8 cups',
+      quickDescription: 'Drink 8 cups of water a day.',
       quantityDrank: 8,
       quantityDrankUnits: 'cups',
     },
@@ -32,11 +32,11 @@ export const sampleChallenges = {
     challengeName: 'Vegetable Challenge',
     uid: 'challenge2',
     description:
-      'Humans grew up as omnivores, and benefit greatly from a large amount of vegetables as a food source. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential for physical and mental fitness.',
+      'We benefit greatly from a large amount of vegetables in our diet. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential.',
     defaultMeasurementUnits: `servings`,
     metric: 'amount',
     defaultTarget: {
-      quickDescription: '2 servings of leafy green vegetables, 1 serving of another vegetable',
+      quickDescription: 'Eat 3 servings of vegetables a day, with at least one being a leafy green vegetable.',
       quantityLeafyGreens: 2,
       quantityNonLeafyGreens: 1,
       quantityUnits: 'servings',
@@ -46,12 +46,12 @@ export const sampleChallenges = {
     challengeName: 'Protein Challenge',
     uid: 'challenge3',
     description:
-      'We should aim for a target protein level every day for the goals we want to achieve. Our bodies are built from them!',
+      'Consuming enough protein helps keep our muscles well fed. We are made of proteins after all!',
     metric: 'weight',
     defaultMeasurementUnits: 'grams',
     defaultTarget: {
-      quickDescription: '30 grams',
-      quantityConsumed: 30,
+      quickDescription: 'Try to eat 20 grams of protein each day.',
+      quantityConsumed: 20,
       quantityConsumedUnits: 'grams',
     },
   },
