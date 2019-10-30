@@ -70,7 +70,7 @@ export const sampleChallenges = {
     }
   },
   challenge5: {
-    challengeName: 'Carb Sources Challenge',
+    challengeName: 'Carbohydrate Challenge',
     uid: 'challenge5',
     description:
       'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
@@ -102,7 +102,7 @@ export const sampleChallenges = {
 }
 export const sampleContests = {
   contest1: {
-    title: 'The First Contest: 6 14-Day Challenges',
+    title: 'Eat-2-Petite Launch Contest',
     startDate: format(addDays(new Date(), -9), 'P'),
     daysPerChallenge: '14',
     enrolledUsers: {},
@@ -117,9 +117,9 @@ export const sampleContests = {
     },
   },
   contest2: {
-    title: 'The Old Contest: 6 2-Day Challenges',
-    startDate: format(addDays(new Date(), -15), 'P'),
-    daysPerChallenge: '2',
+    title: 'Fall Mini Contest ',
+    startDate: format(addDays(new Date(), -3), 'P'),
+    daysPerChallenge: '7',
     enrolledUsers: {},
     numberOfChallenges: 6,
     orderOfChallenges: {
