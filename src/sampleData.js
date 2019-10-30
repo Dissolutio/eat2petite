@@ -1,45 +1,64 @@
 import { format, addDays } from 'date-fns'
-
 export const samplePosts = {
-  post1: {
-    uid: 'post1',
-    postDate: '2019-09-11',
-    postData: {
-      quantity: '6.66',
-      quantityUnits: 'cups',
-    },
+  '-LsQNoes1_JZsqVuG5Mz': {
+    author: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
+    challengeId: "challenge1",
+    checkedInBonus: true,
+    contestId: "-LsQNkeDfSlA1Gql-XKM",
+    createdAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
+    lastEditedAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
+    postDate: "10/30/2019",
+    quantityDrank: 0,
+    quantityDrankUnits: "cups",
+    uid: "-LsQNoes1_JZsqVuG5Mz",
+    userId: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
   },
-  post2: {
-    uid: 'post2',
-    postDate: '2019-09-12',
-    postData: {
-      quantity: '6.66',
-      quantityUnits: 'liters',
-    },
+}
+export const sampleChallenges = {
+  challenge1: {
+    challengeName: 'Water Intake',
+    uid: 'challenge1',
+    description:
+      'We should consume at least as much water as it takes to fill both of our shoes.',
+    units: 'volume',
+    challengeTarget: { quantityDrank: 8, quantityDrankUnits: 'cups' },
   },
-  post3: {
-    uid: 'post3',
-    postDate: '2019-09-13',
-    postData: {
-      quantity: '6.66',
-      quantityUnits: 'cups',
-    },
+  challenge2: {
+    challengeName: 'Eat Vegetables',
+    uid: 'challenge2',
+    description:
+      'Humans grew up as omnivores, and benefit greatly from a large amount of vegetables as a food source. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential for physical and mental fitness.',
+    units: [`servings`],
+    typesOfVegetables: ['leafy-greens', 'non-green'],
   },
-  post4: {
-    uid: 'post4',
-    postDate: '2019-09-14',
-    postData: {
-      quantity: '6.66',
-      quantityUnits: 'ounces',
-    },
+  challenge3: {
+    challengeName: 'Eat Protein',
+    uid: 'challenge3',
+    description:
+      'We should aim for a target protein level every day for the goals we want to achieve. Our bodies are built from them!',
+    units: 'weight',
   },
-  post5: {
-    uid: 'post5',
-    postDate: '2019-09-15',
-    postData: {
-      quantity: '3',
-      quantityUnits: 'liters',
-    },
+  challenge4: {
+    challengeName: 'Get Active!',
+    uid: 'challenge4',
+    description: `Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!`,
+    units: 'intensity',
+    intensities: ['light', 'medium', 'high'],
+  },
+  challenge5: {
+    challengeName: 'Manage Carbohydrate Intake',
+    uid: 'challenge5',
+    description:
+      'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
+    units: 'weight',
+    typesOfCarbohydrate: ['simple', 'complex'],
+  },
+  challenge6: {
+    challengeName: 'Manage Sugar and Salt Intake',
+    uid: 'challenge6',
+    description:
+      'The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.',
+    units: 'weight',
   },
 }
 export const sampleContests = {
@@ -121,53 +140,6 @@ export const sampleUsers = {
   },
 }
 
-export const sampleChallenges = {
-  challenge1: {
-    challengeName: 'Water Intake',
-    uid: 'challenge1',
-    description:
-      'We should consume at least as much water as it takes to fill both of our shoes.',
-    units: 'volume',
-    defaultTarget: { quantity: 8, units: 'cups' },
-  },
-  challenge2: {
-    challengeName: 'Eat Vegetables',
-    uid: 'challenge2',
-    description:
-      'Humans grew up as omnivores, and benefit greatly from a large amount of vegetables as a food source. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential for physical and mental fitness.',
-    units: [`servings`],
-    typesOfVegetables: ['leafy-greens', 'non-green'],
-  },
-  challenge3: {
-    challengeName: 'Eat Protein',
-    uid: 'challenge3',
-    description:
-      'We should aim for a target protein level every day for the goals we want to achieve. Our bodies are built from them!',
-    units: 'weight',
-  },
-  challenge4: {
-    challengeName: 'Get Active!',
-    uid: 'challenge4',
-    description: `Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!`,
-    units: 'intensity',
-    intensities: ['light', 'medium', 'high'],
-  },
-  challenge5: {
-    challengeName: 'Manage Carbohydrate Intake',
-    uid: 'challenge5',
-    description:
-      'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
-    units: 'weight',
-    typesOfCarbohydrate: ['simple', 'complex'],
-  },
-  challenge6: {
-    challengeName: 'Manage Sugar and Salt Intake',
-    uid: 'challenge6',
-    description:
-      'The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.',
-    units: 'weight',
-  },
-}
 export const samplePublicUsers = {
   'MtAwR5hQ18SpTXI5wEjbkzx5pLE3': {
     userRole: 'default',
