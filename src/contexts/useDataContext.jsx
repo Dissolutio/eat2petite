@@ -11,6 +11,8 @@ import {
   sampleContests,
 } from '../sampleData'
 import savePoint from '../assets/savePoint'
+import { adaptContestData } from '../modules/adapters'
+
 const DataContext = React.createContext([{}, () => { }])
 
 const DataContextProvider = (props) => {
@@ -150,14 +152,12 @@ const useDataContext = () => {
       .then((snapshot) => {
         return (
           snapshot.val() &&
-          Object.entries(snapshot.val()).reduce((acc, entry) => {
+          Object.entries(snapshot.val()).reduce((finalContests, entry) => {
             const uid = entry[0]
             const contest = entry[1]
-            const newContest = {
-              ...contest,
-            }
+            const newContest = adaptContestData(contest)
             return {
-              ...acc,
+              ...finalContests,
               [uid]: newContest,
             }
           }, {})
