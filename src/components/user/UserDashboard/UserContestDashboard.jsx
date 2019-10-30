@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { format, isSameDay, differenceInCalendarDays, addDays, isWithinInterval } from 'date-fns'
+import { isSameDay, differenceInCalendarDays, isWithinInterval } from 'date-fns'
 
 import UserDashboardCalendar from './UserDashboardCalendar'
 import ChallengePost from './ChallengePost'
 import { UserDevConsole } from '../../shared/DevConsole'
 import { useUIContext } from '../../../contexts/useUIContext'
-
 
 const UserContestDashboard = (props) => {
     const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
@@ -15,11 +14,12 @@ const UserContestDashboard = (props) => {
         Object.values(posts).filter(
             post => post.contestId === userSelectedContest.uid
         )
-    const { startDate, endDate, orderOfChallenges, daysPerChallenge, numberOfChallenges } = userSelectedContest
-    const currentPost = postsArray && postsArray.find(post => isSameDay(new Date(post.postDate), new Date(selectedDate)))
-    console.log("TCL: UserContestDashboard -> currentPost", currentPost)
-    const currentChallenge = () => {
-        const diffStartPost = differenceInCalendarDays(contestStartDate, selectedDate)
+    const { startDate, endDate, orderOfChallenges, daysPerChallenge } = userSelectedContest
+    const currentPost = postsArray && postsArray.find(post => isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
+    const getChallengeUidForDate = (date) => {
+        const contestDay = differenceInCalendarDays(selectedDateInDashboard, new Date(startDate))
+        const orderOfChallengesIndex = Math.floor(contestDay / daysPerChallenge)
+        return orderOfChallenges[orderOfChallengesIndex]
     }
     const currentChallenge = challenges[getChallengeUidForDate(selectedDateInDashboard)]
     const dateChangeHandler = (date) => {
@@ -46,6 +46,7 @@ const UserContestDashboard = (props) => {
                 contestStartDate={new Date(startDate)}
                 contestEndDate={new Date(endDate)}
                 currentPost={currentPost}
+                currentChallenge={currentChallenge}
                 me={me}
             />
             <UserDashboardCalendar
@@ -55,7 +56,7 @@ const UserContestDashboard = (props) => {
                 contestEndDate={new Date(endDate)}
             />
             {process.env.NODE_ENV === 'development'
-                ? <UserDevConsole userSelectedContest={userSelectedContest} />
+                ? <UserDevConsole userSelectedContest={userSelectedContest} currentChallenge={currentChallenge} />
                 : null}
         </>
     )
