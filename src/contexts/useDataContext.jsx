@@ -43,7 +43,6 @@ const useDataContext = () => {
       firebaseApp.dbSaveNewContest(contest),
     )
     const newData = await loadFirebaseData()
-    console.log('newData', newData)
     Object.values(newData.users).forEach((user) => {
       if (user.userRole === 'admin') {
         return
@@ -180,7 +179,7 @@ const useDataContext = () => {
     }
   }
   const updateUserChallengeTarget = (userId, challengeId, target) =>
-    firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target)
+    firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target).then(() => loadFirebaseData())
 
   return {
     appData,
