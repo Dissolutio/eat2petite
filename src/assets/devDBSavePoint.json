@@ -1,0 +1,82 @@
+{
+  "publicUsers": {
+    "8A0KxSxtWJPhQ3slflHc8tgRiT52": {
+      "uid": "8A0KxSxtWJPhQ3slflHc8tgRiT52",
+      "userRole": "default",
+      "username": "JillPickle"
+    },
+    "MtAwR5hQ18SpTXI5wEjbkzx5pLE3": {
+      "uid": "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
+      "userRole": "default",
+      "username": "JackieChan"
+    },
+    "iNgYAcuUyeVPO83DzReVtv6hWn03": {
+      "uid": "iNgYAcuUyeVPO83DzReVtv6hWn03",
+      "userRole": "admin",
+      "username": "dissolutio"
+    },
+    "me9wM0JJs9QDAG390wu3CoQ9ayi2": {
+      "uid": "me9wM0JJs9QDAG390wu3CoQ9ayi2",
+      "userRole": "default",
+      "username": "Joe"
+    }
+  },
+  "users": {
+    "8A0KxSxtWJPhQ3slflHc8tgRiT52": {
+      "contests": {
+        "-Lrj26IOIQMP-HuI5lTD": true,
+        "-Lrj26IP2WRBX-q3zxS3": true
+      },
+      "email": "user_2@example.com",
+      "firstName": "Jill",
+      "lastName": "Jones",
+      "uid": "8A0KxSxtWJPhQ3slflHc8tgRiT52",
+      "userHeightFeet": "5",
+      "userHeightInches": "10",
+      "userRole": "default",
+      "userWeight": "120",
+      "username": "JillPickle"
+    },
+    "MtAwR5hQ18SpTXI5wEjbkzx5pLE3": {
+      "contests": {
+        "-Lrj26IOIQMP-HuI5lTD": true,
+        "-Lrj26IP2WRBX-q3zxS3": true
+      },
+      "email": "user_1@example.com",
+      "firstName": "Jack",
+      "lastName": "Jones",
+      "uid": "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
+      "userHeightFeet": "5",
+      "userHeightInches": "10",
+      "userRole": "default",
+      "userWeight": "200",
+      "username": "JackieChan"
+    },
+    "iNgYAcuUyeVPO83DzReVtv6hWn03": {
+      "email": "entity.john@gmail.com",
+      "firstName": "John",
+      "lastName": "Moen",
+      "uid": "iNgYAcuUyeVPO83DzReVtv6hWn03",
+      "userHeightFeet": "5",
+      "userHeightInches": "8",
+      "userRole": "admin",
+      "userWeight": "140",
+      "username": "dissolutio"
+    },
+    "me9wM0JJs9QDAG390wu3CoQ9ayi2": {
+      "contests": {
+        "-Lrj26IOIQMP-HuI5lTD": true,
+        "-Lrj26IP2WRBX-q3zxS3": true
+      },
+      "email": "user_3@example.com",
+      "firstName": "Joe",
+      "lastName": "Jones",
+      "uid": "me9wM0JJs9QDAG390wu3CoQ9ayi2",
+      "userHeightFeet": "5",
+      "userHeightInches": "10",
+      "userRole": "default",
+      "userWeight": "200",
+      "username": "Joe"
+    }
+  }
+}

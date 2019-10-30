@@ -7,7 +7,7 @@ import {
   sampleChallenges,
   sampleContests,
 } from '../sampleData'
-import savePoint from '../assets/savePoint'
+import devDBSavePoint from '../assets/devDBSavePoint'
 import { adaptContestData } from '../modules/adapters'
 
 const DataContext = React.createContext([{}, () => { }])
@@ -60,7 +60,7 @@ const useDataContext = () => {
   }
   const dbLoadSavePoint = () => {
     console.log('Setting DB to SavePoint JSON file')
-    firebaseApp.db.ref().set(savePoint)
+    firebaseApp.db.ref().set(devDBSavePoint)
   }
   const consoleLogAppData = () => {
     console.log('current appData', appData)
