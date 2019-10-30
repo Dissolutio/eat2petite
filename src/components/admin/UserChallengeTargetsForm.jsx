@@ -7,16 +7,15 @@ function UserChallengeTargetsForm(props) {
     const { user, challenges } = props
     const { updateUserChallengeTarget } = useDataContext()
 
-    const waterChallenge = challengesArray.filter(challenge => challenge.challengeName === "Water Intake")[0]
+    const waterChallenge = challenges['challenge1']
     const waterTarget = (user.challengeTargets && user.challengeTargets[waterChallenge.uid]) || (waterChallenge.defaultTarget)
 
     const submitForm = (event) => {
         event.preventDefault()
-        const newTarget = { quantity: event.target.waterQuantity.value, units: event.target.waterUnits.value }
+        const newTarget = { quantityDrank: event.target.quantityDrank.value, quantityDrankUnits: event.target.quantityDrankUnits.value }
         console.log('newTarget', newTarget)
         updateUserChallengeTarget(user.uid, waterChallenge.uid, newTarget).then(() => {
             setFormFeedback('Water target updated!')
-            loadFirebaseData()
         })
     }
     const FormAlert = () => {
@@ -35,12 +34,12 @@ function UserChallengeTargetsForm(props) {
                         <h4>Water Challenge Target</h4>
                         <FormAlert></FormAlert>
                         <FormGroup>
-                            <Label for="waterQuantity">Quantity</Label>
-                            <Input name="waterQuantity" type="number" defaultValue={waterTarget.quantity} />
+                            <Label for="quantityDrank">Quantity</Label>
+                            <Input name="quantityDrank" type="number" defaultValue={waterTarget.quantityDrank} />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="waterUnits">Units</Label>
-                            <Input name="waterUnits" type="select" defaultValue={waterTarget.units}>
+                            <Label for="quantityDrankUnits">Units</Label>
+                            <Input name="quantityDrankUnits" type="select" defaultValue={waterTarget.quantityDrankUnits}>
                                 <option>ounces</option>
                                 <option>cups</option>
                                 <option>liters</option>
