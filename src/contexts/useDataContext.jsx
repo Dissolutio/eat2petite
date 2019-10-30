@@ -7,7 +7,7 @@ import {
   sampleChallenges,
   sampleContests,
 } from '../sampleData'
-import savePoint from '../assets/savePoint'
+import devDBSavePoint from '../assets/devDBSavePoint'
 import { adaptContestData } from '../modules/adapters'
 
 const DataContext = React.createContext([{}, () => { }])
@@ -43,7 +43,6 @@ const useDataContext = () => {
       firebaseApp.dbSaveNewContest(contest),
     )
     const newData = await loadFirebaseData()
-    console.log('newData', newData)
     Object.values(newData.users).forEach((user) => {
       if (user.userRole === 'admin') {
         return
@@ -60,7 +59,7 @@ const useDataContext = () => {
   }
   const dbLoadSavePoint = () => {
     console.log('Setting DB to SavePoint JSON file')
-    firebaseApp.db.ref().set(savePoint)
+    firebaseApp.db.ref().set(devDBSavePoint)
   }
   const consoleLogAppData = () => {
     console.log('current appData', appData)
@@ -180,7 +179,7 @@ const useDataContext = () => {
     }
   }
   const updateUserChallengeTarget = (userId, challengeId, target) =>
-    firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target)
+    firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target).then(() => loadFirebaseData())
 
   return {
     appData,

@@ -21,7 +21,7 @@ export const sampleChallenges = {
     description:
       'We should consume at least as much water as it takes to fill both of our shoes.',
     units: 'volume',
-    challengeTarget: { quantityDrank: 8, quantityDrankUnits: 'cups' },
+    defaultTarget: { quantityDrank: 8, quantityDrankUnits: 'cups' },
   },
   challenge2: {
     challengeName: 'Eat Vegetables',

@@ -6,21 +6,24 @@ import { useDataContext } from '../../../contexts/useDataContext'
 
 export default function ChallengePost(props) {
   const { savePost } = useDataContext()
-  const { userSelectedContest, selectedDate, formDisabled, me, currentPost, currentChallenge } = props
-
+  const { userSelectedContest, selectedDate, formDisabled, me, currentPost, currentChallenge, challenges } = props
   const [quantityDrank, setQuantityDrank] = useState(0)
   const [quantityDrankUnits, setQuantityDrankUnits] = useState('cups')
   const selectedDateIsAfterToday = differenceInCalendarDays(new Date(), new Date(selectedDate)) < 0
+  const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(new Date(selectedDate), 'yyyy-MM-dd')}`]
+  const userChallengeTarget = me.challengeTargets && me.challengeTargets[currentChallenge.uid]
+  const newPostTarget = userTargetForDate || userChallengeTarget || (challenges[currentChallenge.uid].defaultTarget)
+  const updatedPostTarget = userTargetForDate || (currentPost && currentPost.target) || userChallengeTarget || (challenges[currentChallenge.uid].defaultTarget)
   React.useEffect(() => {
     if (currentPost) {
       setQuantityDrank(currentPost.quantityDrank)
       setQuantityDrankUnits(currentPost.quantityDrankUnits)
     }
   }, [currentPost])
-  if (initialPost()) {
+
+  if (initialPost() && !currentPost) {
     savePost(initialPost())
   }
-
 
   function handleQuantityDrankInput(event) {
     setQuantityDrank(event.target.value)
@@ -28,12 +31,14 @@ export default function ChallengePost(props) {
   function handleQuantityDrankUnitsChange(event) {
     setQuantityDrankUnits(event.target.value)
   }
+
   function buildUpdatePost(event) {
     return {
       ...currentPost,
       quantityDrank,
-      quantityDrankUnits: (event && event.target.quantityDrankUnits.value) || currentPost.quantityDrankUnits,
-      lastEditedAt: (new Date()).toString()
+      quantityDrankUnits: (event && event.target && event.target.quantityDrankUnits.value) || currentPost.quantityDrankUnits,
+      lastEditedAt: (new Date()).toString(),
+      target: updatedPostTarget,
     }
   }
   function buildNewPost() {
@@ -52,6 +57,7 @@ export default function ChallengePost(props) {
       quantityDrankUnits: 'cups',
       checkedInBonus,
       lastEditedAt: createdAt,
+      target: newPostTarget,
     }
   }
   function initialPost() {

@@ -47,6 +47,7 @@ const UserContestDashboard = (props) => {
                 contestEndDate={new Date(endDate)}
                 currentPost={currentPost}
                 currentChallenge={currentChallenge}
+                challenges={challenges}
                 me={me}
             />
             <UserDashboardCalendar

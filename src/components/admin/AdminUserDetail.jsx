@@ -5,7 +5,7 @@ import { useDataContext } from '../../contexts/useDataContext'
 import UserChallengeTargetsForm from './UserChallengeTargetsForm'
 function AdminUserDetail(props) {
 	const { appData } = useDataContext()
-	const { users } = appData
+	const { users, challenges } = appData
 	const { id } = props.match.params
 	const user = users && users[id]
 	return (
@@ -17,7 +17,7 @@ function AdminUserDetail(props) {
 					<ListGroupItem>{`Email: ${user.email}`}</ListGroupItem>
 					<ListGroupItem>{`Weight: ${user.userWeight} lbs`}</ListGroupItem>
 					<ListGroupItem>{`Height: ${user.userHeightFeet}' ${user.userHeightInches}"`}</ListGroupItem>
-					<UserChallengeTargetsForm user={user} />
+					<UserChallengeTargetsForm user={user} challenges={challenges} />
 				</ListGroup>
 			</Container>
 		)) || <Container>No User Found</Container>
