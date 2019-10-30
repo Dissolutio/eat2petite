@@ -23,9 +23,21 @@
   },
   "users": {
     "8A0KxSxtWJPhQ3slflHc8tgRiT52": {
+      "challengeTargets": {
+        "challenge1": {
+          "quantityDrank": "4",
+          "quantityDrankUnits": "ounces"
+        }
+      },
+      "challengeTargetsForDates": {
+        "2019-10-29": {
+          "quantityDrank": 100,
+          "quantityDrankUnits": "liters"
+        }
+      },
       "contests": {
-        "-Lrj26IOIQMP-HuI5lTD": true,
-        "-Lrj26IP2WRBX-q3zxS3": true
+        "-LsQvsABKS-bdkX6wRRo": true,
+        "-LsQvsACDR_h3c3lkx0M": true
       },
       "email": "user_2@example.com",
       "firstName": "Jill",
@@ -38,9 +50,15 @@
       "username": "JillPickle"
     },
     "MtAwR5hQ18SpTXI5wEjbkzx5pLE3": {
+      "challengeTargetsForDates": {
+        "2019-10-29": {
+          "quantityDrank": 99,
+          "quantityDrankUnits": "liters"
+        }
+      },
       "contests": {
-        "-Lrj26IOIQMP-HuI5lTD": true,
-        "-Lrj26IP2WRBX-q3zxS3": true
+        "-LsQvsABKS-bdkX6wRRo": true,
+        "-LsQvsACDR_h3c3lkx0M": true
       },
       "email": "user_1@example.com",
       "firstName": "Jack",
@@ -65,8 +83,8 @@
     },
     "me9wM0JJs9QDAG390wu3CoQ9ayi2": {
       "contests": {
-        "-Lrj26IOIQMP-HuI5lTD": true,
-        "-Lrj26IP2WRBX-q3zxS3": true
+        "-LsQvsABKS-bdkX6wRRo": true,
+        "-LsQvsACDR_h3c3lkx0M": true
       },
       "email": "user_3@example.com",
       "firstName": "Joe",
