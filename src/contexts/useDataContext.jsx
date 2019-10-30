@@ -4,9 +4,6 @@ import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
 import { getLocalState, setLocalState } from '../modules/localStorage'
 import {
-  sampleUsers,
-  samplePublicUsers,
-  samplePosts,
   sampleChallenges,
   sampleContests,
 } from '../sampleData'
@@ -140,8 +137,6 @@ const useDataContext = () => {
         .dbPosts()
         .once('value')
         .then((snapshot) => snapshot.val())
-    } else {
-      return {}
     }
   }
 
@@ -177,12 +172,11 @@ const useDataContext = () => {
   const updateUserPost = (post) => firebaseApp.dbUpdateUserPost(post)
   const savePost = (post) => {
     if (post && post.uid) {
-      console.log("TCL: savePost -> post", post)
-      console.log("TCL: savePost -> post.uid", post.uid)
-      return updateUserPost(post).then(() => loadFirebaseData())
+      console.log('Updating post', post)
+      return updateUserPost(post).then(() => getPosts()).then((posts) => setAppData({ ...appData, posts }))
     } else {
-      console.log('Making a new post')
-      return createUserPost(post).then(() => loadFirebaseData())
+      console.log('Making a new post', post)
+      return createUserPost(post).then(() => getPosts()).then((posts) => setAppData({ ...appData, posts }))
     }
   }
   const updateUserChallengeTarget = (userId, challengeId, target) =>

@@ -4,10 +4,11 @@ import { format, isSameDay, differenceInCalendarDays, addDays, isWithinInterval 
 import UserDashboardCalendar from './UserDashboardCalendar'
 import ChallengePost from './ChallengePost'
 import { UserDevConsole } from '../../shared/DevConsole'
+import { useUIContext } from '../../../contexts/useUIContext'
 
 
 const UserContestDashboard = (props) => {
-    const [selectedDate, setSelectedDate] = React.useState(new Date())
+    const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
     const [formDisabled, setFormDisabled] = useState(false)
     const { userSelectedContest, me, posts, challenges } = props
     const postsArray = posts &&
@@ -32,14 +33,15 @@ const UserContestDashboard = (props) => {
         if (isBetweenStartAndToday) {
             setFormDisabled(false)
         }
-        setSelectedDate(date)
+        setSelectedDateInDashboard(date)
     }
 
     return (
         <>
             <ChallengePost
+                selectedDate={selectedDateInDashboard}
+                setSelectedDate={setSelectedDateInDashboard}
                 userSelectedContest={userSelectedContest}
-                selectedDate={format(new Date(selectedDate), 'yyyy-MM-dd')}
                 formDisabled={formDisabled}
                 contestStartDate={new Date(startDate)}
                 contestEndDate={new Date(endDate)}
@@ -47,7 +49,7 @@ const UserContestDashboard = (props) => {
                 me={me}
             />
             <UserDashboardCalendar
-                selectedDate={selectedDate}
+                selectedDate={selectedDateInDashboard}
                 dateChangeHandler={dateChangeHandler}
                 contestStartDate={new Date(startDate)}
                 contestEndDate={new Date(endDate)}
