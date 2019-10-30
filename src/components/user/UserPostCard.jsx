@@ -17,17 +17,7 @@ export default function UserPostCard(props) {
 				<CardBody>
 					<CardText>{`Post Date: ${post.postDate}`}</CardText>
 					<CardText>{`Author: ${currentUser.username}`}</CardText>
-					<CardText>{`quantity: ${post.quantityDrank}, units: ${post.quantityDrankUnits}`}</CardText>
-					{post.postData.data && (
-						<CardText>
-							{`[${Object.keys(post.postData.data).map((dataKey, keyIndex) => {
-								return (
-									dataKey.toString() +
-									(keyIndex >= Object.keys(post.postData.data).length - 1 ? ',' : '')
-								)
-							})}]`}
-						</CardText>
-					)}
+					<CardText>{`${post.quantityDrank} ${post.quantityDrankUnits}`}</CardText>
 				</CardBody>
 			</Card>
 		</Col>

@@ -4,13 +4,12 @@ import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
 import { getLocalState, setLocalState } from '../modules/localStorage'
 import {
-  sampleUsers,
-  samplePublicUsers,
-  samplePosts,
   sampleChallenges,
   sampleContests,
 } from '../sampleData'
 import savePoint from '../assets/savePoint'
+import { adaptContestData } from '../modules/adapters'
+
 const DataContext = React.createContext([{}, () => { }])
 
 const DataContextProvider = (props) => {
@@ -138,8 +137,6 @@ const useDataContext = () => {
         .dbPosts()
         .once('value')
         .then((snapshot) => snapshot.val())
-    } else {
-      return {}
     }
   }
 
@@ -150,24 +147,12 @@ const useDataContext = () => {
       .then((snapshot) => {
         return (
           snapshot.val() &&
-          Object.entries(snapshot.val()).reduce((acc, entry) => {
+          Object.entries(snapshot.val()).reduce((finalContests, entry) => {
             const uid = entry[0]
             const contest = entry[1]
-            const orderOfChallenges =
-              contest.orderOfChallenges &&
-              contest.orderOfChallenges.filter((memberOfArray) => {
-                if (memberOfArray) {
-                  return true
-                } else {
-                  return false
-                }
-              })
-            const newContest = {
-              ...contest,
-              orderOfChallenges,
-            }
+            const newContest = adaptContestData(contest)
             return {
-              ...acc,
+              ...finalContests,
               [uid]: newContest,
             }
           }, {})
@@ -187,12 +172,11 @@ const useDataContext = () => {
   const updateUserPost = (post) => firebaseApp.dbUpdateUserPost(post)
   const savePost = (post) => {
     if (post && post.uid) {
-      console.log("TCL: savePost -> post", post)
-      console.log("TCL: savePost -> post.uid", post.uid)
-      return updateUserPost(post).then(() => loadFirebaseData())
+      console.log('Updating post', post)
+      return updateUserPost(post).then(() => getPosts()).then((posts) => setAppData({ ...appData, posts }))
     } else {
-      console.log('Making a new post')
-      return createUserPost(post).then(() => loadFirebaseData())
+      console.log('Making a new post', post)
+      return createUserPost(post).then(() => getPosts()).then((posts) => setAppData({ ...appData, posts }))
     }
   }
   const updateUserChallengeTarget = (userId, challengeId, target) =>

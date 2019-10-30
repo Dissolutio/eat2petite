@@ -1,126 +1,19 @@
 import { format, addDays } from 'date-fns'
-
 export const samplePosts = {
-  post1: {
-    uid: 'post1',
-    postDate: '2019-09-11',
-    postData: {
-      quantity: '6.66',
-      quantityUnits: 'cups',
-    },
-  },
-  post2: {
-    uid: 'post2',
-    postDate: '2019-09-12',
-    postData: {
-      quantity: '6.66',
-      quantityUnits: 'liters',
-    },
-  },
-  post3: {
-    uid: 'post3',
-    postDate: '2019-09-13',
-    postData: {
-      quantity: '6.66',
-      quantityUnits: 'cups',
-    },
-  },
-  post4: {
-    uid: 'post4',
-    postDate: '2019-09-14',
-    postData: {
-      quantity: '6.66',
-      quantityUnits: 'ounces',
-    },
-  },
-  post5: {
-    uid: 'post5',
-    postDate: '2019-09-15',
-    postData: {
-      quantity: '3',
-      quantityUnits: 'liters',
-    },
+  '-LsQNoes1_JZsqVuG5Mz': {
+    author: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
+    challengeId: "challenge1",
+    checkedInBonus: true,
+    contestId: "-LsQNkeDfSlA1Gql-XKM",
+    createdAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
+    lastEditedAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
+    postDate: "10/30/2019",
+    quantityDrank: 0,
+    quantityDrankUnits: "cups",
+    uid: "-LsQNoes1_JZsqVuG5Mz",
+    userId: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
   },
 }
-export const sampleContests = {
-  contest1: {
-    title: 'The First Contest: 6 14-Day Challenges',
-    startDate: format(addDays(new Date(), -9), 'P'),
-    daysPerChallenge: '14',
-    enrolledUsers: {},
-    numberOfChallenges: 6,
-    orderOfChallenges: {
-      '1': 'challenge1',
-      '2': 'challenge2',
-      '3': 'challenge3',
-      '4': 'challenge4',
-      '5': 'challenge5',
-      '6': 'challenge6',
-    },
-  },
-  contest2: {
-    title: 'The Old Contest: 6 2-Day Challenges',
-    startDate: format(addDays(new Date(), -15), 'P'),
-    daysPerChallenge: '2',
-    enrolledUsers: {},
-    numberOfChallenges: 6,
-    orderOfChallenges: {
-      '1': 'challenge1',
-      '2': 'challenge2',
-      '3': 'challenge3',
-      '4': 'challenge4',
-      '5': 'challenge5',
-      '6': 'challenge6',
-    },
-  },
-}
-export const sampleUsers = {
-  MtAwR5hQ18SpTXI5wEjbkzx5pLE3: {
-    email: 'user_1@example.com',
-    userRole: 'default',
-    uid: 'MtAwR5hQ18SpTXI5wEjbkzx5pLE3',
-    username: 'JackieChan',
-    firstName: 'Jack',
-    lastName: 'Jones',
-    userWeight: '200',
-    userHeightFeet: '5',
-    userHeightInches: '10',
-  },
-  '8A0KxSxtWJPhQ3slflHc8tgRiT52': {
-    email: 'user_2@example.com',
-    userRole: 'default',
-    uid: '8A0KxSxtWJPhQ3slflHc8tgRiT52',
-    username: 'JillPickle',
-    firstName: 'Jill',
-    lastName: 'Jones',
-    userWeight: '120',
-    userHeightFeet: '5',
-    userHeightInches: '10',
-  },
-  me9wM0JJs9QDAG390wu3CoQ9ayi2: {
-    email: 'user_3@example.com',
-    userRole: 'default',
-    uid: 'me9wM0JJs9QDAG390wu3CoQ9ayi2',
-    username: 'Joe',
-    firstName: 'Joe',
-    lastName: 'Jones',
-    userWeight: '200',
-    userHeightFeet: '5',
-    userHeightInches: '10',
-  },
-  iNgYAcuUyeVPO83DzReVtv6hWn03: {
-    email: 'entity.john@gmail.com',
-    userRole: 'admin',
-    uid: 'iNgYAcuUyeVPO83DzReVtv6hWn03',
-    username: 'dissolutio',
-    firstName: 'John',
-    lastName: 'Moen',
-    userWeight: '140',
-    userHeightFeet: '5',
-    userHeightInches: '8',
-  },
-}
-
 export const sampleChallenges = {
   challenge1: {
     challengeName: 'Water Intake',
@@ -128,7 +21,7 @@ export const sampleChallenges = {
     description:
       'We should consume at least as much water as it takes to fill both of our shoes.',
     units: 'volume',
-    defaultTarget: { quantity: 8, units: 'cups' },
+    challengeTarget: { quantityDrank: 8, quantityDrankUnits: 'cups' },
   },
   challenge2: {
     challengeName: 'Eat Vegetables',
@@ -168,8 +61,87 @@ export const sampleChallenges = {
     units: 'weight',
   },
 }
+export const sampleContests = {
+  contest1: {
+    title: 'The First Contest: 6 14-Day Challenges',
+    startDate: format(addDays(new Date(), -9), 'P'),
+    daysPerChallenge: '14',
+    enrolledUsers: {},
+    numberOfChallenges: 6,
+    orderOfChallenges: {
+      '0': 'challenge1',
+      '1': 'challenge2',
+      '2': 'challenge3',
+      '3': 'challenge4',
+      '4': 'challenge5',
+      '5': 'challenge6',
+    },
+  },
+  contest2: {
+    title: 'The Old Contest: 6 2-Day Challenges',
+    startDate: format(addDays(new Date(), -15), 'P'),
+    daysPerChallenge: '2',
+    enrolledUsers: {},
+    numberOfChallenges: 6,
+    orderOfChallenges: {
+      '0': 'challenge1',
+      '1': 'challenge2',
+      '2': 'challenge3',
+      '3': 'challenge4',
+      '4': 'challenge5',
+      '5': 'challenge6',
+    },
+  },
+}
+export const sampleUsers = {
+  'MtAwR5hQ18SpTXI5wEjbkzx5pLE3': {
+    email: 'user_1@example.com',
+    userRole: 'default',
+    uid: 'MtAwR5hQ18SpTXI5wEjbkzx5pLE3',
+    username: 'JackieChan',
+    firstName: 'Jack',
+    lastName: 'Jones',
+    userWeight: '200',
+    userHeightFeet: '5',
+    userHeightInches: '10',
+  },
+  '8A0KxSxtWJPhQ3slflHc8tgRiT52': {
+    email: 'user_2@example.com',
+    userRole: 'default',
+    uid: '8A0KxSxtWJPhQ3slflHc8tgRiT52',
+    username: 'JillPickle',
+    firstName: 'Jill',
+    lastName: 'Jones',
+    userWeight: '120',
+    userHeightFeet: '5',
+    userHeightInches: '10',
+  },
+  'me9wM0JJs9QDAG390wu3CoQ9ayi2': {
+    email: 'user_3@example.com',
+    userRole: 'default',
+    uid: 'me9wM0JJs9QDAG390wu3CoQ9ayi2',
+    username: 'Joe',
+    firstName: 'Joe',
+    lastName: 'Jones',
+    userWeight: '200',
+    userHeightFeet: '5',
+    userHeightInches: '10',
+  },
+  'iNgYAcuUyeVPO83DzReVtv6hWn03': {
+    email: 'entity.john@gmail.com',
+    userRole: 'admin',
+    uid: 'iNgYAcuUyeVPO83DzReVtv6hWn03',
+    username: 'dissolutio',
+    firstName: 'John',
+    lastName: 'Moen',
+    userWeight: '140',
+    userHeightFeet: '5',
+    userHeightInches: '8',
+  },
+}
+
 export const samplePublicUsers = {
-  MtAwR5hQ18SpTXI5wEjbkzx5pLE3: {
+  'MtAwR5hQ18SpTXI5wEjbkzx5pLE3': {
     userRole: 'default',
     uid: 'MtAwR5hQ18SpTXI5wEjbkzx5pLE3',
     username: 'JackieChan',
@@ -179,12 +151,12 @@ export const samplePublicUsers = {
     uid: '8A0KxSxtWJPhQ3slflHc8tgRiT52',
     username: 'JillPickle',
   },
-  me9wM0JJs9QDAG390wu3CoQ9ayi2: {
+  'me9wM0JJs9QDAG390wu3CoQ9ayi2': {
     userRole: 'default',
     uid: 'me9wM0JJs9QDAG390wu3CoQ9ayi2',
     username: 'Joe',
   },
-  iNgYAcuUyeVPO83DzReVtv6hWn03: {
+  'iNgYAcuUyeVPO83DzReVtv6hWn03': {
     userRole: 'admin',
     uid: 'iNgYAcuUyeVPO83DzReVtv6hWn03',
     username: 'dissolutio',

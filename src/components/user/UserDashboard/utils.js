@@ -12,14 +12,10 @@ export function sortByMostCurrentStartDate(a, b) {
 }
 
 export function calculateContestData(userSelectedContest, postsArray) {
-    const { daysPerChallenge, numberOfChallenges } = userSelectedContest
+    const { daysPerChallenge, numberOfChallenges, orderOfChallenges } = userSelectedContest
     const contestLengthInDays = daysPerChallenge * numberOfChallenges
     const contestStartDate = new Date(userSelectedContest.startDate)
     const contestEndDate = new Date(addDays(contestStartDate, contestLengthInDays - 1))
-    const allContestDays = eachDayOfInterval({
-        start: contestStartDate,
-        end: contestEndDate,
-    })
 
-    return { contestLengthInDays, contestStartDate, contestEndDate, allContestDays }
+    return { contestStartDate, contestEndDate, orderOfChallenges }
 }

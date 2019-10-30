@@ -2,15 +2,15 @@ import React from 'react'
 import { Container, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText, ListGroup, ListGroupItem } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
 import { AdminUserDetailLink } from '../layout/Links'
-export default function AdminContestDetail(props) {
+import { ordinalSuffixOf } from '../../modules/functions'
 
+export default function AdminContestDetail(props) {
 	const { appData } = useDataContext()
 	const { contests, users, challenges } = appData
 	const contestId = props.match.params.id
 	const contest = contests && contests[contestId]
-	const endDate = new Date()
 	if (contest) {
-		const { uid, title, startDate, enrolledUsers, orderOfChallenges } = contest
+		const { uid, title, startDate, endDate, enrolledUsers, orderOfChallenges } = contest
 		const enrolledUsersArray = enrolledUsers && Object.keys(contest.enrolledUsers).map(key => users[key])
 		return (
 			<Container>
@@ -25,7 +25,7 @@ export default function AdminContestDetail(props) {
 							Begins: {startDate}
 						</CardText>
 						<CardText>
-							Ends: {endDate.toDateString()}
+							Ends: {endDate}
 						</CardText>
 					</CardBody>
 					<CardFooter>
@@ -38,15 +38,21 @@ export default function AdminContestDetail(props) {
 						)
 							: (<CardText>No users enrolled yet!</CardText>)
 						}
-						{orderOfChallenges ? (<ListGroup><h4>Challenge Order</h4>
-							{Object.keys(orderOfChallenges).map(order => {
-								const challengeId = orderOfChallenges[order]
-								const challenge = challenges[challengeId]
-								return (
-									<ListGroupItem key={challenge.uid}><span>{`${order}: `}</span><span>{`${challenge.challengeName}`}</span></ListGroupItem>
-								)
-							})}
-						</ListGroup>) : (<CardText>No Challenges added!</CardText>)}
+						{orderOfChallenges
+							? (<ListGroup><h4>Challenge Order</h4>
+								{Object.entries(orderOfChallenges).map((entry) => {
+									const orderSpot = entry[0]
+									const challengeUid = entry[1]
+									const challenge = challenges[challengeUid]
+									return (
+										<ListGroupItem key={`${challenge.uid}--${orderSpot}`}>
+											<span>{`${ordinalSuffixOf(parseInt(orderSpot) + 1)}: `}</span>
+											<span>{`${challenge.challengeName}`}</span>
+										</ListGroupItem>
+									)
+								})}
+							</ListGroup>)
+							: (<CardText>No Challenges added!</CardText>)}
 					</CardFooter>
 				</Card>
 			</Container>

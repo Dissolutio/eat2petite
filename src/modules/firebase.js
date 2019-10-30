@@ -81,7 +81,7 @@ class Firebase {
   dbContests = () => this.db.ref(`/contests`)
   dbSaveNewContest = (contest) => {
     console.log('TCL: Firebase -> contest', contest)
-    this.dbContests()
+    return this.dbContests()
       .push()
       .then((ref) => {
         ref.set({
