@@ -3,11 +3,9 @@ import { Container, Alert, Form, FormGroup, Label, Input, Button } from 'reactst
 import { useDataContext } from '../../contexts/useDataContext'
 
 function UserChallengeTargetsForm(props) {
-    const { user } = props
-    const { appData, updateUserChallengeTarget, loadFirebaseData } = useDataContext()
     const [formFeedback, setFormFeedback] = React.useState('')
-    const { challenges } = appData
-    const challengesArray = Object.keys(challenges).map(id => challenges[id])
+    const { user, challenges } = props
+    const { updateUserChallengeTarget } = useDataContext()
 
     const waterChallenge = challengesArray.filter(challenge => challenge.challengeName === "Water Intake")[0]
     const waterTarget = (user.challengeTargets && user.challengeTargets[waterChallenge.uid]) || (waterChallenge.defaultTarget)
