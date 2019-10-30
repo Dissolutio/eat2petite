@@ -1,59 +1,56 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Container, Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import { format, addDays } from 'date-fns'
+import { range } from 'lodash'
+
 import { useDataContext } from '../../contexts/useDataContext'
 import useInputValue from '../../modules/hooks/useInputValue'
 import * as ROUTES from '../../routes'
-import { format, addDays } from 'date-fns'
+import { ordinalSuffixOf } from '../../modules/functions'
 
 const ContestCreateForm = (props) => {
   const { appData, createContest, enrollUserInContest } = useDataContext()
   const { users, challenges } = appData
   const [numberOfChallenges, setNumberOfChallenges] = useState(6)
-  const [startDate, setStartDate] = useState(format(new Date(), 'P'))
+  const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'))
+  const title = useInputValue('Sample1')
+  const daysPerChallenge = useInputValue(14)
+  const orderSpotsArray = range(0, (parseInt(numberOfChallenges))).map(integer => `${integer}`)
 
   const handleStartDateChange = (event) => {
     // add one day, because `format` rounds down for some reason
     const newDate = addDays(new Date(event.target.value), 1)
     console.log(newDate)
-    setStartDate(format(addDays(newDate, 1), 'P'))
+    setStartDate(format(addDays(newDate, 1), 'yyyy-MM-dd'))
   }
-  const generateChallengeOrderInputLength = () => {
-    let array = []
-    for (let i = 1; i <= numberOfChallenges; i++) {
-      array.push(i)
-    }
-    return array
-  }
-  const challengeInputNames = generateChallengeOrderInputLength().map(
-    (input, index) => `Challenge${index + 1}`,
-  )
-  const title = useInputValue('Sample1')
-  const daysPerChallenge = useInputValue(14)
 
   const createContestOnSubmit = async (event) => {
     event.preventDefault()
     const enrolledUsers = [...event.target.enrolledUsers]
       .filter((input) => input.checked)
       .map((input) => input.value)
-    const orderOfChallenges = () => challengeInputNames.reduce(
-      (orderOfChallenges, inputName, currIndex) => {
-        orderOfChallenges[currIndex + 1] = event.target[inputName].value
-        return orderOfChallenges
-      }, {})
+
+    const orderOfChallenges = () => {
+      let answer = {}
+      for (let i = 0; i < orderSpotsArray.length; i++) {
+        answer[`${i}`] = event.target[`order${i + 1}`].value
+      }
+      return answer
+    }
+
     const newContest = {
       title: title.value,
-      startDate,
+      startDate: format(new Date(startDate), 'P'),
       daysPerChallenge: daysPerChallenge.value,
       orderOfChallenges: orderOfChallenges(),
       numberOfChallenges,
     }
     const newContestId = await createContest(newContest)
-      enrolledUsers.forEach((userId) => {
-        enrollUserInContest(userId, newContestId)
-      })
-      props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
+    enrolledUsers.forEach((userId) => {
+      enrollUserInContest(userId, newContestId)
     })
+    props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
   }
   return (
     <Container>
@@ -80,7 +77,11 @@ const ContestCreateForm = (props) => {
             name="numberOfChallenges"
             type="number"
             value={numberOfChallenges}
-            onChange={(event) => setNumberOfChallenges(event.target.value)}
+            onChange={(event) => {
+              console.log("TCL: ContestCreateForm -> event.target.value", event.target.value)
+              setNumberOfChallenges(event.target.value)
+            }
+            }
           />
         </FormGroup>
         <FormGroup>
@@ -109,30 +110,33 @@ const ContestCreateForm = (props) => {
               })}
           </FormGroup>
         )}
-        {generateChallengeOrderInputLength().map((orderSelect, orderIndex) => {
-          const inputName = `Challenge${orderIndex + 1}`
+        {orderSpotsArray.map((index0ToNumOfChallenges) => {
+          const orderSpot = parseInt(index0ToNumOfChallenges) + 1
+          const arbitraryName = `order${orderSpot}` // order1, order2, ..., order(#OfChallenges)
           return (
-            <FormGroup key={inputName}>
-              <Label for={inputName}>{`Challenge ${orderIndex + 1}`}</Label>
-              <Input type="select" name={inputName}>
-                {challenges &&
-                  Object.keys(challenges).map((challengeKey) => {
-                    const challenge = challenges[challengeKey]
-                    return (
-                      <option
-                        key={`${orderIndex}--${challengeKey}`}
-                        value={challenge.uid}>
-                        {challenge.challengeName}
-                      </option>
-                    )
-                  })}
+            <FormGroup key={`${arbitraryName}`}>
+              <Label for={`${arbitraryName}`}>{`${ordinalSuffixOf(orderSpot)}`}</Label>
+              <Input type="select" name={`${arbitraryName}`}  >
+                {Object.entries(challenges).map((entry) => {
+                  const challengeKey = entry[0]
+                  const challenge = entry[1]
+                  return (
+                    <option
+                      key={`${challengeKey}${arbitraryName}`}
+                      value={challengeKey}
+                      selected={challengeKey === `challenge${orderSpot}`}
+                    >
+                      {challenge.challengeName}
+                    </option>
+                  )
+                })}
               </Input>
             </FormGroup>
           )
         })}
-        <Button type="submit">Submit</Button>
+        < Button type="submit" > Submit</Button>
       </Form>
-    </Container>
+    </Container >
   )
 }
 export default withRouter(ContestCreateForm)
