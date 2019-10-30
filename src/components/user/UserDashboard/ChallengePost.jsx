@@ -6,7 +6,7 @@ import { useDataContext } from '../../../contexts/useDataContext'
 
 export default function ChallengePost(props) {
   const { savePost } = useDataContext()
-  const { userSelectedContest, selectedDate, formDisabled, me, currentPost, currentChallenge } = props
+  const { userSelectedContest, selectedDate, formDisabled, me, currentPost, currentChallenge, challenges } = props
 
   const [quantityDrank, setQuantityDrank] = useState(0)
   const [quantityDrankUnits, setQuantityDrankUnits] = useState('cups')
