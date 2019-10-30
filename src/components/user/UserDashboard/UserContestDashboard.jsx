@@ -20,11 +20,7 @@ const UserContestDashboard = (props) => {
     const currentChallenge = () => {
         const diffStartPost = differenceInCalendarDays(contestStartDate, selectedDate)
     }
-    const dateFormOnChange = (event) => {
-        // add one day, because the  reactstrap Input value seems to round down a day, for some reason
-        const newDate = format(addDays(new Date(event.target.value), 1), 'P')
-        dateChangeHandler(newDate)
-    }
+    const currentChallenge = challenges[getChallengeUidForDate(selectedDate)]
     const dateChangeHandler = (date) => {
         const isBetweenStartAndToday = isWithinInterval(date, {
             start: new Date(startDate),
@@ -44,7 +40,6 @@ const UserContestDashboard = (props) => {
             <ChallengePost
                 userSelectedContest={userSelectedContest}
                 selectedDate={format(new Date(selectedDate), 'yyyy-MM-dd')}
-                dateChangeHandler={dateFormOnChange}
                 formDisabled={formDisabled}
                 contestStartDate={new Date(startDate)}
                 contestEndDate={new Date(endDate)}
