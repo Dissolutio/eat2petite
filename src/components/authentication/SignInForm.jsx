@@ -5,7 +5,7 @@ import { Container, Alert, Button, Form, FormGroup, Label, Input } from 'reactst
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 import useInputValue from '../../modules/hooks/useInputValue'
 
-import SignInDevConsole from './SignInDevConsole'
+import { SignInDevConsole } from '../shared/DevConsole'
 import PasswordForgetForm from './PasswordForgetForm'
 
 import * as ROUTES from '../../routes'

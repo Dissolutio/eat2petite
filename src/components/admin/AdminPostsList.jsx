@@ -7,7 +7,7 @@ export default function AdminPostsList(props) {
 	return (
 		<ul>
 			<h2>Posts List</h2>
-			{posts ? posts.map(post => (
+			{posts ? Object.values(posts).map(post => (
 				<li key={post.uid}>
 					<ul>
 						<li>

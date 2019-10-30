@@ -1,34 +1,23 @@
 import React from 'react'
 import { Col, Card, CardHeader, CardBody, CardText } from 'reactstrap'
 
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
-
 import { UserPostDetailLink } from '../layout/Links'
 
 export default function UserPostCard(props) {
-	const { user } = useAuthUserContext()
-	const { post } = props
+	const { post, currentUser } = props
+	const { uid } = post
 	return (
-		<Col sm="6" key={post.uid}>
+		<Col sm="6" key={uid}>
 			<Card color="primary" outline body>
 				<CardHeader>
-					<UserPostDetailLink id={post.uid}></UserPostDetailLink>
+					<UserPostDetailLink postId={uid}>
+						<h5>{`Post: ${uid}`}</h5>
+					</UserPostDetailLink>
 				</CardHeader>
 				<CardBody>
 					<CardText>{`Post Date: ${post.postDate}`}</CardText>
-					<CardText>{`Author: ${user.username}`}</CardText>
-					<CardText>{`quantity: ${post.postData.quantity}, units: ${post.postData.quantityUnits}`}</CardText>
-					{post.postData.data && (
-						<CardText>
-							{`[${Object.keys(post.postData.data).map((dataKey, keyIndex) => {
-								return (
-									dataKey.toString() +
-									(keyIndex >= Object.keys(post.postData.data).length - 1 ? ',' : '')
-								)
-							})}]`}
-							}
-						</CardText>
-					)}
+					<CardText>{`Author: ${currentUser.username}`}</CardText>
+					<CardText>{`${post.quantityDrank} ${post.quantityDrankUnits}`}</CardText>
 				</CardBody>
 			</Card>
 		</Col>

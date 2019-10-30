@@ -2,7 +2,6 @@ import React from 'react'
 import { NavItem } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
 import { useUIContext } from '../../contexts/useUIContext'
 
 import CurrentUserReadout from '../authentication/CurrentUserReadout'
@@ -10,7 +9,7 @@ import CurrentUserReadout from '../authentication/CurrentUserReadout'
 import * as ROUTES from '../../routes'
 
 const NavLinks = props => {
-	const { user } = useAuthUserContext()
+	const { user } = props
 
 	const notSignedInCondition = !user
 	const signedInNonAdminCondition = !!user && user.userRole === `default`
@@ -55,7 +54,7 @@ const NavLinks = props => {
 			{notSignedInCondition ? <NonAuthLinks /> : null}
 			{signedInNonAdminCondition ? <AuthLinks /> : null}
 			{adminCondition ? <AdminLinks /> : null}
-			<CurrentUserReadout />
+			<CurrentUserReadout user={user} />
 		</nav>
 	)
 }

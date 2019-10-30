@@ -11,7 +11,7 @@ export default function AdminContestsList(props) {
 				const contest = contests[contestKey]
 				const id = contest.uid
 				return (
-					<ListGroupItem key={id}>
+					<ListGroupItem key={contestKey}>
 						<AdminContestDetailLink id={id}>{contest.title}</AdminContestDetailLink>
 					</ListGroupItem>
 				)

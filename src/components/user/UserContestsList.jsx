@@ -1,21 +1,34 @@
 import React from 'react'
-import { Container } from 'reactstrap'
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
-import UserContestCard from './UserContestCard'
+import { Container, Card, Button } from 'reactstrap'
+import { UserContestDashboardLink } from '../layout/Links'
+
 export default function UserContestsList(props) {
-	const { user } = useAuthUserContext()
-	const userContestsArray =
-		user.contests && props.contests
-			? Object.keys(user.contests).map(userContestsKey => props.contests[userContestsKey])
-			: null
-	return (
-		<Container>
-			<h2>Your Contests</h2>
-			<div>
-				{userContestsArray
-					? userContestsArray.map((contest, index) => <UserContestCard key={index} contest={contest} />)
-					: 'You are not enrolled in any contests.'}
-			</div>
-		</Container>
-	)
+  const { userEnrolledContests, userSelectedContest } = props
+  const currentUid = userSelectedContest && userSelectedContest.uid
+  if (userEnrolledContests) {
+    return (
+      <Container>
+        <h2>Your Contests</h2>
+        {userEnrolledContests.map((contest, index) => (
+          <Card key={index}>
+            <UserContestDashboardLink contestId={contest.uid}>
+              <Button color="primary" disabled={contest.uid === currentUid ? true : false}>
+                Contest: {contest.title}
+              </Button>
+            </UserContestDashboardLink>
+          </Card>
+        )
+        )}
+      </Container>
+    )
+  }
+  if (!userEnrolledContests) {
+    return (
+      <Container>
+        <p>
+          You are not enrolled in any contests.
+        </p>
+      </Container>
+    )
+  }
 }
