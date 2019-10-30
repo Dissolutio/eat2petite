@@ -1,11 +1,12 @@
 import React from 'react'
-import { Container, Alert, Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { useDataContext } from '../../contexts/useDataContext'
+import useFormAlert from '../../modules/hooks/useFormAlert'
 
 function UserChallengeTargetsForm(props) {
-    const [formFeedback, setFormFeedback] = React.useState('')
     const { user, challenges } = props
     const { updateUserChallengeTarget } = useDataContext()
+    const { fireAlert, CurrentAlertDisplay } = useFormAlert()
 
     const waterChallenge = challenges['challenge1']
     const waterTarget = (user.challengeTargets && user.challengeTargets[waterChallenge.uid]) || (waterChallenge.defaultTarget)
@@ -13,16 +14,9 @@ function UserChallengeTargetsForm(props) {
     const submitForm = (event) => {
         event.preventDefault()
         const newTarget = { quantityDrank: event.target.quantityDrank.value, quantityDrankUnits: event.target.quantityDrankUnits.value }
-        console.log('newTarget', newTarget)
         updateUserChallengeTarget(user.uid, waterChallenge.uid, newTarget).then(() => {
-            setFormFeedback('Water target updated!')
+            fireAlert({ text: 'Water target updated!', color: 'info' })
         })
-    }
-    const FormAlert = () => {
-        setTimeout(() => {
-            setFormFeedback('')
-        }, 2000);
-        return (formFeedback ? <Alert color='success'>{formFeedback}</Alert> : null)
     }
 
     return (
@@ -32,7 +26,7 @@ function UserChallengeTargetsForm(props) {
                     <h3>Challenge Targets</h3>
                     <Container>
                         <h4>Water Challenge Target</h4>
-                        <FormAlert></FormAlert>
+                        <CurrentAlertDisplay />
                         <FormGroup>
                             <Label for="quantityDrank">Quantity</Label>
                             <Input name="quantityDrank" type="number" defaultValue={waterTarget.quantityDrank} />
