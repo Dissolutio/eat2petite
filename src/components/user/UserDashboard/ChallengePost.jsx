@@ -7,13 +7,21 @@ import { useDataContext } from '../../../contexts/useDataContext'
 export default function ChallengePost(props) {
   const { savePost } = useDataContext()
   const { userSelectedContest, selectedDate, formDisabled, me, currentPost, currentChallenge, challenges } = props
-  const [quantityDrank, setQuantityDrank] = useState(0)
-  const [quantityDrankUnits, setQuantityDrankUnits] = useState('cups')
-  const selectedDateIsAfterToday = differenceInCalendarDays(new Date(), new Date(selectedDate)) < 0
   const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(new Date(selectedDate), 'yyyy-MM-dd')}`]
   const userChallengeTarget = me.challengeTargets && me.challengeTargets[currentChallenge.uid]
-  const newPostTarget = userTargetForDate || userChallengeTarget || (challenges[currentChallenge.uid].defaultTarget)
-  const updatedPostTarget = userTargetForDate || (currentPost && currentPost.target) || userChallengeTarget || (challenges[currentChallenge.uid].defaultTarget)
+  const currentPostHasTarget = (currentPost && currentPost.target)
+  const challengeDefaultTarget = (challenges[currentChallenge.uid] && challenges[currentChallenge.uid].defaultTarget)
+  const newPostTarget = userTargetForDate || userChallengeTarget || challengeDefaultTarget
+  const updatedPostTarget = userTargetForDate || currentPostHasTarget || userChallengeTarget || challengeDefaultTarget
+
+  const [quantityDrank, setQuantityDrank] = useState(0)
+  const [quantityDrankUnits, setQuantityDrankUnits] = useState('cups')
+  function handleQuantityDrankInput(event) {
+    setQuantityDrank(event.target.value)
+  }
+  function handleQuantityDrankUnitsChange(event) {
+    setQuantityDrankUnits(event.target.value)
+  }
   React.useEffect(() => {
     if (currentPost) {
       setQuantityDrank(currentPost.quantityDrank)
@@ -21,15 +29,15 @@ export default function ChallengePost(props) {
     }
   }, [currentPost])
 
+  const selectedDateIsAfterToday = differenceInCalendarDays(new Date(), new Date(selectedDate)) < 0
+  function initialPost() {
+    if (selectedDateIsAfterToday) { return }
+    // currentPost from props from UserContestDashboard
+    if (currentPost) { return }
+    return buildNewPost()
+  }
   if (initialPost() && !currentPost) {
     savePost(initialPost())
-  }
-
-  function handleQuantityDrankInput(event) {
-    setQuantityDrank(event.target.value)
-  }
-  function handleQuantityDrankUnitsChange(event) {
-    setQuantityDrankUnits(event.target.value)
   }
 
   function buildUpdatePost(event) {
@@ -59,11 +67,6 @@ export default function ChallengePost(props) {
       lastEditedAt: createdAt,
       target: newPostTarget,
     }
-  }
-  function initialPost() {
-    if (selectedDateIsAfterToday) { return }
-    if (currentPost) { return }
-    return buildNewPost()
   }
 
   const onSubmitForm = (event) => {
