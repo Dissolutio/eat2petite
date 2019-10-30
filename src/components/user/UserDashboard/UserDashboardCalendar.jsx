@@ -3,14 +3,14 @@ import Calendar from 'react-calendar'
 
 
 const UserDashboardCalendar = props => {
-  const { startDate, contestEndDate, selectedDate, dateChangeHandler } = props
+  const { contestStartDate, contestEndDate, selectedDate, dateChangeHandler } = props
   const changeHandler = date => dateChangeHandler(date)
   return (
     <Calendar
       onChange={changeHandler}
       value={selectedDate}
       calendarType="US"
-      minDate={startDate}
+      minDate={contestStartDate}
       maxDate={contestEndDate}
       minDetail={'month'}
     />
