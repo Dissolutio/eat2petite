@@ -14,5 +14,5 @@ export const PageStyle = (props) => (
 )
 const PageStyleWrapper = styled(Container)`
 	min-height: 100vh;
-	max-width: 750px;
+	max-width: 950px;
 `
