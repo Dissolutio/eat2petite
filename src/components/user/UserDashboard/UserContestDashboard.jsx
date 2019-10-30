@@ -21,7 +21,7 @@ const UserContestDashboard = (props) => {
     const currentChallenge = () => {
         const diffStartPost = differenceInCalendarDays(contestStartDate, selectedDate)
     }
-    const currentChallenge = challenges[getChallengeUidForDate(selectedDate)]
+    const currentChallenge = challenges[getChallengeUidForDate(selectedDateInDashboard)]
     const dateChangeHandler = (date) => {
         const isBetweenStartAndToday = isWithinInterval(date, {
             start: new Date(startDate),

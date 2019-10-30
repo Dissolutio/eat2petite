@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, ButtonGroup, Button, } from 'reactstrap'
 import { random } from 'lodash'
-import { format, addDays, eachDayOfInterval } from 'date-fns'
+import { format, addDays, eachDayOfInterval, isSameDay } from 'date-fns'
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 import { useDataContext } from '../../contexts/useDataContext'
 
@@ -43,7 +43,7 @@ export function AdminDevConsole() {
 }
 
 export function UserDevConsole(props) {
-	const { userSelectedContest } = props
+	const { userSelectedContest, currentChallenge } = props
 	const {
 		appData,
 		savePost,
@@ -51,25 +51,33 @@ export function UserDevConsole(props) {
 		consoleLogAppData,
 	} = useDataContext()
 	const { me } = appData
-	const yesterday = new Date(format(addDays(new Date(), -1), 'P'))
-	const createABunchOfPosts = (event) => {
+
+	const createABunchOfWaterChallengePosts = (event) => {
+		const yesterday = new Date(format(addDays(new Date(), -1), 'P'))
 		const dateInterval = eachDayOfInterval({
 			start: new Date(userSelectedContest.startDate),
 			end: yesterday,
 		})
 		Promise.all(dateInterval.map(dateToPost => {
+			const createdAt = (new Date()).toString()
+			const postDate = format(dateToPost, 'P')
+			const checkedInBonus = isSameDay(new Date(createdAt), new Date(postDate))
 			let newPost = {
 				author: me.uid,
 				userId: me.uid,
-				createdAt: (new Date()).toString(),
-				postDate: format(dateToPost, 'P'),
+				uid: null,
 				contestId: userSelectedContest.uid,
+				challengeId: currentChallenge.uid,
+				postDate,
+				createdAt,
 				quantityDrank: random(1, 10),
 				quantityDrankUnits: 'cups',
+				checkedInBonus,
+				lastEditedAt: createdAt,
 			}
 			return savePost(newPost)
 		})).then(() => (
-			loadFirebaseData()
+			console.log('SamplePostsMade')
 		))
 	}
 	return (
@@ -80,7 +88,7 @@ export function UserDevConsole(props) {
 					CONSOLE LOG APP DATA
 			</Button>
 				<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
-				<DoubleClickButton doubleClickCallback={createABunchOfPosts} text="MAKE ALL PREVIOUS POSTS FOR USER IN SELECTED CONTEST "
+				<DoubleClickButton doubleClickCallback={createABunchOfWaterChallengePosts} text="MAKE ALL PREVIOUS POSTS FOR USER IN SELECTED CONTEST "
 					firstColor="primary" secondColor="warning"
 				/>
 			</ButtonGroup>
