@@ -7,11 +7,11 @@ import NavLinks from '../layout/NavLinks'
 
 export default function Header(props) {
 	const { user } = props
-	const { menuOpen, toggleMenuOpen } = useUIContext()
+	const { menuOpen, toggleMenuOpen, setMenuClose } = useUIContext()
 	return (
 		<StyledHeader>
 			<Navbar color="light" light expand="md">
-				<Link to="/">
+				<Link to="/" onClick={setMenuClose}>
 					Eat-2-Petite
 				</Link>
 				<NavbarToggler onClick={toggleMenuOpen} />
