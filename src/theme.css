@@ -26,3 +26,10 @@ html {
 	--E2P-dark-gray: rgba(128, 128, 128, 1);
 	/* --E2P-dark-gray: #808080; */
 }
+body, p {
+	font-family: 'ABeeZee', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Cormorant Garamond', serif;
+}
+
