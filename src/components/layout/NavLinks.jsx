@@ -50,14 +50,14 @@ const NavLinks = props => {
 		)
 	}
 	return (
-		<>
+		<div>
 			<nav>
 				{notSignedInCondition ? <NonAuthLinks /> : null}
 				{signedInNonAdminCondition ? <AuthLinks /> : null}
 				{adminCondition ? <AdminLinks /> : null}
 			</nav>
 			<CurrentUserReadout user={user} />
-		</>
+		</div>
 	)
 }
 export default NavLinks

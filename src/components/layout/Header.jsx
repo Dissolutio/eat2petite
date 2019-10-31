@@ -11,10 +11,10 @@ export default function Header(props) {
 	return (
 		<StyledHeader>
 			<Navbar color="light" light expand="md">
-				<Link to="/" onClick={setMenuClose}>
+				<Link id="brand-name" className='p-3' to="/" onClick={setMenuClose}>
 					Eat-2-Petite
 				</Link>
-				<NavbarToggler onClick={toggleMenuOpen} />
+				<NavbarToggler onClick={toggleMenuOpen} color='primary' />
 				<Collapse isOpen={menuOpen} navbar>
 					<Nav className="ml-auto" navbar>
 						<NavLinks user={user} />
@@ -28,9 +28,19 @@ export default function Header(props) {
 const StyledHeader = styled.header`
 	background-color: var(--white);
 	color: var(--font-dark);
+	#brand-name {
+		font-family: 'Sofia';
+		color: var(--E2P-orange);
+		font-size: 1.7rem;
+	}
 	a {
-		font-family: 'Sofia', cursive;
 		color: var(--E2P-ginger);
-		font-size: 1.5rem;
+		font-size: 1.2rem;
+	}
+	button {
+		color: red;
+	}
+	.navbar-toggler-icon {
+		color: red;
 	}
 `
