@@ -1,11 +1,13 @@
 import React from 'react'
 import { Container } from 'reactstrap'
-import { sortByMostCurrentStartDate } from './utils'
+import queryString from 'query-string'
+
 import { useDataContext } from '../../../contexts/useDataContext'
 import UserContestDashboard from './UserContestDashboard'
 import { SelectContestDropdown } from './SelectContestDropdown'
 import UserContestsList from '../UserContestsList'
-const queryString = require('query-string')
+
+import { sortByMostCurrentStartDate } from './utils'
 
 export const UserHomepage = (props) => {
   const [userSelectedContest, setUserSelectedContest] = React.useState()
