@@ -6,13 +6,13 @@ export default function LandingPage() {
 	return (
 		<>
 			<HeroImage />
-			<Container className='p3 mt-5' style={{ maxWidth: '750px' }}>
+			<Container className='p-4 mt-5' style={{ maxWidth: '750px' }}>
 				<h2 className='text-center'>About Eat-2-Petite</h2>
 				<p>
 					Eat 2 Petite was born from a simple thought:
 					</p>
-				<Blockquote>
-					I wish I could just eat my way to thin...
+				<Blockquote className='p-2'>
+					<span>"I wish I could just eat my way to thin..."</span>
 					<span>-Everybody</span>
 				</Blockquote>
 				<p>
@@ -34,17 +34,10 @@ export default function LandingPage() {
 }
 const Blockquote = styled.blockquote`
 	font-size: 1.2rem;
-	margin:50px auto;
-	color: #555555;
-	padding:1.2rem;
-	border-left:8px solid var(--E2P-bright-orange) ;
-	position: relative;
-	background:#EDEDED;
 	span {
 	display: block; 
-	color: #333333; 
 	font-style: normal; 
 	font-weight: bold; 
-	margin-top:1em;
+	margin-top:1rem;
 }
 `
