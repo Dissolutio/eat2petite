@@ -43,7 +43,7 @@ const NavLinks = props => {
 		const { setMenuClose } = useUIContext()
 		return (
 			<NavItem>
-				<Link onClick={setMenuClose} to={to} style={{ color: 'var(--E2P-orange' }}>
+				<Link onClick={setMenuClose} to={to}>
 					{children}
 				</Link>
 			</NavItem>
@@ -55,8 +55,8 @@ const NavLinks = props => {
 				{notSignedInCondition ? <NonAuthLinks /> : null}
 				{signedInNonAdminCondition ? <AuthLinks /> : null}
 				{adminCondition ? <AdminLinks /> : null}
+				<CurrentUserReadout user={user} />
 			</nav>
-			<CurrentUserReadout user={user} />
 		</div>
 	)
 }
