@@ -16,54 +16,93 @@ export const samplePosts = {
 }
 export const sampleChallenges = {
   challenge1: {
-    challengeName: 'Water Intake',
+    challengeName: 'Water Challenge',
     uid: 'challenge1',
     description:
-      'We should consume at least as much water as it takes to fill both of our shoes.',
-    units: 'volume',
-    defaultTarget: { quantityDrank: 8, quantityDrankUnits: 'cups' },
+      'Staying well hydrated improves every facet of human functioning. Nothing hydrates you like pure water -- Drink up!',
+    metric: 'volume',
+    defaultMeasurementUnits: 'cups',
+    defaultTarget: {
+      quickDescription: 'Drink 8 cups of water a day.',
+      quantityDrank: 8,
+      quantityDrankUnits: 'cups',
+    },
   },
   challenge2: {
-    challengeName: 'Eat Vegetables',
+    challengeName: 'Vegetable Challenge',
     uid: 'challenge2',
     description:
-      'Humans grew up as omnivores, and benefit greatly from a large amount of vegetables as a food source. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential for physical and mental fitness.',
-    units: [`servings`],
-    typesOfVegetables: ['leafy-greens', 'non-green'],
+      'We benefit greatly from a large amount of vegetables in our diet. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential.',
+    defaultMeasurementUnits: `servings`,
+    metric: 'amount',
+    defaultTarget: {
+      quickDescription: 'Eat 3 servings of vegetables a day, with at least one being a leafy green vegetable.',
+      quantityLeafyGreens: 2,
+      quantityNonLeafyGreens: 1,
+      quantityUnits: 'servings',
+    },
   },
   challenge3: {
-    challengeName: 'Eat Protein',
+    challengeName: 'Protein Challenge',
     uid: 'challenge3',
     description:
-      'We should aim for a target protein level every day for the goals we want to achieve. Our bodies are built from them!',
-    units: 'weight',
+      'Consuming enough protein helps keep our muscles well fed. We are made of proteins after all!',
+    metric: 'weight',
+    defaultMeasurementUnits: 'grams',
+    defaultTarget: {
+      quickDescription: 'Try to eat 20 grams of protein each day.',
+      quantityConsumed: 20,
+      quantityConsumedUnits: 'grams',
+    },
   },
   challenge4: {
-    challengeName: 'Get Active!',
+    challengeName: 'Movement Challenge!',
     uid: 'challenge4',
     description: `Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!`,
-    units: 'intensity',
+    metric: 'time',
+    defaultMeasurementUnits: 'minutes',
     intensities: ['light', 'medium', 'high'],
+    defaultTarget: {
+      excerciseUnits: 'minutes',
+      quantitylightExcercise: 45,
+      quantityMediumExcercise: 10,
+      quantityHighExcercise: 0,
+    }
   },
   challenge5: {
-    challengeName: 'Manage Carbohydrate Intake',
+    challengeName: 'Carbohydrate Challenge',
     uid: 'challenge5',
     description:
       'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
-    units: 'weight',
+    metric: 'weight',
+    defaultMeasurementUnits: 'grams',
     typesOfCarbohydrate: ['simple', 'complex'],
+    defaultTarget: {
+      quickDescription: '3 servings of whole-grain or complex carbs, 1 or less of refined or simple carbs',
+      quantityUnits: 'servings',
+      quantitySimple: 1,
+      quantityComplex: 3,
+    },
   },
   challenge6: {
-    challengeName: 'Manage Sugar and Salt Intake',
+    challengeName: `Sugar'n'Salt Challenge`,
     uid: 'challenge6',
     description:
       'The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.',
-    units: 'weight',
+    defaultMeasurementUnits: 'grams',
+    metric: 'weight',
+    defaultTarget: {
+      quickDescription: '25 grams or less of sugar, 5 grams or less of salt',
+      quantitySugarConsumed: 25,
+      quantitySaltConsumed: 5,
+      quantitySugarUnits: 'grams',
+      quantitySaltConsumedUnits: 'grams',
+    },
   },
 }
 export const sampleContests = {
   contest1: {
-    title: 'The First Contest: 6 14-Day Challenges',
+    title: 'Eat-2-Petite Launch Contest',
     startDate: format(addDays(new Date(), -9), 'P'),
     daysPerChallenge: '14',
     enrolledUsers: {},
@@ -78,9 +117,9 @@ export const sampleContests = {
     },
   },
   contest2: {
-    title: 'The Old Contest: 6 2-Day Challenges',
-    startDate: format(addDays(new Date(), -15), 'P'),
-    daysPerChallenge: '2',
+    title: 'Fall Mini Contest ',
+    startDate: format(addDays(new Date(), -3), 'P'),
+    daysPerChallenge: '7',
     enrolledUsers: {},
     numberOfChallenges: 6,
     orderOfChallenges: {
