@@ -8,30 +8,37 @@ import { useUIContext } from '../../../contexts/useUIContext'
 
 const UserContestDashboard = (props) => {
     const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
-    const [formDisabled, setFormDisabled] = useState(false)
+    const [selectedDateIsInFuture, setSelectedDateIsInFuture] = useState(false)
     const { userSelectedContest, me, posts, challenges } = props
-    const postsArray = posts &&
-        Object.values(posts).filter(
-            post => post.contestId === userSelectedContest.uid
-        )
+
     const { startDate, endDate, orderOfChallenges, daysPerChallenge } = userSelectedContest
-    const currentPost = postsArray && postsArray.find(post => isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
-    const getChallengeUidForDate = (date) => {
+    const currentChallenge = getChallengeForSelectedDate()
+    const currentPost = getPostForSelectedDate()
+
+
+    function getPostForSelectedDate() {
+        if (!posts) { return }
+        return Object.values(posts).filter(
+            post => post.contestId === userSelectedContest.uid
+        ).find(post => (
+            isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
+        )
+    }
+    function getChallengeForSelectedDate() {
         const contestDay = differenceInCalendarDays(selectedDateInDashboard, new Date(startDate))
         const orderOfChallengesIndex = Math.floor(contestDay / daysPerChallenge)
-        return orderOfChallenges[orderOfChallengesIndex]
+        return challenges[orderOfChallenges[orderOfChallengesIndex]]
     }
-    const currentChallenge = challenges[getChallengeUidForDate(selectedDateInDashboard)]
     const dateChangeHandler = (date) => {
         const isBetweenStartAndToday = isWithinInterval(date, {
             start: new Date(startDate),
             end: new Date(),
         })
         if (!isBetweenStartAndToday) {
-            setFormDisabled(true)
+            setSelectedDateIsInFuture(true)
         }
         if (isBetweenStartAndToday) {
-            setFormDisabled(false)
+            setSelectedDateIsInFuture(false)
         }
         setSelectedDateInDashboard(date)
     }
@@ -42,7 +49,7 @@ const UserContestDashboard = (props) => {
                 selectedDate={selectedDateInDashboard}
                 setSelectedDate={setSelectedDateInDashboard}
                 userSelectedContest={userSelectedContest}
-                formDisabled={formDisabled}
+                formDisabled={selectedDateIsInFuture}
                 contestStartDate={new Date(startDate)}
                 contestEndDate={new Date(endDate)}
                 currentPost={currentPost}
