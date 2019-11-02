@@ -1,3 +1,4 @@
+import { isAfter, addDays } from 'date-fns'
 export const getDateArray = function (start, end) {
 	var arr = []
 	var dt = new Date(start)
@@ -21,4 +22,11 @@ export const ordinalSuffixOf = (i) => {
 		return i + "rd";
 	}
 	return i + "th";
+}
+export function sortByMostCurrentStartDate(a, b) {
+	if (isAfter(new Date(a.startDate), new Date(b.startDate))) {
+		return -1
+	} else {
+		return 1
+	}
 }

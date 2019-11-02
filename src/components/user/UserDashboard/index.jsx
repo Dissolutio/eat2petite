@@ -7,7 +7,7 @@ import UserContestDashboard from './UserContestDashboard'
 import { SelectContestDropdown } from './SelectContestDropdown'
 import UserContestsList from '../UserContestsList'
 
-import { sortByMostCurrentStartDate } from './utils'
+import { sortByMostCurrentStartDate } from '../../../modules/functions'
 
 export const UserHomepage = (props) => {
   const [userSelectedContest, setUserSelectedContest] = React.useState()
