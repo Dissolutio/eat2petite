@@ -88,3 +88,12 @@ export default function ChallengePost(props) {
     </Container>
   )
 }
+const LastEditedReadout = ({ lastEditedAt }) => {
+  return (
+    <p>
+      <small className='text-center text-info'>
+        {`Last edit: ${format(new Date(lastEditedAt), 'Pp')}`}
+      </small>
+    </p>
+  )
+}
