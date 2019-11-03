@@ -21,7 +21,7 @@ class Firebase {
       .createUserWithEmailAndPassword(formUser.email, userPassword)
       .then((result) => {
         console.log('Created User', result)
-        this.dbSaveNewUser({
+        return this.dbSaveNewUser({
           ...formUser,
           uid: result.user.uid,
           email: result.user.email,
