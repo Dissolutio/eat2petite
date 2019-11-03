@@ -21,7 +21,7 @@ const AuthApp = (props) => {
 	return (
 		<AppStyle>
 			<Header user={props.user} />
-			<PageStyle className="p-2 m-2">
+			<PageStyle >
 				<AppRouter authUser={props.user} />
 			</PageStyle>
 		</AppStyle>
@@ -32,7 +32,7 @@ const NonAuthApp = () => {
 	return (
 		<AppStyle>
 			<Header />
-			<PageStyle className="p-2 m-2">
+			<PageStyle>
 				<LandingPage />
 			</PageStyle>
 		</AppStyle>

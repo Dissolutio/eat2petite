@@ -23,7 +23,7 @@ export const sampleChallenges = {
     metric: 'volume',
     defaultMeasurementUnits: 'cups',
     defaultTarget: {
-      quickDescription: '8 cups',
+      quickDescription: 'Drink 8 cups of water a day.',
       quantityDrank: 8,
       quantityDrankUnits: 'cups',
     },
@@ -32,11 +32,11 @@ export const sampleChallenges = {
     challengeName: 'Vegetable Challenge',
     uid: 'challenge2',
     description:
-      'Humans grew up as omnivores, and benefit greatly from a large amount of vegetables as a food source. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential for physical and mental fitness.',
+      'We benefit greatly from a large amount of vegetables in our diet. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential.',
     defaultMeasurementUnits: `servings`,
     metric: 'amount',
     defaultTarget: {
-      quickDescription: '2 servings of leafy green vegetables, 1 serving of another vegetable',
+      quickDescription: 'Eat 3 servings of vegetables a day, with at least one being a leafy green vegetable.',
       quantityLeafyGreens: 2,
       quantityNonLeafyGreens: 1,
       quantityUnits: 'servings',
@@ -46,12 +46,12 @@ export const sampleChallenges = {
     challengeName: 'Protein Challenge',
     uid: 'challenge3',
     description:
-      'We should aim for a target protein level every day for the goals we want to achieve. Our bodies are built from them!',
+      'Consuming enough protein helps keep our muscles well fed. We are made of proteins after all!',
     metric: 'weight',
     defaultMeasurementUnits: 'grams',
     defaultTarget: {
-      quickDescription: '30 grams',
-      quantityConsumed: 30,
+      quickDescription: 'Try to eat 20 grams of protein each day.',
+      quantityConsumed: 20,
       quantityConsumedUnits: 'grams',
     },
   },
@@ -70,7 +70,7 @@ export const sampleChallenges = {
     }
   },
   challenge5: {
-    challengeName: 'Carb Sources Challenge',
+    challengeName: 'Carbohydrate Challenge',
     uid: 'challenge5',
     description:
       'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
@@ -102,7 +102,7 @@ export const sampleChallenges = {
 }
 export const sampleContests = {
   contest1: {
-    title: 'The First Contest: 6 14-Day Challenges',
+    title: 'Eat-2-Petite Launch Contest',
     startDate: format(addDays(new Date(), -9), 'P'),
     daysPerChallenge: '14',
     enrolledUsers: {},
@@ -117,9 +117,9 @@ export const sampleContests = {
     },
   },
   contest2: {
-    title: 'The Old Contest: 6 2-Day Challenges',
-    startDate: format(addDays(new Date(), -15), 'P'),
-    daysPerChallenge: '2',
+    title: 'Fall Mini Contest ',
+    startDate: format(addDays(new Date(), -3), 'P'),
+    daysPerChallenge: '7',
     enrolledUsers: {},
     numberOfChallenges: 6,
     orderOfChallenges: {

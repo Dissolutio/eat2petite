@@ -1,18 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Container } from 'reactstrap'
 
 export const AppStyle = styled.div`
 	min-height: 100%;
 	color: var(--font-dark);
+	background-color: #d5fefd;
+background-image: linear-gradient(350deg, var(--white), var(--gray1));
 `
 
 export const PageStyle = (props) => (
-	<PageStyleWrapper fluid className="text-center p-4">
+	<PageStyleWrapper>
 		{props.children}
 	</PageStyleWrapper>
 )
-const PageStyleWrapper = styled(Container)`
+const PageStyleWrapper = styled.div`
 	min-height: 100vh;
-	max-width: 750px;
 `

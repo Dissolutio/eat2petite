@@ -10,11 +10,11 @@ export default function Header(props) {
 	const { menuOpen, toggleMenuOpen, setMenuClose } = useUIContext()
 	return (
 		<StyledHeader>
-			<Navbar color="light" light expand="md">
-				<Link to="/" onClick={setMenuClose}>
-					Eat-2-Petite
+			<Navbar expand="md">
+				<Link className='p-2' to="/" onClick={setMenuClose}>
+					<h1>Eat-2-Petite</h1>
 				</Link>
-				<NavbarToggler onClick={toggleMenuOpen} />
+				<NavbarToggler onClick={toggleMenuOpen} className='custom-toggler' />
 				<Collapse isOpen={menuOpen} navbar>
 					<Nav className="ml-auto" navbar>
 						<NavLinks user={user} />
@@ -26,11 +26,25 @@ export default function Header(props) {
 }
 
 const StyledHeader = styled.header`
-	background-color: var(--white);
-	color: var(--font-dark);
-	a {
-		font-family: 'Sofia', cursive;
-		color: var(--E2P-ginger);
+background-color: var(--gray1);
+	h1{
+		color: var(--E2P-orange);
+		font-family: 'Sofia';
 		font-size: 1.5rem;
 	}
+	a {
+		color: var(--E2P-orange);
+		font-size: 1.2rem;
+	}
+	button {
+		color: var(--E2P-ginger);
+		border-color: var(--E2P-ginger);
+	}
+	.custom-toggler .navbar-toggler-icon {
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(181, 119, 0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.custom-toggler.navbar-toggler {
+	border-color: var(--E2P-ginger);
+}
 `

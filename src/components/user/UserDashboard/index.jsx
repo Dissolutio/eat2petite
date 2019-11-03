@@ -1,10 +1,13 @@
 import React from 'react'
 import { Container } from 'reactstrap'
-import { sortByMostCurrentStartDate } from './utils'
+import queryString from 'query-string'
+
 import { useDataContext } from '../../../contexts/useDataContext'
 import UserContestDashboard from './UserContestDashboard'
+import { SelectContestDropdown } from './SelectContestDropdown'
 import UserContestsList from '../UserContestsList'
-const queryString = require('query-string')
+
+import { sortByMostCurrentStartDate } from '../../../modules/functions'
 
 export const UserHomepage = (props) => {
   const [userSelectedContest, setUserSelectedContest] = React.useState()
@@ -13,9 +16,10 @@ export const UserHomepage = (props) => {
   const { appData } = useDataContext()
   const { contests, posts, me, challenges } = appData
   const queryParams = queryString.parse(props.location.search)
-  const userEnrolledContests = me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
-  const sortedByMostRecent = userEnrolledContests && [...userEnrolledContests.sort(sortByMostCurrentStartDate)]
-  const autoSelectedContest = userEnrolledContests && sortedByMostRecent[0]
+  const userEnrolledContestIds = me.contests ? Object.keys(me.contests) : []
+  const userEnrolledContests = userEnrolledContestIds.map((contestKey) => contests[contestKey])
+  const sortedByMostRecent = [...userEnrolledContests.sort(sortByMostCurrentStartDate)]
+  const autoSelectedContest = sortedByMostRecent[0]
   const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
   if (!hasInitialized) {
     if (queryContest) {
@@ -29,11 +33,8 @@ export const UserHomepage = (props) => {
   if (userSelectedContest) {
     return (
       <Container>
+        <SelectContestDropdown userEnrolledContests={userEnrolledContests} userSelectedContest={userSelectedContest} />
         <UserContestDashboard me={me} userSelectedContest={userSelectedContest} challenges={challenges} posts={posts} />
-        <UserContestsList
-          userEnrolledContests={userEnrolledContests}
-          userSelectedContest={userSelectedContest}
-        />
       </Container>
     )
   }

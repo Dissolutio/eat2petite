@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardHeader, CardBody, CardFooter, CardTitle, CardText, ListGroup, ListGroupItem } from 'reactstrap'
+import { Container, Row, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText, ListGroup, ListGroupItem } from 'reactstrap'
 
 export default function ChallengeCard(props) {
 	const { challenge } = props
@@ -14,7 +14,7 @@ export default function ChallengeCard(props) {
 }
 const WaterChallengeCard = ({ challenge }) => {
 	const { uid, challengeName, description, metric, defaultMeasurementUnits, defaultTarget } = challenge
-	const { quantityDrank, quantityDrankUnits } = defaultTarget
+	const { quantityDrank, quantityDrankUnits, quickDescription } = defaultTarget
 	return (
 		<Card color="primary" outline key={uid} body>
 			<CardHeader>
@@ -23,16 +23,20 @@ const WaterChallengeCard = ({ challenge }) => {
 				</CardTitle>
 			</CardHeader>
 			<CardBody>
-				<CardText className='text-secondary'>
+				<CardText className='text-dark'>
 					{description}
 				</CardText>
-				<ListGroup>
-					<ListGroupItem>Metric of measurement: {metric}</ListGroupItem>
-					<ListGroupItem>Default units: {defaultMeasurementUnits}</ListGroupItem>
-					<ListGroupItem>Good general goal: {`${quantityDrank} ${quantityDrankUnits}`}</ListGroupItem>
-				</ListGroup>
+				<CardText className='text-success'>
+					General daily goal: {`${quickDescription}`}
+				</CardText>
 			</CardBody>
 			<CardFooter>
+				<Container>
+					<Row className='text-info p-2'>
+						<Col>Metric of measurement: {metric}</Col>
+						<Col>Default units: {defaultMeasurementUnits}</Col>
+					</Row>
+				</Container>
 			</CardFooter>
 		</Card>
 	)
@@ -48,16 +52,20 @@ const DefaultChallengeCard = ({ challenge }) => {
 				</CardTitle>
 			</CardHeader>
 			<CardBody>
-				<CardText className='text-secondary'>
+				<CardText className='text-dark'>
 					{description}
 				</CardText>
-				<ListGroup>
-					<ListGroupItem>Metric: {metric}</ListGroupItem>
-					<ListGroupItem>Default units: {defaultMeasurementUnits}</ListGroupItem>
-					<ListGroupItem>Default Target: {`${quickDescription}`}</ListGroupItem>
-				</ListGroup>
+				<CardText className='text-success'>
+					General daily goal: {`${quickDescription}`}
+				</CardText>
 			</CardBody>
 			<CardFooter>
+				<Container>
+					<Row className='text-info p-2'>
+						<Col>Metric of measurement: {metric}</Col>
+						<Col>Default units: {defaultMeasurementUnits}</Col>
+					</Row>
+				</Container>
 			</CardFooter>
 		</Card>
 	)

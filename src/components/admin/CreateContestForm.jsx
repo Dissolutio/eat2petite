@@ -78,7 +78,6 @@ const ContestCreateForm = (props) => {
             type="number"
             value={numberOfChallenges}
             onChange={(event) => {
-              console.log("TCL: ContestCreateForm -> event.target.value", event.target.value)
               setNumberOfChallenges(event.target.value)
             }
             }

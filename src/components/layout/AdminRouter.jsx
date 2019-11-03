@@ -48,7 +48,9 @@ export default function AdminRouter(props) {
 				/>
 				<Route path={`${ROUTES.ADMIN_CHALLENGES}:id`} render={props => <ChallengeCard challenge={challenges[props.match.params.id]} />} />
 				<Route exact path={ROUTES.ADMIN_USERS} render={props => <AdminUsersList users={users} />} />
-				<Route path={`${ROUTES.ADMIN_USERS}:id`} component={AdminUserDetail} />
+				<Route path={`${ROUTES.ADMIN_USERS}:id`}
+					render={props => <AdminUserDetail users={users} challenges={challenges} contests={contests} />}
+				/>
 			</Switch>
 		</div>
 	)
