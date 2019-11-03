@@ -1,7 +1,3 @@
-[build]
-base = "eat2petite/"
-publish = "eat2petite/build/"
-command = "yarn build"
 [[redirects]]
 from = "/*"
 to = "/index.html"
