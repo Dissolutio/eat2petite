@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Button, Form, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
-import { format } from 'date-fns'
+import { Button, Badge, Form, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
+import { format, isToday } from 'date-fns'
 
 import { useDataContext } from '../../../../contexts/useDataContext'
 
@@ -45,18 +45,57 @@ export default function WaterChallengePost(props) {
         event.preventDefault()
         savePost(buildUpdatePost(event))
     }
+    const ProgressMsg = () => {
+        const goal = currentPost.target.quantityDrank
+        const score = currentPost.quantityDrank
+        if (score > 0 && score < goal) {
+            return (
+                <span style={{ display: 'block' }}>
+                    <Badge color='info'>
+                        Keep it up!
+            </Badge>
+                </span>
+            )
+        }
+        if (score >= goal) {
+            return (
+                <span style={{ display: 'block' }}>
+                    <Badge color='success'>
+                        You met your goal!
+            </Badge>
+                </span>
+            )
+        } else {
+            return null
+        }
+    }
+    const MessageForDay = () => {
+        return (
+            <div>
+                {isToday(selectedDate) ?
+                    (<p className='text-secondary'>How much water have you drank today?</p>)
+                    :
+                    (<p className='text-secondary'>How much water did you drink this day?</p>)}
+                <span style={{ display: 'block' }} className='text-info'>
+                    Your goal: {currentPost.target.quantityDrank} {currentPost.target.quantityDrankUnits}
+                </span>
+                <ProgressMsg />
+            </div>
+        )
+    }
     return (
-        <Form onSubmit={onSubmitForm}>
+        <Form onSubmit={onSubmitForm} >
+            <MessageForDay />
             <fieldset disabled={formDisabled}>
-                <InputGroup size="sm">
+                <InputGroup className='mb-2'>
                     <Label for="quantity" hidden>Quantity</Label>
                     <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
-                    <Input name="quantity" type="number" bsSize='sm' placeholder={currentPost.quantityDrank} onChange={handleQuantityDrankInput} />
+                    <Input name="quantity" type="number" placeholder={currentPost.quantityDrank} onChange={handleQuantityDrankInput} />
                 </InputGroup>
                 <InputGroup size="sm">
                     <Label for="quantityUnits" hidden>Units</Label>
                     <InputGroupAddon addonType="prepend">Units</InputGroupAddon>
-                    <Input type="select" name="quantityDrankUnits" value={quantityDrankUnits} onChange={handleQuantityDrankUnitsChange} bsSize='sm'>
+                    <Input type="select" name="quantityDrankUnits" disabled value={quantityDrankUnits} onChange={handleQuantityDrankUnitsChange} bsSize='sm'>
                         <option value="cups">Cups</option>
                         <option value="ounces">Ounces</option>
                         <option value="liters">Liters</option>
