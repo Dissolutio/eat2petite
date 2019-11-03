@@ -1,53 +1,28 @@
-import React, { useState } from 'react'
-import { Button, Form, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
-import { format, addDays, isSameDay, differenceInCalendarDays } from 'date-fns'
+import React from 'react'
+import { format, isSameDay, differenceInCalendarDays, isToday } from 'date-fns'
+import { Container, Badge, Alert } from 'reactstrap'
 
 import { useDataContext } from '../../../contexts/useDataContext'
+import WaterChallengePost from './challengeForms/WaterChallengePost'
 
 export default function ChallengePost(props) {
   const { savePost } = useDataContext()
-  const { userSelectedContest, selectedDate, formDisabled, me, currentPost, currentChallenge, challenges } = props
-  const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(new Date(selectedDate), 'yyyy-MM-dd')}`]
-  const userChallengeTarget = me.challengeTargets && me.challengeTargets[currentChallenge.uid]
-  const currentPostHasTarget = (currentPost && currentPost.target)
-  const challengeDefaultTarget = (challenges[currentChallenge.uid] && challenges[currentChallenge.uid].defaultTarget)
-  const newPostTarget = userTargetForDate || userChallengeTarget || challengeDefaultTarget
-  const updatedPostTarget = userTargetForDate || currentPostHasTarget || userChallengeTarget || challengeDefaultTarget
+  const { userSelectedContest, selectedDate, me, currentPost, currentChallenge, challenges } = props
+  const selectedDateIsFutureDate = differenceInCalendarDays(new Date(), new Date(selectedDate)) < 0
 
-  const [quantityDrank, setQuantityDrank] = useState(0)
-  const [quantityDrankUnits, setQuantityDrankUnits] = useState('cups')
-  function handleQuantityDrankInput(event) {
-    setQuantityDrank(event.target.value)
+  if (!currentChallenge) {
+    return <h1>No challenge for today!</h1>
   }
-  function handleQuantityDrankUnitsChange(event) {
-    setQuantityDrankUnits(event.target.value)
-  }
-  React.useEffect(() => {
-    if (currentPost) {
-      setQuantityDrank(currentPost.quantityDrank)
-      setQuantityDrankUnits(currentPost.quantityDrankUnits)
-    }
-  }, [currentPost])
-
-  const selectedDateIsAfterToday = differenceInCalendarDays(new Date(), new Date(selectedDate)) < 0
-  function initialPost() {
-    if (selectedDateIsAfterToday) { return }
-    // currentPost from props from UserContestDashboard
-    if (currentPost) { return }
-    return buildNewPost()
-  }
-  if (initialPost() && !currentPost) {
-    savePost(initialPost())
+  if (!currentPost && !selectedDateIsFutureDate) {
+    savePost(buildNewPost())
+    return <h1>Loading</h1>
   }
 
-  function buildUpdatePost(event) {
-    return {
-      ...currentPost,
-      quantityDrank,
-      quantityDrankUnits: (event && event.target && event.target.quantityDrankUnits.value) || currentPost.quantityDrankUnits,
-      lastEditedAt: (new Date()).toString(),
-      target: updatedPostTarget,
-    }
+  function newPostTarget() {
+    const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(new Date(selectedDate), 'yyyy-MM-dd')}`]
+    const userChallengeTarget = me.challengeTargets && me.challengeTargets[currentChallenge.uid]
+    const challengeDefaultTarget = challenges[currentChallenge.uid] && challenges[currentChallenge.uid].defaultTarget
+    return userTargetForDate || userChallengeTarget || challengeDefaultTarget
   }
   function buildNewPost() {
     const createdAt = (new Date()).toString()
@@ -61,40 +36,50 @@ export default function ChallengePost(props) {
       challengeId: currentChallenge.uid,
       postDate,
       createdAt,
-      quantityDrank,
+      quantityDrank: 0,
       quantityDrankUnits: 'cups',
       checkedInBonus,
-      lastEditedAt: createdAt,
-      target: newPostTarget,
+      target: newPostTarget(),
     }
   }
+  const PostFormForDay = () => (currentPost ? (<Container>
+    <CheckedIn />
+    <WaterChallengePost
+      selectedDate={selectedDate}
+      me={me}
+      currentPost={currentPost}
+      currentChallenge={currentChallenge}
+      challenges={challenges}
+      selectedDateIsFutureDate={selectedDateIsFutureDate}
+    />
+    <LastEditedReadout lastEditedAt={currentPost.lastEditedAt} />
+  </Container>) : null
+  )
+  const CheckedIn = () => {
+    return (
+      <div>
+        {currentPost.checkedInBonus ?
+          <Badge style={{ backgroundColor: "var(--E2P-orange" }} pill>Checked-in! +2</Badge>
+          : null}
+      </div>
+    )
+  }
 
-  const onSubmitForm = (event) => {
-    event.preventDefault()
-    savePost(buildUpdatePost(event))
+  const LastEditedReadout = () => {
+    if (!currentPost.lastEditedAt) { return null }
+    return (
+      <p className='mt-1'>
+        <small className='text-center text-info'>
+          {`Last edit: ${format(new Date(currentPost.lastEditedAt), 'Pp')}`}
+        </small>
+      </p>
+    )
   }
   return (
-    <Form
-      onSubmit={onSubmitForm}
-      className="border border-primary rounded p-4 mt-4 mb-3 text-center">
-      <h5 className='text-primary border-bottom border-primary'>{format(new Date(selectedDate), 'P')}</h5>
-      <fieldset disabled={formDisabled}>
-        <InputGroup size="sm">
-          <Label for="quantity" hidden>Quantity</Label>
-          <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
-          <Input name="quantity" type="number" bsSize='sm' value={quantityDrank} onChange={handleQuantityDrankInput} />
-        </InputGroup>
-        <InputGroup size="sm">
-          <Label for="quantityUnits" hidden>Units</Label>
-          <InputGroupAddon addonType="prepend">Units</InputGroupAddon>
-          <Input type="select" name="quantityDrankUnits" value={quantityDrankUnits} onChange={handleQuantityDrankUnitsChange} bsSize='sm'>
-            <option value="cups">Cups</option>
-            <option value="ounces">Ounces</option>
-            <option value="liters">Liters</option>
-          </Input>
-        </InputGroup>
-      </fieldset>
-      <Button type="submit" disabled={Boolean(!currentPost)} >Submit</Button>
-    </Form>
+    <Container className="border border-primary rounded p-4 mt-4 mb-3 text-center">
+      <h5 className='text-primary border-bottom border-primary'>{currentChallenge.challengeName}</h5>
+      <p className='text-secondary'>{format(selectedDate, 'P')}</p>
+      <PostFormForDay />
+    </Container>
   )
 }
