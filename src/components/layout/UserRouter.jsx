@@ -6,8 +6,7 @@ import { useDataContext } from '../../contexts/useDataContext'
 
 import { UserHomepage } from '../user/UserDashboard'
 import AccountPage from '../user/AccountPage'
-import UserChallengesList from '../user/UserChallengesList'
-import ChallengeCard from '../shared/ChallengeCard'
+import ChallengesList from '../shared/ChallengesList'
 
 import * as ROUTES from '../../routes'
 
@@ -25,10 +24,7 @@ export default function UserRouter() {
 			<Route
 				exact
 				path={ROUTES.USER_CHALLENGES}
-				render={props => <UserChallengesList challenges={challenges} />}
-			/>
-			<Route path={`${ROUTES.USER_CHALLENGES}:id`}
-				render={props => <ChallengeCard challenge={challenges[props.match.params.id]} />}
+				render={props => <ChallengesList challenges={challenges} />}
 			/>
 			<Route
 				exact
