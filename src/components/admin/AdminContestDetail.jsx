@@ -14,18 +14,15 @@ export default function AdminContestDetail(props) {
 		const enrolledUsersArray = enrolledUsers && Object.keys(contest.enrolledUsers).map(key => users[key])
 		return (
 			<Container>
-				<Card color="primary" outline key={uid} body>
+				<Card color="primary" outline body>
 					<CardHeader>
 						<CardTitle>
-							{title}
+							<h2>{title}</h2>
+							{startDate} - {endDate}
 						</CardTitle>
 					</CardHeader>
 					<CardBody>
 						<CardText>
-							Begins: {startDate}
-						</CardText>
-						<CardText>
-							Ends: {endDate}
 						</CardText>
 					</CardBody>
 					<CardFooter>
