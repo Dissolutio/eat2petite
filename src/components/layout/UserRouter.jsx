@@ -6,10 +6,7 @@ import { useDataContext } from '../../contexts/useDataContext'
 
 import { UserHomepage } from '../user/UserDashboard'
 import AccountPage from '../user/AccountPage'
-import UserChallengesList from '../user/UserChallengesList'
-import UserPostsList from '../user/UserPostsList'
-import UserPostCard from '../user/UserPostCard'
-import ChallengeCard from '../shared/ChallengeCard'
+import ChallengesList from '../shared/ChallengesList'
 
 import * as ROUTES from '../../routes'
 
@@ -19,29 +16,15 @@ export default function UserRouter() {
 		loadFirebaseData()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-	const { posts, challenges, me } = appData
+	const { challenges, me } = appData
 	const emailVerifiedCondition = () => !!me && me.emailVerified === true
 	const notAdminCondition = () => !!me && me.userRole !== `admin`
 	return (
 		<Switch>
-			<Route exact path={ROUTES.USER_POSTS}
-				render={props => <UserPostsList posts={posts} currentUser={me} />}
-			/>
-			<Route
-				path={`${ROUTES.USER_POSTS}:id`}
-				render={props => {
-					const postId = props.match.params.id
-					const post = { ...posts[postId], uid: postId }
-					return <UserPostCard currentUser={me} post={post} />
-				}}
-			/>
 			<Route
 				exact
 				path={ROUTES.USER_CHALLENGES}
-				render={props => <UserChallengesList challenges={challenges} />}
-			/>
-			<Route path={`${ROUTES.USER_CHALLENGES}:id`}
-				render={props => <ChallengeCard challenge={challenges[props.match.params.id]} />}
+				render={props => <ChallengesList challenges={challenges} />}
 			/>
 			<Route
 				exact

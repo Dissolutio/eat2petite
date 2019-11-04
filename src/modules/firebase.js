@@ -21,7 +21,7 @@ class Firebase {
       .createUserWithEmailAndPassword(formUser.email, userPassword)
       .then((result) => {
         console.log('Created User', result)
-        this.dbSaveNewUser({
+        return this.dbSaveNewUser({
           ...formUser,
           uid: result.user.uid,
           email: result.user.email,
@@ -38,7 +38,6 @@ class Firebase {
     this.auth.currentUser.sendEmailVerification({
       url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT,
     })
-
   // *** Dev API ***
   dbBlowItAllAway = async () => {
     await this.db.ref('/challenges').remove()
@@ -55,7 +54,6 @@ class Firebase {
       })
     return
   }
-
   // *** Users API ***
   dbPrivateUsers = () => this.db.ref(`/users`)
   dbPersonalUser = (uid) => this.db.ref(`/users/${uid}`)
@@ -97,15 +95,12 @@ class Firebase {
     updates['/users/' + userId + '/contests/' + contestId] = true
     return this.db.ref().update(updates)
   }
-
-
   // *** Challenges API ***
   dbChallenges = () => this.db.ref('/challenges')
   dbSetChallenge = (challenge) =>
     this.dbChallenges()
       .child(`/${challenge.uid}`)
       .set(challenge)
-
   dbUpdateChallenge = (updatedChallenge) =>
     this.db.ref(`/challenges/${updatedChallenge.uid}`).set(updatedChallenge)
   // *** Posts API ***

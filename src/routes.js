@@ -5,7 +5,6 @@ export const VERIFY_EMAIL = '/verify-email'
 
 export const USER_HOMEPAGE = '/user'
 export const USER_ACCOUNT = '/user/account'
-export const USER_POSTS = '/user/posts/'
 export const USER_CHALLENGES = '/user/challenges/'
 
 export const ADMIN_DASHBOARD = '/admin'

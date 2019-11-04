@@ -6,7 +6,6 @@ import { range } from 'lodash'
 
 import { useDataContext } from '../../contexts/useDataContext'
 import useInputValue from '../../modules/hooks/useInputValue'
-import * as ROUTES from '../../routes'
 import { ordinalSuffixOf } from '../../modules/functions'
 
 const ContestCreateForm = (props) => {
@@ -27,30 +26,34 @@ const ContestCreateForm = (props) => {
 
   const createContestOnSubmit = async (event) => {
     event.preventDefault()
-    const enrolledUsers = [...event.target.enrolledUsers]
+    const formEnrolledUsers = event.target.enrolledUsers
+    // event has one input node (if only one user checkbox), or node list (for many checkbox input)
+    const enrolledUsers = () => (formEnrolledUsers.length ? Array.from(event.target.enrolledUsers)
       .filter((input) => input.checked)
       .map((input) => input.value)
+      : [formEnrolledUsers.value])
 
-    const orderOfChallenges = () => {
-      let answer = {}
-      for (let i = 0; i < orderSpotsArray.length; i++) {
-        answer[`${i}`] = event.target[`order${i + 1}`].value
-      }
-      return answer
-    }
+    console.log("TCL: createContestOnSubmit -> enrolledUsers", enrolledUsers())
+    // const orderOfChallenges = () => {
+    //   let answer = {}
+    //   for (let i = 0; i < orderSpotsArray.length; i++) {
+    //     answer[`${i}`] = event.target[`order${i + 1}`].value
+    //   }
+    //   return answer
+    // }
 
-    const newContest = {
-      title: title.value,
-      startDate: format(new Date(startDate), 'P'),
-      daysPerChallenge: daysPerChallenge.value,
-      orderOfChallenges: orderOfChallenges(),
-      numberOfChallenges,
-    }
-    const newContestId = await createContest(newContest)
-    enrolledUsers.forEach((userId) => {
-      enrollUserInContest(userId, newContestId)
-    })
-    props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
+    // const newContest = {
+    //   title: title.value,
+    //   startDate: format(new Date(startDate), 'P'),
+    //   daysPerChallenge: daysPerChallenge.value,
+    //   orderOfChallenges: orderOfChallenges(),
+    //   numberOfChallenges,
+    // }
+    // const newContestId = await createContest(newContest)
+    // enrolledUsers.forEach((userId) => {
+    //   enrollUserInContest(userId, newContestId)
+    // })
+    // props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
   }
   return (
     <Container>
@@ -111,7 +114,7 @@ const ContestCreateForm = (props) => {
         )}
         {orderSpotsArray.map((index0ToNumOfChallenges) => {
           const orderSpot = parseInt(index0ToNumOfChallenges) + 1
-          const arbitraryName = `order${orderSpot}` // order1, order2, ..., order(#OfChallenges)
+          const arbitraryName = `order${orderSpot}`
           return (
             <FormGroup key={`${arbitraryName}`}>
               <Label for={`${arbitraryName}`}>{`${ordinalSuffixOf(orderSpot)}`}</Label>
