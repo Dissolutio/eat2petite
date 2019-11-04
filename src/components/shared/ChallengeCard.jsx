@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText, ListGroup, ListGroupItem } from 'reactstrap'
+import { Container, Row, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
 
 export default function ChallengeCard(props) {
 	const { challenge } = props
@@ -43,7 +43,7 @@ const WaterChallengeCard = ({ challenge }) => {
 }
 const DefaultChallengeCard = ({ challenge }) => {
 	const { uid, challengeName, description, metric, defaultMeasurementUnits, defaultTarget } = challenge
-	const { quickDescription } = defaultTarget
+	const quickDescription = defaultTarget && defaultTarget.quickDescription
 	return (
 		<Card color="primary" outline key={uid} body>
 			<CardHeader>

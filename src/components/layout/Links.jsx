@@ -2,13 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import * as ROUTES from '../../routes'
 
-export const UserPostDetailLink = ({ postId, children }) => (
-  <Link to={`${ROUTES.USER_POSTS}${postId}`}>{children}</Link>
-)
-
-export const UserChallengeDetailLink = ({ challengeId, children }) => (
-  <Link to={`${ROUTES.USER_CHALLENGES}${challengeId}`}>{children}</Link>
-)
 export const UserContestDashboardLink = ({ contestId, children }) => (
   <Link to={`${ROUTES.USER_HOMEPAGE}?selectedContest=${contestId}`}>{children}</Link>
 )

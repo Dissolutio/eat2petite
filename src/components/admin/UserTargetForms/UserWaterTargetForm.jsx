@@ -5,9 +5,10 @@ import { useDataContext } from '../../../contexts/useDataContext'
 import useFormAlert from '../../../modules/hooks/useFormAlert'
 
 export const UserWaterTargetForm = (props) => {
-    const { challenge, target, user } = props
+    const { challenge, userTarget, user } = props
     const { updateUserChallengeTarget } = useDataContext()
     const { fireAlert, CurrentAlertDisplay } = useFormAlert()
+    if (challenge.uid !== 'challenge1') { return null }
     const submitForm = (event) => {
         event.preventDefault()
         const newTarget = { quantityDrank: event.target.quantityDrank.value, quantityDrankUnits: event.target.quantityDrankUnits.value }
@@ -15,39 +16,26 @@ export const UserWaterTargetForm = (props) => {
             fireAlert({ text: 'Water target updated!', color: 'success' })
         })
     }
-    const Explanation = () => {
-        if (target) {
-            return (<p>
-                This user's daily target is set to:
-                <span className='text-info'>
-                    {` ${target.quantityDrank} ${target.quantityDrankUnits}`}
-                </span>
-            </p>)
-        } else {
-            return (<p>
-                No target set for user, using default:
-            <span className='text-info'>
-                    {` ${challenge.defaultTarget.quantityDrank} ${challenge.defaultTarget.quantityDrankUnits}`}
-                </span>
-            </p>)
-        }
+    const currentTarget = (params) => {
+        const quantity = userTarget ? userTarget.quantityDrank : challenge.defaultTarget.quantityDrank
+        const units = userTarget ? userTarget.quantityDrankUnits : challenge.defaultTarget.quantityDrankUnits
+        return { quantity, units }
     }
     return (
         <Form onSubmit={submitForm} className='border border-primary border-rounded m-2 p-2'>
             <h6>Water Challenge Target</h6>
-            <Explanation />
             <CurrentAlertDisplay />
             <Row>
                 <Col>
                     <FormGroup>
                         <Label for="quantityDrank">Quantity</Label>
-                        <Input name="quantityDrank" type="number" defaultValue={target.quantityDrank} />
+                        <Input name="quantityDrank" type="number" defaultValue={currentTarget().quantity} />
                     </FormGroup>
                 </Col>
                 <Col>
                     <FormGroup>
                         <Label for="quantityDrankUnits">Units</Label>
-                        <Input name="quantityDrankUnits" type="select" defaultValue={target.quantityDrankUnits}>
+                        <Input name="quantityDrankUnits" type="select" disabled defaultValue={currentTarget().units}>
                             <option>ounces</option>
                             <option>cups</option>
                             <option>liters</option>
@@ -55,7 +43,7 @@ export const UserWaterTargetForm = (props) => {
                     </FormGroup>
                 </Col>
             </Row>
-            <Button type='submit'>Update Targets</Button>
+            <Button type='submit'>Update target!</Button>
         </Form>
     )
 }

@@ -11,7 +11,9 @@ function EditUserChallengeTargetsSection(props) {
         return (
             <Container className='border border-secondary border-rounded m-2'>
                 <h5 className='p-2 m-2'>User's Challenge Targets</h5>
-                <UserWaterTargetForm user={user} challenge={waterChallenge} target={userWaterTarget} />
+                {Object.values(challenges).map(challenge => (
+                    <UserWaterTargetForm user={user} challenge={challenge} userTarget={userWaterTarget} />
+                ))}
             </Container>
         )
     } else {

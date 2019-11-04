@@ -11,7 +11,7 @@ function AdminUserDetail(props) {
 
 	if (user) {
 		const { uid, firstName, lastName, username, email, userWeight, userHeightFeet, userHeightInches } = user
-		const userContests = Object.keys(user.contests)
+		const userContests = user.contests && Object.keys(user.contests)
 		return (
 			<Container>
 				<Card className='p-3'>
