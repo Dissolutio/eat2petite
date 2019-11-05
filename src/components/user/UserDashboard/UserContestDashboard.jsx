@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { isSameDay, differenceInCalendarDays, isWithinInterval } from 'date-fns'
+import React from 'react'
+import { isSameDay } from 'date-fns'
 
 import UserDashboardCalendar from './UserDashboardCalendar'
 import ChallengePost from './ChallengePost'
@@ -10,8 +10,9 @@ const UserContestDashboard = (props) => {
     const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
     const { userSelectedContest, me, posts, challenges } = props
 
-    const { startDate, endDate, orderOfChallenges, daysPerChallenge } = userSelectedContest
-    const currentChallenge = getChallengeForSelectedDate()
+    const { startDate, endDate } = userSelectedContest
+    const currentChallenge = userSelectedContest.getChallengeForDate(selectedDateInDashboard)
+
     const currentPost = getPostForSelectedDate()
 
 
@@ -22,11 +23,6 @@ const UserContestDashboard = (props) => {
         ).find(post => (
             isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
         )
-    }
-    function getChallengeForSelectedDate() {
-        const contestDay = differenceInCalendarDays(selectedDateInDashboard, new Date(startDate))
-        const orderOfChallengesIndex = Math.floor(contestDay / daysPerChallenge)
-        return challenges[orderOfChallenges[orderOfChallengesIndex]]
     }
     const dateChangeHandler = (date) => {
         setSelectedDateInDashboard(date)
