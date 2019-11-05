@@ -1,16 +1,16 @@
 import React from 'react'
 import { Container, Card, ListGroup, ListGroupItem } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
-import { AdminContestDetailLink } from '../layout/Links'
+import { AdminContestDashboardLink } from '../layout/Links'
 import EditUserChallengeTargetsSection from './UserTargetForms/index'
 
 function AdminUserDetail(props) {
 	const { users, challenges, contests } = props
-	const { id } = props.match.params
-	const user = users && users[id]
+	const { userId } = props.match.params
+	const user = users && users[userId]
 
 	if (user) {
-		const { uid, firstName, lastName, username, email, userWeight, userHeightFeet, userHeightInches } = user
+		const { firstName, lastName, username, email, userWeight, userHeightFeet, userHeightInches } = user
 		const userContests = user.contests && Object.keys(user.contests)
 		return (
 			<Container>
@@ -28,9 +28,9 @@ function AdminUserDetail(props) {
 							const contest = contests[contestId]
 							return (
 								<ListGroupItem key={contestId}>
-									<AdminContestDetailLink id={contestId}>
+									<AdminContestDashboardLink contestId={contestId}>
 										{`${contest.title}`}
-									</AdminContestDetailLink>
+									</AdminContestDashboardLink>
 								</ListGroupItem>
 							)
 						})}
