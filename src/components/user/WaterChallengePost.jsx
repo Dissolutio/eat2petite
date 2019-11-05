@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Badge, Form, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 import { format, isToday } from 'date-fns'
 
-import { useDataContext } from '../../../../contexts/useDataContext'
+import { useDataContext } from '../../contexts/useDataContext'
 
 export default function WaterChallengePost(props) {
     const { savePost } = useDataContext()

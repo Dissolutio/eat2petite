@@ -9,10 +9,10 @@ export default function AdminContestsList(props) {
 			<h3>Contests:</h3>
 			{contests && Object.keys(contests).map(contestKey => {
 				const contest = contests[contestKey]
-				const id = contest.uid
+				const { uid, title } = contest
 				return (
 					<ListGroupItem key={contestKey}>
-						<AdminContestDetailLink id={id}>{contest.title}</AdminContestDetailLink>
+						<AdminContestDetailLink contestId={uid}>{title}</AdminContestDetailLink>
 					</ListGroupItem>
 				)
 			})}

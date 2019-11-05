@@ -16,11 +16,7 @@ import CreateContestForm from '../admin/CreateContestForm'
 import * as ROUTES from '../../routes'
 
 export default function AdminRouter(props) {
-	const { loadFirebaseData, appData } = useDataContext()
-	React.useEffect(() => {
-		loadFirebaseData()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	const { appData } = useDataContext()
 	const { posts, users, challenges, contests } = appData
 
 	return (
