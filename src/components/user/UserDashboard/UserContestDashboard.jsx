@@ -11,7 +11,7 @@ const UserContestDashboard = (props) => {
     const { userSelectedContest, me, posts, challenges } = props
 
     const { startDate, endDate } = userSelectedContest
-    const currentChallenge = userSelectedContest.getChallengeForDate(selectedDateInDashboard)
+    const currentChallenge = challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
 
     const currentPost = getPostForSelectedDate()
 
