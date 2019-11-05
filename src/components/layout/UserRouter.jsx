@@ -11,11 +11,7 @@ import ChallengesList from '../shared/ChallengesList'
 import * as ROUTES from '../../routes'
 
 export default function UserRouter() {
-	const { loadFirebaseData, appData } = useDataContext()
-	React.useEffect(() => {
-		loadFirebaseData()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	const { appData } = useDataContext()
 	const { challenges, me } = appData
 	const emailVerifiedCondition = () => !!me && me.emailVerified === true
 	const notAdminCondition = () => !!me && me.userRole !== `admin`

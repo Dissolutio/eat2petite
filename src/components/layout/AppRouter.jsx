@@ -11,7 +11,7 @@ import SignInForm from '../authentication/SignInForm'
 
 import UserRouter from './UserRouter'
 import AdminRouter from './AdminRouter'
-
+import { useDataContext } from '../../contexts/useDataContext'
 import Page404NotFound from './Page404NotFound'
 
 import * as ROUTES from '../../routes'
@@ -22,7 +22,11 @@ export default function AppRouter(props) {
 	const notSignedInCondition = () => !authUser
 	const emailNotVerifiedCondition = () => signedInCondition() && authUser.emailVerified === false
 	const adminCondition = () => signedInCondition() && authUser.userRole === `admin`
-
+	const { loadFirebaseData } = useDataContext()
+	React.useEffect(() => {
+		loadFirebaseData()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [authUser])
 	return (
 		<Switch>
 			<Route exact path={ROUTES.LANDING} component={LandingPage} />
