@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Container } from 'reactstrap'
 import queryString from 'query-string'
 
-import { useDataContext } from '../../../contexts/useDataContext'
+import { useDataContext } from '../../contexts/useDataContext'
 import UserContestDashboard from './UserContestDashboard'
 import { UserSelectContestDropdown } from './UserSelectContestDropdown'
-import UserContestsList from '../UserContestsList'
+import UserContestsList from './UserContestsList'
 
-import { sortByMostCurrentStartDate } from '../../../modules/functions'
+import { sortByMostCurrentStartDate } from '../../modules/functions'
 
-export const UserHomepage = (props) => {
-  const [userSelectedContest, setUserSelectedContest] = React.useState()
-  const [hasInitialized, setHasInitialized] = React.useState(false)
+export const UserDashboard = (props) => {
+  const [userSelectedContest, setUserSelectedContest] = useState()
+  const [hasInitialized, setHasInitialized] = useState(false)
 
   const { appData } = useDataContext()
   const { contests, posts, me, challenges } = appData
@@ -21,15 +21,27 @@ export const UserHomepage = (props) => {
   const sortedByMostRecent = [...userEnrolledContests.sort(sortByMostCurrentStartDate)]
   const autoSelectedContest = sortedByMostRecent[0]
   const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
-  if (!hasInitialized) {
+  if (!hasInitialized && userEnrolledContests) {
+    console.log("TCL: UserDashboard -> userEnrolledContests", userEnrolledContests)
+    console.log("TCL: UserDashboard -> hasInitialized", hasInitialized)
     if (queryContest) {
       setUserSelectedContest(queryContest)
+      setHasInitialized(true)
     } else if (autoSelectedContest) {
       setUserSelectedContest(autoSelectedContest)
+      setHasInitialized(true)
     }
-    setHasInitialized(true)
   }
 
+  if (!userSelectedContest) {
+    return (
+      <Container className="text-center">
+        <h1 className="text-center">User Dashboard</h1>
+        <hr />
+        <UserContestsList contests={contests} userSelectedContest={userSelectedContest} />
+      </Container>
+    )
+  }
   if (userSelectedContest) {
     return (
       <Container>
@@ -38,11 +50,4 @@ export const UserHomepage = (props) => {
       </Container>
     )
   }
-  return (
-    <Container className="text-center">
-      <h1 className="text-center">User Dashboard</h1>
-      <hr />
-      <UserContestsList contests={contests} userSelectedContest={userSelectedContest} />
-    </Container>
-  )
 }

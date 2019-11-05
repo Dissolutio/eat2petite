@@ -2,8 +2,8 @@ import React from 'react'
 import { format, isSameDay, differenceInCalendarDays, isToday } from 'date-fns'
 import { Container, Badge, Alert } from 'reactstrap'
 
-import { useDataContext } from '../../../contexts/useDataContext'
-import WaterChallengePost from './challengeForms/WaterChallengePost'
+import { useDataContext } from '../../contexts/useDataContext'
+import WaterChallengePost from './WaterChallengePost'
 
 export default function ChallengePost(props) {
   const { savePost } = useDataContext()

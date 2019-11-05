@@ -1,10 +1,10 @@
 import React from 'react'
 import { isSameDay } from 'date-fns'
 
-import UserDashboardCalendar from './UserDashboardCalendar'
+import UserDashboardCalendar from '../shared/DashboardCalendar'
 import ChallengePost from './ChallengePost'
-import { UserDevConsole } from '../../shared/DevConsole'
-import { useUIContext } from '../../../contexts/useUIContext'
+import { UserDevConsole } from '../shared/DevConsole'
+import { useUIContext } from '../../contexts/useUIContext'
 
 const UserContestDashboard = (props) => {
     const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
