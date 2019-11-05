@@ -1,12 +1,12 @@
 import React from 'react'
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { UserContestDashboardLink } from '../../layout/Links'
+import { AdminContestDashboardLink } from '../layout/Links'
 
-export function SelectContestDropdown(props) {
+export default function AdminSelectContestDropdown(props) {
     const [dropdownOpen, setOpen] = React.useState(false);
-    const { userEnrolledContests, userSelectedContest } = props
+    const { contests, userSelectedContest } = props
     const toggle = () => setOpen(!dropdownOpen);
-    const selectableContests = userEnrolledContests.filter(contest => contest.uid !== userSelectedContest.uid)
+    const selectableContests = Object.values(contests).filter(contest => contest.uid !== userSelectedContest.uid)
     return (
         <ButtonDropdown className='btn-block' isOpen={dropdownOpen} toggle={toggle}>
             <DropdownToggle caret>
@@ -16,7 +16,7 @@ export function SelectContestDropdown(props) {
                 <DropdownItem header>Choose a different contest:</DropdownItem>
                 {selectableContests.map(contest => {
                     return (
-                        <DropdownItem key={contest.uid}><UserContestDashboardLink contestId={contest.uid}>{contest.title}</UserContestDashboardLink></DropdownItem>
+                        <DropdownItem key={contest.uid}><AdminContestDashboardLink contestId={contest.uid}>{contest.title}</AdminContestDashboardLink></DropdownItem>
                     )
                 }
                 )}
