@@ -33,7 +33,7 @@ export const UserHomepage = (props) => {
   if (userSelectedContest) {
     return (
       <Container>
-        <SelectContestDropdown userEnrolledContests={userEnrolledContests} userSelectedContest={userSelectedContest} />
+        <UserSelectContestDropdown contests={userEnrolledContests} userSelectedContest={userSelectedContest} />
         <UserContestDashboard me={me} userSelectedContest={userSelectedContest} challenges={challenges} posts={posts} />
       </Container>
     )
