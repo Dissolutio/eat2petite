@@ -4,7 +4,7 @@ import queryString from 'query-string'
 
 import { useDataContext } from '../../../contexts/useDataContext'
 import UserContestDashboard from './UserContestDashboard'
-import { SelectContestDropdown } from './SelectContestDropdown'
+import { UserSelectContestDropdown } from './UserSelectContestDropdown'
 import UserContestsList from '../UserContestsList'
 
 import { sortByMostCurrentStartDate } from '../../../modules/functions'
