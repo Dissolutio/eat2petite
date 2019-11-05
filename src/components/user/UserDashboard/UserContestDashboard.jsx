@@ -48,8 +48,8 @@ const UserContestDashboard = (props) => {
             <UserDashboardCalendar
                 selectedDate={selectedDateInDashboard}
                 dateChangeHandler={dateChangeHandler}
-                contestStartDate={new Date(startDate)}
-                contestEndDate={new Date(endDate)}
+                minDate={new Date(startDate)}
+                maxDate={new Date(endDate)}
             />
             {process.env.NODE_ENV === 'development'
                 ? <UserDevConsole userSelectedContest={userSelectedContest} currentChallenge={currentChallenge} />
