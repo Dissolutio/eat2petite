@@ -14,8 +14,8 @@ export const AdminUserDetailLink = ({ id, children }) => (
   <Link to={`${ROUTES.ADMIN_USERS}${id}`}>{children}</Link>
 )
 
-export const AdminPostDetailLink = ({ id }) => (
-  <Link to={`${ROUTES.ADMIN_POSTS}${id}`}>{`Post ID: ${id}`}</Link>
+export const AdminPostDetailLink = ({ postId }) => (
+  <Link to={`${ROUTES.ADMIN_POSTS}${postId}`}>{`Post ID: ${postId}`}</Link>
 )
 export const AdminContestDetailLink = ({ contestId, children }) => (
   <Link to={`${ROUTES.ADMIN_CONTESTS}${contestId}`}>{children}</Link>

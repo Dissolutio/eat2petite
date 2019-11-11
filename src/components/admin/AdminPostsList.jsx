@@ -10,7 +10,7 @@ export default function AdminPostsList(props) {
 			{posts ? Object.values(posts).map(post => (
 				<li key={post.uid}>
 					<ul>
-						<li>
+						<AdminPostDetailLink postId={post.uid} />
 							<Link to={`/user/admin/posts/${post.uid}`}>{`uid: ${post.uid}`}</Link>
 						</li>
 						<AdminPostDetailLink id={post.uid} />
