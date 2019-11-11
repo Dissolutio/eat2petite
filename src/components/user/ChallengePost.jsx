@@ -11,7 +11,7 @@ export default function ChallengePost(props) {
   const selectedDateIsFutureDate = differenceInCalendarDays(new Date(), new Date(selectedDate)) < 0
 
   if (!currentChallenge) {
-    return <h1>No challenge for today!</h1>
+    return <h5>No challenge for today!</h5>
   }
   if (!currentPost && !selectedDateIsFutureDate) {
     savePost(buildNewPost())

@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Card, ListGroup, ListGroupItem } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
 import { AdminContestDashboardLink } from '../layout/Links'
-import EditUserChallengeTargetsSection from './UserTargetForms/index'
+import UserTargetEdit from './UserTargetEdit/UserTargetEdit'
 
 function AdminUserDetail(props) {
 	const { users, challenges, contests } = props
@@ -36,7 +36,7 @@ function AdminUserDetail(props) {
 						})}
 					</ListGroup>
 				</Card>
-				<EditUserChallengeTargetsSection user={user} challenges={challenges} />
+				<UserTargetEdit user={user} challenges={challenges} />
 			</Container>
 		)
 	} else {

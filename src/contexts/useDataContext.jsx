@@ -92,7 +92,6 @@ const useDataContext = () => {
       posts,
       me,
     }
-    console.log('firebaseData', newData)
     await setAppData({
       ...newData,
     })
