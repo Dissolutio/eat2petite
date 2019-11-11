@@ -3,7 +3,6 @@ import { isSameDay } from 'date-fns'
 
 import UserDashboardCalendar from '../shared/DashboardCalendar'
 import ChallengePost from './ChallengePost'
-import { UserDevConsole } from '../shared/DevConsole'
 import { useUIContext } from '../../contexts/useUIContext'
 
 const UserContestDashboard = (props) => {
@@ -47,9 +46,6 @@ const UserContestDashboard = (props) => {
                 minDate={new Date(startDate)}
                 maxDate={new Date(endDate)}
             />
-            {process.env.NODE_ENV === 'development'
-                ? <UserDevConsole userSelectedContest={userSelectedContest} currentChallenge={currentChallenge} />
-                : null}
         </>
     )
 }
