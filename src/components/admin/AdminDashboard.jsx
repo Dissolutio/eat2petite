@@ -10,8 +10,11 @@ import { useUIContext } from '../../contexts/useUIContext'
 import { sortByMostCurrentStartDate } from '../../modules/functions'
 import DashboardCalendar from '../shared/DashboardCalendar'
 import { AdminDevConsole } from '../shared/DevConsole'
+import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
 export default function AdminDashboard(props) {
 	const [userSelectedContest, setUserSelectedContest] = useState()
+	const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
+	console.log("TCL: AdminDashboard -> localContestId", localContestId)
 	const [hasLoadedContest, setHasLoadedContest] = useState(false)
 	const { appData } = useDataContext()
 	const { contests, posts, challenges, users } = appData
@@ -20,12 +23,19 @@ export default function AdminDashboard(props) {
 	const sortedByMostRecent = [...contestsArray.sort(sortByMostCurrentStartDate)]
 	const autoSelectedContest = sortedByMostRecent[0]
 	const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
+	const handleSelectedContestChange = (contest) => {
+		setUserSelectedContest(contest)
+		setLocalContestId(contest.uid)
+	}
 	if (!hasLoadedContest && contestsArray) {
 		if (queryContest) {
-			setUserSelectedContest(queryContest)
+			handleSelectedContestChange(queryContest)
+			setHasLoadedContest(true)
+		} else if (localContestId) {
+			setUserSelectedContest(contests[localContestId])
 			setHasLoadedContest(true)
 		} else if (autoSelectedContest) {
-			setUserSelectedContest(autoSelectedContest)
+			handleSelectedContestChange(autoSelectedContest)
 			setHasLoadedContest(true)
 		}
 	}
@@ -48,6 +58,7 @@ const ContestOverview = (props) => {
 	const enrolledUsersArray = enrolledUsers && Object.keys(enrolledUsers).map(userId => users[userId])
 	const currentChallenge = challenges && challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
 	function getPostForSelectedDateForUserId(userId) {
+		if (!posts) { return }
 		const allUsersPosts = posts[userId]
 		return allUsersPosts && Object.values(allUsersPosts)
 			.filter(post => post.contestId === userSelectedContest.uid)
@@ -58,6 +69,7 @@ const ContestOverview = (props) => {
 	const dateChangeHandler = (date) => {
 		setSelectedDateInDashboard(date)
 	}
+	const arrayOfFormattedDatesToHighlight = [format(new Date(), 'MMMM d, yyyy'), 'November 10, 2019', 'November 11, 2019']
 	return (
 		<>
 			<Container className="border border-secondary rounded p-3 mt-2 mb-1 text-center">
@@ -85,6 +97,7 @@ const ContestOverview = (props) => {
 					dateChangeHandler={dateChangeHandler}
 					minDate={new Date(startDate)}
 					maxDate={new Date(endDate)}
+					arrayOfFormattedDatesToHighlight={arrayOfFormattedDatesToHighlight}
 				/>
 			</Container>
 			<AdminDevConsole></AdminDevConsole>

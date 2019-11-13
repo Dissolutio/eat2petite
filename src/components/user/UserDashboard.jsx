@@ -6,13 +6,14 @@ import { useDataContext } from '../../contexts/useDataContext'
 import UserContestDashboard from './UserContestDashboard'
 import { UserSelectContestDropdown } from './UserSelectContestDropdown'
 import UserContestsList from './UserContestsList'
+import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
 
 import { sortByMostCurrentStartDate } from '../../modules/functions'
 
 export const UserDashboard = (props) => {
   const [userSelectedContest, setUserSelectedContest] = useState()
+  const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
   const [hasInitialized, setHasInitialized] = useState(false)
-
   const { appData } = useDataContext()
   const { contests, posts, me, challenges } = appData
   const queryParams = queryString.parse(props.location.search)
@@ -21,14 +22,19 @@ export const UserDashboard = (props) => {
   const sortedByMostRecent = [...userEnrolledContests.sort(sortByMostCurrentStartDate)]
   const autoSelectedContest = sortedByMostRecent[0]
   const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
+  const handleSelectedContestChange = (contest) => {
+    setUserSelectedContest(contest)
+    setLocalContestId(contest.uid)
+  }
   if (!hasInitialized && userEnrolledContests) {
-    console.log("TCL: UserDashboard -> userEnrolledContests", userEnrolledContests)
-    console.log("TCL: UserDashboard -> hasInitialized", hasInitialized)
     if (queryContest) {
-      setUserSelectedContest(queryContest)
+      handleSelectedContestChange(queryContest)
+      setHasInitialized(true)
+    } else if (localContestId) {
+      setUserSelectedContest(contests[localContestId])
       setHasInitialized(true)
     } else if (autoSelectedContest) {
-      setUserSelectedContest(autoSelectedContest)
+      handleSelectedContestChange(autoSelectedContest)
       setHasInitialized(true)
     }
   }
