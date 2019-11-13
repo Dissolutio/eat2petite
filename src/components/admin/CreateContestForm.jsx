@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { Container, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import { format, addDays } from 'date-fns'
 import { range } from 'lodash'
-
+import * as ROUTES from '../../routes'
 import { useDataContext } from '../../contexts/useDataContext'
 import useInputValue from '../../modules/hooks/useInputValue'
 import { ordinalSuffixOf } from '../../modules/functions'
@@ -32,28 +32,26 @@ const ContestCreateForm = (props) => {
       .filter((input) => input.checked)
       .map((input) => input.value)
       : [formEnrolledUsers.value])
+    const orderOfChallenges = () => {
+      let answer = {}
+      for (let i = 0; i < orderSpotsArray.length; i++) {
+        answer[`${i}`] = event.target[`order${i + 1}`].value
+      }
+      return answer
+    }
 
-    console.log("TCL: createContestOnSubmit -> enrolledUsers", enrolledUsers())
-    // const orderOfChallenges = () => {
-    //   let answer = {}
-    //   for (let i = 0; i < orderSpotsArray.length; i++) {
-    //     answer[`${i}`] = event.target[`order${i + 1}`].value
-    //   }
-    //   return answer
-    // }
-
-    // const newContest = {
-    //   title: title.value,
-    //   startDate: format(new Date(startDate), 'P'),
-    //   daysPerChallenge: daysPerChallenge.value,
-    //   orderOfChallenges: orderOfChallenges(),
-    //   numberOfChallenges,
-    // }
-    // const newContestId = await createContest(newContest)
-    // enrolledUsers.forEach((userId) => {
-    //   enrollUserInContest(userId, newContestId)
-    // })
-    // props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
+    const newContest = {
+      title: title.value,
+      startDate: format(new Date(startDate), 'P'),
+      daysPerChallenge: daysPerChallenge.value,
+      orderOfChallenges: orderOfChallenges(),
+      numberOfChallenges,
+    }
+    const newContestId = await createContest(newContest)
+    enrolledUsers.forEach((userId) => {
+      enrollUserInContest(userId, newContestId)
+    })
+    props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
   }
   return (
     <Container>
