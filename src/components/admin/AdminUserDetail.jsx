@@ -6,8 +6,8 @@ import UserTargetEdit from './UserTargetEdit/UserTargetEdit'
 
 function AdminUserDetail(props) {
 	const { users, challenges, contests } = props
-	const { userId } = props.match.params
-	const user = users && users[userId]
+	const userId = props.match.params.id
+	const user = users[userId]
 
 	if (user) {
 		const { firstName, lastName, username, email, userWeight, userHeightFeet, userHeightInches } = user
@@ -16,7 +16,7 @@ function AdminUserDetail(props) {
 			<Container>
 				<Card className='p-3'>
 					<h3 className='text-primary'>{`${firstName} ${lastName}`}</h3>
-					<div className="text-center"><small className='text-info'>{`username: ${username}`}</small></div>
+					<div className="text-center"><small className='text-secondary'>{`username: ${username}`}</small></div>
 					<div className="text-center"><small className='text-secondary'>{email}</small></div>
 					<div className="text-center"><small className='text-secondary'>{`Weight: ${userWeight} lbs`}</small></div>
 					<div className="text-center"><small className='text-secondary'>{`Height: ${userHeightFeet}' ${userHeightInches}"`}</small></div>
