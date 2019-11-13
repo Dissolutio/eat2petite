@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import { meetAuthConditionOrRedirectHOC } from '../../components//authentication/meetAuthConditionOrRedirectHOC'
 import { useDataContext } from '../../contexts/useDataContext'
 
-import { UserDashboard } from '../user/UserDashboard'
+import UserDashboard from '../user/UserDashboard'
 import AccountPage from '../user/AccountPage'
 import ChallengesList from '../shared/ChallengesList'
 

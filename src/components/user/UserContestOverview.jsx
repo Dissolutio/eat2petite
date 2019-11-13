@@ -5,7 +5,7 @@ import UserDashboardCalendar from '../shared/DashboardCalendar'
 import ChallengePost from './ChallengePost'
 import { useUIContext } from '../../contexts/useUIContext'
 
-const UserContestDashboard = (props) => {
+const UserContestOverview = (props) => {
     const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
     const { userSelectedContest, me, posts, challenges } = props
 
@@ -49,4 +49,4 @@ const UserContestDashboard = (props) => {
         </>
     )
 }
-export default UserContestDashboard
+export default UserContestOverview

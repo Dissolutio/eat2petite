@@ -2,7 +2,7 @@ import React from 'react'
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { UserContestDashboardLink } from '../layout/Links'
 
-export function UserSelectContestDropdown(props) {
+export default function UserSelectContestDropdown(props) {
     const [dropdownOpen, setOpen] = React.useState(false);
     const { contests, userSelectedContest } = props
     const toggle = () => setOpen(!dropdownOpen);

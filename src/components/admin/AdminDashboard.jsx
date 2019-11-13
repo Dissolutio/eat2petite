@@ -5,38 +5,43 @@ import { format, isSameDay } from 'date-fns'
 import styled from 'styled-components'
 
 import { useDataContext } from '../../contexts/useDataContext'
-import AdminSelectContestDropdown from './AdminSelectContestDropdown'
 import { useUIContext } from '../../contexts/useUIContext'
-import { sortByMostCurrentStartDate } from '../../modules/functions'
+import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
+
+import AdminSelectContestDropdown from './AdminSelectContestDropdown'
 import DashboardCalendar from '../shared/DashboardCalendar'
 import { AdminDevConsole } from '../shared/DevConsole'
-import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
+
+import { sortByMostCurrentStartDate } from '../../modules/functions'
+
 export default function AdminDashboard(props) {
 	const [userSelectedContest, setUserSelectedContest] = useState()
 	const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
-	console.log("TCL: AdminDashboard -> localContestId", localContestId)
-	const [hasLoadedContest, setHasLoadedContest] = useState(false)
-	const { appData } = useDataContext()
-	const { contests, posts, challenges, users } = appData
-	const queryParams = queryString.parse(props.location.search)
-	const contestsArray = Object.values(contests)
-	const sortedByMostRecent = [...contestsArray.sort(sortByMostCurrentStartDate)]
-	const autoSelectedContest = sortedByMostRecent[0]
-	const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
 	const handleSelectedContestChange = (contest) => {
 		setUserSelectedContest(contest)
 		setLocalContestId(contest.uid)
 	}
-	if (!hasLoadedContest && contestsArray) {
+
+	const { appData } = useDataContext()
+	const { contests, posts, challenges, users } = appData
+
+	const [hasInitialized, setHasInitialized] = useState(false)
+	const contestsArray = Object.values(contests)
+
+	if (!hasInitialized && contestsArray) {
+		const queryParams = queryString.parse(props.location.search)
+		const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
+		const localContest = contests[localContestId]
+		const mostRecentlyStartedContest = [...contestsArray.sort(sortByMostCurrentStartDate)][0]
 		if (queryContest) {
 			handleSelectedContestChange(queryContest)
-			setHasLoadedContest(true)
-		} else if (contests[localContestId]) {
-			setUserSelectedContest(contests[localContestId])
-			setHasLoadedContest(true)
-		} else if (autoSelectedContest) {
-			handleSelectedContestChange(autoSelectedContest)
-			setHasLoadedContest(true)
+			setHasInitialized(true)
+		} else if (localContest) {
+			setUserSelectedContest(localContest)
+			setHasInitialized(true)
+		} else if (mostRecentlyStartedContest) {
+			handleSelectedContestChange(mostRecentlyStartedContest)
+			setHasInitialized(true)
 		}
 	}
 

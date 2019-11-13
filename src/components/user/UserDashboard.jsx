@@ -3,37 +3,41 @@ import { Container } from 'reactstrap'
 import queryString from 'query-string'
 
 import { useDataContext } from '../../contexts/useDataContext'
-import UserContestDashboard from './UserContestDashboard'
-import { UserSelectContestDropdown } from './UserSelectContestDropdown'
-import UserContestsList from './UserContestsList'
 import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
+
+import UserContestOverview from './UserContestOverview'
+import UserSelectContestDropdown from './UserSelectContestDropdown'
+import UserContestsList from './UserContestsList'
 
 import { sortByMostCurrentStartDate } from '../../modules/functions'
 
-export const UserDashboard = (props) => {
+const UserDashboard = (props) => {
   const [userSelectedContest, setUserSelectedContest] = useState()
   const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
-  const [hasInitialized, setHasInitialized] = useState(false)
-  const { appData } = useDataContext()
-  const { contests, posts, me, challenges } = appData
-  const queryParams = queryString.parse(props.location.search)
-  const userEnrolledContestIds = me.contests ? Object.keys(me.contests) : []
-  const userEnrolledContests = userEnrolledContestIds.map((contestKey) => contests[contestKey])
-  const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
-  const autoSelectedContest = userEnrolledContests && [...userEnrolledContests.sort(sortByMostCurrentStartDate)][0]
   const handleSelectedContestChange = (contest) => {
     setUserSelectedContest(contest)
     setLocalContestId(contest.uid)
   }
-  if (!hasInitialized && userEnrolledContests) {
+
+  const { appData } = useDataContext()
+  const { contests, posts, me, challenges } = appData
+
+  const [hasInitialized, setHasInitialized] = useState(false)
+  const userEnrolledContestsArr = me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
+
+  if (!hasInitialized && userEnrolledContestsArr) {
+    const queryParams = queryString.parse(props.location.search)
+    const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
+    const localContest = contests[localContestId]
+    const mostRecentlyStartedContest = userEnrolledContestsArr && [...userEnrolledContestsArr.sort(sortByMostCurrentStartDate)][0]
     if (queryContest) {
       handleSelectedContestChange(queryContest)
       setHasInitialized(true)
-    } else if (contests[localContestId]) {
-      setUserSelectedContest(contests[localContestId])
+    } else if (localContest) {
+      setUserSelectedContest(localContest)
       setHasInitialized(true)
-    } else if (autoSelectedContest) {
-      handleSelectedContestChange(autoSelectedContest)
+    } else if (mostRecentlyStartedContest) {
+      handleSelectedContestChange(mostRecentlyStartedContest)
       setHasInitialized(true)
     }
   }
@@ -50,9 +54,10 @@ export const UserDashboard = (props) => {
   if (userSelectedContest) {
     return (
       <Container>
-        <UserSelectContestDropdown contests={userEnrolledContests} userSelectedContest={userSelectedContest} />
-        <UserContestDashboard me={me} userSelectedContest={userSelectedContest} challenges={challenges} posts={posts} />
+        <UserSelectContestDropdown contests={userEnrolledContestsArr} userSelectedContest={userSelectedContest} />
+        <UserContestOverview me={me} userSelectedContest={userSelectedContest} challenges={challenges} posts={posts} />
       </Container>
     )
   }
 }
+export default UserDashboard
