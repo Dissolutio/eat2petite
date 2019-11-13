@@ -65,20 +65,6 @@ const useDataContext = () => {
     console.log('current appData', appData)
   }
 
-  const loadLocalData = () => {
-    const localData = getLocalState()
-    if (localData) {
-      console.log('localData', localData)
-      setAppData(localData)
-    } else {
-      console.log('No local data found')
-    }
-  }
-
-  const setLocalData = () => {
-    setLocalState(appData)
-  }
-
   const loadFirebaseData = async () => {
     const challenges = await getChallenges()
     const users = await getUsers()
@@ -185,8 +171,6 @@ const useDataContext = () => {
     consoleLogAppData,
     dbResetToSample,
     dbLoadSavePoint,
-    loadLocalData,
-    setLocalData,
     loadFirebaseData,
     savePost,
     createContest,

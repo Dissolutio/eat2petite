@@ -9,7 +9,7 @@ import AdminSelectContestDropdown from './AdminSelectContestDropdown'
 import { useUIContext } from '../../contexts/useUIContext'
 import { sortByMostCurrentStartDate } from '../../modules/functions'
 import DashboardCalendar from '../shared/DashboardCalendar'
-
+import { AdminDevConsole } from '../shared/DevConsole'
 export default function AdminDashboard(props) {
 	const [userSelectedContest, setUserSelectedContest] = useState()
 	const [hasLoadedContest, setHasLoadedContest] = useState(false)
@@ -87,6 +87,7 @@ const ContestOverview = (props) => {
 					maxDate={new Date(endDate)}
 				/>
 			</Container>
+			<AdminDevConsole></AdminDevConsole>
 		</>
 	)
 }
