@@ -31,7 +31,7 @@ export default function AdminDashboard(props) {
 		if (queryContest) {
 			handleSelectedContestChange(queryContest)
 			setHasLoadedContest(true)
-		} else if (localContestId) {
+		} else if (contests[localContestId]) {
 			setUserSelectedContest(contests[localContestId])
 			setHasLoadedContest(true)
 		} else if (autoSelectedContest) {

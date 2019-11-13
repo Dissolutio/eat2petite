@@ -19,9 +19,8 @@ export const UserDashboard = (props) => {
   const queryParams = queryString.parse(props.location.search)
   const userEnrolledContestIds = me.contests ? Object.keys(me.contests) : []
   const userEnrolledContests = userEnrolledContestIds.map((contestKey) => contests[contestKey])
-  const sortedByMostRecent = [...userEnrolledContests.sort(sortByMostCurrentStartDate)]
-  const autoSelectedContest = sortedByMostRecent[0]
   const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
+  const autoSelectedContest = userEnrolledContests && [...userEnrolledContests.sort(sortByMostCurrentStartDate)][0]
   const handleSelectedContestChange = (contest) => {
     setUserSelectedContest(contest)
     setLocalContestId(contest.uid)
@@ -30,7 +29,7 @@ export const UserDashboard = (props) => {
     if (queryContest) {
       handleSelectedContestChange(queryContest)
       setHasInitialized(true)
-    } else if (localContestId) {
+    } else if (contests[localContestId]) {
       setUserSelectedContest(contests[localContestId])
       setHasInitialized(true)
     } else if (autoSelectedContest) {
