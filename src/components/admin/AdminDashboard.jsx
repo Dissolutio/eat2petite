@@ -83,7 +83,7 @@ const ContestOverview = (props) => {
 					{enrolledUsersArray && enrolledUsersArray.map(user => {
 						const post = getPostForSelectedDateForUserId(user.uid)
 						return (
-							<Button color='info'>
+							<Button key={user.uid} color='info'>
 								<h6>{post && post.checkedInBonus ? `\u2605` : null}{user.username}</h6>
 							</Button>
 						)

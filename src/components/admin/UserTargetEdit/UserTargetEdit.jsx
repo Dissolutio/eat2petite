@@ -12,7 +12,7 @@ function UserTargetEdit(props) {
             <Container className='border border-secondary border-rounded m-2'>
                 <h5 className='p-2 m-2'>User's Challenge Targets</h5>
                 {Object.values(challenges).map(challenge => (
-                    <UserWaterTargetForm user={user} challenge={challenge} userTarget={userWaterTarget} />
+                    <UserWaterTargetForm key={challenge.uid} user={user} challenge={challenge} userTarget={userWaterTarget} />
                 ))}
             </Container>
         )
