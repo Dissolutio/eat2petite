@@ -1,11 +1,9 @@
 import React from 'react'
 import Calendar from 'react-calendar'
 import styled from 'styled-components'
-import { format } from 'date-fns'
 
 const DashboardCalendar = props => {
-  const { minDate, maxDate, selectedDate, dateChangeHandler } = props
-  const arrayOfFormattedDatesToHighlight = [format(new Date(), 'MMMM d, yyyy'), 'November 7, 2019', 'October 30, 2019']
+  const { minDate, maxDate, selectedDate, dateChangeHandler, arrayOfFormattedDatesToHighlight } = props
   return (
     <Highlighter arrayOfFormattedDatesToHighlight={arrayOfFormattedDatesToHighlight}>
       <RestyledCalendar
