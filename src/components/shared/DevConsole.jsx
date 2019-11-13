@@ -62,8 +62,8 @@ export function UserDevConsole(props) {
 				challengeId: currentChallenge.uid,
 				postDate,
 				createdAt,
-				quantityDrank: random(1, 10),
-				quantityDrankUnits: 'cups',
+				quantityWaterDrank: random(1, 10),
+				quantityWaterDrankUnits: 'cups',
 				checkedInBonus,
 				lastEditedAt: createdAt,
 			}

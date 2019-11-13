@@ -11,14 +11,14 @@ export const UserWaterTargetForm = (props) => {
     if (challenge.uid !== 'challenge1') { return null }
     const submitForm = (event) => {
         event.preventDefault()
-        const newTarget = { quantityDrank: event.target.quantityDrank.value, quantityDrankUnits: event.target.quantityDrankUnits.value }
+        const newTarget = { quantityWaterDrank: event.target.quantityWaterDrank.value, quantityWaterDrankUnits: event.target.quantityWaterDrankUnits.value }
         updateUserChallengeTarget(user.uid, challenge.uid, newTarget).then(() => {
             fireAlert({ text: 'Water target updated!', color: 'success' })
         })
     }
     const currentTarget = (params) => {
-        const quantity = userTarget ? userTarget.quantityDrank : challenge.defaultTarget.quantityDrank
-        const units = userTarget ? userTarget.quantityDrankUnits : challenge.defaultTarget.quantityDrankUnits
+        const quantity = userTarget ? userTarget.quantityWaterDrank : challenge.defaultTarget.quantityWaterDrank
+        const units = userTarget ? userTarget.quantityWaterDrankUnits : challenge.defaultTarget.quantityWaterDrankUnits
         return { quantity, units }
     }
     return (
@@ -28,14 +28,14 @@ export const UserWaterTargetForm = (props) => {
             <Row>
                 <Col>
                     <FormGroup>
-                        <Label for="quantityDrank">Quantity</Label>
-                        <Input name="quantityDrank" type="number" defaultValue={currentTarget().quantity} />
+                        <Label for="quantityWaterDrank">Quantity</Label>
+                        <Input name="quantityWaterDrank" type="number" defaultValue={currentTarget().quantity} />
                     </FormGroup>
                 </Col>
                 <Col>
                     <FormGroup>
-                        <Label for="quantityDrankUnits">Units</Label>
-                        <Input name="quantityDrankUnits" type="select" disabled defaultValue={currentTarget().units}>
+                        <Label for="quantityWaterDrankUnits">Units</Label>
+                        <Input name="quantityWaterDrankUnits" type="select" disabled defaultValue={currentTarget().units}>
                             <option>ounces</option>
                             <option>cups</option>
                             <option>liters</option>

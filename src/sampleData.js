@@ -8,8 +8,8 @@ export const samplePosts = {
     createdAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
     lastEditedAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
     postDate: "10/30/2019",
-    quantityDrank: 0,
-    quantityDrankUnits: "cups",
+    quantityWaterDrank: 0,
+    quantityWaterDrankUnits: "cups",
     uid: "-LsQNoes1_JZsqVuG5Mz",
     userId: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
   },
@@ -24,8 +24,8 @@ export const sampleChallenges = {
     defaultMeasurementUnits: 'cups',
     defaultTarget: {
       quickDescription: 'Drink 8 cups of water a day.',
-      quantityDrank: 8,
-      quantityDrankUnits: 'cups',
+      quantityWaterDrank: 8,
+      quantityWaterDrankUnits: 'cups',
     },
   },
   challenge2: {
