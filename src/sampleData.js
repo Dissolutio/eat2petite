@@ -63,6 +63,7 @@ export const sampleChallenges = {
     defaultMeasurementUnits: 'minutes',
     intensities: ['light', 'medium', 'high'],
     defaultTarget: {
+      quickDescription: 'Aim to get at least 60 minutes of light exercise, or 30 minutes of medium excercise every day.',
       excerciseUnits: 'minutes',
       quantitylightExcercise: 45,
       quantityMediumExcercise: 10,
