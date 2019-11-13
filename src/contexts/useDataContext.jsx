@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 
 import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
-import { getLocalState, setLocalState } from '../modules/localStorage'
 import {
   sampleChallenges,
   sampleContests,

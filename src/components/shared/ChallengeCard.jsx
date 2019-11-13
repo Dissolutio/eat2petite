@@ -14,7 +14,7 @@ export default function ChallengeCard(props) {
 }
 const WaterChallengeCard = ({ challenge }) => {
 	const { uid, challengeName, description, metric, defaultMeasurementUnits, defaultTarget } = challenge
-	const { quantityDrank, quantityDrankUnits, quickDescription } = defaultTarget
+	const { quickDescription } = defaultTarget
 	return (
 		<Card color="primary" outline key={uid} body>
 			<CardHeader>

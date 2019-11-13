@@ -10,7 +10,7 @@ export default function AdminContestDetail(props) {
 	const contestId = props.match.params.id
 	const contest = contests && contests[contestId]
 	if (contest) {
-		const { uid, title, startDate, endDate, enrolledUsers, orderOfChallenges } = contest
+		const { title, startDate, endDate, enrolledUsers, orderOfChallenges } = contest
 		const enrolledUsersArray = enrolledUsers && Object.keys(contest.enrolledUsers).map(key => users[key])
 		return (
 			<Container>

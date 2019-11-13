@@ -1,6 +1,6 @@
 import React from 'react'
-import { format, isSameDay, differenceInCalendarDays, isToday } from 'date-fns'
-import { Container, Badge, Alert } from 'reactstrap'
+import { format, isSameDay, differenceInCalendarDays } from 'date-fns'
+import { Container, Badge } from 'reactstrap'
 
 import { useDataContext } from '../../contexts/useDataContext'
 import WaterChallengePost from './WaterChallengePost'
