@@ -17,10 +17,8 @@ const UserDashboard = (props) => {
     setUserSelectedContest(contest)
     setLocalContestId(contest.uid)
   }
-
   const { appData } = useDataContext()
   const { contests, posts, me, challenges } = appData
-
   const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
   const userEnrolledContests = me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
 
@@ -42,18 +40,20 @@ const UserDashboard = (props) => {
   }
 
   if (!userSelectedContest) {
-    return (
-      <Container className="text-center">
-        <h1 className="text-center">User Dashboard</h1>
-        <hr />
-      </Container>
-    )
+    return (<p>You are not enrolled in any contests!</p>)
   }
   if (userSelectedContest) {
     return (
       <Container>
-        <UserSelectContestDropdown contests={userEnrolledContests} userSelectedContest={userSelectedContest} />
-        <UserContestOverview me={me} userSelectedContest={userSelectedContest} challenges={challenges} posts={posts} />
+        <UserSelectContestDropdown
+          contests={userEnrolledContests}
+          userSelectedContest={userSelectedContest}
+        />
+        <UserContestOverview me={me}
+          userSelectedContest={userSelectedContest}
+          challenges={challenges}
+          posts={posts}
+        />
       </Container>
     )
   }

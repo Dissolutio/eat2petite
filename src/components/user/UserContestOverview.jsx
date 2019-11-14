@@ -1,21 +1,16 @@
 import React from 'react'
 import { isSameDay } from 'date-fns'
 
-import UserDashboardCalendar from '../shared/DashboardCalendar'
+import DashboardCalendar from '../shared/DashboardCalendar'
 import ChallengePost from './ChallengePost'
 import { useUIContext } from '../../contexts/useUIContext'
 
 const UserContestOverview = (props) => {
     const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
     const { userSelectedContest, me, posts, challenges } = props
-
     const { startDate, endDate } = userSelectedContest
     const currentChallenge = challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
-
-    const currentPost = getPostForSelectedDate()
-
-
-    function getPostForSelectedDate() {
+    const currentPost = () => {
         if (!posts) { return }
         return Object.values(posts).filter(
             post => post.contestId === userSelectedContest.uid
@@ -23,21 +18,19 @@ const UserContestOverview = (props) => {
             isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
         )
     }
-
     return (
         <>
             <ChallengePost
-                selectedDate={selectedDateInDashboard}
-                setSelectedDate={setSelectedDateInDashboard}
+                selectedDateInDashboard={selectedDateInDashboard}
                 userSelectedContest={userSelectedContest}
                 contestStartDate={new Date(startDate)}
                 contestEndDate={new Date(endDate)}
-                currentPost={currentPost}
+                currentPost={currentPost()}
                 currentChallenge={currentChallenge}
                 challenges={challenges}
                 me={me}
             />
-            <UserDashboardCalendar
+            <DashboardCalendar
                 selectedDate={selectedDateInDashboard}
                 setSelectedDateInDashboard={setSelectedDateInDashboard}
                 minDate={new Date(startDate)}
