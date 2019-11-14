@@ -7,7 +7,6 @@ import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
 
 import UserContestOverview from './UserContestOverview'
 import UserSelectContestDropdown from './UserSelectContestDropdown'
-import UserContestsList from './UserContestsList'
 
 import { sortByMostCurrentStartDate } from '../../modules/functions'
 
@@ -47,7 +46,6 @@ const UserDashboard = (props) => {
       <Container className="text-center">
         <h1 className="text-center">User Dashboard</h1>
         <hr />
-        <UserContestsList contests={contests} userSelectedContest={userSelectedContest} />
       </Container>
     )
   }
