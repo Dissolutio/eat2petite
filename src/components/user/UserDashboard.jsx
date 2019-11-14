@@ -21,23 +21,23 @@ const UserDashboard = (props) => {
   const { appData } = useDataContext()
   const { contests, posts, me, challenges } = appData
 
-  const [hasInitialized, setHasInitialized] = useState(false)
-  const userEnrolledContestsArr = me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
+  const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
+  const userEnrolledContests = me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
 
-  if (!hasInitialized && userEnrolledContestsArr) {
+  if (!hasAutoSelectedContest && userEnrolledContests) {
     const queryParams = queryString.parse(props.location.search)
     const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
     const localContest = contests[localContestId]
-    const mostRecentlyStartedContest = userEnrolledContestsArr && [...userEnrolledContestsArr.sort(sortByMostCurrentStartDate)][0]
+    const mostRecentlyStartedContest = userEnrolledContests && [...userEnrolledContests.sort(sortByMostCurrentStartDate)][0]
     if (queryContest) {
       handleSelectedContestChange(queryContest)
-      setHasInitialized(true)
+      setHasAutoSelectedContest(true)
     } else if (localContest) {
       setUserSelectedContest(localContest)
-      setHasInitialized(true)
+      setHasAutoSelectedContest(true)
     } else if (mostRecentlyStartedContest) {
       handleSelectedContestChange(mostRecentlyStartedContest)
-      setHasInitialized(true)
+      setHasAutoSelectedContest(true)
     }
   }
 
@@ -52,7 +52,7 @@ const UserDashboard = (props) => {
   if (userSelectedContest) {
     return (
       <Container>
-        <UserSelectContestDropdown contests={userEnrolledContestsArr} userSelectedContest={userSelectedContest} />
+        <UserSelectContestDropdown contests={userEnrolledContests} userSelectedContest={userSelectedContest} />
         <UserContestOverview me={me} userSelectedContest={userSelectedContest} challenges={challenges} posts={posts} />
       </Container>
     )
