@@ -23,9 +23,6 @@ const UserContestOverview = (props) => {
             isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
         )
     }
-    const dateChangeHandler = (date) => {
-        setSelectedDateInDashboard(date)
-    }
 
     return (
         <>
@@ -42,7 +39,7 @@ const UserContestOverview = (props) => {
             />
             <UserDashboardCalendar
                 selectedDate={selectedDateInDashboard}
-                dateChangeHandler={dateChangeHandler}
+                setSelectedDateInDashboard={setSelectedDateInDashboard}
                 minDate={new Date(startDate)}
                 maxDate={new Date(endDate)}
             />

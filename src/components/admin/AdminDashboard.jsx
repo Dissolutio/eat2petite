@@ -71,9 +71,6 @@ const ContestOverview = (props) => {
 				isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard))
 			))
 	}
-	const dateChangeHandler = (date) => {
-		setSelectedDateInDashboard(date)
-	}
 	const arrayOfFormattedDatesToHighlight = [format(new Date(), 'MMMM d, yyyy'), 'November 10, 2019', 'November 11, 2019']
 	return (
 		<>
@@ -99,7 +96,7 @@ const ContestOverview = (props) => {
 			<Container className='mb-3'>
 				<DashboardCalendar
 					selectedDate={selectedDateInDashboard}
-					dateChangeHandler={dateChangeHandler}
+					setSelectedDateInDashboard={setSelectedDateInDashboard}
 					minDate={new Date(startDate)}
 					maxDate={new Date(endDate)}
 					arrayOfFormattedDatesToHighlight={arrayOfFormattedDatesToHighlight}

@@ -3,7 +3,10 @@ import Calendar from 'react-calendar'
 import styled from 'styled-components'
 
 const DashboardCalendar = props => {
-  const { minDate, maxDate, selectedDate, dateChangeHandler, arrayOfFormattedDatesToHighlight } = props
+  const { minDate, maxDate, selectedDate, setSelectedDateInDashboard, arrayOfFormattedDatesToHighlight } = props
+  const dateChangeHandler = (date) => {
+    setSelectedDateInDashboard(date)
+  }
   return (
     <Highlighter arrayOfFormattedDatesToHighlight={arrayOfFormattedDatesToHighlight}>
       <RestyledCalendar
@@ -19,6 +22,7 @@ const DashboardCalendar = props => {
   )
 }
 export default DashboardCalendar
+
 const RestyledCalendar = styled(Calendar)`
 .react-calendar__month-view__days__day--weekend {
   color: inherit;
