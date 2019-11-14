@@ -11,14 +11,6 @@ export default function WaterChallengePost(props) {
     const [quantityWaterDrank, setQuantityDrank] = useState(0)
     const [quantityWaterDrankUnits, setQuantityDrankUnits] = useState('cups')
 
-    function updatedPostTarget() {
-        const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(selectedDate, 'yyyy-MM-dd')}`]
-        const currentPostHasTarget = currentPost && currentPost.target
-        const userChallengeTarget = me.challengeTargets && me.challengeTargets[currentChallenge.uid]
-        const challengeDefaultTarget = challenges[currentChallenge.uid] && challenges[currentChallenge.uid].defaultTarget
-        return userTargetForDate || currentPostHasTarget || userChallengeTarget || challengeDefaultTarget
-    }
-
     function handleQuantityDrankInput(event) {
         const newValue = event.target.value
         if (newValue) {
@@ -32,28 +24,37 @@ export default function WaterChallengePost(props) {
     }
 
     function buildUpdatePost(event) {
+        const updatedPostTarget = () => {
+            const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(selectedDate, 'yyyy-MM-dd')}`]
+            const currentPostHasTarget = currentPost && currentPost.target.challenge1
+            const userChallengeTarget = me.challengeTargets && me.challengeTargets[currentChallenge.uid]
+            const challengeDefaultTarget = challenges[currentChallenge.uid] && challenges[currentChallenge.uid].defaultTarget
+            return userTargetForDate || currentPostHasTarget || userChallengeTarget || challengeDefaultTarget
+        }
         return {
             ...currentPost,
             quantityWaterDrank,
-            quantityWaterDrankUnits: (event && event.target && event.target.quantityWaterDrankUnits.value) || currentPost.quantityWaterDrankUnits,
+            quantityWaterDrankUnits: event.target.quantityWaterDrankUnits.value || currentPost.quantityWaterDrankUnits,
             lastEditedAt: (new Date()).toString(),
-            target: updatedPostTarget(),
+            target: {
+                ...currentPost.target,
+                challenge1: updatedPostTarget(),
+            },
         }
     }
-
-    const onSubmitForm = (event) => {
+    function onSubmitForm(event) {
         event.preventDefault()
         savePost(buildUpdatePost(event))
     }
     const ProgressMsg = () => {
-        const goal = currentPost.target.quantityWaterDrank
+        const goal = currentPost.target.challenge1.quantityWaterDrank
         const score = currentPost.quantityWaterDrank
         if (score > 0 && score < goal) {
             return (
                 <span style={{ display: 'block' }}>
                     <Badge color='info'>
                         Keep it up!
-            </Badge>
+                    </Badge>
                 </span>
             )
         }
@@ -62,7 +63,7 @@ export default function WaterChallengePost(props) {
                 <span style={{ display: 'block' }}>
                     <Badge color='success'>
                         You met your goal!
-            </Badge>
+                    </Badge>
                 </span>
             )
         } else {
@@ -75,9 +76,10 @@ export default function WaterChallengePost(props) {
                 {isToday(selectedDate) ?
                     (<p className='text-secondary'>How much water have you drank today?</p>)
                     :
-                    (<p className='text-secondary'>How much water did you drink this day?</p>)}
+                    (<p className='text-secondary'>How much water did you drink this day?</p>)
+                }
                 <span style={{ display: 'block' }} className='text-info'>
-                    Your goal: {currentPost.target.quantityWaterDrank} {currentPost.target.quantityWaterDrankUnits}
+                    Your goal: {currentPost.target.challenge1.quantityWaterDrank} {currentPost.target.challenge1.quantityWaterDrankUnits}
                 </span>
                 <ProgressMsg />
             </div>
