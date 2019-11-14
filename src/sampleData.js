@@ -22,8 +22,8 @@ export const sampleChallenges = {
       'Staying well hydrated improves every facet of human functioning. Nothing hydrates you like pure water -- Drink up!',
     metric: 'volume',
     defaultMeasurementUnits: 'cups',
+    defaultTargetQuickDescription: 'Drink 8 cups of water a day.',
     defaultTarget: {
-      quickDescription: 'Drink 8 cups of water a day.',
       quantityWaterDrank: 8,
       quantityWaterDrankUnits: 'cups',
     },
@@ -35,8 +35,8 @@ export const sampleChallenges = {
       'We benefit greatly from a large amount of vegetables in our diet. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential.',
     defaultMeasurementUnits: `servings`,
     metric: 'amount',
+    defaultTargetQuickDescription: 'Eat 3 servings of vegetables a day, with at least one being a leafy green vegetable.',
     defaultTarget: {
-      quickDescription: 'Eat 3 servings of vegetables a day, with at least one being a leafy green vegetable.',
       quantityLeafyGreens: 2,
       quantityNonLeafyGreens: 1,
       quantityUnits: 'servings',
@@ -49,8 +49,8 @@ export const sampleChallenges = {
       'Consuming enough protein helps keep our muscles well fed. We are made of proteins after all!',
     metric: 'weight',
     defaultMeasurementUnits: 'grams',
+    defaultTargetQuickDescription: 'Try to eat 20 grams of protein each day.',
     defaultTarget: {
-      quickDescription: 'Try to eat 20 grams of protein each day.',
       quantityConsumed: 20,
       quantityConsumedUnits: 'grams',
     },
@@ -62,8 +62,8 @@ export const sampleChallenges = {
     metric: 'time',
     defaultMeasurementUnits: 'minutes',
     intensities: ['light', 'medium', 'high'],
+    defaultTargetQuickDescription: 'Aim to get at least 60 minutes of light exercise, or 30 minutes of medium excercise every day.',
     defaultTarget: {
-      quickDescription: 'Aim to get at least 60 minutes of light exercise, or 30 minutes of medium excercise every day.',
       excerciseUnits: 'minutes',
       quantitylightExcercise: 45,
       quantityMediumExcercise: 10,
@@ -78,8 +78,8 @@ export const sampleChallenges = {
     metric: 'weight',
     defaultMeasurementUnits: 'grams',
     typesOfCarbohydrate: ['simple', 'complex'],
+    defaultTargetQuickDescription: '3 servings of whole-grain or complex carbs, 1 or less of refined or simple carbs',
     defaultTarget: {
-      quickDescription: '3 servings of whole-grain or complex carbs, 1 or less of refined or simple carbs',
       quantityUnits: 'servings',
       quantitySimple: 1,
       quantityComplex: 3,
@@ -92,8 +92,8 @@ export const sampleChallenges = {
       'The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.',
     defaultMeasurementUnits: 'grams',
     metric: 'weight',
+    defaultTargetQuickDescription: '25 grams or less of sugar, 5 grams or less of salt',
     defaultTarget: {
-      quickDescription: '25 grams or less of sugar, 5 grams or less of salt',
       quantitySugarConsumed: 25,
       quantitySaltConsumed: 5,
       quantitySugarUnits: 'grams',
