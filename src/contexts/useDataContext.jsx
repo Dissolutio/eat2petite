@@ -1,11 +1,9 @@
 import React, { useContext, useState } from 'react'
+import { format, isSameDay } from 'date-fns'
 
 import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
-import {
-  sampleChallenges,
-  sampleContests,
-} from '../sampleData'
+import { sampleChallenges, sampleContests } from '../sampleData'
 import devDBSavePoint from '../assets/devDBSavePoint'
 import { adaptContestData } from '../modules/adapters'
 
@@ -162,6 +160,32 @@ const useDataContext = () => {
       return createUserPost(post).then(() => getPosts()).then((posts) => setAppData({ ...appData, posts }))
     }
   }
+  function buildNewPost(forDate, forChallenge, forContestId) {
+    const newPostTarget = () => {
+      const userTargetForDate = appData.me.challengeTargetsForDates && appData.me.challengeTargetsForDates[`${format(new Date(forDate), 'yyyy-MM-dd')}`]
+      const userChallengeTarget = appData.me.challengeTargets && appData.me.challengeTargets[forChallenge.uid]
+      const challengeDefaultTarget = appData.challenges[forChallenge.uid] && (appData.challenges[forChallenge.uid].defaultTarget)
+      return userTargetForDate || userChallengeTarget || challengeDefaultTarget
+    }
+    const createdAt = (new Date()).toString()
+    const postDate = format(new Date(forDate), 'P')
+    const checkedInBonus = isSameDay(new Date(createdAt), new Date(postDate))
+    return {
+      author: appData.me.uid,
+      userId: appData.me.uid,
+      uid: null,
+      contestId: forContestId,
+      challengeId: forChallenge.uid,
+      postDate,
+      createdAt,
+      quantityWaterDrank: 0,
+      quantityWaterDrankUnits: 'cups',
+      checkedInBonus,
+      target: {
+        [forChallenge.uid]: newPostTarget(),
+      },
+    }
+  }
   const updateUserChallengeTarget = (userId, challengeId, target) =>
     firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target).then(() => loadFirebaseData())
 
@@ -171,6 +195,7 @@ const useDataContext = () => {
     dbResetToSample,
     dbLoadSavePoint,
     loadFirebaseData,
+    buildNewPost,
     savePost,
     createContest,
     updateChallenge,
