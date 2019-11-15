@@ -42,20 +42,18 @@ export default function ChallengePost(props) {
       </div>
     )
   }
-  const LastEditedReadout = () => {
-    if (!currentPost.lastEditedAt) { return null }
-    return (
-      <p className='mt-1'>
-        <small className='text-center text-info'>
-          {`Last edit: ${format(new Date(currentPost.lastEditedAt), 'Pp')}`}
-        </small>
-      </p>
-    )
-  }
+  const LastEditedReadout = () => ((currentPost && currentPost.lastEditedAt && (
+    <p className='mt-1'>
+      <small className='text-center text-info'>
+        {`Last edit: ${format(new Date(currentPost.lastEditedAt), 'Pp')}`}
+      </small>
+    </p>
+  )) || null
+  )
   return (
-    <Container className="border border-primary rounded p-4 mt-4 mb-3 text-center">
+    <Container className="border border-primary rounded p-3 mt-4 mb-3 text-center">
       <h5 className='text-primary border-bottom border-primary'>{currentChallenge.challengeName}</h5>
-      <p className='text-secondary'>{format(selectedDateInDashboard, 'P')}</p>
+      <h4 className='text-secondary'>{format(selectedDateInDashboard, 'P')}</h4>
       <PostFormForDay />
     </Container>
   )
