@@ -1,5 +1,4 @@
 import React from 'react'
-import { AdminPostDetailLink } from '../layout/Links'
 
 export default function AdminPostsList(props) {
 	const { posts } = props
@@ -15,7 +14,6 @@ export default function AdminPostsList(props) {
 			{allPosts && allPosts.map(post => (
 				<li key={post.uid}>
 					<ul>
-						<AdminPostDetailLink postId={post.uid} />
 						<li>{`contestId: ${post.contestId}`}</li>
 						<li>{`userId: ${post.userId}`}</li>
 						<li>{`challengeId: ${post.challengeId}`}</li>
