@@ -18,8 +18,6 @@ import AdminContestsPage from '../admin/AdminContestsList'
 import AdminContestDetail from '../admin/AdminContestDetail'
 import AdminUsersList from '../admin/AdminUsersList'
 import AdminUserDetail from '../admin/AdminUserDetail'
-import AdminPostsList from '../admin/AdminPostsList'
-import AdminPostDetail from '../admin/AdminPostDetail'
 
 import { ChallengesPage } from '../shared/Challenges'
 import Page404NotFound from './Page404NotFound'
@@ -98,15 +96,6 @@ export default function AppRouter(props) {
 						{...props}
 					/>
 				)}
-			/>
-			<Route
-				exact
-				path={ROUTES.ADMIN_POSTS}
-				render={() => <AdminPostsList posts={posts} />}
-			/>
-			<Route
-				path={`${ROUTES.ADMIN_POSTS}:id`}
-				component={AdminPostDetail}
 			/>
 			<Route
 				exact
