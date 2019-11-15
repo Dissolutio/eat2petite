@@ -9,8 +9,8 @@ import useInputValue from '../../modules/hooks/useInputValue'
 import { ordinalSuffixOf } from '../../modules/functions'
 
 const ContestCreateForm = (props) => {
-  const { appData, createContest, enrollUserInContest } = useDataContext()
-  const { users, challenges } = appData
+  const { createContest, enrollUserInContest } = useDataContext()
+  const { users, challenges } = props
   const [numberOfChallenges, setNumberOfChallenges] = useState(6)
   const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'))
   const title = useInputValue('Sample1')
@@ -27,11 +27,14 @@ const ContestCreateForm = (props) => {
   const createContestOnSubmit = async (event) => {
     event.preventDefault()
     const formEnrolledUsers = event.target.enrolledUsers
-    // event has one input node (if only one user checkbox), or node list (for many checkbox input)
-    const enrolledUsers = () => (formEnrolledUsers.length ? Array.from(event.target.enrolledUsers)
-      .filter((input) => input.checked)
-      .map((input) => input.value)
-      : [formEnrolledUsers.value])
+    const enrolledUsers = () => (
+      // either convert the node list to an array
+      formEnrolledUsers.length ?
+        Array.from(event.target.enrolledUsers)
+          .filter((input) => input.checked)
+          .map((input) => input.value)
+        // or put the lone value in an array
+        : [formEnrolledUsers.value])
     const orderOfChallenges = () => {
       let answer = {}
       for (let i = 0; i < orderSpotsArray.length; i++) {
@@ -80,8 +83,7 @@ const ContestCreateForm = (props) => {
             value={numberOfChallenges}
             onChange={(event) => {
               setNumberOfChallenges(event.target.value)
-            }
-            }
+            }}
           />
         </FormGroup>
         <FormGroup>

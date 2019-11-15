@@ -21,9 +21,7 @@ export default function AdminDashboard(props) {
 		setUserSelectedContest(contest)
 		setLocalContestId(contest.uid)
 	}
-
-	const { appData } = useDataContext()
-	const { contests, posts, challenges, users } = appData
+	const { contests, posts, challenges, users } = props
 
 	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
 	const contestsArray = Object.values(contests)

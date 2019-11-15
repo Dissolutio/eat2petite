@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { meetAuthConditionOrRedirectHOC } from '../../components/authentication/meetAuthConditionOrRedirectHOC'
 
@@ -40,6 +40,17 @@ export default function AppRouter(props) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authUser])
 	const { challenges, me, posts, users, contests } = appData
+	const PublicRoute = ({ component, ...options }) => {
+		if (authUser) {
+			return <Redirect to={ROUTES.USER_HOMEPAGE} />
+		} else {
+			return <Route {...options} component={component} />
+		}
+		const PrivateRoute = ({ component, ...options }) => {
+			const finalComponent = authUser ? component : SignInForm
+			return <Route {...options} component={finalComponent} />;
+		};
+	}
 	return (
 		<Switch>
 			<Route exact path={ROUTES.LANDING} component={LandingPage} />
