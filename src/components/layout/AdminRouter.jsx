@@ -22,18 +22,36 @@ export default function AdminRouter(props) {
 	return (
 		<div>
 			<Switch>
-				<Route exact path={ROUTES.ADMIN_DASHBOARD} component={AdminDashboard} />
+				<Route exact path={ROUTES.ADMIN_DASHBOARD} render={props => (
+					<AdminDashboard
+						contests={contests}
+						users={users}
+						posts={posts}
+						challenges={challenges}
+						{...props}
+					/>
+				)}
+				/>
 				<Route
 					exact
 					path={ROUTES.ADMIN_CONTESTS}
 					render={props => (
 						<>
 							<AdminContestsList contests={contests} />
-							<CreateContestForm />
+							<CreateContestForm users={users} challenges={challenges} />
 						</>
 					)}
 				/>
-				<Route path={`${ROUTES.ADMIN_CONTESTS}:id`} component={AdminContestDetail} />
+				<Route path={`${ROUTES.ADMIN_CONTESTS}:id`} render={props => (
+					<AdminContestDetail
+						contests={contests}
+						users={users}
+						challenges={challenges}
+						{...props}
+					/>
+
+				)
+				} />
 				<Route exact path={ROUTES.ADMIN_POSTS} render={props => <AdminPostsList posts={posts} />} />
 				<Route path={`${ROUTES.ADMIN_POSTS}:id`} component={AdminPostDetail} />
 				<Route
