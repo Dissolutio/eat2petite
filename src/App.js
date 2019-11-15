@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 
 import { useAuthUserContext } from './contexts/useAuthUserContext'
 import Header from './components/layout/Header'
@@ -39,4 +38,4 @@ const NonAuthApp = () => {
 	)
 }
 
-export default withRouter(App)
+export default App
