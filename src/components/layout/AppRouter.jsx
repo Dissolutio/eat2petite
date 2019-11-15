@@ -14,13 +14,12 @@ import UserDashboard from '../user/UserDashboard'
 import AccountPage from '../user/AccountPage'
 
 import AdminDashboard from '../admin/AdminDashboard'
-import AdminContestsList from '../admin/AdminContestsList'
+import AdminContestsPage from '../admin/AdminContestsList'
 import AdminContestDetail from '../admin/AdminContestDetail'
 import AdminUsersList from '../admin/AdminUsersList'
 import AdminUserDetail from '../admin/AdminUserDetail'
 import AdminPostsList from '../admin/AdminPostsList'
 import AdminPostDetail from '../admin/AdminPostDetail'
-import CreateContestForm from '../admin/CreateContestForm'
 
 import { ChallengesPage } from '../shared/Challenges'
 import Page404NotFound from './Page404NotFound'
@@ -40,17 +39,6 @@ export default function AppRouter(props) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authUser])
 	const { challenges, me, posts, users, contests } = appData
-	const PublicRoute = ({ component, ...options }) => {
-		if (authUser) {
-			return <Redirect to={ROUTES.USER_HOMEPAGE} />
-		} else {
-			return <Route {...options} component={component} />
-		}
-		const PrivateRoute = ({ component, ...options }) => {
-			const finalComponent = authUser ? component : SignInForm
-			return <Route {...options} component={finalComponent} />;
-		};
-	}
 	return (
 		<Switch>
 			<Route exact path={ROUTES.LANDING} component={LandingPage} />
@@ -97,10 +85,7 @@ export default function AppRouter(props) {
 				exact
 				path={ROUTES.ADMIN_CONTESTS}
 				render={() => (
-					<>
-						<AdminContestsList contests={contests} />
-						<CreateContestForm users={users} challenges={challenges} />
-					</>
+					<AdminContestsPage users={users} challenges={challenges} contests={contests} />
 				)}
 			/>
 			<Route
