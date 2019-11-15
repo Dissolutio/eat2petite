@@ -69,7 +69,8 @@ const ContestOverview = (props) => {
 				isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard))
 			))
 	}
-	const arrayOfFormattedDatesToHighlight = [format(new Date(), 'MMMM d, yyyy'), 'November 10, 2019', 'November 11, 2019']
+	const daysWithInput = [format(new Date(), 'MMMM d, yyyy'), 'November 10, 2019', 'November 11, 2019']
+	const daysWithoutInput = ['November 14, 2019', 'November 13, 2019', 'November 15, 2019']
 	return (
 		<>
 			<Container className="border border-secondary rounded p-3 mt-2 mb-1 text-center">
@@ -97,7 +98,8 @@ const ContestOverview = (props) => {
 					setSelectedDateInDashboard={setSelectedDateInDashboard}
 					minDate={new Date(startDate)}
 					maxDate={new Date(endDate)}
-					arrayOfFormattedDatesToHighlight={arrayOfFormattedDatesToHighlight}
+					daysWithInput={daysWithInput}
+					daysWithoutInput={daysWithoutInput}
 				/>
 			</Container>
 			<AdminDevConsole></AdminDevConsole>

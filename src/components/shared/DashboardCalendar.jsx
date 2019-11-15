@@ -50,6 +50,7 @@ ${props => props.arrayOfFormattedDatesToHighlight &&
         height: 100%;
         padding: 35% 0;
         background-color: var(--E2P-orange);
+        color: inherit;
       }`
     }, '')}
   // selected tile should still have unique color
