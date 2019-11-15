@@ -1,17 +1,74 @@
 import { format, addDays } from 'date-fns'
-export const samplePosts = {
+export const samplePost = {
   '-LsQNoes1_JZsqVuG5Mz': {
+    uid: "-LsQNoes1_JZsqVuG5Mz",
     author: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
     challengeId: "challenge1",
     checkedInBonus: true,
+    // firstInput: null at first, added when user updates post
     contestId: "-LsQNkeDfSlA1Gql-XKM",
     createdAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
     lastEditedAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
-    postDate: "10/30/2019",
-    quantityWaterDrank: 0,
-    quantityWaterDrankUnits: "cups",
-    uid: "-LsQNoes1_JZsqVuG5Mz",
     userId: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
+    postDate: "10/30/2019",
+    targets: {
+      challenge1: {
+        quantityWaterDrank: 0,
+        quantityWaterDrankUnits: "cups",
+      },
+      challenge2: {
+        servingsVegetablesEaten: 0,
+      },
+      challenge3: {
+        proteinConsumed: 0,
+        proteinConsumedUnits: 'grams',
+      },
+      challenge4: {
+        excerciseUnits: 'minutes',
+        lightExcerciseDuration: 0,
+        mediumExcerciseDuration: 0,
+        heavyExcerciseDuration: 0,
+      },
+      challenge5: {
+        refinedCarbsConsumed: 0,
+        refinedCarbsConsumedUnits: 'calories',
+      },
+      challenge6: {
+        quantitySugarConsumed: 0,
+        quantitySaltConsumed: 0,
+        quantitySugarConsumedUnits: 'grams',
+        quantitySaltConsumedUnits: 'grams',
+      },
+    },
+    data: {
+      challenge1: {
+        quantityWaterDrank: 0,
+        quantityWaterDrankUnits: "cups",
+      },
+      challenge2: {
+        servingsVegetablesEaten: 0,
+      },
+      challenge3: {
+        proteinConsumed: 0,
+        proteinConsumedUnits: 'grams',
+      },
+      challenge4: {
+        excerciseUnits: 'minutes',
+        lightExcerciseDuration: 0,
+        mediumExcerciseDuration: 0,
+        heavyExcerciseDuration: 0,
+      },
+      challenge5: {
+        refinedCarbsConsumed: 0,
+        refinedCarbsConsumedUnits: 'calories',
+      },
+      challenge6: {
+        quantitySugarConsumed: 0,
+        quantitySaltConsumed: 0,
+        quantitySugarConsumedUnits: 'grams',
+        quantitySaltConsumedUnits: 'grams',
+      },
+    }
   },
 }
 export const sampleChallenges = {
@@ -101,6 +158,7 @@ export const sampleContests = {
   contest1: {
     title: 'Eat-2-Petite Launch Contest',
     startDate: format(addDays(new Date(), -9), 'P'),
+    uid: '-Lth91Tw1gaKMMbwFe54',
     daysPerChallenge: '14',
     enrolledUsers: {},
     numberOfChallenges: 6,
@@ -116,6 +174,7 @@ export const sampleContests = {
   contest2: {
     title: 'Fall Mini Contest ',
     startDate: format(addDays(new Date(), -3), 'P'),
+    uid: '-Lth91Tw1gaKMMbwFe55',
     daysPerChallenge: '7',
     enrolledUsers: {},
     numberOfChallenges: 6,
