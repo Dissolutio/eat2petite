@@ -35,11 +35,9 @@ export const sampleChallenges = {
       'We benefit greatly from a large amount of vegetables in our diet. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential.',
     defaultMeasurementUnits: `servings`,
     metric: 'amount',
-    defaultTargetQuickDescription: 'Eat 3 servings of vegetables a day, with at least one being a leafy green vegetable.',
+    defaultTargetQuickDescription: 'Try and eat 3-5 servings of vegetables a day.',
     defaultTarget: {
-      quantityLeafyGreens: 2,
-      quantityNonLeafyGreens: 1,
-      quantityUnits: 'servings',
+      servingsVegetablesEaten: 3,
     },
   },
   challenge3: {
@@ -51,8 +49,8 @@ export const sampleChallenges = {
     defaultMeasurementUnits: 'grams',
     defaultTargetQuickDescription: 'Try to eat 20 grams of protein each day.',
     defaultTarget: {
-      quantityConsumed: 20,
-      quantityConsumedUnits: 'grams',
+      proteinConsumed: 20,
+      proteinConsumedUnits: 'grams',
     },
   },
   challenge4: {
@@ -61,28 +59,26 @@ export const sampleChallenges = {
     description: `Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!`,
     metric: 'time',
     defaultMeasurementUnits: 'minutes',
-    intensities: ['light', 'medium', 'high'],
+    intensities: ['light', 'medium', 'heavy'],
     defaultTargetQuickDescription: 'Aim to get at least 60 minutes of light exercise, or 30 minutes of medium excercise every day.',
     defaultTarget: {
       excerciseUnits: 'minutes',
-      quantitylightExcercise: 45,
-      quantityMediumExcercise: 10,
-      quantityHighExcercise: 0,
+      lightExcerciseDuration: 45,
+      mediumExcerciseDuration: 10,
+      heavyExcerciseDuration: 0,
     }
   },
   challenge5: {
     challengeName: 'Carbohydrate Challenge',
     uid: 'challenge5',
     description:
-      'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
-    metric: 'weight',
-    defaultMeasurementUnits: 'grams',
-    typesOfCarbohydrate: ['simple', 'complex'],
-    defaultTargetQuickDescription: '3 servings of whole-grain or complex carbs, 1 or less of refined or simple carbs',
+      'Heavily processed and refined flours offer plenty of energy with not enough vitamins, minerals, or fiber. Try to limit how much of your calories come from simple and refined carbohydrates.',
+    metric: 'calories',
+    defaultMeasurementUnits: 'calories',
+    defaultTargetQuickDescription: 'Consume less than 400 calories from refined foods.',
     defaultTarget: {
-      quantityUnits: 'servings',
-      quantitySimple: 1,
-      quantityComplex: 3,
+      refinedCarbsConsumed: 400,
+      refinedCarbsConsumedUnits: 'calories',
     },
   },
   challenge6: {
@@ -96,7 +92,7 @@ export const sampleChallenges = {
     defaultTarget: {
       quantitySugarConsumed: 25,
       quantitySaltConsumed: 5,
-      quantitySugarUnits: 'grams',
+      quantitySugarConsumedUnits: 'grams',
       quantitySaltConsumedUnits: 'grams',
     },
   },
