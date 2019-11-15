@@ -1,11 +1,9 @@
 import React from 'react'
-import { Container, Collapse, Button } from 'reactstrap'
-import ChallengeCard from './ChallengeCard'
+import { Container, Collapse, Button, Row, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
 
 export default function ChallengesList(props) {
 	const { challenges } = props
 	if (challenges) {
-		console.log("TCL: ChallengesList -> challenges", challenges)
 		return (
 			<Container>
 				<h2>All Challenges:</h2>
@@ -22,7 +20,7 @@ export default function ChallengesList(props) {
 		)
 	}
 }
-const ChallengeCollapseCard = ({ challenge }) => {
+export const ChallengeCollapseCard = ({ challenge }) => {
 	const [isOpen, setIsOpen] = React.useState(false);
 	if (!challenge) { return null }
 
@@ -36,4 +34,34 @@ const ChallengeCollapseCard = ({ challenge }) => {
 			</Collapse>
 		</div>
 	);
+}
+
+export const ChallengeCard = ({ challenge }) => {
+	const { uid, challengeName, description, metric, defaultMeasurementUnits, defaultTargetQuickDescription } = challenge
+	if (!challenge) { return null }
+	return (
+		<Card color="primary" outline key={uid} body>
+			<CardHeader>
+				<CardTitle>
+					<h3 className='text-primary'>{challengeName}</h3>
+				</CardTitle>
+			</CardHeader>
+			<CardBody>
+				<CardText className='text-dark'>
+					{description}
+				</CardText>
+				<CardText className='text-success'>
+					General daily goal: {`${defaultTargetQuickDescription}`}
+				</CardText>
+			</CardBody>
+			<CardFooter>
+				<Container>
+					<Row className='text-info p-2'>
+						<Col>Metric of measurement: {metric}</Col>
+						<Col>Default units: {defaultMeasurementUnits}</Col>
+					</Row>
+				</Container>
+			</CardFooter>
+		</Card>
+	)
 }
