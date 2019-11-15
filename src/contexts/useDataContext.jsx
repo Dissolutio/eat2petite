@@ -63,6 +63,7 @@ const useDataContext = () => {
   }
 
   const loadFirebaseData = async () => {
+    console.log('fetching Firebase Data')
     const challenges = await getChallenges()
     const users = await getUsers()
     const contests = await getContests()
@@ -78,6 +79,7 @@ const useDataContext = () => {
     await setAppData({
       ...newData,
     })
+    console.log("TCL: loadFirebaseData -> newData", newData)
     return newData
   }
   const getPersonalProfile = () =>

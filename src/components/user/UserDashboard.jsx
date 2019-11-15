@@ -20,7 +20,7 @@ const UserDashboard = (props) => {
   const { appData } = useDataContext()
   const { contests, posts, me, challenges } = appData
   const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
-  const userEnrolledContests = me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
+  const userEnrolledContests = me && me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
 
   if (!hasAutoSelectedContest && userEnrolledContests) {
     const queryParams = queryString.parse(props.location.search)

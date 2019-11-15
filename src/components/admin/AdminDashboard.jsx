@@ -24,7 +24,7 @@ export default function AdminDashboard(props) {
 	const { contests, posts, challenges, users } = props
 
 	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
-	const contestsArray = Object.values(contests)
+	const contestsArray = contests && Object.values(contests)
 
 	if (!hasAutoSelectedContest && contestsArray) {
 		const queryParams = queryString.parse(props.location.search)
