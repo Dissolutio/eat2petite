@@ -5,7 +5,7 @@ import { format, isToday } from 'date-fns'
 import { useDataContext } from '../../contexts/useDataContext'
 
 export default function WaterChallengePost(props) {
-    const { savePost } = useDataContext()
+    const { updateUserPost } = useDataContext()
     const { formDisabled, me, currentPost, currentChallenge, challenges } = props
     const selectedDate = new Date(props.selectedDate)
     const [quantityWaterDrank, setQuantityDrank] = useState(0)
@@ -26,28 +26,33 @@ export default function WaterChallengePost(props) {
     function buildUpdatePost(event) {
         const updatedPostTarget = () => {
             const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(selectedDate, 'yyyy-MM-dd')}`]
-            const currentPostHasTarget = currentPost && currentPost.target.challenge1
+            const currentPostHasTarget = currentPost && currentPost.targets.challenge1
             const userChallengeTarget = me.challengeTargets && me.challengeTargets[currentChallenge.uid]
             const challengeDefaultTarget = challenges[currentChallenge.uid] && challenges[currentChallenge.uid].defaultTarget
             return userTargetForDate || currentPostHasTarget || userChallengeTarget || challengeDefaultTarget
         }
         return {
             ...currentPost,
-            quantityWaterDrank,
-            quantityWaterDrankUnits: event.target.quantityWaterDrankUnits.value || currentPost.quantityWaterDrankUnits,
+            data: {
+                ...currentPost.data,
+                challenge1: {
+                    quantityWaterDrank,
+                    quantityWaterDrankUnits: event.target.quantityWaterDrankUnits.value || currentPost.quantityWaterDrankUnits,
+                }
+            },
             lastEditedAt: (new Date()).toString(),
-            target: {
-                ...currentPost.target,
+            targets: {
+                ...currentPost.targets,
                 challenge1: updatedPostTarget(),
             },
         }
     }
     function onSubmitForm(event) {
         event.preventDefault()
-        savePost(buildUpdatePost(event))
+        updateUserPost(buildUpdatePost(event))
     }
     const ProgressMsg = () => {
-        const goal = currentPost.target.challenge1.quantityWaterDrank
+        const goal = currentPost.targets.challenge1.quantityWaterDrank
         const score = currentPost.quantityWaterDrank
         if (score > 0 && score < goal) {
             return (
@@ -79,7 +84,7 @@ export default function WaterChallengePost(props) {
                     (<p className='text-secondary'>How much water did you drink this day?</p>)
                 }
                 <span style={{ display: 'block' }} className='text-info'>
-                    Your goal: {currentPost.target.challenge1.quantityWaterDrank} {currentPost.target.challenge1.quantityWaterDrankUnits}
+                    Your goal: {currentPost.targets.challenge1.quantityWaterDrank} {currentPost.targets.challenge1.quantityWaterDrankUnits}
                 </span>
                 <ProgressMsg />
             </div>
@@ -92,7 +97,10 @@ export default function WaterChallengePost(props) {
                 <InputGroup className='mb-2'>
                     <Label for="quantity" hidden>Quantity</Label>
                     <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
-                    <Input name="quantity" type="number" placeholder={currentPost.quantityWaterDrank} onChange={handleQuantityDrankInput} />
+                    <Input name="quantity" type="number"
+                        placeholder={(currentPost.data && currentPost.data.challenge1.quantityWaterDrank) || '0'}
+                        onChange={handleQuantityDrankInput}
+                    />
                 </InputGroup>
                 <InputGroup size="sm">
                     <Label for="quantityUnits" hidden>Units</Label>

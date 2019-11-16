@@ -151,28 +151,23 @@ const useDataContext = () => {
   }
 
   const createContest = (contest) => firebaseApp.dbSaveNewContest(contest)
-  const createUserPost = (post) => firebaseApp.dbCreateUserPost(post)
-  const updateUserPost = (post) => firebaseApp.dbUpdateUserPost(post)
-  const savePost = (post) => {
-    if (post && post.uid) {
-      console.log('Updating post', post)
-      return updateUserPost(post).then(() => getPosts()).then((posts) => setAppData({ ...appData, posts }))
-    } else {
-      console.log('Making a new post', post)
-      return createUserPost(post).then(() => getPosts()).then((posts) => setAppData({ ...appData, posts }))
-    }
+  const updateUserPost = (post) => {
+    console.log('Updating post', post)
+    return firebaseApp.dbUpdateUserPost(post)
+      .then(() => getPosts())
+      .then((posts) => setAppData({ ...appData, posts }))
   }
-  function buildNewPost(forDate, forChallenge, forContestId) {
+  function saveNewPost(forDate, forChallenge, forContestId) {
+    const createdAt = (new Date()).toString()
+    const postDate = format(new Date(forDate), 'P')
+    const checkedInBonus = isSameDay(new Date(createdAt), new Date(postDate))
     const newPostTarget = () => {
       const userTargetForDate = appData.me.challengeTargetsForDates && appData.me.challengeTargetsForDates[`${format(new Date(forDate), 'yyyy-MM-dd')}`]
       const userChallengeTarget = appData.me.challengeTargets && appData.me.challengeTargets[forChallenge.uid]
       const challengeDefaultTarget = appData.challenges[forChallenge.uid] && (appData.challenges[forChallenge.uid].defaultTarget)
       return userTargetForDate || userChallengeTarget || challengeDefaultTarget
     }
-    const createdAt = (new Date()).toString()
-    const postDate = format(new Date(forDate), 'P')
-    const checkedInBonus = isSameDay(new Date(createdAt), new Date(postDate))
-    return {
+    const newPost = {
       author: appData.me.uid,
       userId: appData.me.uid,
       uid: null,
@@ -183,10 +178,14 @@ const useDataContext = () => {
       quantityWaterDrank: 0,
       quantityWaterDrankUnits: 'cups',
       checkedInBonus,
-      target: {
+      targets: {
         [forChallenge.uid]: newPostTarget(),
-      },
+      }
     }
+    console.log('Making a new post', newPost)
+    return firebaseApp.dbCreateUserPost(newPost)
+      .then(() => getPosts())
+      .then((posts) => setAppData({ ...appData, posts }))
   }
   const updateUserChallengeTarget = (userId, challengeId, target) =>
     firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target).then(() => loadFirebaseData())
@@ -197,8 +196,8 @@ const useDataContext = () => {
     dbResetToSample,
     dbLoadSavePoint,
     loadFirebaseData,
-    buildNewPost,
-    savePost,
+    saveNewPost,
+    updateUserPost,
     createContest,
     updateChallenge,
     enrollUserInContest,

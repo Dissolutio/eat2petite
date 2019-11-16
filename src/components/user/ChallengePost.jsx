@@ -6,14 +6,14 @@ import { useDataContext } from '../../contexts/useDataContext'
 import WaterChallengePost from './WaterChallengePost'
 
 export default function ChallengePost(props) {
-  const { buildNewPost, savePost } = useDataContext()
+  const { saveNewPost } = useDataContext()
   const { userSelectedContest, selectedDateInDashboard, me, currentChallenge, currentPost, challenges } = props
   const selectedDateIsFutureDate = differenceInCalendarDays(new Date(), new Date(selectedDateInDashboard)) < 0
   if (!currentChallenge) {
     return <h5>No challenge for today!</h5>
   }
   if (!currentPost && !selectedDateIsFutureDate) {
-    savePost(buildNewPost(selectedDateInDashboard, currentChallenge, userSelectedContest.uid))
+    saveNewPost(selectedDateInDashboard, currentChallenge, userSelectedContest.uid)
     return <h1>Loading</h1>
   }
 
