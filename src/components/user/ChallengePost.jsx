@@ -42,14 +42,15 @@ export default function ChallengePost(props) {
       </div>
     )
   }
-  const LastEditedReadout = () => ((currentPost && currentPost.lastEditedAt && (
-    <p className='mt-1'>
-      <small className='text-center text-info'>
-        {`Last edit: ${format(new Date(currentPost.lastEditedAt), 'Pp')}`}
-      </small>
-    </p>
-  )) || null
-  )
+  const LastEditedReadout = () => {
+    return (currentPost && currentPost.lastEditedAt && (
+      <p className='mt-1'>
+        <small className='text-center text-info'>
+          {`Last edit: ${format(new Date(currentPost.lastEditedAt), 'Pp')}`}
+        </small>
+      </p>
+    )) || null
+  }
   return (
     <Container className="border border-primary rounded p-3 mt-4 mb-3 text-center">
       <h5 className='text-primary border-bottom border-primary'>{currentChallenge.challengeName}</h5>
