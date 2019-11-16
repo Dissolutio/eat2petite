@@ -14,11 +14,9 @@ const UserContestOverview = (props) => {
     const daysWithoutInput = ['November 14, 2019', 'November 13, 2019', 'November 15, 2019']
     const currentPost = () => {
         if (!posts) { return }
-        return Object.values(posts).filter(
-            post => post.contestId === userSelectedContest.uid
-        ).find(post => (
-            isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
-        )
+        return Object.values(posts)
+            .filter(post => post.contestId === userSelectedContest.uid)
+            .find(post => isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
     }
     return (
         <>
