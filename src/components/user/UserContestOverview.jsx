@@ -10,11 +10,13 @@ const UserContestOverview = (props) => {
     const { userSelectedContest, me, posts, challenges } = props
     const { startDate, endDate } = userSelectedContest
     const currentChallenge = challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
-    const daysWithInput = [format(new Date(), 'MMMM d, yyyy'), 'November 12, 2019', 'November 11, 2019']
-    const daysWithoutInput = ['November 14, 2019', 'November 13, 2019', 'November 15, 2019']
+    const postsArr = posts ? Object.values(posts) : []
+    const daysWithInput = () => {
+        return postsArr.map(post => format(new Date(post.postDate), 'MMMM d, yyyy'))
+    }
+    const daysWithoutInput = () => []
     const currentPost = () => {
-        if (!posts) { return }
-        return Object.values(posts)
+        return postsArr
             .filter(post => post.contestId === userSelectedContest.uid)
             .find(post => isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
     }
@@ -35,8 +37,8 @@ const UserContestOverview = (props) => {
                 setSelectedDateInDashboard={setSelectedDateInDashboard}
                 minDate={new Date(startDate)}
                 maxDate={new Date(endDate)}
-                daysWithInput={daysWithInput}
-                daysWithoutInput={daysWithoutInput}
+                daysWithInput={daysWithInput()}
+                daysWithoutInput={daysWithoutInput()}
             />
         </>
     )

@@ -3,12 +3,30 @@ import Calendar from 'react-calendar'
 import styled from 'styled-components'
 
 const DashboardCalendar = props => {
-  const { minDate, maxDate, selectedDate, setSelectedDateInDashboard, arrayOfFormattedDatesToHighlight } = props
+  const { minDate, maxDate, selectedDate, setSelectedDateInDashboard, daysWithInput, daysWithoutInput } = props
   const dateChangeHandler = (date) => {
     setSelectedDateInDashboard(date)
   }
+  const highlightCSS = () => {
+    return daysWithInput.reduce((result, date) => (
+      result + `abbr[aria-label = "${date}"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 35% 0;
+      background-color: var(--E2P-orange);
+      color: inherit;
+      border: 1px solid green;
+    }`
+    ), '')
+  }
   return (
-    <Highlighter arrayOfFormattedDatesToHighlight={arrayOfFormattedDatesToHighlight}>
+    <Highlighter
+      highlightCSS={highlightCSS}
+      daysWithoutInput={daysWithoutInput}
+    >
       <RestyledCalendar
         onChange={dateChangeHandler}
         value={selectedDate}
@@ -36,23 +54,10 @@ button:disabled {
 }
 `
 const Highlighter = styled.div`
-${props => props.arrayOfFormattedDatesToHighlight ?
-    `.relative-position-tiles {
+  .relative-position-tiles {
   position: relative;
-}` : ``}
-${props => props.arrayOfFormattedDatesToHighlight &&
-    props.arrayOfFormattedDatesToHighlight.reduce((result, date) => {
-      return result + `abbr[aria-label = "${date}"] {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        padding: 35% 0;
-        background-color: var(--E2P-orange);
-        color: inherit;
-      }`
-    }, '')}
+  }
+${props => props.highlightCSS}
   // selected tile should still have unique color
   .react-calendar__tile--active > abbr {
     background-color: inherit !important;
