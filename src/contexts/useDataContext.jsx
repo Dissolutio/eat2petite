@@ -180,6 +180,35 @@ const useDataContext = () => {
       checkedInBonus,
       targets: {
         [forChallenge.uid]: newPostTarget(),
+      },
+      data: {
+        challenge1: {
+          quantityWaterDrank: 0,
+          quantityWaterDrankUnits: "cups",
+        },
+        challenge2: {
+          servingsVegetablesEaten: 0,
+        },
+        challenge3: {
+          proteinConsumed: 0,
+          proteinConsumedUnits: 'grams',
+        },
+        challenge4: {
+          excerciseUnits: 'minutes',
+          lightExcerciseDuration: 0,
+          mediumExcerciseDuration: 0,
+          heavyExcerciseDuration: 0,
+        },
+        challenge5: {
+          refinedCarbsConsumed: 0,
+          refinedCarbsConsumedUnits: 'calories',
+        },
+        challenge6: {
+          quantitySugarConsumed: 0,
+          quantitySaltConsumed: 0,
+          quantitySugarConsumedUnits: 'grams',
+          quantitySaltConsumedUnits: 'grams',
+        },
       }
     }
     console.log('Making a new post', newPost)
