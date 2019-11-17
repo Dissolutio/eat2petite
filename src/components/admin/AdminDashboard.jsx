@@ -19,16 +19,17 @@ export default function AdminDashboard(props) {
 
 	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
 	const contestsArray = contests && Object.values(contests)
+	const queryParams = queryString.parse(props.location.search)
+	const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
+	if (queryContest && queryParams.selectedContest !== localContestId) {
+		handleSelectedContestChange(queryContest)
+		setHasAutoSelectedContest(true)
+	}
 
 	if (!hasAutoSelectedContest && contestsArray) {
-		const queryParams = queryString.parse(props.location.search)
-		const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
 		const localContest = contests[localContestId]
 		const mostRecentlyStartedContest = [...contestsArray.sort(sortByMostCurrentStartDate)][0]
-		if (queryContest) {
-			handleSelectedContestChange(queryContest)
-			setHasAutoSelectedContest(true)
-		} else if (localContest) {
+		if (localContest) {
 			setUserSelectedContest(localContest)
 			setHasAutoSelectedContest(true)
 		} else if (mostRecentlyStartedContest) {
@@ -37,7 +38,9 @@ export default function AdminDashboard(props) {
 		}
 	}
 
-	if (!userSelectedContest) { return null }
+	if (!userSelectedContest) {
+		return (<p>No contests found!</p>)
+	}
 	return (
 		<Container>
 			<AdminSelectContestDropdown contests={contestsArray} userSelectedContest={userSelectedContest} />

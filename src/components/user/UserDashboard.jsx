@@ -21,16 +21,17 @@ const UserDashboard = (props) => {
   const { contests, posts, me, challenges } = appData
   const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
   const userEnrolledContests = me && me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
+  const queryParams = queryString.parse(props.location.search)
+  const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
+  if (queryContest && queryParams.selectedContest !== localContestId) {
+    handleSelectedContestChange(queryContest)
+    setHasAutoSelectedContest(true)
+  }
 
   if (!hasAutoSelectedContest && userEnrolledContests) {
-    const queryParams = queryString.parse(props.location.search)
-    const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
     const localContest = contests[localContestId]
-    const mostRecentlyStartedContest = userEnrolledContests && [...userEnrolledContests.sort(sortByMostCurrentStartDate)][0]
-    if (queryContest) {
-      handleSelectedContestChange(queryContest)
-      setHasAutoSelectedContest(true)
-    } else if (localContest) {
+    const mostRecentlyStartedContest = [...userEnrolledContests.sort(sortByMostCurrentStartDate)][0]
+    if (localContest) {
       setUserSelectedContest(localContest)
       setHasAutoSelectedContest(true)
     } else if (mostRecentlyStartedContest) {
@@ -43,6 +44,7 @@ const UserDashboard = (props) => {
     return (<p>You are not enrolled in any contests!</p>)
   }
   if (userSelectedContest) {
+    const postsForSelectedContest = posts && Object.values(posts).filter(post => post.contestId === userSelectedContest.uid)
     return (
       <Container>
         <UserSelectContestDropdown
@@ -52,7 +54,7 @@ const UserDashboard = (props) => {
         <UserContestOverview me={me}
           userSelectedContest={userSelectedContest}
           challenges={challenges}
-          posts={posts}
+          posts={postsForSelectedContest}
         />
       </Container>
     )
