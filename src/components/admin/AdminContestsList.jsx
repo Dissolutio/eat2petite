@@ -1,7 +1,17 @@
 import React from 'react'
 import { ListGroup, ListGroupItem } from 'reactstrap'
+import CreateContestForm from './CreateContestForm'
 import { AdminContestDetailLink } from '../layout/Links'
-export default function AdminContestsList(props) {
+
+export default function AdminContestsPage({ contests, users, challenges }) {
+	return (
+		<>
+			<AdminContestsList contests={contests} />
+			<CreateContestForm users={users} challenges={challenges} />
+		</>
+	)
+}
+function AdminContestsList(props) {
 	const { contests } = props
 
 	return contests ? (
@@ -9,10 +19,10 @@ export default function AdminContestsList(props) {
 			<h3>Contests:</h3>
 			{contests && Object.keys(contests).map(contestKey => {
 				const contest = contests[contestKey]
-				const id = contest.uid
+				const { uid, title } = contest
 				return (
 					<ListGroupItem key={contestKey}>
-						<AdminContestDetailLink id={id}>{contest.title}</AdminContestDetailLink>
+						<AdminContestDetailLink contestId={uid}>{title}</AdminContestDetailLink>
 					</ListGroupItem>
 				)
 			})}

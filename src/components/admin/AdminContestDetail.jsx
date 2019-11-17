@@ -1,16 +1,14 @@
 import React from 'react'
 import { Container, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText, ListGroup, ListGroupItem } from 'reactstrap'
-import { useDataContext } from '../../contexts/useDataContext'
 import { AdminUserDetailLink } from '../layout/Links'
 import { ordinalSuffixOf } from '../../modules/functions'
 
 export default function AdminContestDetail(props) {
-	const { appData } = useDataContext()
-	const { contests, users, challenges } = appData
+	const { contests, users, challenges } = props
 	const contestId = props.match.params.id
 	const contest = contests && contests[contestId]
 	if (contest) {
-		const { uid, title, startDate, endDate, enrolledUsers, orderOfChallenges } = contest
+		const { title, startDate, endDate, enrolledUsers, orderOfChallenges } = contest
 		const enrolledUsersArray = enrolledUsers && Object.keys(contest.enrolledUsers).map(key => users[key])
 		return (
 			<Container>
