@@ -1,7 +1,9 @@
 import React from 'react'
+import { Container } from 'reactstrap'
 import { format, isSameDay } from 'date-fns'
 
 import DashboardCalendar from '../shared/DashboardCalendar'
+import CalendarHighlighter from '../shared/CalendarHighlighter'
 import ChallengePost from './ChallengePost'
 import { useUIContext } from '../../contexts/useUIContext'
 
@@ -12,16 +14,24 @@ const UserContestOverview = (props) => {
     const currentChallenge = challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
     const postsArr = posts ? Object.values(posts) : []
     const daysWithInput = () => {
-        return postsArr.map(post => format(new Date(post.postDate), 'MMMM d, yyyy'))
+        return postsArr.filter(post => !!post.lastEditedAt)
+            .map(post => format(new Date(post.postDate), 'MMMM d, yyyy'))
     }
-    const daysWithoutInput = () => []
+    const daysWithTargetMet = () => {
+        return postsArr.filter(post => !!post.lastEditedAt)
+            .filter(post => (post.data.challenge1.quantityWaterDrank > post.targets.challenge1.quantityWaterDrank))
+            .map(post => format(new Date(post.postDate), 'MMMM d, yyyy'))
+    }
+    const daysWithoutInput = () => {
+        return postsArr.filter(post => !post.lastEditedAt)
+            .map(post => format(new Date(post.postDate), 'MMMM d, yyyy'))
+    }
     const currentPost = () => {
-        return postsArr
-            .filter(post => post.contestId === userSelectedContest.uid)
+        return postsArr.filter(post => post.contestId === userSelectedContest.uid)
             .find(post => isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)))
     }
     return (
-        <>
+        <Container>
             <ChallengePost
                 selectedDateInDashboard={selectedDateInDashboard}
                 userSelectedContest={userSelectedContest}
@@ -32,15 +42,20 @@ const UserContestOverview = (props) => {
                 challenges={challenges}
                 me={me}
             />
-            <DashboardCalendar
-                selectedDate={selectedDateInDashboard}
-                setSelectedDateInDashboard={setSelectedDateInDashboard}
-                minDate={new Date(startDate)}
-                maxDate={new Date(endDate)}
+            <CalendarHighlighter
                 daysWithInput={daysWithInput()}
                 daysWithoutInput={daysWithoutInput()}
-            />
-        </>
+                daysWithTargetMet={daysWithTargetMet()}
+            >
+
+                <DashboardCalendar
+                    selectedDate={selectedDateInDashboard}
+                    setSelectedDateInDashboard={setSelectedDateInDashboard}
+                    minDate={new Date(startDate)}
+                    maxDate={new Date(endDate)}
+                />
+            </CalendarHighlighter>
+        </Container>
     )
 }
 export default UserContestOverview
