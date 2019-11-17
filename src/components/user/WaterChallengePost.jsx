@@ -53,7 +53,7 @@ export default function WaterChallengePost(props) {
     }
     const ProgressMsg = () => {
         const goal = currentPost.targets.challenge1.quantityWaterDrank
-        const score = currentPost.quantityWaterDrank
+        const score = currentPost.data.challenge1.quantityWaterDrank
         if (score > 0 && score < goal) {
             return (
                 <span style={{ display: 'block' }}>
