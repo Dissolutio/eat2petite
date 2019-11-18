@@ -57,7 +57,7 @@ const AdminContestOverview = (props) => {
                     daysWithoutInput={daysWithoutInput}
                 />
             </Container>
-            <AdminDevConsole></AdminDevConsole>
+            {(process.env.NODE_ENV === 'development') ? <AdminDevConsole></AdminDevConsole> : null}
         </>
     )
 }
