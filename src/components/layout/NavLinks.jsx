@@ -35,7 +35,6 @@ const NavLinks = props => {
 			<NavBarLink to={ROUTES.ADMIN_CONTESTS}>Contests</NavBarLink>
 			<NavBarLink to={ROUTES.ADMIN_CHALLENGES}>Challenges</NavBarLink>
 			<NavBarLink to={ROUTES.ADMIN_USERS}>Users</NavBarLink>
-			<NavBarLink to={ROUTES.ADMIN_POSTS}>Posts</NavBarLink>
 		</>
 	)
 	const NavBarLink = ({ children, to }) => {
