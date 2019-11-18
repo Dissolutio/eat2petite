@@ -8,11 +8,6 @@ export const AppStyle = styled.div`
 background-image: linear-gradient(350deg, var(--white), var(--gray1));
 `
 
-export const PageStyle = (props) => (
-	<PageStyleWrapper>
-		{props.children}
-	</PageStyleWrapper>
-)
-const PageStyleWrapper = styled.div`
+export const PageStyle = styled.div`
 	min-height: 100vh;
 `

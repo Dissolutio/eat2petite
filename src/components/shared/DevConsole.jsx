@@ -13,8 +13,6 @@ export function AdminDevConsole() {
 	const {
 		dbResetToSample,
 		dbLoadSavePoint,
-		loadLocalData,
-		setLocalData,
 		loadFirebaseData,
 		consoleLogAppData,
 	} = useDataContext()
@@ -25,12 +23,6 @@ export function AdminDevConsole() {
 					CONSOLE LOG APP DATA
 			</Button>
 				<DoubleClickButton doubleClickCallback={loadFirebaseData} text="LOAD FIREBASE DATA " />
-				<DoubleClickButton doubleClickCallback={setLocalData} text="SET LOCAL DATA "
-					firstColor="primary" secondColor="warning"
-				/>
-				<DoubleClickButton doubleClickCallback={loadLocalData} text="LOAD LOCAL DATA "
-					firstColor="primary" secondColor="warning"
-				/>
 				<DoubleClickButton doubleClickCallback={dbLoadSavePoint} text="LOAD DB SAVE POINT"
 					firstColor="primary" secondColor="warning"
 				/>
@@ -70,8 +62,8 @@ export function UserDevConsole(props) {
 				challengeId: currentChallenge.uid,
 				postDate,
 				createdAt,
-				quantityDrank: random(1, 10),
-				quantityDrankUnits: 'cups',
+				quantityWaterDrank: random(1, 10),
+				quantityWaterDrankUnits: 'cups',
 				checkedInBonus,
 				lastEditedAt: createdAt,
 			}

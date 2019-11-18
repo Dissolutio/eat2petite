@@ -1,17 +1,74 @@
 import { format, addDays } from 'date-fns'
-export const samplePosts = {
+export const samplePost = {
   '-LsQNoes1_JZsqVuG5Mz': {
+    uid: "-LsQNoes1_JZsqVuG5Mz",
     author: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
     challengeId: "challenge1",
     checkedInBonus: true,
+    // firstInput: null at first, added when user updates post
     contestId: "-LsQNkeDfSlA1Gql-XKM",
     createdAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
     lastEditedAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
-    postDate: "10/30/2019",
-    quantityDrank: 0,
-    quantityDrankUnits: "cups",
-    uid: "-LsQNoes1_JZsqVuG5Mz",
     userId: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
+    postDate: "10/30/2019",
+    targets: {
+      challenge1: {
+        quantityWaterDrank: 0,
+        quantityWaterDrankUnits: "cups",
+      },
+      challenge2: {
+        servingsVegetablesEaten: 0,
+      },
+      challenge3: {
+        proteinConsumed: 0,
+        proteinConsumedUnits: 'grams',
+      },
+      challenge4: {
+        excerciseUnits: 'minutes',
+        lightExcerciseDuration: 0,
+        mediumExcerciseDuration: 0,
+        heavyExcerciseDuration: 0,
+      },
+      challenge5: {
+        refinedCarbsConsumed: 0,
+        refinedCarbsConsumedUnits: 'calories',
+      },
+      challenge6: {
+        quantitySugarConsumed: 0,
+        quantitySaltConsumed: 0,
+        quantitySugarConsumedUnits: 'grams',
+        quantitySaltConsumedUnits: 'grams',
+      },
+    },
+    data: {
+      challenge1: {
+        quantityWaterDrank: 0,
+        quantityWaterDrankUnits: "cups",
+      },
+      challenge2: {
+        servingsVegetablesEaten: 0,
+      },
+      challenge3: {
+        proteinConsumed: 0,
+        proteinConsumedUnits: 'grams',
+      },
+      challenge4: {
+        excerciseUnits: 'minutes',
+        lightExcerciseDuration: 0,
+        mediumExcerciseDuration: 0,
+        heavyExcerciseDuration: 0,
+      },
+      challenge5: {
+        refinedCarbsConsumed: 0,
+        refinedCarbsConsumedUnits: 'calories',
+      },
+      challenge6: {
+        quantitySugarConsumed: 0,
+        quantitySaltConsumed: 0,
+        quantitySugarConsumedUnits: 'grams',
+        quantitySaltConsumedUnits: 'grams',
+      },
+    }
   },
 }
 export const sampleChallenges = {
@@ -22,10 +79,10 @@ export const sampleChallenges = {
       'Staying well hydrated improves every facet of human functioning. Nothing hydrates you like pure water -- Drink up!',
     metric: 'volume',
     defaultMeasurementUnits: 'cups',
+    defaultTargetQuickDescription: 'Drink 8 cups of water a day.',
     defaultTarget: {
-      quickDescription: 'Drink 8 cups of water a day.',
-      quantityDrank: 8,
-      quantityDrankUnits: 'cups',
+      quantityWaterDrank: 8,
+      quantityWaterDrankUnits: 'cups',
     },
   },
   challenge2: {
@@ -35,11 +92,9 @@ export const sampleChallenges = {
       'We benefit greatly from a large amount of vegetables in our diet. The abundance of micro-nutrients and fiber work wonders for health, and help us unlock our full potential.',
     defaultMeasurementUnits: `servings`,
     metric: 'amount',
+    defaultTargetQuickDescription: 'Try and eat 3-5 servings of vegetables a day.',
     defaultTarget: {
-      quickDescription: 'Eat 3 servings of vegetables a day, with at least one being a leafy green vegetable.',
-      quantityLeafyGreens: 2,
-      quantityNonLeafyGreens: 1,
-      quantityUnits: 'servings',
+      servingsVegetablesEaten: 3,
     },
   },
   challenge3: {
@@ -49,10 +104,10 @@ export const sampleChallenges = {
       'Consuming enough protein helps keep our muscles well fed. We are made of proteins after all!',
     metric: 'weight',
     defaultMeasurementUnits: 'grams',
+    defaultTargetQuickDescription: 'Try to eat 20 grams of protein each day.',
     defaultTarget: {
-      quickDescription: 'Try to eat 20 grams of protein each day.',
-      quantityConsumed: 20,
-      quantityConsumedUnits: 'grams',
+      proteinConsumed: 20,
+      proteinConsumedUnits: 'grams',
     },
   },
   challenge4: {
@@ -61,27 +116,26 @@ export const sampleChallenges = {
     description: `Our bodies are made to be active! Boost your health by USING your health. How much time and how much intensity can you give to your body? Everyone has a different situation, but we all face the same challenge of taking the time to get in motion!`,
     metric: 'time',
     defaultMeasurementUnits: 'minutes',
-    intensities: ['light', 'medium', 'high'],
+    intensities: ['light', 'medium', 'heavy'],
+    defaultTargetQuickDescription: 'Aim to get at least 60 minutes of light exercise, or 30 minutes of medium excercise every day.',
     defaultTarget: {
       excerciseUnits: 'minutes',
-      quantitylightExcercise: 45,
-      quantityMediumExcercise: 10,
-      quantityHighExcercise: 0,
+      lightExcerciseDuration: 45,
+      mediumExcerciseDuration: 10,
+      heavyExcerciseDuration: 0,
     }
   },
   challenge5: {
     challengeName: 'Carbohydrate Challenge',
     uid: 'challenge5',
     description:
-      'Vary the sources of where you get your carbs! There are simple and complex carbohydrates. The simple ones are quickly converted to sugar and influence your body in a variety of negative ways when consumed as a main calorie source. We should aim to get the majority of our energy from the much more beneficial complex carbohydrates found in whole grains, fruit, and vegetables.',
-    metric: 'weight',
-    defaultMeasurementUnits: 'grams',
-    typesOfCarbohydrate: ['simple', 'complex'],
+      'Heavily processed and refined flours offer plenty of energy with not enough vitamins, minerals, or fiber. Try to limit how much of your calories come from simple and refined carbohydrates.',
+    metric: 'calories',
+    defaultMeasurementUnits: 'calories',
+    defaultTargetQuickDescription: 'Consume less than 400 calories from refined foods.',
     defaultTarget: {
-      quickDescription: '3 servings of whole-grain or complex carbs, 1 or less of refined or simple carbs',
-      quantityUnits: 'servings',
-      quantitySimple: 1,
-      quantityComplex: 3,
+      refinedCarbsConsumed: 400,
+      refinedCarbsConsumedUnits: 'calories',
     },
   },
   challenge6: {
@@ -91,11 +145,11 @@ export const sampleChallenges = {
       'The average diet has a huge amount of added sugar and salt, and we can benefit from monitoring and managing how much we take into our bodies.',
     defaultMeasurementUnits: 'grams',
     metric: 'weight',
+    defaultTargetQuickDescription: '25 grams or less of sugar, 5 grams or less of salt',
     defaultTarget: {
-      quickDescription: '25 grams or less of sugar, 5 grams or less of salt',
       quantitySugarConsumed: 25,
       quantitySaltConsumed: 5,
-      quantitySugarUnits: 'grams',
+      quantitySugarConsumedUnits: 'grams',
       quantitySaltConsumedUnits: 'grams',
     },
   },
@@ -104,6 +158,7 @@ export const sampleContests = {
   contest1: {
     title: 'Eat-2-Petite Launch Contest',
     startDate: format(addDays(new Date(), -9), 'P'),
+    uid: '-Lth91Tw1gaKMMbwFe54',
     daysPerChallenge: '14',
     enrolledUsers: {},
     numberOfChallenges: 6,
@@ -119,6 +174,7 @@ export const sampleContests = {
   contest2: {
     title: 'Fall Mini Contest ',
     startDate: format(addDays(new Date(), -3), 'P'),
+    uid: '-Lth91Tw1gaKMMbwFe55',
     daysPerChallenge: '7',
     enrolledUsers: {},
     numberOfChallenges: 6,

@@ -7,11 +7,19 @@ import LandingPage from './LandingPage'
 import VerifyEmail from '../authentication/VerifyEmail'
 import SignUpForm from '../authentication/SignUpForm'
 import SignInForm from '../authentication/SignInForm'
-// import SignInForm_Dev from '../authentication/SignInForm_Dev'
 
-import UserRouter from './UserRouter'
-import AdminRouter from './AdminRouter'
 import { useDataContext } from '../../contexts/useDataContext'
+
+import UserDashboard from '../user/UserDashboard'
+import AccountPage from '../user/AccountPage'
+
+import AdminDashboard from '../admin/AdminDashboard'
+import AdminContestsPage from '../admin/AdminContestsList'
+import AdminContestDetail from '../admin/AdminContestDetail'
+import AdminUsersList from '../admin/AdminUsersList'
+import AdminUserDetail from '../admin/AdminUserDetail'
+
+import { ChallengesPage } from '../shared/Challenges'
 import Page404NotFound from './Page404NotFound'
 
 import * as ROUTES from '../../routes'
@@ -20,13 +28,15 @@ export default function AppRouter(props) {
 	const { authUser } = props
 	const signedInCondition = () => !!authUser
 	const notSignedInCondition = () => !authUser
+	const emailVerifiedCondition = () => !!me && me.emailVerified === true
 	const emailNotVerifiedCondition = () => signedInCondition() && authUser.emailVerified === false
-	const adminCondition = () => signedInCondition() && authUser.userRole === `admin`
-	const { loadFirebaseData } = useDataContext()
+	const notAdminCondition = () => !!me && me.userRole !== `admin`
+	const { loadFirebaseData, appData } = useDataContext()
 	React.useEffect(() => {
 		loadFirebaseData()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authUser])
+	const { challenges, me, posts, users, contests } = appData
 	return (
 		<Switch>
 			<Route exact path={ROUTES.LANDING} component={LandingPage} />
@@ -46,12 +56,62 @@ export default function AppRouter(props) {
 				component={meetAuthConditionOrRedirectHOC(emailNotVerifiedCondition, ROUTES.LOGIN)(VerifyEmail)}
 			/>
 			<Route
-				path={ROUTES.USER_HOMEPAGE}
-				component={meetAuthConditionOrRedirectHOC(signedInCondition, ROUTES.LOGIN)(UserRouter)}
+				exact
+				path={ROUTES.USER_CHALLENGES}
+				render={() => <ChallengesPage challenges={challenges} />}
 			/>
 			<Route
-				path={ROUTES.ADMIN_DASHBOARD}
-				component={meetAuthConditionOrRedirectHOC(adminCondition, ROUTES.USER_HOMEPAGE)(AdminRouter)}
+				exact
+				path={ROUTES.USER_ACCOUNT}
+				component={meetAuthConditionOrRedirectHOC(emailVerifiedCondition, ROUTES.VERIFY_EMAIL)(AccountPage)}
+			/>
+			<Route
+				exact
+				path={ROUTES.USER_HOMEPAGE}
+				component={meetAuthConditionOrRedirectHOC(notAdminCondition, ROUTES.ADMIN_DASHBOARD)(UserDashboard)}
+			/>
+			<Route exact path={ROUTES.ADMIN_DASHBOARD} render={props => (
+				<AdminDashboard
+					contests={contests}
+					users={users}
+					posts={posts}
+					challenges={challenges}
+					{...props}
+				/>)}
+			/>
+			<Route
+				exact
+				path={ROUTES.ADMIN_CONTESTS}
+				render={() => (
+					<AdminContestsPage users={users} challenges={challenges} contests={contests} />
+				)}
+			/>
+			<Route
+				path={`${ROUTES.ADMIN_CONTESTS}:id`}
+				render={props => (
+					<AdminContestDetail
+						contests={contests}
+						users={users}
+						challenges={challenges}
+						{...props}
+					/>
+				)}
+			/>
+			<Route
+				exact
+				path={ROUTES.ADMIN_CHALLENGES}
+				render={props => <ChallengesPage challenges={challenges} />}
+			/>
+			<Route
+				exact
+				path={ROUTES.ADMIN_USERS}
+				render={props => <AdminUsersList users={users} />}
+			/>
+			<Route
+				path={`${ROUTES.ADMIN_USERS}:id`}
+				render={props => (
+					<AdminUserDetail users={users} challenges={challenges} contests={contests} />
+				)}
 			/>
 			<Route component={Page404NotFound} />
 		</Switch>

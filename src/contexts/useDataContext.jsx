@@ -1,12 +1,9 @@
 import React, { useContext, useState } from 'react'
+import { format, isSameDay } from 'date-fns'
 
 import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
-import { getLocalState, setLocalState } from '../modules/localStorage'
-import {
-  sampleChallenges,
-  sampleContests,
-} from '../sampleData'
+import { sampleChallenges, sampleContests } from '../sampleData'
 import devDBSavePoint from '../assets/devDBSavePoint'
 import { adaptContestData } from '../modules/adapters'
 
@@ -65,21 +62,8 @@ const useDataContext = () => {
     console.log('current appData', appData)
   }
 
-  const loadLocalData = () => {
-    const localData = getLocalState()
-    if (localData) {
-      console.log('localData', localData)
-      setAppData(localData)
-    } else {
-      console.log('No local data found')
-    }
-  }
-
-  const setLocalData = () => {
-    setLocalState(appData)
-  }
-
   const loadFirebaseData = async () => {
+    console.log('fetching Firebase Data')
     const challenges = await getChallenges()
     const users = await getUsers()
     const contests = await getContests()
@@ -92,10 +76,10 @@ const useDataContext = () => {
       posts,
       me,
     }
-    console.log('firebaseData', newData)
     await setAppData({
       ...newData,
     })
+    console.log("TCL: loadFirebaseData -> newData", newData)
     return newData
   }
   const getPersonalProfile = () =>
@@ -167,16 +151,70 @@ const useDataContext = () => {
   }
 
   const createContest = (contest) => firebaseApp.dbSaveNewContest(contest)
-  const createUserPost = (post) => firebaseApp.dbCreateUserPost(post)
-  const updateUserPost = (post) => firebaseApp.dbUpdateUserPost(post)
-  const savePost = (post) => {
-    if (post && post.uid) {
-      console.log('Updating post', post)
-      return updateUserPost(post).then(() => getPosts()).then((posts) => setAppData({ ...appData, posts }))
-    } else {
-      console.log('Making a new post', post)
-      return createUserPost(post).then(() => getPosts()).then((posts) => setAppData({ ...appData, posts }))
+  const updateUserPost = (post) => {
+    console.log('Updating post', post)
+    return firebaseApp.dbUpdateUserPost(post)
+      .then(() => getPosts())
+      .then((posts) => setAppData({ ...appData, posts }))
+  }
+  function saveNewPost(forDate, forChallenge, forContestId) {
+    const createdAt = (new Date()).toString()
+    const postDate = format(new Date(forDate), 'P')
+    const checkedInBonus = isSameDay(new Date(createdAt), new Date(postDate))
+    const newPostTarget = () => {
+      const userTargetForDate = appData.me.challengeTargetsForDates && appData.me.challengeTargetsForDates[`${format(new Date(forDate), 'yyyy-MM-dd')}`]
+      const userChallengeTarget = appData.me.challengeTargets && appData.me.challengeTargets[forChallenge.uid]
+      const challengeDefaultTarget = appData.challenges[forChallenge.uid] && (appData.challenges[forChallenge.uid].defaultTarget)
+      return userTargetForDate || userChallengeTarget || challengeDefaultTarget
     }
+    const newPost = {
+      author: appData.me.uid,
+      userId: appData.me.uid,
+      uid: null,
+      contestId: forContestId,
+      challengeId: forChallenge.uid,
+      postDate,
+      createdAt,
+      quantityWaterDrank: 0,
+      quantityWaterDrankUnits: 'cups',
+      checkedInBonus,
+      targets: {
+        [forChallenge.uid]: newPostTarget(),
+      },
+      data: {
+        challenge1: {
+          quantityWaterDrank: 0,
+          quantityWaterDrankUnits: "cups",
+        },
+        challenge2: {
+          servingsVegetablesEaten: 0,
+        },
+        challenge3: {
+          proteinConsumed: 0,
+          proteinConsumedUnits: 'grams',
+        },
+        challenge4: {
+          excerciseUnits: 'minutes',
+          lightExcerciseDuration: 0,
+          mediumExcerciseDuration: 0,
+          heavyExcerciseDuration: 0,
+        },
+        challenge5: {
+          refinedCarbsConsumed: 0,
+          refinedCarbsConsumedUnits: 'calories',
+        },
+        challenge6: {
+          quantitySugarConsumed: 0,
+          quantitySaltConsumed: 0,
+          quantitySugarConsumedUnits: 'grams',
+          quantitySaltConsumedUnits: 'grams',
+        },
+      }
+    }
+    console.log('Making a new post', newPost)
+    return firebaseApp.dbCreateUserPost(newPost)
+      .then(() => getPosts())
+      .then((posts) => setAppData({ ...appData, posts }))
   }
   const updateUserChallengeTarget = (userId, challengeId, target) =>
     firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target).then(() => loadFirebaseData())
@@ -186,10 +224,9 @@ const useDataContext = () => {
     consoleLogAppData,
     dbResetToSample,
     dbLoadSavePoint,
-    loadLocalData,
-    setLocalData,
     loadFirebaseData,
-    savePost,
+    saveNewPost,
+    updateUserPost,
     createContest,
     updateChallenge,
     enrollUserInContest,

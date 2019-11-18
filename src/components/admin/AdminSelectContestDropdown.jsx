@@ -9,7 +9,7 @@ export default function AdminSelectContestDropdown(props) {
     const selectableContests = Object.values(contests).filter(contest => contest.uid !== userSelectedContest.uid)
     return (
         <ButtonDropdown className='btn-block' isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle caret>
+            <DropdownToggle color='primary' caret>
                 {userSelectedContest.title}
             </DropdownToggle>
             <DropdownMenu>

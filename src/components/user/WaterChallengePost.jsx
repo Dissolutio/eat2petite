@@ -5,19 +5,11 @@ import { format, isToday } from 'date-fns'
 import { useDataContext } from '../../contexts/useDataContext'
 
 export default function WaterChallengePost(props) {
-    const { savePost } = useDataContext()
+    const { updateUserPost } = useDataContext()
     const { formDisabled, me, currentPost, currentChallenge, challenges } = props
     const selectedDate = new Date(props.selectedDate)
-    const [quantityDrank, setQuantityDrank] = useState(0)
-    const [quantityDrankUnits, setQuantityDrankUnits] = useState('cups')
-
-    function updatedPostTarget() {
-        const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(selectedDate, 'yyyy-MM-dd')}`]
-        const currentPostHasTarget = currentPost && currentPost.target
-        const userChallengeTarget = me.challengeTargets && me.challengeTargets[currentChallenge.uid]
-        const challengeDefaultTarget = challenges[currentChallenge.uid] && challenges[currentChallenge.uid].defaultTarget
-        return userTargetForDate || currentPostHasTarget || userChallengeTarget || challengeDefaultTarget
-    }
+    const [quantityWaterDrank, setQuantityDrank] = useState(0)
+    const [quantityWaterDrankUnits, setQuantityDrankUnits] = useState('cups')
 
     function handleQuantityDrankInput(event) {
         const newValue = event.target.value
@@ -32,28 +24,42 @@ export default function WaterChallengePost(props) {
     }
 
     function buildUpdatePost(event) {
+        const updatedPostTarget = () => {
+            const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(selectedDate, 'yyyy-MM-dd')}`]
+            const currentPostHasTarget = currentPost && currentPost.targets.challenge1
+            const userChallengeTarget = me.challengeTargets && me.challengeTargets[currentChallenge.uid]
+            const challengeDefaultTarget = challenges[currentChallenge.uid] && challenges[currentChallenge.uid].defaultTarget
+            return userTargetForDate || currentPostHasTarget || userChallengeTarget || challengeDefaultTarget
+        }
         return {
             ...currentPost,
-            quantityDrank,
-            quantityDrankUnits: (event && event.target && event.target.quantityDrankUnits.value) || currentPost.quantityDrankUnits,
+            data: {
+                ...currentPost.data,
+                challenge1: {
+                    quantityWaterDrank,
+                    quantityWaterDrankUnits: event.target.quantityWaterDrankUnits.value || currentPost.quantityWaterDrankUnits,
+                }
+            },
             lastEditedAt: (new Date()).toString(),
-            target: updatedPostTarget(),
+            targets: {
+                ...currentPost.targets,
+                challenge1: updatedPostTarget(),
+            },
         }
     }
-
-    const onSubmitForm = (event) => {
+    function onSubmitForm(event) {
         event.preventDefault()
-        savePost(buildUpdatePost(event))
+        updateUserPost(buildUpdatePost(event))
     }
     const ProgressMsg = () => {
-        const goal = currentPost.target.quantityDrank
-        const score = currentPost.quantityDrank
+        const goal = currentPost.targets.challenge1.quantityWaterDrank
+        const score = currentPost.data.challenge1.quantityWaterDrank
         if (score > 0 && score < goal) {
             return (
                 <span style={{ display: 'block' }}>
                     <Badge color='info'>
                         Keep it up!
-            </Badge>
+                    </Badge>
                 </span>
             )
         }
@@ -62,7 +68,7 @@ export default function WaterChallengePost(props) {
                 <span style={{ display: 'block' }}>
                     <Badge color='success'>
                         You met your goal!
-            </Badge>
+                    </Badge>
                 </span>
             )
         } else {
@@ -75,9 +81,10 @@ export default function WaterChallengePost(props) {
                 {isToday(selectedDate) ?
                     (<p className='text-secondary'>How much water have you drank today?</p>)
                     :
-                    (<p className='text-secondary'>How much water did you drink this day?</p>)}
+                    (<p className='text-secondary'>How much water did you drink this day?</p>)
+                }
                 <span style={{ display: 'block' }} className='text-info'>
-                    Your goal: {currentPost.target.quantityDrank} {currentPost.target.quantityDrankUnits}
+                    Your goal: {currentPost.targets.challenge1.quantityWaterDrank} {currentPost.targets.challenge1.quantityWaterDrankUnits}
                 </span>
                 <ProgressMsg />
             </div>
@@ -90,12 +97,15 @@ export default function WaterChallengePost(props) {
                 <InputGroup className='mb-2'>
                     <Label for="quantity" hidden>Quantity</Label>
                     <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
-                    <Input name="quantity" type="number" placeholder={currentPost.quantityDrank} onChange={handleQuantityDrankInput} />
+                    <Input name="quantity" type="number"
+                        placeholder={(currentPost.data && currentPost.data.challenge1.quantityWaterDrank) || '0'}
+                        onChange={handleQuantityDrankInput}
+                    />
                 </InputGroup>
                 <InputGroup size="sm">
                     <Label for="quantityUnits" hidden>Units</Label>
                     <InputGroupAddon addonType="prepend">Units</InputGroupAddon>
-                    <Input type="select" name="quantityDrankUnits" disabled value={quantityDrankUnits} onChange={handleQuantityDrankUnitsChange} bsSize='sm'>
+                    <Input type="select" name="quantityWaterDrankUnits" disabled value={quantityWaterDrankUnits} onChange={handleQuantityDrankUnitsChange} bsSize='sm'>
                         <option value="cups">Cups</option>
                         <option value="ounces">Ounces</option>
                         <option value="liters">Liters</option>
@@ -103,7 +113,7 @@ export default function WaterChallengePost(props) {
                 </InputGroup>
             </fieldset>
             {
-                (quantityDrank && (quantityDrank !== currentPost.quantityDrank))
+                (quantityWaterDrank && (quantityWaterDrank !== currentPost.quantityWaterDrank))
                     ?
                     (<Button type="submit" disabled={formDisabled}>Update Post!</Button>)
                     :

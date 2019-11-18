@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Card, Button } from 'reactstrap'
-import { UserContestDashboardLink } from '../layout/Links'
+import { UserContestDashboardLink } from '../src/components/layout/Links'
 
 export default function UserContestsList(props) {
   const { userEnrolledContests, userSelectedContest } = props
