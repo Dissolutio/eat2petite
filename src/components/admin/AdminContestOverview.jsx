@@ -4,6 +4,7 @@ import { format, isSameDay } from 'date-fns'
 import styled from 'styled-components'
 
 import { useUIContext } from '../../contexts/useUIContext'
+
 import DashboardCalendar from '../shared/DashboardCalendar'
 import { AdminDevConsole } from '../shared/DevConsole'
 
@@ -26,6 +27,7 @@ const AdminContestOverview = (props) => {
     }
     const daysWithInput = [format(new Date(), 'MMMM d, yyyy'), 'November 10, 2019', 'November 11, 2019']
     const daysWithoutInput = ['November 14, 2019', 'November 13, 2019', 'November 15, 2019']
+    const lastInitial = (string) => string.split('')[0].toUpperCase() + '.'
     return (
         <>
             <Container className="border border-secondary rounded p-3 mt-2 mb-1 text-center">
@@ -39,8 +41,8 @@ const AdminContestOverview = (props) => {
                     {enrolledUsersArray && enrolledUsersArray.map(user => {
                         const post = getPostForSelectedDateForUserId(user.uid)
                         return (
-                            <Button key={user.uid} color='info'>
-                                <h6>{post && post.checkedInBonus ? `\u2605` : null}{user.username}</h6>
+                            <Button key={user.uid} color='info' onClick={() => props.setViewingUserId(user.uid)}>
+                                <h6>{post && post.checkedInBonus ? `\u2605` : null}{`${user.firstName} ${lastInitial(user.lastName)}`}</h6>
                             </Button>
                         )
                     }
