@@ -3,19 +3,14 @@ import { Container, Button } from 'reactstrap'
 import { format, isSameDay } from 'date-fns'
 import styled from 'styled-components'
 
-import { useUIContext } from '../../contexts/useUIContext'
-
 import DashboardCalendar from '../shared/DashboardCalendar'
 import { AdminDevConsole } from '../shared/DevConsole'
 
-
 const AdminContestOverview = (props) => {
-    const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
-    const { userSelectedContest, posts, challenges, users } = props
+    const { userSelectedContest, posts, currentChallenge, users, selectedDateInDashboard, setSelectedDateInDashboard } = props
     const { startDate, endDate, enrolledUsers } = userSelectedContest
     if (!userSelectedContest) { return null }
     const enrolledUsersArray = enrolledUsers && Object.keys(enrolledUsers).map(userId => users[userId])
-    const currentChallenge = challenges && challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
     function getPostForSelectedDateForUserId(userId) {
         if (!posts) { return }
         const allUsersPosts = posts[userId]
