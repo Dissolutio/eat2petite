@@ -23,6 +23,7 @@ const DashboardCalendar = props => {
 export default DashboardCalendar
 
 const RestyledCalendar = styled(Calendar)`
+margin: 0 auto; 
 /* override red weekend numbers */
 .react-calendar__month-view__days__day--weekend {
   color: inherit;
