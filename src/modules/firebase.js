@@ -16,8 +16,8 @@ class Firebase {
     this.db = app.database()
     this.EmailAuthProvider = app.auth.EmailAuthProvider
   }
-  doCreateNewUser = (formUser, userPassword) =>
-    this.auth
+  doCreateNewUser = (formUser, userPassword) => {
+    return this.auth
       .createUserWithEmailAndPassword(formUser.email, userPassword)
       .then((result) => {
         console.log('Created User', result)
@@ -28,16 +28,24 @@ class Firebase {
         })
       })
       .catch((error) => error)
-  doSignInWithEmailAndPassword = (email, password) =>
-    this.auth.signInWithEmailAndPassword(email, password)
-  doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email)
-  doPasswordUpdate = (password) =>
-    this.auth.currentUser.updatePassword(password)
-  doSignOut = () => this.auth.signOut()
-  doSendEmailVerification = () =>
-    this.auth.currentUser.sendEmailVerification({
+  }
+  doSignInWithEmailAndPassword = (email, password) => {
+    return this.auth.signInWithEmailAndPassword(email, password)
+  }
+  doPasswordReset = (email) => {
+    return this.auth.sendPasswordResetEmail(email)
+  }
+  doPasswordUpdate = (password) => {
+    return this.auth.currentUser.updatePassword(password)
+  }
+  doSignOut = () => {
+    return this.auth.signOut()
+  }
+  doSendEmailVerification = () => {
+    return this.auth.currentUser.sendEmailVerification({
       url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT,
     })
+  }
   // *** Dev API ***
   dbBlowItAllAway = async () => {
     await this.db.ref('/challenges').remove()
@@ -71,10 +79,11 @@ class Firebase {
       username,
     })
   }
-  dbSetUserChallengeTarget = (userId, challengeId, target) =>
-    this.dbPrivateUsers()
+  dbSetUserChallengeTarget = (userId, challengeId, target) => {
+    return this.dbPrivateUsers()
       .child(`${userId}/challengeTargets/${challengeId}`)
       .set(target)
+  }
   // *** Contests API ***
   dbContests = () => this.db.ref(`/contests`)
   dbSaveNewContest = (contest) => {
@@ -97,12 +106,14 @@ class Firebase {
   }
   // *** Challenges API ***
   dbChallenges = () => this.db.ref('/challenges')
-  dbSetChallenge = (challenge) =>
-    this.dbChallenges()
+  dbSetChallenge = (challenge) => {
+    return this.dbChallenges()
       .child(`/${challenge.uid}`)
       .set(challenge)
-  dbUpdateChallenge = (updatedChallenge) =>
-    this.db.ref(`/challenges/${updatedChallenge.uid}`).set(updatedChallenge)
+  }
+  dbUpdateChallenge = (updatedChallenge) => {
+    return this.db.ref(`/challenges/${updatedChallenge.uid}`).set(updatedChallenge)
+  }
   // *** Posts API ***
   dbPosts = () => this.db.ref('posts')
   dbPostsByUserId = (uid) => this.db.ref(`/posts/${uid}`)
@@ -111,7 +122,9 @@ class Firebase {
       ref.set({ ...post, uid: ref.key })
     })
   }
-  dbUpdateUserPost = (post) => this.db.ref(`posts/${post.userId}/${post.uid}`).update({ ...post })
+  dbUpdateUserPost = (post) => {
+    return this.db.ref(`posts/${post.userId}/${post.uid}`).update({ ...post })
+  }
 }
 
 export { Firebase }
