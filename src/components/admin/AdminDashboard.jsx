@@ -7,7 +7,7 @@ import { sortByMostCurrentStartDate } from '../../modules/functions'
 
 import AdminContestOverview from './AdminContestOverview'
 import AdminUserOverview from './AdminUserOverview'
-import AdminSelectContestDropdown from './AdminSelectContestDropdown'
+import SelectContestDropdown from '../shared/SelectContestDropdown'
 
 export default function AdminDashboard(props) {
 	const [userSelectedContest, setUserSelectedContest] = useState()
@@ -40,9 +40,10 @@ export default function AdminDashboard(props) {
 	const currentChallenge = challenges && challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
 	return (
 		<Container>
-			<AdminSelectContestDropdown
+			<SelectContestDropdown
 				contests={contestsArray}
 				userSelectedContest={userSelectedContest}
+				handleSelectedContestChange={handleSelectedContestChange}
 			/>
 			{viewingUserId ?
 				<AdminUserOverview

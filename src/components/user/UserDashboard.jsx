@@ -5,7 +5,7 @@ import { useDataContext } from '../../contexts/useDataContext'
 import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
 
 import UserContestOverview from './UserContestOverview'
-import UserSelectContestDropdown from './UserSelectContestDropdown'
+import SelectContestDropdown from '../shared/SelectContestDropdown'
 
 import { sortByMostCurrentStartDate } from '../../modules/functions'
 
@@ -40,7 +40,8 @@ const UserDashboard = (props) => {
     const postsForSelectedContest = posts && Object.values(posts).filter(post => post.contestId === userSelectedContest.uid)
     return (
       <Container>
-        <UserSelectContestDropdown
+        <SelectContestDropdown
+          handleSelectedContestChange={handleSelectedContestChange}
           contests={userEnrolledContests}
           userSelectedContest={userSelectedContest}
         />

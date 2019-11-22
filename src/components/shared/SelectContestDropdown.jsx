@@ -1,9 +1,9 @@
 import React from 'react'
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-export default function UserSelectContestDropdown(props) {
+export default function SelectContestDropdown(props) {
     const [dropdownOpen, setOpen] = React.useState(false);
-    const { contests, userSelectedContest } = props
+    const { contests, userSelectedContest, handleSelectedContestChange } = props
     const toggle = () => setOpen(!dropdownOpen);
     const selectableContests = contests.filter(contest => contest.uid !== userSelectedContest.uid)
     return (
