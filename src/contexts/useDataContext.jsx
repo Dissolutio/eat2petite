@@ -61,40 +61,39 @@ const useDataContext = () => {
   const consoleLogAppData = () => {
     console.log('current appData', appData)
   }
-
-  const loadFirebaseData = async () => {
+  const loadFirebaseData = () => {
     console.log('fetching Firebase Data')
-    const challenges = await getChallenges()
-    const users = await getUsers()
-    const contests = await getContests()
-    const posts = await getPosts()
-    const me = await getPersonalProfile()
-    const newData = {
-      users,
-      challenges,
-      contests,
-      posts,
-      me,
-    }
-    await setAppData({
-      ...newData,
+    const users = getUsers()
+    const challenges = getChallenges()
+    const contests = getContests()
+    const posts = getPosts()
+    const me = getPersonalProfile()
+    Promise.all([users, challenges, contests, posts, me]).then(function (values) {
+      const newData = {
+        users: values[0],
+        challenges: values[1],
+        contests: values[2],
+        posts: values[3],
+        me: values[4],
+      }
+      setAppData({
+        ...newData,
+      })
+      console.log("TCL: loadFirebaseData -> newData", newData)
     })
-    console.log("TCL: loadFirebaseData -> newData", newData)
-    return newData
   }
-  const getPersonalProfile = () =>
-    firebaseApp
+  const getPersonalProfile = () => {
+    return firebaseApp
       .dbPersonalUser(user.uid)
       .once('value')
       .then((snapshot) => snapshot.val())
-
+  }
   const getChallenges = () => {
     return firebaseApp.db
       .ref('/challenges')
       .once('value')
       .then((snapshot) => snapshot.val())
   }
-
   const getUsers = () => {
     if (user.userRole === 'admin') {
       return firebaseApp
@@ -108,49 +107,34 @@ const useDataContext = () => {
         .then((snapshot) => snapshot.val())
     }
   }
-
   const getPosts = () => {
-    if (user.userRole === 'default') {
-      return firebaseApp
-        .dbPostsByUserId(user.uid)
-        .once('value')
-        .then((snapshot) => snapshot.val())
-    } else if (user.userRole === 'admin') {
+    if (user.userRole === 'admin') {
       return firebaseApp
         .dbPosts()
         .once('value')
         .then((snapshot) => snapshot.val())
+    } else {
+      return firebaseApp
+        .dbPostsByUserId(user.uid)
+        .once('value')
+        .then((snapshot) => snapshot.val())
     }
   }
-
   const getContests = () => {
     return firebaseApp
       .dbContests()
       .once('value')
-      .then((snapshot) => {
-        return (
-          snapshot.val() &&
-          Object.entries(snapshot.val()).reduce((finalContests, entry) => {
-            const uid = entry[0]
-            const contest = entry[1]
-            const newContest = adaptContestData(contest)
-            return {
-              ...finalContests,
-              [uid]: newContest,
-            }
-          }, {})
-        )
-      })
+      .then((snapshot) => adaptContestData(snapshot.val()))
   }
-
-  const updateChallenge = (updatedChallenge) =>
-    firebaseApp.dbUpdateChallenge(updatedChallenge)
-
+  const updateChallenge = (updatedChallenge) => {
+    return firebaseApp.dbUpdateChallenge(updatedChallenge)
+  }
   const enrollUserInContest = (userId, contestId) => {
     firebaseApp.dbEnrollUserInContest(userId, contestId)
   }
-
-  const createContest = (contest) => firebaseApp.dbSaveNewContest(contest)
+  const createContest = (contest) => {
+    return firebaseApp.dbSaveNewContest(contest)
+  }
   const updateUserPost = (post) => {
     console.log('Updating post', post)
     return firebaseApp.dbUpdateUserPost(post)
@@ -216,8 +200,9 @@ const useDataContext = () => {
       .then(() => getPosts())
       .then((posts) => setAppData({ ...appData, posts }))
   }
-  const updateUserChallengeTarget = (userId, challengeId, target) =>
-    firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target).then(() => loadFirebaseData())
+  const updateUserChallengeTarget = (userId, challengeId, target) => {
+    return firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target).then(() => loadFirebaseData())
+  }
 
   return {
     appData,
@@ -233,5 +218,4 @@ const useDataContext = () => {
     updateUserChallengeTarget,
   }
 }
-
 export { DataContextProvider, useDataContext }
