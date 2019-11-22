@@ -43,12 +43,12 @@ export default function AppRouter(props) {
 			<Route
 				exact
 				path={ROUTES.REGISTER}
-				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignUpForm)}
+				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_DASHBOARD)(SignUpForm)}
 			/>
 			<Route
 				exact
 				path={ROUTES.LOGIN}
-				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_HOMEPAGE)(SignInForm)}
+				component={meetAuthConditionOrRedirectHOC(notSignedInCondition, ROUTES.USER_DASHBOARD)(SignInForm)}
 			/>
 			<Route
 				exact
@@ -67,7 +67,7 @@ export default function AppRouter(props) {
 			/>
 			<Route
 				exact
-				path={ROUTES.USER_HOMEPAGE}
+				path={ROUTES.USER_DASHBOARD}
 				component={meetAuthConditionOrRedirectHOC(notAdminCondition, ROUTES.ADMIN_DASHBOARD)(UserDashboard)}
 			/>
 			<Route exact path={ROUTES.ADMIN_DASHBOARD} render={props => (
