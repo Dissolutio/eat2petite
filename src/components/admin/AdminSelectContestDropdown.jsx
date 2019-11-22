@@ -1,6 +1,5 @@
 import React from 'react'
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { AdminContestDashboardLink } from '../layout/Links'
 
 export default function AdminSelectContestDropdown(props) {
     const [dropdownOpen, setOpen] = React.useState(false);
@@ -16,7 +15,12 @@ export default function AdminSelectContestDropdown(props) {
                 <DropdownItem header>Choose a different contest:</DropdownItem>
                 {selectableContests.map(contest => {
                     return (
-                        <DropdownItem key={contest.uid}><AdminContestDashboardLink contestId={contest.uid}>{contest.title}</AdminContestDashboardLink></DropdownItem>
+                        <DropdownItem
+                            key={contest.uid}
+                            onClick={() => handleSelectedContestChange(contest)}
+                        >
+                            {contest.title}
+                        </DropdownItem>
                     )
                 }
                 )}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Container } from 'reactstrap'
-import queryString from 'query-string'
 
 import { useUIContext } from '../../contexts/useUIContext'
 import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
@@ -20,15 +19,8 @@ export default function AdminDashboard(props) {
 		setLocalContestId(contest.uid)
 	}
 	const { contests, posts, challenges, users } = props
-
 	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
 	const contestsArray = contests && Object.values(contests)
-	const queryParams = queryString.parse(props.location.search)
-	const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
-	if (queryContest && queryParams.selectedContest !== localContestId) {
-		handleSelectedContestChange(queryContest)
-		setHasAutoSelectedContest(true)
-	}
 
 	if (!hasAutoSelectedContest && contestsArray) {
 		const localContest = contests[localContestId]

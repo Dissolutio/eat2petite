@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Container } from 'reactstrap'
-import queryString from 'query-string'
 
 import { useDataContext } from '../../contexts/useDataContext'
 import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
@@ -21,12 +20,6 @@ const UserDashboard = (props) => {
   const { contests, posts, me, challenges } = appData
   const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
   const userEnrolledContests = me && me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
-  const queryParams = queryString.parse(props.location.search)
-  const queryContest = queryParams.selectedContest && contests[queryParams.selectedContest]
-  if (queryContest && queryParams.selectedContest !== localContestId) {
-    handleSelectedContestChange(queryContest)
-    setHasAutoSelectedContest(true)
-  }
 
   if (!hasAutoSelectedContest && userEnrolledContests) {
     const localContest = contests[localContestId]

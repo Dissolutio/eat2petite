@@ -28,9 +28,7 @@ function AdminUserDetail(props) {
 							const contest = contests[contestId]
 							return (
 								<ListGroupItem key={contestId}>
-									<AdminContestDashboardLink contestId={contestId}>
-										{`${contest.title}`}
-									</AdminContestDashboardLink>
+									{contest.title}
 								</ListGroupItem>
 							)
 						})}
