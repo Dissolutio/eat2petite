@@ -1,13 +1,4 @@
-import { isAfter } from 'date-fns'
-export const getDateArray = function (start, end) {
-	var arr = []
-	var dt = new Date(start)
-	while (dt <= end) {
-		arr.push(new Date(dt))
-		dt.setDate(dt.getDate() + 1)
-	}
-	return arr
-}
+import { isAfter, format } from 'date-fns'
 
 export const ordinalSuffixOf = (i) => {
 	const j = i % 10,
@@ -29,4 +20,16 @@ export function sortByMostCurrentStartDate(a, b) {
 	} else {
 		return 1
 	}
+}
+export function lastInitial(string) {
+	return string.split('')[0].toUpperCase() + '.'
+}
+export const daysWithInput = (postsArr) => {
+	return postsArr.filter(post => !!post.lastEditedAt)
+		.map(post => format(new Date(post.postDate), 'MMMM d, yyyy'))
+}
+export const daysWithTargetMet = (postsArr) => {
+	return postsArr.filter(post => !!post.lastEditedAt)
+		.filter(post => (post.data.challenge1.quantityWaterDrank > post.targets.challenge1.quantityWaterDrank))
+		.map(post => format(new Date(post.postDate), 'MMMM d, yyyy'))
 }
