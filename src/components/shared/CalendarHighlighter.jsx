@@ -2,33 +2,29 @@ import React from 'react'
 import styled from 'styled-components'
 
 const CalendarHighlighter = props => {
-    const { daysWithInput, daysWithoutInput, daysWithTargetMet, children } = props
-    const blueDatesCSS = () => {
+    const { daysWithInput, daysWithTargetMet, children } = props
+    const progressDatesToCSS = () => {
         return daysWithInput && daysWithInput.reduce((result, date) => (
-            result + `abbr[aria-label = "${date}"] {
-    background-color: #33b5e5;
-    }`
+            result + `
+                abbr[aria-label = "${date}"] {
+                    border: 2px solid var(--E2P-orange);
+                }
+            `
         ), '')
     }
-    const grayDatesCSS = () => {
-        return daysWithoutInput && daysWithoutInput.reduce((result, date) => (
-            result + `abbr[aria-label = "${date}"] {
-    background-color: var(--light-gray);
-    }`
-        ), '')
-    }
-    const greenDatesCSS = () => {
+    const successDatesToCSS = () => {
         return daysWithTargetMet && daysWithTargetMet.reduce((result, date) => (
-            result + `abbr[aria-label = "${date}"] {
-    background-color: #00C851;
-    }`
+            result + `
+                abbr[aria-label = "${date}"] {
+                    border: 2px solid var(--E2P-ginger);
+                }
+            `
         ), '')
     }
     return (
         <HighlighterStyledDiv
-            blueDatesCSS={blueDatesCSS}
-            grayDatesCSS={grayDatesCSS}
-            greenDatesCSS={greenDatesCSS}
+            progressDatesToCSS={progressDatesToCSS}
+            successDatesToCSS={successDatesToCSS}
         >
             {children}
         </HighlighterStyledDiv>
@@ -45,12 +41,15 @@ const HighlighterStyledDiv = styled.div`
         height: 100%;
         padding: 35% 0;
         color: inherit;
+        font-size: 10px;
         }
-    ${props => props.grayDatesCSS}
-    ${props => props.blueDatesCSS}
-    ${props => props.greenDatesCSS}
+    ${props => props.progressDatesToCSS}
+    ${props => props.successDatesToCSS}
     // active tile should still have unique color
     .react-calendar__tile--active > abbr {
-        background-color: inherit !important;
+        background-color: var(--app-bg) !important;
+        color: var(--font-dark) !important;
+        border: 3px solid var(--E2P-bright-orange) !important;
+        box-shadow: 2, 2, var(--E2P-bright-orange) !important;
     }
 `
