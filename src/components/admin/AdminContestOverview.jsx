@@ -32,10 +32,7 @@ const AdminContestOverview = (props) => {
                 isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard))
             ))
     }
-
     const enrolledUsersArray = enrolledUsers && Object.keys(enrolledUsers).map(userId => users[userId])
-    const daysWithInput = [format(new Date(), 'MMMM d, yyyy'), 'November 10, 2019', 'November 11, 2019']
-    const daysWithoutInput = ['November 14, 2019', 'November 13, 2019', 'November 15, 2019']
     return (
         <>
             <SelectContestDropdown
@@ -44,14 +41,13 @@ const AdminContestOverview = (props) => {
                 handleSelectedContestChange={handleSelectedContestChange}
             />
             <Container className="border border-secondary rounded p-3 mt-2 mb-1 text-center">
-                <h5 className='text-primary border-bottom border-primary'>{currentChallenge.challengeName}</h5>
+                <h4 className='text-primary border-bottom border-primary'>{(currentChallenge && currentChallenge.challengeName) || 'No Challenge'}</h4>
                 <p className='text-secondary'>{format(selectedDateInDashboard, 'P')}</p>
                 <UsersGrid
                     getPostForSelectedDateForUserId={getPostForSelectedDateForUserId}
                     setViewingUserId={setViewingUserId}
                     enrolledUsersArray={enrolledUsersArray}
                 />
-
             </Container>
             <Container className='mb-3'>
                 <DashboardCalendar
@@ -59,22 +55,20 @@ const AdminContestOverview = (props) => {
                     setSelectedDateInDashboard={setSelectedDateInDashboard}
                     minDate={new Date(startDate)}
                     maxDate={new Date(endDate)}
-                    daysWithInput={daysWithInput}
-                    daysWithoutInput={daysWithoutInput}
                 />
             </Container>
             {(process.env.NODE_ENV === 'development') ? <AdminDevConsole></AdminDevConsole> : null}
         </>
     )
 }
+const UserFullName = ({ user }) => {
+    return (
+        `${user.firstName} ${lastInitial(user.lastName)}`
+    )
+}
 const UsersGrid = ({ enrolledUsersArray, getPostForSelectedDateForUserId, setViewingUserId }) => {
     const StarForCheckinBonus = ({ post }) => {
         return post && post.checkedInBonus ? `\u2605` : null
-    }
-    const UserFullName = ({ user }) => {
-        return (
-            `${user.firstName} ${lastInitial(user.lastName)}`
-        )
     }
     return (
         <UsersGridStyle>

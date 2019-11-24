@@ -1,43 +1,59 @@
 import React, { useState } from 'react'
 import { Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 import { isToday } from 'date-fns'
-import { AppearingSubmitButton, ProgressMsg } from './ChallengePost'
+import AppearingSubmitButton from './AppearingSubmitButton'
+import ProgressMsg from './ProgressMsg'
 
 export default function ProteinChallengeInputs(props) {
     const [proteinConsumed, setProteinConsumed] = useState(0)
-    const [proteinConsumedUnits, setProteinConsumedUnits] = useState('grams')
     const challengeId = 'challenge3'
-    const { currentPost } = props
+    const { currentPost, proteinTargetMet, setProteinTargetMet } = props
     const selectedDate = new Date(props.selectedDate)
     const formIsDirty = proteinConsumed && (proteinConsumed !== currentPost.data[challengeId].proteinConsumed)
     const goal = currentPost.targets[challengeId].proteinConsumed
-    const score = currentPost.data[challengeId].proteinConsumed
+    const score = proteinConsumed || currentPost.data[challengeId].proteinConsumed
     const userProgressingTowardsGoal = score > 0 && score < goal
-    const userMetGoal = score >= goal
+    const userMetGoal = () => {
+        if (score >= goal) {
+            setProteinTargetMet(true)
+            return true
+        } else return false
+    }
     function handleProteinConsumed(event) {
         const newValue = event.target.value
         if (newValue) {
             setProteinConsumed(newValue)
         }
     }
-    function handleProteinConsumedUnits(event) {
-        const newValue = event.target.value
-        if (newValue) {
-            setProteinConsumedUnits(event.target.value)
+    const MessageForDay = ({ isToday }) => {
+        if (isToday) {
+            return (<p className='text-secondary'>How many grams of protein did you eat today?</p>)
+        } else {
+            return (<p className='text-secondary'>How many grams of protein did you eat that day?</p>)
         }
     }
+    const GoalReadout = ({ proteinConsumed, proteinConsumedUnits = 'grams' }) => {
+        if (!proteinConsumed) { return null }
+        return (
+            <span style={{ display: 'block' }} className='text-info'>
+                Your goal: {currentPost.targets[challengeId].proteinConsumed} {currentPost.targets[challengeId].proteinConsumedUnits}
+            </span>
+        )
+    }
+
+
     return (
         <>
-            {isToday(selectedDate) ?
-                (<p className='text-secondary'>How much water have you drank today?</p>)
-                :
-                (<p className='text-secondary'>How much water did you drink this day?</p>)}
-            <span style={{ display: 'block' }} className='text-info'>
-                Your goal: {currentPost.targets[challengeId].quantityWaterDrank} {currentPost.targets[challengeId].proteinConsumedUnits}
-            </span>
+            <MessageForDay
+                isToday={isToday(selectedDate)}
+            />
+            <GoalReadout
+                proteinConsumed={currentPost.targets[challengeId].proteinConsumed}
+                proteinConsumedUnits={undefined}
+            />
             <ProgressMsg
                 userProgressingTowardsGoal={userProgressingTowardsGoal}
-                userMetGoal={userMetGoal}
+                userMetGoal={userMetGoal()}
             />
             <fieldset >
                 <InputGroup className='mb-2'>
@@ -47,15 +63,6 @@ export default function ProteinChallengeInputs(props) {
                         placeholder={(currentPost.data && currentPost.data[challengeId].proteinConsumed) || '0'}
                         onChange={handleProteinConsumed}
                     />
-                </InputGroup>
-                <InputGroup size="sm">
-                    <Label for="proteinConsumedUnits" hidden>Units</Label>
-                    <InputGroupAddon addonType="prepend">Units</InputGroupAddon>
-                    <Input type="select" name="proteinConsumedUnits" disabled value={proteinConsumedUnits} onChange={handleProteinConsumedUnits} bsSize='sm'>
-                        <option value="cups">Cups</option>
-                        <option value="ounces">Ounces</option>
-                        <option value="liters">Liters</option>
-                    </Input>
                 </InputGroup>
             </fieldset>
             <AppearingSubmitButton formIsDirty={formIsDirty} />

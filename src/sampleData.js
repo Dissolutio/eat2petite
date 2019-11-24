@@ -119,7 +119,7 @@ export const sampleChallenges = {
     intensities: ['light', 'medium', 'heavy'],
     defaultTargetQuickDescription: 'Aim to get at least 60 minutes of light exercise, or 30 minutes of medium excercise every day.',
     defaultTarget: {
-      excerciseUnits: 'minutes',
+      excerciseDurationUnits: 'minutes',
       lightExcerciseDuration: 45,
       mediumExcerciseDuration: 10,
       heavyExcerciseDuration: 0,
@@ -159,7 +159,7 @@ export const sampleContests = {
     title: 'Eat-2-Petite Launch Contest',
     startDate: format(addDays(new Date(), -9), 'P'),
     uid: '-Lth91Tw1gaKMMbwFe54',
-    daysPerChallenge: '14',
+    daysPerChallenge: '1',
     enrolledUsers: {},
     numberOfChallenges: 6,
     orderOfChallenges: {
@@ -175,7 +175,7 @@ export const sampleContests = {
     title: 'Fall Mini Contest ',
     startDate: format(addDays(new Date(), -3), 'P'),
     uid: '-Lth91Tw1gaKMMbwFe55',
-    daysPerChallenge: '7',
+    daysPerChallenge: '2',
     enrolledUsers: {},
     numberOfChallenges: 6,
     orderOfChallenges: {

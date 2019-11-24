@@ -24,12 +24,3 @@ export function sortByMostCurrentStartDate(a, b) {
 export function lastInitial(string) {
 	return string.split('')[0].toUpperCase() + '.'
 }
-export const daysWithInput = (postsArr) => {
-	return postsArr.filter(post => !!post.lastEditedAt)
-		.map(post => format(new Date(post.postDate), 'MMMM d, yyyy'))
-}
-export const daysWithTargetMet = (postsArr) => {
-	return postsArr.filter(post => !!post.lastEditedAt)
-		.filter(post => (post.data.challenge1.quantityWaterDrank > post.targets.challenge1.quantityWaterDrank))
-		.map(post => format(new Date(post.postDate), 'MMMM d, yyyy'))
-}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Container } from 'reactstrap'
-
+import { isAfter } from 'date-fns'
 import { useDataContext } from '../../contexts/useDataContext'
+import { useUIContext } from '../../contexts/useUIContext'
 import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
 
 import UserContestOverview from './UserContestOverview'
@@ -17,10 +18,26 @@ const UserDashboard = (props) => {
     setLocalContestId(contest.uid)
   }
   const { appData } = useDataContext()
+  const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
   const { contests, posts, me, challenges } = appData
   const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
   const userEnrolledContests = me && me.contests && Object.keys(me.contests).map((contestKey) => contests[contestKey])
-
+  const currentChallenge = () => {
+    const challengeForDay = challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
+    const endDate = new Date(userSelectedContest.endDate)
+    const startDate = new Date(userSelectedContest.startDate)
+    const selectedDateAfterContestEnd = isAfter(selectedDateInDashboard, endDate)
+    const selectedDateBeforeContestStart = isAfter(startDate, selectedDateInDashboard)
+    if (selectedDateAfterContestEnd) {
+      setSelectedDateInDashboard(new Date(userSelectedContest.endDate))
+    }
+    if (selectedDateBeforeContestStart) {
+      setSelectedDateInDashboard(new Date(userSelectedContest.startDate))
+    }
+    if (challenges && challengeForDay) {
+      return challengeForDay
+    }
+  }
   if (!hasAutoSelectedContest && userEnrolledContests) {
     const localContest = contests[localContestId]
     const mostRecentlyStartedContest = [...userEnrolledContests.sort(sortByMostCurrentStartDate)][0]
@@ -45,8 +62,12 @@ const UserDashboard = (props) => {
           contests={userEnrolledContests}
           userSelectedContest={userSelectedContest}
         />
-        <UserContestOverview me={me}
+        <UserContestOverview
+          me={me}
           userSelectedContest={userSelectedContest}
+          selectedDateInDashboard={selectedDateInDashboard}
+          setSelectedDateInDashboard={setSelectedDateInDashboard}
+          currentChallenge={currentChallenge()}
           challenges={challenges}
           posts={postsForSelectedContest}
         />

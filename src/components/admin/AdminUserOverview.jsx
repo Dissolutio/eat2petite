@@ -1,10 +1,10 @@
 import React from 'react'
 import { Container, Button } from 'reactstrap'
 import { format, isSameDay } from 'date-fns'
-import styled from 'styled-components'
 
 import DashboardCalendar from '../shared/DashboardCalendar'
 import { ReactComponent as ArrowOutlineLeftZondicon } from '../../assets/arrow-outline-left.svg'
+
 export default function AdminUserOverview(props) {
     const { user, userSelectedContest, selectedDateInDashboard, setViewingUserId, currentChallenge, challenges, userPosts, setSelectedDateInDashboard } = props
     const { startDate, endDate } = userSelectedContest
@@ -19,14 +19,16 @@ export default function AdminUserOverview(props) {
     }
     return (
         <>
+            <Button style={{ backgroundColor: 'var(--E2P-ginger)' }} block onClick={() => setViewingUserId('')} >
+                <ArrowOutlineLeftZondicon width="10%" style={{ padding: '0.2rem', fill: 'var(--font-light)', maxWidth: '40px', }} />
+                <span>
+                    Back to Contest
+                </span>
+            </Button>
             <Container className="border border-secondary rounded p-3 mt-2 mb-1 text-center">
-                <Button style={{ backgroundColor: 'var(--E2P-ginger)' }} block onClick={() => setViewingUserId('')} >
-                    <ArrowOutlineLeftZondicon width="10%" style={{ padding: '0.2rem', fill: 'var(--font-light)', maxWidth: '40px', }} />
-                    <span>
-                        Back to Contest
-                    </span>
-                </Button>
-
+                <h4 className='text-primary border-bottom border-primary'>
+                    {`${user.firstName} ${user.lastName}`}
+                </h4>
                 <p className='text-secondary'>
                     {format(selectedDateInDashboard, 'P')}
                 </p>
@@ -43,27 +45,6 @@ export default function AdminUserOverview(props) {
         </>
     )
 }
-const PostsGrid = ({ posts }) => {
-    return (
-        <PostsGridStyle >
-            {posts().map(post => {
-                return (
-                    <Button key={post.uid} color='info'>
-                        <h6>{post && post.checkedInBonus ? `\u2605` : null}{`${post.postDate}`}</h6>
-                    </Button>
-                )
-            }
-            )}
-        </PostsGridStyle>
-    )
-    //  usage: <PostsGrid posts={postsForSelectedContest} />
-}
-const PostsGridStyle = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-column-gap: 10px;
-	grid-row-gap: 15px;
-`
 const PostDetailForSelectedDate = ({ post, currentChallenge }) => {
     if (!post) {
         return <div>No Post Found</div>

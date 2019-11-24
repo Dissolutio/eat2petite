@@ -1,19 +1,25 @@
 import React, { useState } from 'react'
 import { Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 import { isToday } from 'date-fns'
-import { AppearingSubmitButton, ProgressMsg } from './ChallengePost'
+import AppearingSubmitButton from './AppearingSubmitButton'
+import ProgressMsg from './ProgressMsg'
 
 export default function WaterChallengeInputs(props) {
     const [quantityWaterDrank, setQuantityDrank] = useState(0)
     const [quantityWaterDrankUnits, setQuantityDrankUnits] = useState('cups')
     const challengeId = 'challenge1'
-    const { currentPost } = props
+    const { currentPost, waterTargetMet, setWaterTargetMet } = props
     const selectedDate = new Date(props.selectedDate)
     const formIsDirty = (quantityWaterDrank && (quantityWaterDrank !== currentPost.data[challengeId].quantityWaterDrank))
     const goal = currentPost.targets[challengeId].quantityWaterDrank
-    const score = currentPost.data[challengeId].quantityWaterDrank
+    const score = currentPost.data[challengeId].quantityWaterDrank || quantityWaterDrank
     const userProgressingTowardsGoal = score > 0 && score < goal
-    const userMetGoal = score >= goal
+    const userMetGoal = () => {
+        if (score >= goal) {
+            setWaterTargetMet(true)
+            return true
+        }
+    }
     function handleQuantityDrankInput(event) {
         const newValue = event.target.value
         if (newValue) {
@@ -34,7 +40,7 @@ export default function WaterChallengeInputs(props) {
             </span>
             <ProgressMsg
                 userProgressingTowardsGoal={userProgressingTowardsGoal}
-                userMetGoal={userMetGoal}
+                userMetGoal={userMetGoal()}
             />
             <fieldset >
                 <InputGroup className='mb-2'>

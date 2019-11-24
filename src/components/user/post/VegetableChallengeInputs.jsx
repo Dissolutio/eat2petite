@@ -1,18 +1,24 @@
 import React, { useState } from 'react'
 import { Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 import { isToday } from 'date-fns'
-import { AppearingSubmitButton, ProgressMsg } from './ChallengePost'
+import AppearingSubmitButton from './AppearingSubmitButton'
+import ProgressMsg from './ProgressMsg'
 
 export default function VegetableChallengeInputs(props) {
     const [servingsVegetablesEaten, setServingsVegetablesEaten] = useState()
-    const { currentPost } = props
+    const { currentPost, vegetableTargetMet, setVegetableTargetMet } = props
     const selectedDate = new Date(props.selectedDate)
     const challengeId = 'challenge2'
     const formIsDirty = (servingsVegetablesEaten && (servingsVegetablesEaten !== currentPost.data[challengeId].servingsVegetablesEaten))
     const goal = currentPost.targets[challengeId].servingsVegetablesEaten
-    const score = currentPost.data[challengeId].servingsVegetablesEaten
+    const score = servingsVegetablesEaten || currentPost.data[challengeId].servingsVegetablesEaten
     const userProgressingTowardsGoal = score > 0 && score < goal
-    const userMetGoal = score >= goal
+    const userMetGoal = () => {
+        if (score >= goal) {
+            setVegetableTargetMet(true)
+            return true
+        }
+    }
     function handleServingsVegetablesEaten(event) {
         const newValue = event.target.value
         if (newValue) {
@@ -31,7 +37,7 @@ export default function VegetableChallengeInputs(props) {
             </span>
             <ProgressMsg
                 userProgressingTowardsGoal={userProgressingTowardsGoal}
-                userMetGoal={userMetGoal}
+                userMetGoal={userMetGoal()}
             />
             <fieldset >
                 <InputGroup className='mb-2'>

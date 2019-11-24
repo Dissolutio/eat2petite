@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { format, differenceInCalendarDays } from 'date-fns'
-import { Container, Badge, Button, Form } from 'reactstrap'
+import { Container, Badge, Form } from 'reactstrap'
 
-import { useDataContext } from '../../contexts/useDataContext'
+import { useDataContext } from '../../../contexts/useDataContext'
 import WaterChallengeInputs from './WaterChallengeInputs'
 import VegetableChallengeInputs from './VegetableChallengeInputs'
 import ProteinChallengeInputs from './ProteinChallengeInputs'
+import ExcerciseChallengeInputs from './ExcerciseChallengeInputs'
+import CarbChallengeInputs from './CarbChallengeInputs'
+import SugarSaltChallengeInputs from './SugarSaltChallengeInputs'
 
 export default function ChallengePost(props) {
+  const [waterTargetMet, setWaterTargetMet] = useState(false)
+  const [vegetableTargetMet, setVegetableTargetMet] = useState(false)
+  const [proteinTargetMet, setProteinTargetMet] = useState(false)
+  const [excerciseTargetMet, setExcerciseTargetMet] = useState(false)
+  const [carbTargetMet, setCarbTargetMet] = useState(false)
+  const [sugarSaltTargetMet, setSugarSaltTargetMet] = useState(false)
+
   const { saveNewPost, updateUserPost } = useDataContext()
   const { userSelectedContest, selectedDateInDashboard, me, currentChallenge, currentPost, challenges } = props
   const selectedDateIsFutureDate = differenceInCalendarDays(new Date(), new Date(selectedDateInDashboard)) < 0
@@ -19,6 +29,7 @@ export default function ChallengePost(props) {
     return <h1>Creating post for selected date...</h1>
   }
   function buildUpdatePost(event) {
+
     const updatedPostTarget = (challengeId) => {
       const userTargetForDate = me.challengeTargetsForDates && me.challengeTargetsForDates[`${format(selectedDateInDashboard, 'yyyy-MM-dd')}`]
       const currentPostHasTarget = currentPost && currentPost.targets[challengeId]
@@ -29,6 +40,14 @@ export default function ChallengePost(props) {
     return {
       ...currentPost,
       lastEditedAt: (new Date()).toString(),
+      targetsMet: (
+        waterTargetMet ||
+        vegetableTargetMet ||
+        proteinTargetMet ||
+        excerciseTargetMet ||
+        carbTargetMet ||
+        sugarSaltTargetMet
+      ),
       data: {
         ...currentPost.data,
         challenge1: {
@@ -37,7 +56,19 @@ export default function ChallengePost(props) {
         },
         challenge2: {
           servingsVegetablesEaten: (event.target.servingsVegetablesEaten && event.target.servingsVegetablesEaten.value) || currentPost.data.challenge2.servingsVegetablesEaten,
-        }
+        },
+        challenge3: {
+          proteinConsumed: (event.target.proteinConsumed && event.target.proteinConsumed.value) || currentPost.data.challenge3.proteinConsumed,
+        },
+        challenge4: {
+          defaultMeasurementUnits: 'minutes',
+          lightExcerciseDuration: (event.target.lightExcerciseDuration && event.target.lightExcerciseDuration.value) || currentPost.data.challenge4.lightExcerciseDuration,
+          mediumExcerciseDuration: (event.target.mediumExcerciseDuration && event.target.mediumExcerciseDuration.value) || currentPost.data.challenge4.mediumExcerciseDuration,
+          heavyExcerciseDuration: (event.target.heavyExcerciseDuration && event.target.heavyExcerciseDuration.value) || currentPost.data.challenge4.heavyExcerciseDuration,
+        },
+        challenge5: {
+          refinedCarbsConsumed: (event.target.refinedCarbsConsumed && event.target.refinedCarbsConsumed.value) || currentPost.data.challenge5.refinedCarbsConsumed,
+        },
       },
       targets: {
         challenge1: updatedPostTarget('challenge1'),
@@ -59,6 +90,8 @@ export default function ChallengePost(props) {
       return (
         <WaterChallengeInputs
           currentPost={currentPost}
+          waterTargetMet={waterTargetMet}
+          setWaterTargetMet={setWaterTargetMet}
         />
       )
     }
@@ -66,6 +99,8 @@ export default function ChallengePost(props) {
       return (
         <VegetableChallengeInputs
           currentPost={currentPost}
+          vegetableTargetMet={vegetableTargetMet}
+          setVegetableTargetMet={setVegetableTargetMet}
         />
       )
     }
@@ -73,17 +108,37 @@ export default function ChallengePost(props) {
       return (
         <ProteinChallengeInputs
           currentPost={currentPost}
+          proteinTargetMet={proteinTargetMet}
+          setProteinTargetMet={setProteinTargetMet}
         />
       )
     }
     if (challengeId === 'challenge4') {
-      return null
+      return (
+        <ExcerciseChallengeInputs
+          currentPost={currentPost}
+          excerciseTargetMet={excerciseTargetMet}
+          setExcerciseTargetMet={setExcerciseTargetMet}
+        />
+      )
     }
     if (challengeId === 'challenge5') {
-      return null
+      return (
+        <CarbChallengeInputs
+          currentPost={currentPost}
+          carbTargetMet={carbTargetMet}
+          setCarbTargetMet={setCarbTargetMet}
+        />
+      )
     }
     if (challengeId === 'challenge6') {
-      return null
+      return (
+        <SugarSaltChallengeInputs
+          currentPost={currentPost}
+          sugarSaltTargetMet={sugarSaltTargetMet}
+          setSugarSaltTargetMet={setSugarSaltTargetMet}
+        />
+      )
 
     }
     return (
@@ -126,10 +181,6 @@ const LastEditedReadout = ({ lastEditedAt }) => {
       </small>
     </p>
   )) || null
-}
-export const AppearingSubmitButton = ({ formIsDirty }) => {
-  if (!formIsDirty) { return null }
-  return (<Button type="submit" >Update Post!</Button>)
 }
 export const ProgressMsg = ({ userProgressingTowardsGoal, userMetGoal }) => {
   if (userProgressingTowardsGoal) {

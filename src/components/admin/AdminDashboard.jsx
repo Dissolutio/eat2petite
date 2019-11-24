@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import { isAfter } from 'date-fns'
 import { useUIContext } from '../../contexts/useUIContext'
 import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
 
@@ -32,11 +32,25 @@ export default function AdminDashboard(props) {
 			setHasAutoSelectedContest(true)
 		}
 	}
-
 	if (!userSelectedContest) {
 		return (<p>No contests found!</p>)
 	}
-	const currentChallenge = challenges && challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
+	const currentChallenge = () => {
+		const challengeForDay = challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
+		const endDate = new Date(userSelectedContest.endDate)
+		const startDate = new Date(userSelectedContest.startDate)
+		const selectedDateAfterContestEnd = isAfter(selectedDateInDashboard, endDate)
+		const selectedDateBeforeContestStart = isAfter(startDate, selectedDateInDashboard)
+		if (selectedDateAfterContestEnd) {
+			setSelectedDateInDashboard(new Date(userSelectedContest.endDate))
+		}
+		if (selectedDateBeforeContestStart) {
+			setSelectedDateInDashboard(new Date(userSelectedContest.startDate))
+		}
+		if (challenges && challengeForDay) {
+			return challengeForDay
+		}
+	}
 	return (
 		<>
 			{viewingUserId ?
@@ -46,7 +60,7 @@ export default function AdminDashboard(props) {
 					setViewingUserId={setViewingUserId}
 					selectedDateInDashboard={selectedDateInDashboard}
 					setSelectedDateInDashboard={setSelectedDateInDashboard}
-					currentChallenge={currentChallenge}
+					currentChallenge={currentChallenge()}
 					challenges={challenges}
 					userPosts={posts[viewingUserId]}
 				/>
@@ -57,7 +71,7 @@ export default function AdminDashboard(props) {
 					selectedDateInDashboard={selectedDateInDashboard}
 					setSelectedDateInDashboard={setSelectedDateInDashboard}
 					setViewingUserId={setViewingUserId}
-					currentChallenge={currentChallenge}
+					currentChallenge={currentChallenge()}
 					users={users}
 					posts={posts}
 					contestsArray={contestsArray}
