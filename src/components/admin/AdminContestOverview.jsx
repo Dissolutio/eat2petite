@@ -6,12 +6,23 @@ import styled from 'styled-components'
 import DashboardCalendar from '../shared/DashboardCalendar'
 import SelectContestDropdown from '../shared/SelectContestDropdown'
 import { AdminDevConsole } from '../shared/DevConsole'
+import { lastInitial } from '../../modules/functions'
 
 const AdminContestOverview = (props) => {
-    const { userSelectedContest, handleSelectedContestChange, selectedDateInDashboard, setSelectedDateInDashboard, posts, currentChallenge, users, contestsArray } = props
+    const {
+        userSelectedContest,
+        handleSelectedContestChange,
+        selectedDateInDashboard,
+        setSelectedDateInDashboard,
+        setViewingUserId,
+        posts,
+        currentChallenge,
+        users,
+        contestsArray
+    } = props
     const { startDate, endDate, enrolledUsers } = userSelectedContest
+
     if (!userSelectedContest) { return null }
-    const enrolledUsersArray = enrolledUsers && Object.keys(enrolledUsers).map(userId => users[userId])
     function getPostForSelectedDateForUserId(userId) {
         if (!posts) { return }
         const allUsersPosts = posts[userId]
@@ -21,9 +32,10 @@ const AdminContestOverview = (props) => {
                 isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard))
             ))
     }
+
+    const enrolledUsersArray = enrolledUsers && Object.keys(enrolledUsers).map(userId => users[userId])
     const daysWithInput = [format(new Date(), 'MMMM d, yyyy'), 'November 10, 2019', 'November 11, 2019']
     const daysWithoutInput = ['November 14, 2019', 'November 13, 2019', 'November 15, 2019']
-    const lastInitial = (string) => string.split('')[0].toUpperCase() + '.'
     return (
         <>
             <SelectContestDropdown
@@ -32,23 +44,14 @@ const AdminContestOverview = (props) => {
                 handleSelectedContestChange={handleSelectedContestChange}
             />
             <Container className="border border-secondary rounded p-3 mt-2 mb-1 text-center">
-                {currentChallenge ? (
-                    <h5 className='text-primary border-bottom border-primary'>{currentChallenge.challengeName}</h5>
-                ) : (
-                        <h5>No challenge for today!</h5>
-                    )}
+                <h5 className='text-primary border-bottom border-primary'>{currentChallenge.challengeName}</h5>
                 <p className='text-secondary'>{format(selectedDateInDashboard, 'P')}</p>
-                <UsersGrid >
-                    {enrolledUsersArray && enrolledUsersArray.map(user => {
-                        const post = getPostForSelectedDateForUserId(user.uid)
-                        return (
-                            <Button key={user.uid} color='info' onClick={() => props.setViewingUserId(user.uid)}>
-                                <h6>{post && post.checkedInBonus ? `\u2605` : null}{`${user.firstName} ${lastInitial(user.lastName)}`}</h6>
-                            </Button>
-                        )
-                    }
-                    )}
-                </UsersGrid>
+                <UsersGrid
+                    getPostForSelectedDateForUserId={getPostForSelectedDateForUserId}
+                    setViewingUserId={setViewingUserId}
+                    enrolledUsersArray={enrolledUsersArray}
+                />
+
             </Container>
             <Container className='mb-3'>
                 <DashboardCalendar
@@ -64,7 +67,36 @@ const AdminContestOverview = (props) => {
         </>
     )
 }
-const UsersGrid = styled.div`
+const UsersGrid = ({ enrolledUsersArray, getPostForSelectedDateForUserId, setViewingUserId }) => {
+    const StarForCheckinBonus = ({ post }) => {
+        return post && post.checkedInBonus ? `\u2605` : null
+    }
+    const UserFullName = ({ user }) => {
+        return (
+            `${user.firstName} ${lastInitial(user.lastName)}`
+        )
+    }
+    return (
+        <UsersGridStyle>
+            {enrolledUsersArray && enrolledUsersArray.map(user => {
+                const post = getPostForSelectedDateForUserId(user.uid)
+                return (
+                    <Button
+                        key={user.uid}
+                        style={{ backgroundColor: 'var(--E2P-orange)' }}
+                        onClick={() => setViewingUserId(user.uid)}>
+                        <h6>
+                            <StarForCheckinBonus post={post} />
+                            <UserFullName user={user} />
+                        </h6>
+                    </Button>
+                )
+            }
+            )}
+        </UsersGridStyle>
+    )
+}
+const UsersGridStyle = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 10px;

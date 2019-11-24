@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 
 import { useUIContext } from '../../contexts/useUIContext'
 import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
-import { sortByMostCurrentStartDate } from '../../modules/functions'
 
 import AdminContestOverview from './AdminContestOverview'
 import AdminUserOverview from './AdminUserOverview'
+
+import { sortByMostCurrentStartDate } from '../../modules/functions'
 
 export default function AdminDashboard(props) {
 	const [userSelectedContest, setUserSelectedContest] = useState()
@@ -42,6 +43,7 @@ export default function AdminDashboard(props) {
 				<AdminUserOverview
 					user={users[viewingUserId]}
 					userSelectedContest={userSelectedContest}
+					setViewingUserId={setViewingUserId}
 					selectedDateInDashboard={selectedDateInDashboard}
 					setSelectedDateInDashboard={setSelectedDateInDashboard}
 					currentChallenge={currentChallenge}
