@@ -32,6 +32,11 @@ const useDataContext = () => {
   const [appData, setAppData] = useContext(DataContext)
 
   const dbResetToSample = async () => {
+    /* 
+    Delete all posts, challenges, contests, and each user's `/contests` and `/challengeTargets`
+    Then upload challenges, contests
+    Refresh data, then enroll each default user into each contest, refresh data and return newest
+  */
     await firebaseApp.dbBlowItAllAway()
     Object.values(sampleChallenges).forEach((challenge) =>
       firebaseApp.dbSetChallenge(challenge),
@@ -61,14 +66,15 @@ const useDataContext = () => {
   const consoleLogAppData = () => {
     console.log('current appData', appData)
   }
-  const loadFirebaseData = () => {
+  const loadFirebaseData = async () => {
     console.log('fetching Firebase Data')
+    if (!user) return
     const users = getUsers()
     const challenges = getChallenges()
     const contests = getContests()
     const posts = getPosts()
     const me = getPersonalProfile()
-    Promise.all([users, challenges, contests, posts, me]).then(function (values) {
+    return Promise.all([users, challenges, contests, posts, me]).then(function (values) {
       const newData = {
         users: values[0],
         challenges: values[1],
@@ -80,6 +86,7 @@ const useDataContext = () => {
         ...newData,
       })
       console.log("TCL: loadFirebaseData -> newData", newData)
+      return newData
     })
   }
   const getPersonalProfile = () => {
@@ -145,10 +152,10 @@ const useDataContext = () => {
     const createdAt = (new Date()).toString()
     const postDate = format(new Date(forDate), 'P')
     const checkedInBonus = isSameDay(new Date(createdAt), new Date(postDate))
-    const newPostTarget = () => {
+    const newPostTarget = (challengeId) => {
       const userTargetForDate = appData.me.challengeTargetsForDates && appData.me.challengeTargetsForDates[`${format(new Date(forDate), 'yyyy-MM-dd')}`]
-      const userChallengeTarget = appData.me.challengeTargets && appData.me.challengeTargets[forChallenge.uid]
-      const challengeDefaultTarget = appData.challenges[forChallenge.uid] && (appData.challenges[forChallenge.uid].defaultTarget)
+      const userChallengeTarget = appData.me.challengeTargets && appData.me.challengeTargets[challengeId]
+      const challengeDefaultTarget = appData.challenges[challengeId] && (appData.challenges[challengeId].defaultTarget)
       return userTargetForDate || userChallengeTarget || challengeDefaultTarget
     }
     const newPost = {
@@ -159,11 +166,14 @@ const useDataContext = () => {
       challengeId: forChallenge.uid,
       postDate,
       createdAt,
-      quantityWaterDrank: 0,
-      quantityWaterDrankUnits: 'cups',
       checkedInBonus,
       targets: {
-        [forChallenge.uid]: newPostTarget(),
+        challenge1: newPostTarget('challenge1'),
+        challenge2: newPostTarget('challenge2'),
+        challenge3: newPostTarget('challenge3'),
+        challenge4: newPostTarget('challenge4'),
+        challenge5: newPostTarget('challenge5'),
+        challenge6: newPostTarget('challenge6'),
       },
       data: {
         challenge1: {
