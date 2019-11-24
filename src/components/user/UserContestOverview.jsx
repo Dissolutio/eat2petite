@@ -44,7 +44,6 @@ const UserContestOverview = (props) => {
             />
             <CalendarHighlighter
                 daysWithInput={daysWithInput()}
-                daysWithoutInput={daysWithoutInput()}
                 daysWithTargetMet={daysWithTargetMet()}
             >
 

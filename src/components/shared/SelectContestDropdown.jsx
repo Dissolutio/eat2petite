@@ -7,8 +7,13 @@ export default function SelectContestDropdown(props) {
     const toggle = () => setOpen(!dropdownOpen);
     const selectableContests = contests.filter(contest => contest.uid !== userSelectedContest.uid)
     return (
-        <ButtonDropdown className='btn-block' isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle color='primary' caret>
+        <ButtonDropdown 
+            className='btn-block' 
+            style={{ backgroundColor: 'var(--E2P-ginger)' }} 
+            isOpen={dropdownOpen} 
+            toggle={toggle}
+        >
+            <DropdownToggle style={{ backgroundColor: 'var(--E2P-ginger)' }}  caret>
                 {userSelectedContest.title}
             </DropdownToggle>
             <DropdownMenu>
