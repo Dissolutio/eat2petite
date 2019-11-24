@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Container } from 'reactstrap'
 
 import { useUIContext } from '../../contexts/useUIContext'
 import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
@@ -7,7 +6,6 @@ import { sortByMostCurrentStartDate } from '../../modules/functions'
 
 import AdminContestOverview from './AdminContestOverview'
 import AdminUserOverview from './AdminUserOverview'
-import SelectContestDropdown from '../shared/SelectContestDropdown'
 
 export default function AdminDashboard(props) {
 	const [userSelectedContest, setUserSelectedContest] = useState()
@@ -39,12 +37,7 @@ export default function AdminDashboard(props) {
 	}
 	const currentChallenge = challenges && challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
 	return (
-		<Container>
-			<SelectContestDropdown
-				contests={contestsArray}
-				userSelectedContest={userSelectedContest}
-				handleSelectedContestChange={handleSelectedContestChange}
-			/>
+		<>
 			{viewingUserId ?
 				<AdminUserOverview
 					user={users[viewingUserId]}
@@ -53,19 +46,21 @@ export default function AdminDashboard(props) {
 					setSelectedDateInDashboard={setSelectedDateInDashboard}
 					currentChallenge={currentChallenge}
 					challenges={challenges}
-					posts={posts[viewingUserId]}
+					userPosts={posts[viewingUserId]}
 				/>
 				:
 				<AdminContestOverview
 					userSelectedContest={userSelectedContest}
+					handleSelectedContestChange={handleSelectedContestChange}
 					selectedDateInDashboard={selectedDateInDashboard}
 					setSelectedDateInDashboard={setSelectedDateInDashboard}
 					setViewingUserId={setViewingUserId}
 					currentChallenge={currentChallenge}
 					users={users}
 					posts={posts}
+					contestsArray={contestsArray}
 				/>
 			}
-		</Container>
+		</>
 	)
 }

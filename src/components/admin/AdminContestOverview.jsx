@@ -4,10 +4,11 @@ import { format, isSameDay } from 'date-fns'
 import styled from 'styled-components'
 
 import DashboardCalendar from '../shared/DashboardCalendar'
+import SelectContestDropdown from '../shared/SelectContestDropdown'
 import { AdminDevConsole } from '../shared/DevConsole'
 
 const AdminContestOverview = (props) => {
-    const { userSelectedContest, posts, currentChallenge, users, selectedDateInDashboard, setSelectedDateInDashboard } = props
+    const { userSelectedContest, handleSelectedContestChange, selectedDateInDashboard, setSelectedDateInDashboard, posts, currentChallenge, users, contestsArray } = props
     const { startDate, endDate, enrolledUsers } = userSelectedContest
     if (!userSelectedContest) { return null }
     const enrolledUsersArray = enrolledUsers && Object.keys(enrolledUsers).map(userId => users[userId])
@@ -25,6 +26,11 @@ const AdminContestOverview = (props) => {
     const lastInitial = (string) => string.split('')[0].toUpperCase() + '.'
     return (
         <>
+            <SelectContestDropdown
+                contests={contestsArray}
+                userSelectedContest={userSelectedContest}
+                handleSelectedContestChange={handleSelectedContestChange}
+            />
             <Container className="border border-secondary rounded p-3 mt-2 mb-1 text-center">
                 {currentChallenge ? (
                     <h5 className='text-primary border-bottom border-primary'>{currentChallenge.challengeName}</h5>

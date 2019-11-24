@@ -6,11 +6,11 @@ import styled from 'styled-components'
 import DashboardCalendar from '../shared/DashboardCalendar'
 
 export default function AdminUserOverview(props) {
-    const { user, userSelectedContest, selectedDateInDashboard, currentChallenge, challenges, posts, setSelectedDateInDashboard } = props
+    const { user, userSelectedContest, selectedDateInDashboard, currentChallenge, challenges, userPosts, setSelectedDateInDashboard } = props
     const { startDate, endDate } = userSelectedContest
     if (!userSelectedContest) { return null }
     const postsForSelectedContest = () => {
-        return posts && Object.values(posts)
+        return userPosts && Object.values(userPosts)
             .filter(post => post.contestId === userSelectedContest.uid)
     }
     const postForSelectedDate = () => postsForSelectedContest.find(post => (
