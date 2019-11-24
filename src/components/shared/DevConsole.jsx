@@ -17,7 +17,7 @@ export function AdminDevConsole() {
 		consoleLogAppData,
 	} = useDataContext()
 	return (
-		<Container className="border border-secondary p-3 m-2">
+		<Container>
 			<ButtonGroup vertical style={{ width: '100%' }}>
 				<Button color="primary" onClick={consoleLogAppData}>
 					CONSOLE LOG APP DATA
