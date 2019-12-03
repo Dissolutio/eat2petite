@@ -210,8 +210,13 @@ const useDataContext = () => {
       .then(() => getPosts())
       .then((posts) => setAppData({ ...appData, posts }))
   }
-  const updateUserChallengeTarget = (userId, challengeId, target) => {
-    return firebaseApp.dbSetUserChallengeTarget(userId, challengeId, target).then(() => loadFirebaseData())
+  const updateUserDefaultTargets = (userId, newTargets) => {
+    return firebaseApp.dbSetUserDefaultTargets(userId, newTargets)
+      .then(() => loadFirebaseData())
+      .catch(error => {
+        console.log(error)
+        return error
+      })
   }
 
   return {
@@ -225,7 +230,7 @@ const useDataContext = () => {
     createContest,
     updateChallenge,
     enrollUserInContest,
-    updateUserChallengeTarget,
+    updateUserDefaultTargets,
   }
 }
 export { DataContextProvider, useDataContext }

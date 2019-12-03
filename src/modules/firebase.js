@@ -79,10 +79,10 @@ class Firebase {
       username,
     })
   }
-  dbSetUserChallengeTarget = (userId, challengeId, target) => {
+  dbSetUserDefaultTargets = (userId, newTargets) => {
     return this.dbPrivateUsers()
-      .child(`${userId}/challengeTargets/${challengeId}`)
-      .set(target)
+      .child(`${userId}/defaultTargets`)
+      .set(newTargets)
   }
   // *** Contests API ***
   dbContests = () => this.db.ref(`/contests`)
