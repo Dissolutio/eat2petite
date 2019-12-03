@@ -5,7 +5,7 @@ import { useFirebaseContext } from '../contexts//useFirebaseContext'
 import { useAuthUserContext } from '../contexts//useAuthUserContext'
 import { sampleChallenges, sampleContests } from '../sampleData'
 import devDBSavePoint from '../assets/devDBSavePoint'
-import { adaptContestData } from '../modules/adapters'
+import { addCalculatedContestDataTo } from '../modules/adapters'
 
 const DataContext = React.createContext([{}, () => { }])
 
@@ -131,7 +131,7 @@ const useDataContext = () => {
     return firebaseApp
       .dbContests()
       .once('value')
-      .then((snapshot) => adaptContestData(snapshot.val()))
+      .then((snapshot) => addCalculatedContestDataTo(snapshot.val()))
   }
   const updateChallenge = (updatedChallenge) => {
     return firebaseApp.dbUpdateChallenge(updatedChallenge)

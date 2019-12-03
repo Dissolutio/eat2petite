@@ -1,6 +1,6 @@
 import { format, addDays, differenceInCalendarDays } from 'date-fns'
 
-export function adaptContestData(snapshotVal) {
+export function addCalculatedContestDataTo(snapshotVal) {
     if (!snapshotVal) { return {} }
     return Object.entries(snapshotVal).reduce((finalContests, entry) => {
         const uid = entry[0]
