@@ -13,6 +13,20 @@ export default function AdminDashboard(props) {
 	const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
 	const [viewingUserId, setViewingUserId] = React.useState('')
 	const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
+	// When user switches contest, we adjust the selected date to be within the contest dates
+	React.useEffect(() => {
+		if (!userSelectedContest) { return }
+		const selectedDateIsAfterContestEnd = isAfter(selectedDateInDashboard, new Date(userSelectedContest.endDate))
+		const selectedDateIsBeforeContestStart = isAfter(new Date(userSelectedContest.startDate), selectedDateInDashboard)
+		if (selectedDateIsAfterContestEnd) {
+			setSelectedDateInDashboard(new Date(userSelectedContest.endDate))
+		}
+		if (selectedDateIsBeforeContestStart) {
+			setSelectedDateInDashboard(new Date(userSelectedContest.startDate))
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [userSelectedContest])
+
 	const handleSelectedContestChange = (contest) => {
 		setUserSelectedContest(contest)
 		setLocalContestId(contest.uid)
@@ -37,20 +51,11 @@ export default function AdminDashboard(props) {
 	}
 	const currentChallenge = () => {
 		const challengeForDay = challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
-		const endDate = new Date(userSelectedContest.endDate)
-		const startDate = new Date(userSelectedContest.startDate)
-		const selectedDateAfterContestEnd = isAfter(selectedDateInDashboard, endDate)
-		const selectedDateBeforeContestStart = isAfter(startDate, selectedDateInDashboard)
-		if (selectedDateAfterContestEnd) {
-			setSelectedDateInDashboard(new Date(userSelectedContest.endDate))
-		}
-		if (selectedDateBeforeContestStart) {
-			setSelectedDateInDashboard(new Date(userSelectedContest.startDate))
-		}
 		if (challenges && challengeForDay) {
 			return challengeForDay
 		}
 	}
+
 	return (
 		<>
 			{viewingUserId ?

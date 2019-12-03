@@ -13,6 +13,19 @@ import { sortByMostCurrentStartDate } from '../../modules/functions'
 const UserDashboard = (props) => {
   const [userSelectedContest, setUserSelectedContest] = useState()
   const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
+  // When user switches contest, we adjust the selected date to be within the contest dates
+  // React.useEffect(() => {
+  // 	if (!userSelectedContest) { return }
+  // 	const selectedDateIsAfterContestEnd = isAfter(selectedDateInDashboard, new Date(userSelectedContest.endDate))
+  // 	const selectedDateIsBeforeContestStart = isAfter(new Date(userSelectedContest.startDate), selectedDateInDashboard)
+  // 	if (selectedDateIsAfterContestEnd) {
+  // 		setSelectedDateInDashboard(new Date(userSelectedContest.endDate))
+  // 	}
+  // 	if (selectedDateIsBeforeContestStart) {
+  // 		setSelectedDateInDashboard(new Date(userSelectedContest.startDate))
+  // 	}
+  // 	// eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [userSelectedContest])
   const handleSelectedContestChange = (contest) => {
     setUserSelectedContest(contest)
     setLocalContestId(contest.uid)
