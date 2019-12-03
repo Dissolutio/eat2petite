@@ -9,6 +9,7 @@ import ProteinChallengeInputs from './ProteinChallengeInputs'
 import ExcerciseChallengeInputs from './ExcerciseChallengeInputs'
 import CarbChallengeInputs from './CarbChallengeInputs'
 import SugarSaltChallengeInputs from './SugarSaltChallengeInputs'
+import UserDidCheckin from '../../shared/UserDidCheckin'
 
 export default function ChallengePost(props) {
   const [waterTargetMet, setWaterTargetMet] = useState(false)
@@ -164,15 +165,7 @@ export default function ChallengePost(props) {
     </Container>
   )
 }
-const UserDidCheckin = ({ checkedInBonus }) => {
-  return (
-    <div>
-      {checkedInBonus ?
-        <Badge style={{ backgroundColor: "var(--E2P-orange" }} pill>Checked-in! +2</Badge>
-        : null}
-    </div>
-  )
-}
+
 const LastEditedReadout = ({ lastEditedAt }) => {
   return (lastEditedAt && (
     <p className='mt-1'>
