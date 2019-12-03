@@ -29,6 +29,7 @@ const DashboardCalendar = props => {
   return (
     <RestyledCalendar
       daysWithInput={daysWithInput}
+      daysWithTargetMet={daysWithTargetMet}
       onChange={dateChangeHandler}
       value={selectedDate}
       calendarType="US"
@@ -79,14 +80,15 @@ button:disabled {
 ${props => props.daysWithInput && props.daysWithInput.reduce((result, date) => (
   result + `
           abbr[aria-label = "${date}"] {
-              border: 2px solid var(--E2P-orange);
+              border: 3px solid var(--E2P-bright-orange);
           }
       `
 ), '')}
 ${props => props.daysWithTargetMet && props.daysWithTargetMet.reduce((result, date) => (
   result + `
           abbr[aria-label = "${date}"] {
-              border: 2px solid var(--E2P-ginger);
+              border: 2px solid var(--E2P-bright-orange);
+              background-color: var(--E2P-bright-orange) !important;
           }
       `
 ), '')}
