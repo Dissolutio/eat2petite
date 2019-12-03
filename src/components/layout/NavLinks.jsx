@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 
 import { useUIContext } from '../../contexts/useUIContext'
 
-import CurrentUserReadout from '../authentication/CurrentUserReadout'
-
 import * as ROUTES from '../../routes'
 
 const NavLinks = props => {
@@ -53,7 +51,6 @@ const NavLinks = props => {
 				{notSignedInCondition ? <NonAuthLinks /> : null}
 				{signedInNonAdminCondition ? <AuthLinks /> : null}
 				{adminCondition ? <AdminLinks /> : null}
-				<CurrentUserReadout user={user} />
 			</nav>
 		</div>
 	)

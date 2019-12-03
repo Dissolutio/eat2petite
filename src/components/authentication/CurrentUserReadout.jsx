@@ -1,20 +1,18 @@
 import React from 'react'
-import { Badge, Button } from 'reactstrap'
+import { Badge, } from 'reactstrap'
 import styled from 'styled-components'
-import { useFirebaseContext } from '../../contexts/useFirebaseContext'
+import SignOutButton from './SignOutButton'
 
 const CurrentUserReadout = (props) => {
-	const firebaseApp = useFirebaseContext()
 	const { user } = props
-	const onSignOutButtonClick = () => firebaseApp.doSignOut()
 	if (user) {
 		return (
 			<StyledContainer className='mt-1'>
 				<Badge pill tag="span" className='w-100' style={{ color: 'var(--white)', backgroundColor: 'var(--E2P-orange)' }}> {user.username || user.email}</Badge>
 				<br />
-				<Button size="sm" outline block onClick={onSignOutButtonClick}>
+				{user && <SignOutButton size="sm" outline block>
 					Sign Out
-				</Button>
+				</SignOutButton>}
 			</StyledContainer>
 		)
 	} else {

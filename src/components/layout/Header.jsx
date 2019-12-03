@@ -2,8 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Collapse, Navbar, NavbarToggler, Nav } from 'reactstrap'
+
 import { useUIContext } from '../../contexts/useUIContext'
+
 import NavLinks from '../layout/NavLinks'
+import CurrentUserReadout from '../authentication/CurrentUserReadout'
 
 export default function Header(props) {
 	const { user } = props
@@ -18,6 +21,7 @@ export default function Header(props) {
 				<Collapse isOpen={menuOpen} navbar>
 					<Nav className="ml-auto" navbar>
 						<NavLinks user={user} />
+						<CurrentUserReadout user={user} />
 					</Nav>
 				</Collapse>
 			</Navbar>
