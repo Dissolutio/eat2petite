@@ -35,14 +35,20 @@ const AdminContestOverview = (props) => {
     const enrolledUsersArray = enrolledUsers && Object.keys(enrolledUsers).map(userId => users[userId])
     return (
         <>
-            <SelectContestDropdown
-                contests={contestsArray}
-                userSelectedContest={userSelectedContest}
-                handleSelectedContestChange={handleSelectedContestChange}
-            />
-            <Container className="border border-secondary rounded p-3 mt-2 mb-1 text-center">
-                <h4 className='text-primary border-bottom border-primary'>{(currentChallenge && currentChallenge.challengeName) || 'No Challenge'}</h4>
-                <p className='text-secondary'>{format(selectedDateInDashboard, 'P')}</p>
+            <Container>
+                <SelectContestDropdown
+                    contests={contestsArray}
+                    userSelectedContest={userSelectedContest}
+                    handleSelectedContestChange={handleSelectedContestChange}
+                />
+            </Container>
+            <Container className="rounded p-3 m-2 text-center">
+                <h4 style={{ fontFamily: 'ABeeZee' }} >
+                    {format(selectedDateInDashboard, 'P')}
+                </h4>
+                <p className='text-secondary'>
+                    {(currentChallenge && currentChallenge.challengeName) || 'No Challenge'}
+                </p>
                 <UsersGrid
                     getPostForSelectedDateForUserId={getPostForSelectedDateForUserId}
                     setViewingUserId={setViewingUserId}

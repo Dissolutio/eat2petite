@@ -23,6 +23,16 @@ const UserContestOverview = (props) => {
     }
     return (
         <Container>
+            <Container className='p-1'>
+                <DashboardCalendar
+                    selectedDate={selectedDateInDashboard}
+                    setSelectedDateInDashboard={setSelectedDateInDashboard}
+                    minDate={new Date(startDate)}
+                    maxDate={new Date(endDate)}
+                    daysWithInput={daysWithInput()}
+                    daysWithTargetMet={daysWithTargetMet()}
+                />
+            </Container>
             <ChallengePost
                 selectedDateInDashboard={selectedDateInDashboard}
                 userSelectedContest={userSelectedContest}
@@ -32,14 +42,6 @@ const UserContestOverview = (props) => {
                 currentChallenge={currentChallenge}
                 challenges={challenges}
                 me={me}
-            />
-            <DashboardCalendar
-                selectedDate={selectedDateInDashboard}
-                setSelectedDateInDashboard={setSelectedDateInDashboard}
-                minDate={new Date(startDate)}
-                maxDate={new Date(endDate)}
-                daysWithInput={daysWithInput()}
-                daysWithTargetMet={daysWithTargetMet()}
             />
         </Container>
     )
