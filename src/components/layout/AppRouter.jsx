@@ -100,7 +100,7 @@ export default function AppRouter(props) {
 			<Route
 				exact
 				path={ROUTES.ADMIN_CHALLENGES}
-				render={props => <ChallengesPage challenges={challenges} />}
+				render={props => <ChallengesPage admin={true} challenges={challenges} />}
 			/>
 			<Route
 				exact

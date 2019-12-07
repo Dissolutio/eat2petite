@@ -135,6 +135,8 @@ const useDataContext = () => {
   }
   const updateChallenge = (updatedChallenge) => {
     return firebaseApp.dbUpdateChallenge(updatedChallenge)
+      .then(() => getChallenges())
+      .then((challenges) => setAppData({ ...appData, challenges }))
   }
   const enrollUserInContest = (userId, contestId) => {
     firebaseApp.dbEnrollUserInContest(userId, contestId)
