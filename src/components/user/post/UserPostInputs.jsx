@@ -3,19 +3,20 @@ import { isToday } from 'date-fns'
 import { Button } from 'reactstrap'
 
 import WaterChallengeInputs from '../../shared/challenge-inputs/WaterChallengeInputs'
-import WaterChallengeInfo from './post-info/WaterChallengeInfo'
 import VegetableChallengeInputs from '../../shared/challenge-inputs/VegetableChallengeInputs'
-import VegetableChallengeInfo from './post-info/VegetableChallengeInfo'
 import ProteinChallengeInputs from '../../shared/challenge-inputs/ProteinChallengeInputs'
-import ProteinChallengeInfo from './post-info/ProteinChallengeInfo'
 import ExcerciseChallengeInputs from '../../shared/challenge-inputs/ExcerciseChallengeInputs'
-import ExcercisePostInfo from './post-info/ExcercisePostInfo'
 import CarbChallengeInputs from '../../shared/challenge-inputs/CarbChallengeInputs'
-import CarbChallengeInfo from './post-info/CarbChallengeInfo'
-import SugarSaltPostInfo from './post-info/SugarSaltPostInfo'
 import SugarSaltChallengeInputs from '../../shared/challenge-inputs/SugarSaltChallengeInputs'
 
-const AppearingSubmitButton = () => {
+import WaterChallengeInfo from './post-info/WaterChallengeInfo'
+import VegetableChallengeInfo from './post-info/VegetableChallengeInfo'
+import ProteinChallengeInfo from './post-info/ProteinChallengeInfo'
+import ExcercisePostInfo from './post-info/ExcercisePostInfo'
+import CarbChallengeInfo from './post-info/CarbChallengeInfo'
+import SugarSaltPostInfo from './post-info/SugarSaltPostInfo'
+
+const SubmitButton = () => {
     return (
         <Button color='primary' type="submit" >
             Update Post!
@@ -47,7 +48,7 @@ const UserPostInputs = (props) => {
                         quantityWaterDrankUnits: currentPost.data[challengeId].quantityWaterDrankUnits,
                     }}
                 />
-                <AppearingSubmitButton />
+                <SubmitButton />
             </>
         )
     }
@@ -65,7 +66,7 @@ const UserPostInputs = (props) => {
                         servingsVegetablesEaten: currentPost.data[challengeId].servingsVegetablesEaten,
                     }}
                 />
-                <AppearingSubmitButton />
+                <SubmitButton />
             </>
         )
     }
@@ -84,7 +85,7 @@ const UserPostInputs = (props) => {
                         proteinConsumedUnits: currentPost.data[challengeId].proteinConsumedUnits,
                     }}
                 />
-                <AppearingSubmitButton />
+                <SubmitButton />
             </>
         )
     }
@@ -105,7 +106,7 @@ const UserPostInputs = (props) => {
                         heavyExcerciseDuration: currentPost.data[challengeId].heavyExcerciseDuration,
                     }}
                 />
-                <AppearingSubmitButton />
+                <SubmitButton />
             </>
         )
     }
@@ -124,7 +125,7 @@ const UserPostInputs = (props) => {
                         refinedCarbsConsumedUnits: currentPost.data[challengeId].refinedCarbsConsumedUnits,
                     }}
                 />
-                <AppearingSubmitButton />
+                <SubmitButton />
             </>
         )
     }
@@ -146,7 +147,7 @@ const UserPostInputs = (props) => {
                         quantitySaltConsumedUnits: currentPost.data[challengeId].quantitySaltConsumedUnits,
                     }}
                 />
-                <AppearingSubmitButton />
+                <SubmitButton />
             </>
         )
     }
