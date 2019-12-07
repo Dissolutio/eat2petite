@@ -3,10 +3,12 @@ import { Container, Button } from 'reactstrap'
 import { format, isSameDay } from 'date-fns'
 
 import DashboardCalendar from '../shared/DashboardCalendar'
+import UserDidCheckin from '../shared/UserDidCheckin'
 import { ReactComponent as ArrowOutlineLeftZondicon } from '../../assets/arrow-outline-left.svg'
 
 export default function AdminUserOverview(props) {
-    const { user, userSelectedContest, selectedDateInDashboard, setViewingUserId, currentChallenge, challenges, userPosts, setSelectedDateInDashboard } = props
+    const { user, userSelectedContest, selectedDateInDashboard, setViewingUserId,
+        currentChallenge, userPosts, setSelectedDateInDashboard } = props
     const { startDate, endDate } = userSelectedContest
     if (!userSelectedContest) { return null }
     const postsForSelectedContest = () => {
@@ -46,22 +48,24 @@ export default function AdminUserOverview(props) {
     )
 }
 const PostDetailForSelectedDate = ({ post, currentChallenge }) => {
+    const challengeId = currentChallenge.uid
     if (!post) {
         return <div>No Post Found</div>
     }
-    if (currentChallenge.uid === 'challenge1') {
+    if (challengeId === 'challenge1') {
         const { quantityWaterDrank, quantityWaterDrankUnits } = post.data.challenge1
         return (
             <div>
-                <h3>{post.contestId}</h3>
+                <h5>{currentChallenge.challengeName}</h5>
+                <UserDidCheckin checkInBonus={post.checkInBonus} />
                 <p>
                     {`${quantityWaterDrank} ${quantityWaterDrankUnits}`}
                 </p>
             </div>
         )
     }
-    if (currentChallenge.uid === 'challenge2') {
-        const { servingsVegetablesEaten } = post.data.challenge2
+    if (challengeId === 'challenge2') {
+        const { servingsVegetablesEaten } = post.data[challengeId]
         return (
             <div>
                 <h3>{post.contestId}</h3>
@@ -71,5 +75,25 @@ const PostDetailForSelectedDate = ({ post, currentChallenge }) => {
             </div>
         )
     }
+    if (challengeId === 'challenge3') {
+        const { proteinConsumed, proteinConsumedUnits } = post.data[challengeId]
+        return (
+            <div>
+                <h5>{currentChallenge.challengeName}</h5>
+                <p>
+                    {`${proteinConsumed} ${proteinConsumedUnits}`}
+                </p>
+            </div>
+        )
+    }
     else return null
+}
+const PostFrame = ({ post, currentChallenge, content }) => {
+    return (
+        <div>
+            <h5>{currentChallenge.challengeName}</h5>
+            <UserDidCheckin checkInBonus={post.checkInBonus} />
+            {content}
+        </div>
+    )
 }

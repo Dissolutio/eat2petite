@@ -1,8 +1,7 @@
 import React from 'react'
 import { Container, Card, ListGroup, ListGroupItem } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
-import { AdminContestDashboardLink } from '../layout/Links'
-import UserTargetEdit from './UserTargetEdit/UserTargetEdit'
+import EditUserDefaultTargetForm from './forms/EditUserDefaultTargetForm'
 
 function AdminUserDetail(props) {
 	const { users, challenges, contests } = props
@@ -14,16 +13,16 @@ function AdminUserDetail(props) {
 		const userContests = user.contests && Object.keys(user.contests)
 		return (
 			<Container>
-				<Card className='p-3'>
+				<Card className='p-3 text-center'>
 					<h3 className='text-primary'>{`${firstName} ${lastName}`}</h3>
-					<div className="text-center"><small className='text-secondary'>{`username: ${username}`}</small></div>
-					<div className="text-center"><small className='text-secondary'>{email}</small></div>
-					<div className="text-center"><small className='text-secondary'>{`Weight: ${userWeight} lbs`}</small></div>
-					<div className="text-center"><small className='text-secondary'>{`Height: ${userHeightFeet}' ${userHeightInches}"`}</small></div>
+					<div ><small className='text-secondary'>{`username: ${username}`}</small></div>
+					<div ><small className='text-secondary'>{email}</small></div>
+					<div ><small className='text-secondary'>{`Weight: ${userWeight} lbs`}</small></div>
+					<div ><small className='text-secondary'>{`Height: ${userHeightFeet}' ${userHeightInches}"`}</small></div>
 				</Card>
-				<Card className='p-4'>
-					<ListGroup>
-						<h5>User's contests:</h5>
+				<Container>
+					<ListGroup flush>
+						<h5>Contests enrolled in:</h5>
 						{userContests && userContests.map(contestId => {
 							const contest = contests[contestId]
 							return (
@@ -33,8 +32,10 @@ function AdminUserDetail(props) {
 							)
 						})}
 					</ListGroup>
-				</Card>
-				<UserTargetEdit user={user} challenges={challenges} />
+				</Container>
+				<Container className='border border-secondary border-rounded m-2 p-2 text-center'>
+					<EditUserDefaultTargetForm user={user} challenges={challenges} />
+				</Container>
 			</Container>
 		)
 	} else {
