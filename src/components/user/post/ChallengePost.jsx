@@ -44,15 +44,14 @@ export default function ChallengePost(props) {
       ...currentPost,
       lastEditedAt: (new Date()).toString(),
       targetsMet: (
-        waterTargetMet &&
-        vegetableTargetMet &&
-        proteinTargetMet &&
-        excerciseTargetMet &&
-        !carbLimitExceeded &&
+        waterTargetMet ||
+        vegetableTargetMet ||
+        proteinTargetMet ||
+        excerciseTargetMet ||
+        !carbLimitExceeded ||
         !sugarSaltLimitExceeded
       ),
       data: {
-        ...currentPost.data,
         challenge1: {
           quantityWaterDrank: (event.target.quantityWaterDrank && event.target.quantityWaterDrank.value) || currentPost.data.challenge1.quantityWaterDrank,
           quantityWaterDrankUnits: (event.target.quantityWaterDrankUnits && event.target.quantityWaterDrankUnits.value) || currentPost.data.challenge1.quantityWaterDrankUnits,
@@ -73,10 +72,10 @@ export default function ChallengePost(props) {
           refinedCarbsConsumed: (event.target.refinedCarbsConsumed && event.target.refinedCarbsConsumed.value) || currentPost.data.challenge5.refinedCarbsConsumed,
         },
         challenge6: {
-          quantitySugarConsumed: (event.target.quantitySugarConsumed && event.target.quantitySugarConsumed.value),
-          quantitySugarConsumedUnits: (event.target.quantitySugarConsumedUnits && event.target.quantitySugarConsumedUnits.value),
-          quantitySaltConsumed: (event.target.quantitySaltConsumed && event.target.quantitySaltConsumed.value),
-          quantitySaltConsumedUnits: (event.target.quantitySaltConsumedUnits && event.target.quantitySaltConsumedUnits.value),
+          quantitySugarConsumed: (event.target.quantitySugarConsumed && event.target.quantitySugarConsumed.value) || currentPost.data.challenge6.quantitySugarConsumed,
+          quantitySugarConsumedUnits: (event.target.quantitySugarConsumedUnits && event.target.quantitySugarConsumedUnits.value) || currentPost.data.challenge6.quantitySugarConsumedUnits,
+          quantitySaltConsumed: (event.target.quantitySaltConsumed && event.target.quantitySaltConsumed.value) || currentPost.data.challenge6.quantitySaltConsumed,
+          quantitySaltConsumedUnits: (event.target.quantitySaltConsumedUnits && event.target.quantitySaltConsumedUnits.value) || currentPost.data.challenge6.quantitySaltConsumedUnits,
         },
       },
       targets: {
