@@ -157,7 +157,7 @@ export const sampleChallenges = {
 export const sampleContests = {
   contest1: {
     title: 'Eat-2-Petite Launch Contest',
-    startDate: format(addDays(new Date(), -2), 'P'),
+    startDate: format(addDays(new Date(), -6), 'P'),
     uid: '-Lth91Tw1gaKMMbwFe54',
     daysPerChallenge: '3',
     enrolledUsers: {},
@@ -173,9 +173,9 @@ export const sampleContests = {
   },
   contest2: {
     title: 'Fall Mini Contest ',
-    startDate: format(addDays(new Date(), -3), 'P'),
+    startDate: format(addDays(new Date(), -6), 'P'),
     uid: '-Lth91Tw1gaKMMbwFe55',
-    daysPerChallenge: '2',
+    daysPerChallenge: '1',
     enrolledUsers: {},
     numberOfChallenges: 6,
     orderOfChallenges: {
