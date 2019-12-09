@@ -9,5 +9,6 @@ export const USER_CHALLENGES = '/user/challenges'
 
 export const ADMIN_DASHBOARD = '/admin'
 export const ADMIN_CONTESTS = '/admin/contests/'
+export const ADMIN_CREATE_CONTEST = '/admin/contests/create'
 export const ADMIN_USERS = '/admin/users/'
 export const ADMIN_CHALLENGES = '/admin/challenges/'
