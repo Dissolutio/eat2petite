@@ -155,10 +155,10 @@ const useDataContext = () => {
     const postDate = format(new Date(forDate), 'P')
     const checkedInBonus = isSameDay(new Date(createdAt), new Date(postDate))
     const newPostTarget = (challengeId) => {
-      const userTargetForDate = appData.me.challengeTargetsForDates && appData.me.challengeTargetsForDates[`${format(new Date(forDate), 'yyyy-MM-dd')}`]
-      const userChallengeTarget = appData.me.challengeTargets && appData.me.challengeTargets[challengeId]
-      const challengeDefaultTarget = appData.challenges[challengeId] && (appData.challenges[challengeId].defaultTarget)
-      return userTargetForDate || userChallengeTarget || challengeDefaultTarget
+      const userTargetsForDate = appData.me.challengeTargetsForDates && appData.me.challengeTargetsForDates[`${format(new Date(forDate), 'yyyy-MM-dd')}`]
+      const userDefaultTargets = appData.me.defaultTargets && appData.me.defaultTargets[challengeId]
+      const challengeDefaultTargets = challengeId && (appData.challenges[challengeId].defaultTarget)
+      return userTargetsForDate || userDefaultTargets || challengeDefaultTargets
     }
     const newPost = {
       author: appData.me.uid,
