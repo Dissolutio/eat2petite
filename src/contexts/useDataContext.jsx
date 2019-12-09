@@ -169,6 +169,7 @@ const useDataContext = () => {
       postDate,
       createdAt,
       checkedInBonus,
+      targetsMet: false,
       targets: {
         challenge1: newPostTarget('challenge1'),
         challenge2: newPostTarget('challenge2'),
