@@ -73,3 +73,58 @@ export function buildNewTargetsFromEvent(event) {
 		},
 	}
 }
+
+export function scorePost(post) {
+	if (!post) return null
+	const waterGoal = post.targets.challenge1.quantityWaterDrank
+	const waterScore = post.data.challenge1.quantityWaterDrank
+	const waterProgress = waterScore > 0 && waterScore < waterGoal
+	const waterSuccess = waterScore >= waterGoal
+
+	const vegGoal = parseInt(post.targets.challenge2.servingsVegetablesEaten)
+	const vegScore = parseInt(post.data.challenge2.servingsVegetablesEaten)
+	const vegetableProgress = vegScore > 0 && vegScore < vegGoal
+	const vegetableSuccess = vegScore >= vegGoal
+
+	const proteinGoal = parseInt(post.targets.challenge3.proteinConsumed)
+	const proteinScore = parseInt(post.data.challenge3.proteinConsumed)
+	const proteinProgress = proteinScore > 0 && proteinScore < proteinGoal
+	const proteinSuccess = proteinScore >= proteinGoal
+
+	const lightExcerciseGoal = parseInt(post.targets.challenge4.lightExcerciseDuration)
+	const mediumExcerciseGoal = parseInt(post.targets.challenge4.mediumExcerciseDuration)
+	const heavyExcerciseGoal = parseInt(post.targets.challenge4.heavyExcerciseDuration)
+	const lightExcerciseScore = parseInt(post.data.challenge4.lightExcerciseDuration)
+	const mediumExcerciseScore = parseInt(post.data.challenge4.mediumExcerciseDuration)
+	const heavyExcerciseScore = parseInt(post.data.challenge4.heavyExcerciseDuration)
+	const excerciseProgress = (lightExcerciseScore > 0 || mediumExcerciseScore > 0 || heavyExcerciseScore > 0) && (
+		(lightExcerciseScore < lightExcerciseGoal)
+		|| (mediumExcerciseScore < mediumExcerciseGoal)
+		|| (heavyExcerciseScore < heavyExcerciseGoal)
+	)
+	const excerciseSuccess = ((lightExcerciseScore >= lightExcerciseGoal) && (mediumExcerciseScore >= mediumExcerciseGoal) && (heavyExcerciseScore >= heavyExcerciseGoal))
+
+	const carbLimit = parseInt(post.targets.challenge5.refinedCarbsConsumed)
+	const carbScore = parseInt(post.data.challenge5.refinedCarbsConsumed)
+	const carbUnderBudget = post && (carbScore <= carbLimit)
+
+
+	const sugarLimit = parseInt(post.targets.challenge6.quantitySugarConsumed)
+	const saltLimit = parseInt(post.targets.challenge6.quantitySaltConsumed)
+	const sugarScore = parseInt(post.data.challenge6.quantitySugarConsumed)
+	const saltScore = parseInt(post.data.challenge6.quantitySaltConsumed)
+	const sugarSaltUnderBudget = (sugarScore <= sugarLimit) && (saltScore <= saltLimit)
+
+	return {
+		waterProgress,
+		waterSuccess,
+		vegetableProgress,
+		vegetableSuccess,
+		proteinProgress,
+		proteinSuccess,
+		excerciseProgress,
+		excerciseSuccess,
+		carbUnderBudget,
+		sugarSaltUnderBudget,
+	}
+}

@@ -1,9 +1,8 @@
 import React from 'react'
 import { Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
-import useInputValue from '../../../modules/hooks/useInputValue'
 
-export default function VegetableChallengeInputs({ defaultValues }) {
-    const servingsVegetablesEaten = useInputValue(defaultValues.servingsVegetablesEaten)
+export default function VegetableChallengeInputs({ servingsVegetablesEaten }) {
+
     return (
         <InputGroup className='mb-2'>
             <Label for="servingsVegetablesEaten" hidden />

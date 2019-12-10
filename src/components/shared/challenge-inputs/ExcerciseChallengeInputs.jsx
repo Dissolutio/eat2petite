@@ -1,11 +1,7 @@
 import React from 'react'
 import { Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
-import useInputValue from '../../../modules/hooks/useInputValue'
 
-export default function ExcerciseChallengeInputs({ defaultValues }) {
-    const lightExcerciseDuration = useInputValue(defaultValues.lightExcerciseDuration)
-    const mediumExcerciseDuration = useInputValue(defaultValues.mediumExcerciseDuration)
-    const heavyExcerciseDuration = useInputValue(defaultValues.heavyExcerciseDuration)
+export default function ExcerciseChallengeInputs({ lightExcerciseDuration, mediumExcerciseDuration, heavyExcerciseDuration }) {
     return (
         <>
             <InputGroup className='mb-2'>

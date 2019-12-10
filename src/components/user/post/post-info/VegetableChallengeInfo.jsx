@@ -1,19 +1,8 @@
 import React from 'react'
 import ProgressMsg from '../ProgressMsg'
 
-export default function VegetableChallengeInfo({ currentPost, setVegetableTargetMet, selectedDateIsToday, challengeId }) {
+export default function VegetableChallengeInfo({ currentPost, selectedDateIsToday, challengeId, vegetableProgress, vegetableSuccess }) {
     const goal = currentPost.targets[challengeId].servingsVegetablesEaten
-    const score = currentPost.data[challengeId].servingsVegetablesEaten
-    const userProgressingTowardsGoal = score > 0 && score < goal
-    const userMetVegetableGoal = () => {
-        if (parseInt(score) >= parseInt(goal)) {
-            setVegetableTargetMet(true)
-            return true
-        } else {
-            setVegetableTargetMet(false)
-            return false
-        }
-    }
     return (
         <>
             {selectedDateIsToday ?
@@ -25,8 +14,8 @@ export default function VegetableChallengeInfo({ currentPost, setVegetableTarget
                 {`Goal: ${goal} servings`}
             </span>
             <ProgressMsg
-                userProgressingTowardsGoal={userProgressingTowardsGoal}
-                userMetGoal={userMetVegetableGoal()}
+                userProgressingTowardsGoal={vegetableProgress}
+                userMetGoal={vegetableSuccess}
             />
         </>)
 }
