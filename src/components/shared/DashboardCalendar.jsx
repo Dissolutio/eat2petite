@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import { format } from 'date-fns'
 
 const DashboardCalendar = props => {
-  const { minDate, maxDate, selectedDate, setSelectedDateInDashboard, daysWithInput, daysWithTargetMet } = props
+  const { minDate, maxDate, selectedDate, setSelectedDateInDashboard, progressHighlightDateArr, successHighlightDateArr } = props
+  console.log("TCL: successHighlightDateArr", successHighlightDateArr)
   const dateChangeHandler = (date) => {
     setSelectedDateInDashboard(date)
   }
@@ -14,12 +15,12 @@ const DashboardCalendar = props => {
     const { children, date } = props
     const formattedDate = format(new Date(date), 'MMMM d, yyyy')
     const isProgressDate = () => {
-      return daysWithInput.includes(formattedDate)
+      return progressHighlightDateArr.includes(formattedDate)
     }
     return (
       <DateSquareStyle
         progress={isProgressDate()}
-        daysWithInput={daysWithInput}
+        progressHighlightDateArr={progressHighlightDateArr}
       >
         <span>{children}</span>
         <span>X</span>
@@ -28,8 +29,8 @@ const DashboardCalendar = props => {
   }
   return (
     <RestyledCalendar
-      daysWithInput={daysWithInput}
-      daysWithTargetMet={daysWithTargetMet}
+      progressHighlightDateArr={progressHighlightDateArr}
+      successHighlightDateArr={successHighlightDateArr}
       onChange={dateChangeHandler}
       value={selectedDate}
       calendarType="US"
@@ -77,14 +78,14 @@ button:disabled {
   background-color: var(--transparent-gray);
   color: var(--transparent-gray);
 }
-${props => props.daysWithInput && props.daysWithInput.reduce((result, date) => (
+${props => props.progressHighlightDateArr && props.progressHighlightDateArr.reduce((result, date) => (
   result + `
           abbr[aria-label = "${date}"] {
               border: 3px solid var(--E2P-bright-orange);
           }
       `
 ), '')}
-${props => props.daysWithTargetMet && props.daysWithTargetMet.reduce((result, date) => (
+${props => props.successHighlightDateArr && props.successHighlightDateArr.reduce((result, date) => (
   result + `
           abbr[aria-label = "${date}"] {
               border: 2px solid var(--E2P-bright-orange);

@@ -125,8 +125,8 @@ export default function ChallengePost(props) {
   }
   return (
     <Container className="border border-primary rounded p-3 mt-4 mb-3 text-center">
-      <h5 className='text-primary border-bottom border-primary'>{currentChallenge.challengeName}</h5>
-      <h4 className='text-secondary'>{format(selectedDateInDashboard, 'P')}</h4>
+      <h6 style={{ fontFamily: 'ABeeZee, sans-serif', fontSize: '1.2rem' }}>{format(selectedDateInDashboard, 'P')}</h6>
+      <h6>{currentChallenge.challengeName}</h6>
       {currentPost ? (
         <Form onSubmit={onSubmitForm} >
           <UserDidCheckin checkedInBonus={currentPost.checkedInBonus} />
