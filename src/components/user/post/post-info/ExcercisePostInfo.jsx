@@ -2,24 +2,10 @@ import React from 'react'
 import ProgressMsg from '../ProgressMsg'
 
 export default function ExcercisePostInfo(props) {
-    const { currentPost, selectedDateIsToday, setExcerciseTargetMet, challengeId } = props
+    const { currentPost, selectedDateIsToday, challengeId, excerciseProgress, excerciseSuccess } = props
     const lightGoal = currentPost.targets[challengeId].lightExcerciseDuration
     const mediumGoal = currentPost.targets[challengeId].mediumExcerciseDuration
     const heavyGoal = currentPost.targets[challengeId].heavyExcerciseDuration
-    const lightScore = currentPost.data[challengeId].lightExcerciseDuration
-    const mediumScore = currentPost.data[challengeId].mediumExcerciseDuration
-    const heavyScore = currentPost.data[challengeId].heavyExcerciseDuration
-    const userProgressingTowardsGoal = ((lightScore > 0 || mediumScore > 0 || heavyScore > 0) && ((lightScore < lightGoal) || (mediumScore < mediumGoal) || (heavyScore < heavyGoal)))
-    const condition = ((lightScore >= lightGoal) && (mediumScore >= mediumGoal) && (heavyScore >= heavyGoal))
-    const userMetExcerciseGoal = () => {
-        if (condition) {
-            setExcerciseTargetMet(true)
-            return true
-        } else {
-            setExcerciseTargetMet(false)
-            return false
-        }
-    }
 
     return (
         <>
@@ -41,8 +27,8 @@ export default function ExcercisePostInfo(props) {
                 {`${heavyGoal} mins high intensity`}
             </span>
             <ProgressMsg
-                userProgressingTowardsGoal={userProgressingTowardsGoal}
-                userMetGoal={userMetExcerciseGoal()}
+                userProgressingTowardsGoal={excerciseProgress}
+                userMetGoal={excerciseSuccess}
             />
         </>
     )

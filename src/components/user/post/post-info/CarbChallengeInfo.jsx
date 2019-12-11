@@ -1,18 +1,7 @@
 import React from 'react'
 import ProgressMsg from '../ProgressMsg'
-export default function CarbChallengeInfo({ currentPost, setCarbLimitExceeded, selectedDateIsToday, challengeId }) {
-    const goalLimit = currentPost.targets[challengeId].refinedCarbsConsumed
-    const score = currentPost.data[challengeId].refinedCarbsConsumed
-    const userUnderBudget = currentPost && (score <= goalLimit)
-    const userOverBudget = () => {
-        if (score >= goalLimit) {
-            setCarbLimitExceeded(true)
-            return true
-        } else {
-            setCarbLimitExceeded(false)
-            return false
-        }
-    }
+export default function CarbChallengeInfo({ currentPost, selectedDateIsToday, challengeId, userUnderBudget }) {
+    const goalLimit = parseInt(currentPost.targets[challengeId].refinedCarbsConsumed)
     return (
         <>
             {selectedDateIsToday
@@ -26,7 +15,7 @@ export default function CarbChallengeInfo({ currentPost, setCarbLimitExceeded, s
             </span>
             <ProgressMsg
                 userUnderBudget={userUnderBudget}
-                userOverBudget={userOverBudget()}
+                userOverBudget={!userUnderBudget}
             />
         </>
     )

@@ -1,4 +1,4 @@
-import { isAfter, format } from 'date-fns'
+import { isAfter } from 'date-fns'
 
 export const ordinalSuffixOf = (i) => {
 	const j = i % 10,
@@ -23,4 +23,108 @@ export function sortByMostCurrentStartDate(a, b) {
 }
 export function lastInitial(string) {
 	return string.split('')[0].toUpperCase() + '.'
+}
+
+export function flatten(objectToFlatten) {
+	return Object.values(objectToFlatten).reduce((reduction, current) => {
+		return {
+			...reduction,
+			...current,
+		}
+	}, {})
+}
+
+export function buildNewTargetsFromEvent(event) {
+	return {
+		challenge1: {
+			quantityWaterDrank:
+				event.target.quantityWaterDrank && event.target.quantityWaterDrank.value,
+			quantityWaterDrankUnits:
+				event.target.quantityWaterDrankUnits && event.target.quantityWaterDrankUnits.value,
+		},
+		challenge2: {
+			servingsVegetablesEaten:
+				event.target.servingsVegetablesEaten && event.target.servingsVegetablesEaten.value,
+		},
+		challenge3: {
+			proteinConsumed: event.target.proteinConsumed && event.target.proteinConsumed.value,
+		},
+		challenge4: {
+			lightExcerciseDuration:
+				event.target.lightExcerciseDuration && event.target.lightExcerciseDuration.value,
+			mediumExcerciseDuration:
+				event.target.mediumExcerciseDuration && event.target.mediumExcerciseDuration.value,
+			heavyExcerciseDuration:
+				event.target.heavyExcerciseDuration && event.target.heavyExcerciseDuration.value,
+		},
+		challenge5: {
+			refinedCarbsConsumed:
+				event.target.refinedCarbsConsumed && event.target.refinedCarbsConsumed.value,
+		},
+		challenge6: {
+			quantitySugarConsumed:
+				event.target.quantitySugarConsumed && event.target.quantitySugarConsumed.value,
+			quantitySugarConsumedUnits:
+				event.target.quantitySugarConsumedUnits && event.target.quantitySugarConsumedUnits.value,
+			quantitySaltConsumed:
+				event.target.quantitySaltConsumed && event.target.quantitySaltConsumed.value,
+			quantitySaltConsumedUnits:
+				event.target.quantitySaltConsumedUnits && event.target.quantitySaltConsumedUnits.value,
+		},
+	}
+}
+
+export function scorePost(post) {
+	if (!post) return null
+	const waterGoal = post.targets.challenge1.quantityWaterDrank
+	const waterScore = post.data.challenge1.quantityWaterDrank
+	const waterProgress = waterScore > 0 && waterScore < waterGoal
+	const waterSuccess = waterScore >= waterGoal
+
+	const vegGoal = parseInt(post.targets.challenge2.servingsVegetablesEaten)
+	const vegScore = parseInt(post.data.challenge2.servingsVegetablesEaten)
+	const vegetableProgress = vegScore > 0 && vegScore < vegGoal
+	const vegetableSuccess = vegScore >= vegGoal
+
+	const proteinGoal = parseInt(post.targets.challenge3.proteinConsumed)
+	const proteinScore = parseInt(post.data.challenge3.proteinConsumed)
+	const proteinProgress = proteinScore > 0 && proteinScore < proteinGoal
+	const proteinSuccess = proteinScore >= proteinGoal
+
+	const lightExcerciseGoal = parseInt(post.targets.challenge4.lightExcerciseDuration)
+	const mediumExcerciseGoal = parseInt(post.targets.challenge4.mediumExcerciseDuration)
+	const heavyExcerciseGoal = parseInt(post.targets.challenge4.heavyExcerciseDuration)
+	const lightExcerciseScore = parseInt(post.data.challenge4.lightExcerciseDuration)
+	const mediumExcerciseScore = parseInt(post.data.challenge4.mediumExcerciseDuration)
+	const heavyExcerciseScore = parseInt(post.data.challenge4.heavyExcerciseDuration)
+	const excerciseProgress = (lightExcerciseScore > 0 || mediumExcerciseScore > 0 || heavyExcerciseScore > 0) && (
+		(lightExcerciseScore < lightExcerciseGoal)
+		|| (mediumExcerciseScore < mediumExcerciseGoal)
+		|| (heavyExcerciseScore < heavyExcerciseGoal)
+	)
+	const excerciseSuccess = ((lightExcerciseScore >= lightExcerciseGoal) && (mediumExcerciseScore >= mediumExcerciseGoal) && (heavyExcerciseScore >= heavyExcerciseGoal))
+
+	const carbLimit = parseInt(post.targets.challenge5.refinedCarbsConsumed)
+	const carbScore = parseInt(post.data.challenge5.refinedCarbsConsumed)
+	const carbUnderBudget = post && (carbScore <= carbLimit)
+
+
+	const sugarLimit = parseInt(post.targets.challenge6.quantitySugarConsumed)
+	const saltLimit = parseInt(post.targets.challenge6.quantitySaltConsumed)
+	const sugarScore = parseInt(post.data.challenge6.quantitySugarConsumed)
+	const saltScore = parseInt(post.data.challenge6.quantitySaltConsumed)
+	const sugarSaltUnderBudget = (sugarScore <= sugarLimit) && (saltScore <= saltLimit)
+
+	return {
+		waterProgress,
+		waterSuccess,
+		vegetableProgress,
+		vegetableSuccess,
+		proteinProgress,
+		proteinSuccess,
+		excerciseProgress,
+		excerciseSuccess,
+		carbUnderBudget,
+		sugarSaltUnderBudget,
+	}
 }

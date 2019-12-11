@@ -1,19 +1,8 @@
 import React from 'react'
 import ProgressMsg from '../ProgressMsg'
 
-export default function ProteinChallengeInfo({ selectedDateIsToday, setProteinTargetMet, currentPost, challengeId }) {
-    const goal = currentPost.targets[challengeId].proteinConsumed
-    const score = currentPost.data[challengeId].proteinConsumed
-    const userProgressingTowardsGoal = score > 0 && score < goal
-    const userMetProteinGoal = () => {
-        if (parseInt(score) >= parseInt(goal)) {
-            setProteinTargetMet(true)
-            return true
-        } else {
-            setProteinTargetMet(false)
-            return false
-        }
-    }
+export default function ProteinChallengeInfo({ selectedDateIsToday, currentPost, challengeId, proteinProgress, proteinSuccess }) {
+    const goal = parseInt(currentPost.targets[challengeId].proteinConsumed)
     return (
         <>
             {selectedDateIsToday ?
@@ -25,8 +14,8 @@ export default function ProteinChallengeInfo({ selectedDateIsToday, setProteinTa
                 {`Your goal: ${goal} grams`}
             </span>
             <ProgressMsg
-                userProgressingTowardsGoal={userProgressingTowardsGoal}
-                userMetGoal={userMetProteinGoal()}
+                userProgressingTowardsGoal={proteinProgress}
+                userMetGoal={proteinSuccess}
             />
         </>)
 }

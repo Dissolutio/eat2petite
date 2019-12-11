@@ -9,11 +9,11 @@ import ChallengePost from './post/ChallengePost'
 const UserContestOverview = (props) => {
   const {
     selectedDateInDashboard,
-    setSelectedDateInDashboard,
     handleSelectedContestChange,
+    setSelectedDateInDashboard,
     userSelectedContest,
-    me,
     userEnrolledContests,
+    me,
     posts,
     challenges,
     currentChallenge,
@@ -27,7 +27,7 @@ const UserContestOverview = (props) => {
         isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)),
       )
   }
-  function daysWithInput() {
+  function progressHighlightDateArr() {
     return (
       postsArr &&
       postsArr
@@ -35,13 +35,16 @@ const UserContestOverview = (props) => {
         .map((post) => format(new Date(post.postDate), 'MMMM d, yyyy'))
     )
   }
-  const daysWithTargetMet = () => {
-    return (
-      postsArr &&
-      postsArr
-        .filter((post) => post && post.targetsMet)
-        .map((post) => format(new Date(post.postDate), 'MMMM d, yyyy'))
-    )
+  const successHighlightDateArr = () => {
+    function forSuccess(post) {
+      const targetsMet = post && post.targetsMet
+      return targetsMet && Object.values(targetsMet).some((item) => item)
+    }
+    function toFormattedDates(post) {
+      return format(new Date(post.postDate), 'MMMM d, yyyy')
+    }
+    const targetsMetDays = postsArr && postsArr.filter(forSuccess)
+    return targetsMetDays.map(toFormattedDates)
   }
   return (
     <Container className='text-center'>
@@ -67,8 +70,8 @@ const UserContestOverview = (props) => {
           setSelectedDateInDashboard={setSelectedDateInDashboard}
           minDate={new Date(startDate)}
           maxDate={new Date(endDate)}
-          daysWithInput={daysWithInput()}
-          daysWithTargetMet={daysWithTargetMet()}
+          progressHighlightDateArr={progressHighlightDateArr()}
+          successHighlightDateArr={successHighlightDateArr()}
         />
       </Container>
     </Container>

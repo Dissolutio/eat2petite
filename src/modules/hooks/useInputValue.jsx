@@ -6,6 +6,9 @@ const useInputValue = initialValue => {
 		onChange: e => {
 			setValue(e.target.value || e.target.innerText)
 		},
+		setInputValue: val => {
+			setValue(val)
+		}
 	}
 }
 export default useInputValue

@@ -16,6 +16,7 @@ import ExcercisePostInfo from './post-info/ExcercisePostInfo'
 import CarbChallengeInfo from './post-info/CarbChallengeInfo'
 import SugarSaltPostInfo from './post-info/SugarSaltPostInfo'
 
+
 const SubmitButton = () => {
     return (
         <Button color='primary' type="submit" >
@@ -25,28 +26,48 @@ const SubmitButton = () => {
 }
 
 const UserPostInputs = (props) => {
+    const { currentPost, challengeId, selectedDateInDashboard, progress, formState } = props
     const {
-        currentPost, challengeId, selectedDateInDashboard, setWaterTargetMet,
-        setVegetableTargetMet, setProteinTargetMet, setExcerciseTargetMet,
-        setCarbLimitExceeded, setSugarSaltLimitExceeded
-    } = props
+        waterProgress,
+        waterSuccess,
+        vegetableProgress,
+        vegetableSuccess,
+        proteinProgress,
+        proteinSuccess,
+        excerciseProgress,
+        excerciseSuccess,
+        carbUnderBudget,
+        sugarSaltUnderBudget,
+    } = progress
+    const { quantityWaterDrank,
+        quantityWaterDrankUnits,
+        servingsVegetablesEaten,
+        proteinConsumed,
+        proteinConsumedUnits,
+        lightExcerciseDuration,
+        mediumExcerciseDuration,
+        heavyExcerciseDuration,
+        refinedCarbsConsumed,
+        refinedCarbsConsumedUnits,
+        quantitySugarConsumed,
+        quantitySaltConsumed,
+        quantitySugarConsumedUnits,
+        quantitySaltConsumedUnits, } = formState
 
     const selectedDateIsToday = isToday(selectedDateInDashboard)
-
     if (challengeId === 'challenge1') {
         return (
             <>
                 <WaterChallengeInfo
+                    waterProgress={waterProgress}
+                    waterSuccess={waterSuccess}
                     currentPost={currentPost}
                     selectedDateIsToday={selectedDateIsToday}
                     challengeId={challengeId}
-                    setWaterTargetMet={setWaterTargetMet}
                 />
                 <WaterChallengeInputs
-                    defaultValues={{
-                        quantityWaterDrank: currentPost.data[challengeId].quantityWaterDrank,
-                        quantityWaterDrankUnits: currentPost.data[challengeId].quantityWaterDrankUnits,
-                    }}
+                    quantityWaterDrank={quantityWaterDrank}
+                    quantityWaterDrankUnits={quantityWaterDrankUnits}
                 />
                 <SubmitButton />
             </>
@@ -56,15 +77,14 @@ const UserPostInputs = (props) => {
         return (
             <>
                 <VegetableChallengeInfo
+                    vegetableProgress={vegetableProgress}
+                    vegetableSuccess={vegetableSuccess}
                     challengeId={challengeId}
                     currentPost={currentPost}
                     selectedDateIsToday={selectedDateIsToday}
-                    setVegetableTargetMet={setVegetableTargetMet}
                 />
                 <VegetableChallengeInputs
-                    defaultValues={{
-                        servingsVegetablesEaten: currentPost.data[challengeId].servingsVegetablesEaten,
-                    }}
+                    servingsVegetablesEaten={servingsVegetablesEaten}
                 />
                 <SubmitButton />
             </>
@@ -74,16 +94,15 @@ const UserPostInputs = (props) => {
         return (
             <>
                 <ProteinChallengeInfo
+                    proteinProgress={proteinProgress}
+                    proteinSuccess={proteinSuccess}
                     selectedDateIsToday={selectedDateIsToday}
-                    setProteinTargetMet={setProteinTargetMet}
                     currentPost={currentPost}
                     challengeId={challengeId}
                 />
                 <ProteinChallengeInputs
-                    defaultValues={{
-                        proteinConsumed: currentPost.data[challengeId].proteinConsumed,
-                        proteinConsumedUnits: currentPost.data[challengeId].proteinConsumedUnits,
-                    }}
+                    proteinConsumed={proteinConsumed}
+                    proteinConsumedUnits={proteinConsumedUnits}
                 />
                 <SubmitButton />
             </>
@@ -93,18 +112,16 @@ const UserPostInputs = (props) => {
         return (
             <>
                 <ExcercisePostInfo
+                    excerciseProgress={excerciseProgress}
+                    excerciseSuccess={excerciseSuccess}
                     selectedDateIsToday={selectedDateIsToday}
-                    setExcerciseTargetMet={setExcerciseTargetMet}
                     currentPost={currentPost}
                     challengeId={challengeId}
                 />
                 <ExcerciseChallengeInputs
-                    defaultValues={{
-                        excerciseDurationUnits: currentPost.data[challengeId].excerciseDurationUnits,
-                        lightExcerciseDuration: currentPost.data[challengeId].lightExcerciseDuration,
-                        mediumExcerciseDuration: currentPost.data[challengeId].mediumExcerciseDuration,
-                        heavyExcerciseDuration: currentPost.data[challengeId].heavyExcerciseDuration,
-                    }}
+                    lightExcerciseDuration={lightExcerciseDuration}
+                    mediumExcerciseDuration={mediumExcerciseDuration}
+                    heavyExcerciseDuration={heavyExcerciseDuration}
                 />
                 <SubmitButton />
             </>
@@ -114,16 +131,14 @@ const UserPostInputs = (props) => {
         return (
             <>
                 <CarbChallengeInfo
+                    userUnderBudget={carbUnderBudget}
                     selectedDateIsToday={selectedDateIsToday}
-                    setCarbLimitExceeded={setCarbLimitExceeded}
                     currentPost={currentPost}
                     challengeId={challengeId}
                 />
                 <CarbChallengeInputs
-                    defaultValues={{
-                        refinedCarbsConsumed: currentPost.data[challengeId].refinedCarbsConsumed,
-                        refinedCarbsConsumedUnits: currentPost.data[challengeId].refinedCarbsConsumedUnits,
-                    }}
+                    refinedCarbsConsumed={refinedCarbsConsumed}
+                    refinedCarbsConsumedUnits={refinedCarbsConsumedUnits}
                 />
                 <SubmitButton />
             </>
@@ -133,19 +148,17 @@ const UserPostInputs = (props) => {
         return (
             <>
                 <SugarSaltPostInfo
+                    userUnderBudget={sugarSaltUnderBudget}
                     selectedDateIsToday={selectedDateIsToday}
-                    setSugarSaltLimitExceeded={setSugarSaltLimitExceeded}
                     currentPost={currentPost}
                     challengeId={challengeId}
                 />
                 <SugarSaltChallengeInputs
                     currentPost={currentPost}
-                    defaultValues={{
-                        quantitySugarConsumed: currentPost.data[challengeId].quantitySugarConsumed,
-                        quantitySaltConsumed: currentPost.data[challengeId].quantitySaltConsumed,
-                        quantitySugarConsumedUnits: currentPost.data[challengeId].quantitySugarConsumedUnits,
-                        quantitySaltConsumedUnits: currentPost.data[challengeId].quantitySaltConsumedUnits,
-                    }}
+                    quantitySugarConsumed={quantitySugarConsumed}
+                    quantitySaltConsumed={quantitySaltConsumed}
+                    quantitySugarConsumedUnits={quantitySugarConsumedUnits}
+                    quantitySaltConsumedUnits={quantitySaltConsumedUnits}
                 />
                 <SubmitButton />
             </>

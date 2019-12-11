@@ -1,17 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
 
-import useInputValue from '../../../modules/hooks/useInputValue'
-
-export default function WaterChallengeInputs({ defaultValues }) {
-  console.log('TCL: WaterChallengeInputs -> defaultValues', defaultValues)
-  const quantityWaterDrank = useInputValue(defaultValues.quantityWaterDrank)
-  const [quantityWaterDrankUnits, setQuantityWaterDrankUnits] = useState(
-    defaultValues.quantityWaterDrankUnits,
-  )
-  const handleUnitsChange = (event) => {
-    setQuantityWaterDrankUnits(event.target)
-  }
+export default function WaterChallengeInputs({ quantityWaterDrank, quantityWaterDrankUnits }) {
   return (
     <>
       <InputGroup className='mb-2'>
@@ -35,8 +25,8 @@ export default function WaterChallengeInputs({ defaultValues }) {
           bsSize='sm'
           type='select'
           name='quantityWaterDrankUnits'
-          value={quantityWaterDrankUnits}
-          onChange={handleUnitsChange}>
+          {...quantityWaterDrankUnits}
+        >
           <option value='cups'>Cups</option>
           <option value='ounces'>Ounces</option>
           <option value='liters'>Liters</option>

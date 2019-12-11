@@ -1,13 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Label, Input, InputGroup, InputGroupAddon } from 'reactstrap'
-import useInputValue from '../../../modules/hooks/useInputValue'
 
-export default function ProteinChallengeInputs({ defaultValues }) {
-    const proteinConsumed = useInputValue(defaultValues.proteinConsumed)
-    const [proteinConsumedUnits, setProteinConsumedUnits] = useState(defaultValues.proteinConsumedUnits)
-    const handleUnitsChange = (event) => {
-        setProteinConsumedUnits(event.target)
-    }
+export default function ProteinChallengeInputs({ proteinConsumed, proteinConsumedUnits }) {
     return (
         <>
             <InputGroup className='mb-2'>
@@ -23,8 +17,7 @@ export default function ProteinChallengeInputs({ defaultValues }) {
                     bsSize='sm'
                     type="select"
                     name="proteinConsumedUnits"
-                    value={proteinConsumedUnits}
-                    onChange={handleUnitsChange}
+                    {...proteinConsumedUnits}
                 >
                     <option value="cups">grams</option>
                     <option value="ounces">servings</option>
