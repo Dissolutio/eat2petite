@@ -55,6 +55,7 @@ export default function AdminDashboard(props) {
 			return challengeForDay
 		}
 	}
+	const userPosts = () => (posts && posts[viewingUserId]) ? posts[viewingUserId] : []
 
 	return (
 		<>
@@ -67,7 +68,7 @@ export default function AdminDashboard(props) {
 					setSelectedDateInDashboard={setSelectedDateInDashboard}
 					currentChallenge={currentChallenge()}
 					challenges={challenges}
-					userPosts={posts[viewingUserId]}
+					userPosts={userPosts()}
 				/>
 				:
 				<AdminContestOverview
