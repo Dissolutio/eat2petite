@@ -10,6 +10,7 @@ import { sortByMostCurrentStartDate } from '../../modules/functions'
 
 export default function AdminDashboard(props) {
 	const [userSelectedContest, setUserSelectedContest] = useState()
+	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
 	const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
 	const [viewingUserId, setViewingUserId] = React.useState('')
 	const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
@@ -32,9 +33,8 @@ export default function AdminDashboard(props) {
 		setLocalContestId(contest.uid)
 	}
 	const { contests, posts, challenges, users } = props
-	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
 	const contestsArray = contests && Object.values(contests)
-
+	// Auto select a contest
 	if (!hasAutoSelectedContest && contestsArray) {
 		const localContest = contests[localContestId]
 		const mostRecentlyStartedContest = [...contestsArray.sort(sortByMostCurrentStartDate)][0]
