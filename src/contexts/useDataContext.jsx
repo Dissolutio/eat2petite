@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { format, isSameDay } from 'date-fns'
 
-import { useFirebaseContext } from '../contexts//useFirebaseContext'
-import { useAuthUserContext } from '../contexts//useAuthUserContext'
+import { useFirebaseContext } from '../contexts/useFirebaseContext'
+import { useAuthUserContext } from '../contexts/useAuthUserContext'
 import { sampleChallenges, sampleContests } from '../sampleData'
 import devDBSavePoint from '../assets/devDBSavePoint'
 import { addCalculatedContestDataTo } from '../modules/adapters'

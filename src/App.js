@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { useAuthUserContext } from './contexts/useAuthUserContext'
+import { useAuthUserContext } from 'contexts/useAuthUserContext'
+
 import Header from './components/layout/Header'
 import AppRouter from './components/layout/AppRouter'
 import { PageStyle, AppStyle } from './components/layout/StyleWrappers'
