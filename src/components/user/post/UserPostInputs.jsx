@@ -16,6 +16,7 @@ import ExcercisePostInfo from './post-info/ExcercisePostInfo'
 import CarbChallengeInfo from './post-info/CarbChallengeInfo'
 import SugarSaltPostInfo from './post-info/SugarSaltPostInfo'
 
+import { scorePost } from 'modules/functions'
 
 const SubmitButton = () => {
     return (
@@ -26,7 +27,7 @@ const SubmitButton = () => {
 }
 
 const UserPostInputs = (props) => {
-    const { currentPost, challengeId, selectedDateInDashboard, progress, formState } = props
+    const { currentPost, challengeId, selectedDateInDashboard } = props
     const {
         waterProgress,
         waterSuccess,
@@ -38,21 +39,14 @@ const UserPostInputs = (props) => {
         excerciseSuccess,
         carbUnderBudget,
         sugarSaltUnderBudget,
-    } = progress
-    const { quantityWaterDrank,
-        quantityWaterDrankUnits,
-        servingsVegetablesEaten,
-        proteinConsumed,
-        proteinConsumedUnits,
-        lightExcerciseDuration,
-        mediumExcerciseDuration,
-        heavyExcerciseDuration,
-        refinedCarbsConsumed,
-        refinedCarbsConsumedUnits,
-        quantitySugarConsumed,
-        quantitySaltConsumed,
-        quantitySugarConsumedUnits,
-        quantitySaltConsumedUnits, } = formState
+    } = scorePost(currentPost)
+
+    const { quantityWaterDrank, quantityWaterDrankUnits } = currentPost.data.challenge1
+    const { servingsVegetablesEaten } = currentPost.data.challenge2
+    const { proteinConsumed, proteinConsumedUnits } = currentPost.data.challenge3
+    const { lightExcerciseDuration, mediumExcerciseDuration, heavyExcerciseDuration } = currentPost.data.challenge4
+    const { refinedCarbsConsumed, refinedCarbsConsumedUnits } = currentPost.data.challenge5
+    const { quantitySugarConsumed, quantitySaltConsumed, quantitySugarConsumedUnits, quantitySaltConsumedUnits } = currentPost.data.challenge6
 
     const selectedDateIsToday = isToday(selectedDateInDashboard)
     if (challengeId === 'challenge1') {

@@ -8,9 +8,6 @@ import UserPostInputs from './UserPostInputs'
 import UserDidCheckin from '../../shared/UserDidCheckin'
 import LastEditedReadout from './LastEditedReadout'
 
-import useInputValue from 'modules/hooks/useInputValue'
-import { scorePost } from 'modules/functions'
-
 export default function ChallengePost(props) {
   const {
     userSelectedContest,
@@ -21,84 +18,6 @@ export default function ChallengePost(props) {
     challenges,
   } = props
   const { saveNewPost, updateUserPost } = useDataContext()
-  // Make form state
-  const quantityWaterDrank = useInputValue('0')
-  const quantityWaterDrankUnits = useInputValue('cups')
-  const servingsVegetablesEaten = useInputValue('0')
-  const proteinConsumed = useInputValue('0')
-  const proteinConsumedUnits = useInputValue('grams')
-  const lightExcerciseDuration = useInputValue('0')
-  const mediumExcerciseDuration = useInputValue('0')
-  const heavyExcerciseDuration = useInputValue('0')
-  const refinedCarbsConsumed = useInputValue('0')
-  const refinedCarbsConsumedUnits = useInputValue('calories')
-  const quantitySugarConsumed = useInputValue('0')
-  const quantitySaltConsumed = useInputValue('0')
-  const quantitySugarConsumedUnits = useInputValue('grams')
-  const quantitySaltConsumedUnits = useInputValue('grams')
-  const formState = {
-    quantityWaterDrank,
-    quantityWaterDrankUnits,
-    servingsVegetablesEaten,
-    proteinConsumed,
-    proteinConsumedUnits,
-    lightExcerciseDuration,
-    mediumExcerciseDuration,
-    heavyExcerciseDuration,
-    refinedCarbsConsumed,
-    refinedCarbsConsumedUnits,
-    quantitySugarConsumed,
-    quantitySaltConsumed,
-    quantitySugarConsumedUnits,
-    quantitySaltConsumedUnits,
-  }
-  React.useEffect(() => {
-    // Reset Form values
-    if (!(currentPost && currentPost.data)) return
-    quantityWaterDrank.setInputValue(
-      currentPost && currentPost.data.challenge1.quantityWaterDrank,
-    )
-    quantityWaterDrankUnits.setInputValue(
-      currentPost && currentPost.data.challenge1.quantityWaterDrankUnits,
-    )
-    servingsVegetablesEaten.setInputValue(
-      currentPost && currentPost.data.challenge2.servingsVegetablesEaten,
-    )
-    proteinConsumed.setInputValue(
-      currentPost && currentPost.data.challenge3.proteinConsumed,
-    )
-    proteinConsumedUnits.setInputValue(
-      currentPost && currentPost.data.challenge3.proteinConsumedUnits,
-    )
-    lightExcerciseDuration.setInputValue(
-      currentPost && currentPost.data.challenge4.lightExcerciseDuration,
-    )
-    mediumExcerciseDuration.setInputValue(
-      currentPost && currentPost.data.challenge4.mediumExcerciseDuration,
-    )
-    heavyExcerciseDuration.setInputValue(
-      currentPost && currentPost.data.challenge4.heavyExcerciseDuration,
-    )
-    refinedCarbsConsumed.setInputValue(
-      currentPost && currentPost.data.challenge5.refinedCarbsConsumed,
-    )
-    refinedCarbsConsumedUnits.setInputValue(
-      currentPost && currentPost.data.challenge5.refinedCarbsConsumedUnits,
-    )
-    quantitySugarConsumed.setInputValue(
-      currentPost && currentPost.data.challenge6.quantitySugarConsumed,
-    )
-    quantitySaltConsumed.setInputValue(
-      currentPost && currentPost.data.challenge6.quantitySaltConsumed,
-    )
-    quantitySugarConsumedUnits.setInputValue(
-      currentPost && currentPost.data.challenge6.quantitySugarConsumedUnits,
-    )
-    quantitySaltConsumedUnits.setInputValue(
-      currentPost && currentPost.data.challenge6.quantitySaltConsumedUnits,
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPost])
   const selectedDateIsFutureDate =
     differenceInCalendarDays(new Date(), new Date(selectedDateInDashboard)) < 0
   const selectedDateIsToday = isToday(selectedDateInDashboard)
@@ -121,7 +40,7 @@ export default function ChallengePost(props) {
       const userTargetForDate =
         me.challengeTargetsForDates &&
         me.challengeTargetsForDates[
-          `${format(selectedDateInDashboard, 'yyyy-MM-dd')}`
+        `${format(selectedDateInDashboard, 'yyyy-MM-dd')}`
         ]
       const currentPostHasTarget =
         currentPost && currentPost.targets[challengeId]
@@ -136,37 +55,53 @@ export default function ChallengePost(props) {
         challengeDefaultTarget
       )
     }
+    const {
+      quantityWaterDrank,
+      quantityWaterDrankUnits,
+      servingsVegetablesEaten,
+      proteinConsumed,
+      proteinConsumedUnits,
+      lightExcerciseDuration,
+      mediumExcerciseDuration,
+      heavyExcerciseDuration,
+      refinedCarbsConsumed,
+      refinedCarbsConsumedUnits,
+      quantitySugarConsumed,
+      quantitySaltConsumed,
+      quantitySugarConsumedUnits,
+      quantitySaltConsumedUnits,
+    } = event.target
     return {
       ...currentPost,
       lastEditedAt: new Date().toString(),
       targetsMet: false,
       data: {
         challenge1: {
-          quantityWaterDrank: quantityWaterDrank.value,
-          quantityWaterDrankUnits: quantityWaterDrankUnits.value,
+          quantityWaterDrank: quantityWaterDrank ? quantityWaterDrank.value : currentPost.data.challenge1.quantityWaterDrank,
+          quantityWaterDrankUnits: quantityWaterDrankUnits ? quantityWaterDrankUnits.value : currentPost.data.challenge1.quantityWaterDrankUnits,
         },
         challenge2: {
-          servingsVegetablesEaten: servingsVegetablesEaten.value,
+          servingsVegetablesEaten: servingsVegetablesEaten ? servingsVegetablesEaten.value : currentPost.data.challenge2.servingsVegetablesEaten,
         },
         challenge3: {
-          proteinConsumed: proteinConsumed.value,
-          proteinConsumedUnits: proteinConsumedUnits.value,
+          proteinConsumed: proteinConsumed ? proteinConsumed.value : currentPost.data.challenge3.proteinConsumed,
+          proteinConsumedUnits: proteinConsumedUnits ? proteinConsumedUnits.value : currentPost.data.challenge3.proteinConsumedUnits,
         },
         challenge4: {
           defaultMeasurementUnits: 'minutes',
-          lightExcerciseDuration: lightExcerciseDuration.value,
-          mediumExcerciseDuration: mediumExcerciseDuration.value,
-          heavyExcerciseDuration: heavyExcerciseDuration.value,
+          lightExcerciseDuration: lightExcerciseDuration ? lightExcerciseDuration.value : currentPost.data.challenge4.lightExcerciseDuration,
+          mediumExcerciseDuration: mediumExcerciseDuration ? mediumExcerciseDuration.value : currentPost.data.challenge4.mediumExcerciseDuration,
+          heavyExcerciseDuration: heavyExcerciseDuration ? heavyExcerciseDuration.value : currentPost.data.challenge4.heavyExcerciseDuration,
         },
         challenge5: {
-          refinedCarbsConsumed: refinedCarbsConsumed.value,
-          refinedCarbsConsumedUnits: refinedCarbsConsumedUnits.value,
+          refinedCarbsConsumed: refinedCarbsConsumed ? refinedCarbsConsumed.value : currentPost.data.challenge5.refinedCarbsConsumed,
+          refinedCarbsConsumedUnits: refinedCarbsConsumedUnits ? refinedCarbsConsumedUnits.value : currentPost.data.challenge5.refinedCarbsConsumedUnits,
         },
         challenge6: {
-          quantitySugarConsumed: quantitySugarConsumed.value,
-          quantitySugarConsumedUnits: quantitySugarConsumedUnits.value,
-          quantitySaltConsumed: quantitySaltConsumed.value,
-          quantitySaltConsumedUnits: quantitySaltConsumedUnits.value,
+          quantitySugarConsumed: quantitySugarConsumed ? quantitySugarConsumed.value : currentPost.data.challenge6.quantitySugarConsumed,
+          quantitySugarConsumedUnits: quantitySugarConsumedUnits ? quantitySugarConsumedUnits.value : currentPost.data.challenge6.quantitySugarConsumedUnits,
+          quantitySaltConsumed: quantitySaltConsumed ? quantitySaltConsumed.value : currentPost.data.challenge6.quantitySaltConsumed,
+          quantitySaltConsumedUnits: quantitySaltConsumedUnits ? quantitySaltConsumedUnits.value : currentPost.data.challenge6.quantitySugarConsumedUnits,
         },
       },
       targets: {
@@ -193,8 +128,6 @@ export default function ChallengePost(props) {
         <Form onSubmit={onSubmitForm}>
           <UserDidCheckin checkedInBonus={currentPost.checkedInBonus} />
           <UserPostInputs
-            formState={formState}
-            progress={scorePost(currentPost)}
             currentPost={currentPost}
             challengeId={currentChallenge.uid}
             selectedDateIsToday={selectedDateIsToday}

@@ -12,7 +12,7 @@ export default function WaterChallengeInputs({ quantityWaterDrank, quantityWater
         <Input
           name='quantityWaterDrank'
           type='number'
-          {...quantityWaterDrank}
+          defaultValue={quantityWaterDrank}
         />
       </InputGroup>
       <InputGroup size='sm'>
@@ -25,7 +25,7 @@ export default function WaterChallengeInputs({ quantityWaterDrank, quantityWater
           bsSize='sm'
           type='select'
           name='quantityWaterDrankUnits'
-          {...quantityWaterDrankUnits}
+          defaultValue={quantityWaterDrankUnits}
         >
           <option value='cups'>Cups</option>
           <option value='ounces'>Ounces</option>

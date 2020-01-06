@@ -10,7 +10,7 @@ export default function VegetableChallengeInputs({ servingsVegetablesEaten }) {
             <Input
                 name="servingsVegetablesEaten"
                 type="number"
-                {...servingsVegetablesEaten}
+                defaultValue={servingsVegetablesEaten}
             />
         </InputGroup>
     )

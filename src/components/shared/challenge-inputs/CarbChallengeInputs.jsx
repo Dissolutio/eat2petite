@@ -7,7 +7,7 @@ export default function CarbChallengeInputs({ refinedCarbsConsumed, refinedCarbs
             <InputGroup className='mb-2'>
                 <Label for="refinedCarbsConsumed" hidden>Quantity</Label>
                 <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
-                <Input name="refinedCarbsConsumed" type="number" {...refinedCarbsConsumed} />
+                <Input name="refinedCarbsConsumed" type="number" defaultValue={refinedCarbsConsumed} />
             </InputGroup>
             <InputGroup size="sm">
                 <Label for="refinedCarbsConsumedUnits" hidden>Units</Label>
@@ -17,7 +17,7 @@ export default function CarbChallengeInputs({ refinedCarbsConsumed, refinedCarbs
                     bsSize='sm'
                     type="select"
                     name="refinedCarbsConsumedUnits"
-                    {...refinedCarbsConsumedUnits}
+                    defaultValue={refinedCarbsConsumedUnits}
                 >
                     <option value="calories">calories</option>
                 </Input>

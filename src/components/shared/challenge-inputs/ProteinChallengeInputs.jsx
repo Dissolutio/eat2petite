@@ -7,7 +7,7 @@ export default function ProteinChallengeInputs({ proteinConsumed, proteinConsume
             <InputGroup className='mb-2'>
                 <Label for="proteinConsumed" hidden>Quantity</Label>
                 <InputGroupAddon addonType="prepend">Quantity</InputGroupAddon>
-                <Input name="proteinConsumed" type="number" {...proteinConsumed} />
+                <Input name="proteinConsumed" type="number" defaultValue={proteinConsumed} />
             </InputGroup>
             <InputGroup size="sm">
                 <Label for="proteinConsumedUnits" hidden>Units</Label>
@@ -17,7 +17,7 @@ export default function ProteinChallengeInputs({ proteinConsumed, proteinConsume
                     bsSize='sm'
                     type="select"
                     name="proteinConsumedUnits"
-                    {...proteinConsumedUnits}
+                    defaultValue={proteinConsumedUnits}
                 >
                     <option value="cups">grams</option>
                     <option value="ounces">servings</option>
