@@ -8,31 +8,11 @@ import LandingPage from './components/layout/LandingPage'
 
 function App() {
 	const { initializing, user } = useAuthUserContext()
-	if (initializing === true) {
-		return <NonAuthApp />
-	}
-	if (initializing === false) {
-		return <AuthApp user={user} />
-	}
-}
-
-const AuthApp = (props) => {
 	return (
 		<AppStyle>
-			<Header user={props.user} />
+			<Header user={user} />
 			<PageStyle >
-				<AppRouter authUser={props.user} />
-			</PageStyle>
-		</AppStyle>
-	)
-}
-
-const NonAuthApp = () => {
-	return (
-		<AppStyle>
-			<Header />
-			<PageStyle>
-				<LandingPage />
+				{initializing ? <LandingPage /> : <AppRouter authUser={user} />}
 			</PageStyle>
 		</AppStyle>
 	)
