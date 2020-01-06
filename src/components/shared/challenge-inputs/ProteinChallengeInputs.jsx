@@ -19,8 +19,7 @@ export default function ProteinChallengeInputs({ proteinConsumed, proteinConsume
                     name="proteinConsumedUnits"
                     defaultValue={proteinConsumedUnits}
                 >
-                    <option value="cups">grams</option>
-                    <option value="ounces">servings</option>
+                    <option value="grams">grams</option>
                 </Input>
             </InputGroup>
         </>
