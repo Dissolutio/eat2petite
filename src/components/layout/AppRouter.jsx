@@ -9,6 +9,7 @@ import SignUpForm from '../authentication/SignUpForm'
 import SignInForm from '../authentication/SignInForm'
 
 import { useDataContext } from '../../contexts/useDataContext'
+import { useRealtimeData } from 'contexts/useRealtimeData'
 
 import UserDashboard from '../user/UserDashboard'
 import AccountPage from '../user/AccountPage'
@@ -27,6 +28,8 @@ import * as ROUTES from '../../routes'
 
 export default function AppRouter(props) {
   const { authUser } = props
+  const { state } = useRealtimeData()
+  console.log("TCL: AppRouter -> state", state)
   const signedInCondition = () => !!authUser
   const notSignedInCondition = () => !authUser
   const emailVerifiedCondition = () => !!me && me.emailVerified === true

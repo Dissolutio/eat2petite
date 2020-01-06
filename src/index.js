@@ -7,6 +7,7 @@ import { FirebaseContext, useFirebaseContext } from './contexts/useFirebaseConte
 import { AuthUserContext, useAuthListener } from './contexts/useAuthUserContext'
 import { UIContextProvider } from './contexts/useUIContext'
 import { DataContextProvider } from './contexts/useDataContext'
+import { RealtimeDataContextProvider } from './contexts/useRealtimeData'
 
 import App from './App'
 
@@ -33,9 +34,11 @@ function AppWrapper() {
 			<AuthWrapper>
 				<UIContextProvider>
 					<DataContextProvider>
-						<Router>
-							<App />
-						</Router>
+						<RealtimeDataContextProvider>
+							<Router>
+								<App />
+							</Router>
+						</RealtimeDataContextProvider>
 					</DataContextProvider>
 				</UIContextProvider>
 			</AuthWrapper>
