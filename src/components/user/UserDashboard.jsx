@@ -13,11 +13,11 @@ const UserDashboard = (props) => {
     'E2PSelectedContest',
     '',
   )
+  const [userSelectedContest, setUserSelectedContest] = useState()
+  const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
   const { appData } = useDataContext()
   const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
   const { contests, posts, me, challenges } = appData
-  const [userSelectedContest, setUserSelectedContest] = useState()
-  const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
 
   // When user switches contest, we adjust the selected date
   // to be within the contest dates
@@ -46,16 +46,17 @@ const UserDashboard = (props) => {
     setUserSelectedContest(contest)
     setLocalContestId(contest.uid)
   }
-  const userEnrolledContests =
-    me &&
-    me.contests &&
-    Object.keys(me.contests).map((contestKey) => contests[contestKey])
+  const userEnrolledContests = () => {
+    return me &&
+      me.contests &&
+      Object.keys(me.contests).map((contestKey) => contests[contestKey])
+  }
 
   // AUTOSELECT MOST RECENT CONTEST
-  if (!hasAutoSelectedContest && userEnrolledContests) {
+  if (!hasAutoSelectedContest && userEnrolledContests()) {
     const localContest = contests[localContestId]
     const mostRecentlyStartedContest = [
-      ...userEnrolledContests.sort(sortByMostCurrentStartDate),
+      ...userEnrolledContests().sort(sortByMostCurrentStartDate),
     ][0]
     if (localContest) {
       setUserSelectedContest(localContest)
@@ -87,7 +88,7 @@ const UserDashboard = (props) => {
         handleSelectedContestChange={handleSelectedContestChange}
         selectedDateInDashboard={selectedDateInDashboard}
         setSelectedDateInDashboard={setSelectedDateInDashboard}
-        userEnrolledContests={userEnrolledContests}
+        userEnrolledContests={userEnrolledContests()}
         currentChallenge={currentChallenge}
         challenges={challenges}
         posts={postsForSelectedContest}
