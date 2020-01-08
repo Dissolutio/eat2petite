@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import { isAfter } from 'date-fns'
-import { useUIContext } from '../../contexts/useUIContext'
-import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
 
+import { useUIContext } from 'contexts/useUIContext'
+import { useRealtimeData } from 'contexts/useRealtimeData'
+import { useLocalStorage } from 'modules/hooks/useLocalStorage'
 import AdminContestOverview from './AdminContestOverview'
 import AdminUserOverview from './AdminUserOverview'
 
-import { sortByMostCurrentStartDate } from '../../modules/functions'
+import { sortByMostCurrentStartDate } from 'modules/functions'
 
 export default function AdminDashboard(props) {
 	const [userSelectedContest, setUserSelectedContest] = useState()
 	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
 	const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
+	const { appState } = useRealtimeData()
+	console.log("TCL: AdminDashboard -> appState", appState)
 	const [viewingUserId, setViewingUserId] = React.useState('')
 	const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
 	// When user switches contest, we adjust the selected date to be within the contest dates
@@ -32,7 +35,9 @@ export default function AdminDashboard(props) {
 		setUserSelectedContest(contest)
 		setLocalContestId(contest.uid)
 	}
-	const { contests, posts, challenges, users } = props
+	const { personalProfile, contests, challenges } = appState
+	const users = appState.adminUsers
+	const posts = appState.adminPosts
 	const contestsArray = contests && Object.values(contests)
 	// Auto select a contest
 	if (!hasAutoSelectedContest && contestsArray) {

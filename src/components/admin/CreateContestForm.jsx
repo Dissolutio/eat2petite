@@ -3,13 +3,15 @@ import { withRouter } from 'react-router-dom'
 import { Container, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import { format, addDays } from 'date-fns'
 import { range } from 'lodash'
-import * as ROUTES from '../../routes'
-import { useDataContext } from '../../contexts/useDataContext'
-import useInputValue from '../../modules/hooks/useInputValue'
-import { ordinalSuffixOf } from '../../modules/functions'
+
+import { useRealtimeData } from 'contexts/useRealtimeData'
+
+import useInputValue from 'modules/hooks/useInputValue'
+import { ordinalSuffixOf } from 'modules/functions'
+import * as ROUTES from 'routes.js'
 
 const ContestCreateForm = (props) => {
-  const { createContest, enrollUserInContest } = useDataContext()
+  const { createContest, enrollUserInContest } = useRealtimeData()
   const { users, challenges } = props
   const [numberOfChallenges, setNumberOfChallenges] = useState(6)
   const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'))
@@ -26,15 +28,12 @@ const ContestCreateForm = (props) => {
 
   const createContestOnSubmit = async (event) => {
     event.preventDefault()
-    const formEnrolledUsers = event.target.enrolledUsers
-    const enrolledUsers = () => (
-      // either convert the node list to an array
-      formEnrolledUsers.length ?
-        Array.from(event.target.enrolledUsers)
-          .filter((input) => input.checked)
-          .map((input) => input.value)
-        // or put the lone value in an array
-        : [formEnrolledUsers.value])
+    const formEnrolledUsers = event.target.enrolledUsers.length ? Array.from(event.target.enrolledUsers)
+      .filter((input) => input.checked)
+      .map((input) => input.value)
+      // or put the lone value in an array
+      : [event.target.enrolledUsers.value]
+    console.log("TCL: createContestOnSubmit -> event.target.enrolledUsers", event.target.enrolledUsers)
     const orderOfChallenges = () => {
       let answer = {}
       for (let i = 0; i < orderSpotsArray.length; i++) {
@@ -51,10 +50,10 @@ const ContestCreateForm = (props) => {
       numberOfChallenges,
     }
     const newContestId = await createContest(newContest)
-    enrolledUsers.forEach((userId) => {
-      enrollUserInContest(userId, newContestId)
-    })
-    props.history.push(`${ROUTES.ADMIN_CONTESTS}${newContestId}`)
+    await Promise.all(formEnrolledUsers.map((userId) => {
+      return enrollUserInContest(userId, newContestId)
+    }))
+    props.history.push(`${ROUTES.ADMIN_CONTESTS}`)
   }
   return (
     <Container>
