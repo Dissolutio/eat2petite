@@ -2,10 +2,10 @@ import React from 'react'
 import { Container, Form } from 'reactstrap'
 import { format, differenceInCalendarDays, isToday } from 'date-fns'
 
-import { useDataContext } from '../../../contexts/useDataContext'
+import { useRealtimeData } from 'contexts/useRealtimeData'
 
 import UserPostInputs from './UserPostInputs'
-import UserDidCheckin from '../../shared/UserDidCheckin'
+import UserDidCheckin from 'components/shared/UserDidCheckin'
 import LastEditedReadout from './LastEditedReadout'
 
 export default function ChallengePost(props) {
@@ -17,7 +17,7 @@ export default function ChallengePost(props) {
     currentPost,
     challenges,
   } = props
-  const { saveNewPost, updateUserPost } = useDataContext()
+  const { saveNewPost, updateUserPost } = useRealtimeData()
   const selectedDateIsFutureDate =
     differenceInCalendarDays(new Date(), new Date(selectedDateInDashboard)) < 0
   const selectedDateIsToday = isToday(selectedDateInDashboard)
@@ -27,6 +27,7 @@ export default function ChallengePost(props) {
     return <h5>No challenge for today!</h5>
   }
   if (!currentPost && !selectedDateIsFutureDate) {
+
     saveNewPost(
       selectedDateInDashboard,
       currentChallenge,

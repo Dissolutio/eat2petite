@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { isAfter } from 'date-fns'
-import { useDataContext } from '../../contexts/useDataContext'
-import { useUIContext } from '../../contexts/useUIContext'
-import { useLocalStorage } from '../../modules/hooks/useLocalStorage'
+
+import { useUIContext } from 'contexts/useUIContext'
+import { useRealtimeData } from 'contexts/useRealtimeData'
 
 import UserContestOverview from './UserContestOverview'
 
-import { sortByMostCurrentStartDate } from '../../modules/functions'
+import { sortByMostCurrentStartDate } from 'modules/functions'
+import { useLocalStorage } from 'modules/hooks/useLocalStorage'
 
 const UserDashboard = (props) => {
   const [localContestId, setLocalContestId] = useLocalStorage(
@@ -15,12 +16,13 @@ const UserDashboard = (props) => {
   )
   const [userSelectedContest, setUserSelectedContest] = useState()
   const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
-  const { appData } = useDataContext()
+  const { appData } = useRealtimeData()
   const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
-  const { contests, posts, me, challenges } = appData
+  const { contests, challenges } = appData
+  const posts = appData.userPosts
+  const me = appData.personalProfile
 
-  // When user switches contest, we adjust the selected date
-  // to be within the contest dates
+  // KEEP SELECTED DATE WITHIN CONTEST DATES
   React.useEffect(() => {
     if (!userSelectedContest) {
       return
