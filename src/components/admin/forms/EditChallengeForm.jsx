@@ -2,8 +2,8 @@ import React from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 import { useDataContext } from '../../../contexts/useDataContext'
-import useInputValue from '../../../modules/hooks/useInputValue'
-import useFormAlert from '../../../modules/hooks/useFormAlert'
+import useInputValue from 'hooks/useInputValue'
+import useFormAlert from 'hooks/useFormAlert'
 
 export default function EditChallengeForm({ challenge }) {
     const challengeName = useInputValue(challenge.challengeName)

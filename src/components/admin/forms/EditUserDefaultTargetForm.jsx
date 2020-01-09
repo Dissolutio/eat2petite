@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Form, FormGroup, Button } from 'reactstrap'
 
 import { useDataContext } from 'contexts/useDataContext'
-import useFormAlert from 'modules/hooks/useFormAlert'
+import useFormAlert from 'hooks/useFormAlert'
 
 import WaterChallengeInputs from 'components/shared/challenge-inputs/WaterChallengeInputs'
 import VegetableChallengeInputs from 'components/shared/challenge-inputs/VegetableChallengeInputs'

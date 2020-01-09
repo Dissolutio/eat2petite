@@ -3,7 +3,7 @@ import { isAfter } from 'date-fns'
 
 import { useUIContext } from 'contexts/useUIContext'
 import { useRealtimeData } from 'contexts/useRealtimeData'
-import { useLocalStorage } from 'modules/hooks/useLocalStorage'
+import { useLocalStorage } from 'hooks/useLocalStorage'
 import AdminContestOverview from './AdminContestOverview'
 import AdminUserOverview from './AdminUserOverview'
 

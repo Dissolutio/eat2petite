@@ -1,6 +1,7 @@
 import React from 'react'
-import { useDoubleClick } from '../../modules/hooks/useDoubleClick'
+import { useDoubleClick } from 'hooks/useDoubleClick'
 import { Button } from 'reactstrap'
+
 export default function DoubleClickButton(props) {
 	const { text, doubleClickCallback, firstColor, secondColor } = props
 	const [clickCount, incrementClick, setClickCountToZero] = useDoubleClick(doubleClickCallback)

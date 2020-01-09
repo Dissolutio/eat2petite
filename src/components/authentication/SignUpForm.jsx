@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { Container, Alert, Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap'
 
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
-import useInputValue from '../../modules/hooks/useInputValue'
+import useInputValue from 'hooks/useInputValue'
 
 const SignUpForm = () => {
   const firebaseApp = useFirebaseContext()

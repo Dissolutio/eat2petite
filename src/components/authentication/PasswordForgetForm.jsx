@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
-import useInputValue from '../../modules/hooks/useInputValue'
+import useInputValue from 'hooks/useInputValue'
 
 const PasswordForgetForm = () => {
 	const email = useInputValue('')

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Container, Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
-import useInputValue from '../../modules/hooks/useInputValue'
+import useInputValue from 'hooks/useInputValue'
 
 import { SignInDevConsole } from '../shared/DevConsole'
 import PasswordForgetForm from './PasswordForgetForm'

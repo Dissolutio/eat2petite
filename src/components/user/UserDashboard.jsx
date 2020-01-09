@@ -7,7 +7,7 @@ import { useRealtimeData } from 'contexts/useRealtimeData'
 import UserContestOverview from './UserContestOverview'
 
 import { sortByMostCurrentStartDate } from 'modules/functions'
-import { useLocalStorage } from 'modules/hooks/useLocalStorage'
+import { useLocalStorage } from 'hooks/useLocalStorage'
 
 const UserDashboard = (props) => {
   const [localContestId, setLocalContestId] = useLocalStorage(

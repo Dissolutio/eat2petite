@@ -6,7 +6,7 @@ import { range } from 'lodash'
 
 import { useRealtimeData } from 'contexts/useRealtimeData'
 
-import useInputValue from 'modules/hooks/useInputValue'
+import useInputValue from 'hooks/useInputValue'
 import { ordinalSuffixOf } from 'modules/functions'
 import * as ROUTES from 'routes.js'
 
