@@ -52,7 +52,7 @@ export const useRealtimeData = () => {
     const firebaseApp = useFirebaseContext()
     const { user } = useAuthUserContext()
     const [appData, dispatch] = useContext(RealtimeDataContext);
-
+    const [initializing, setInitializing] = React.useState(true)
     const personalProfileRef = firebaseApp.dbPersonalUser(user.uid)
     const challengesRef = firebaseApp.dbChallenges()
     const contestsRef = firebaseApp.dbContests()
@@ -63,6 +63,7 @@ export const useRealtimeData = () => {
 
     // ATTACH LISTENERS
     useEffect(() => {
+        setInitializing(false)
         if (!user.uid) {
             return
         }
@@ -192,7 +193,7 @@ export const useRealtimeData = () => {
         return firebaseApp.dbUpdateUserPost(post)
     }
     return {
-        state
+        initializing,
         appData,
         createContest,
         enrollUserInContest,
