@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from 'reactstrap'
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 export default function SelectContestDropdown(props) {
   const [dropdownOpen, setOpen] = React.useState(false)

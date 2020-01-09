@@ -87,7 +87,6 @@ class Firebase {
   // *** Contests API ***
   dbContests = () => this.db.ref(`/contests`)
   dbSaveNewContest = (contest) => {
-    console.log('TCL: Firebase -> contest', contest)
     return this.dbContests()
       .push()
       .then((ref) => {
