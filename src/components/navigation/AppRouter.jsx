@@ -1,9 +1,9 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import { meetAuthConditionOrRedirectHOC } from '../../components/authentication/meetAuthConditionOrRedirectHOC'
+import { meetAuthConditionOrRedirectHOC } from 'components/authentication/meetAuthConditionOrRedirectHOC'
 
-import LandingPage from './LandingPage'
+import LandingPage from '../layout/LandingPage'
 import VerifyEmail from '../authentication/VerifyEmail'
 import SignUpForm from '../authentication/SignUpForm'
 import SignInForm from '../authentication/SignInForm'
@@ -21,7 +21,7 @@ import AdminUserDetail from '../admin/AdminUserDetail'
 import CreateContestForm from '../admin/CreateContestForm'
 
 import { ChallengesPage } from '../shared/Challenges'
-import Page404NotFound from './Page404NotFound'
+import Page404NotFound from '../layout/Page404NotFound'
 
 import * as ROUTES from '../../routes'
 

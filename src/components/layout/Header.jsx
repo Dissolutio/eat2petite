@@ -5,7 +5,7 @@ import { Collapse, Navbar, NavbarToggler, Nav } from 'reactstrap'
 
 import { useUIContext } from '../../contexts/useUIContext'
 
-import NavLinks from '../layout/NavLinks'
+import NavLinks from '../navigation/NavLinks'
 import CurrentUserReadout from '../authentication/CurrentUserReadout'
 
 export default function Header(props) {

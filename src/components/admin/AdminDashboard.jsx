@@ -14,9 +14,9 @@ export default function AdminDashboard(props) {
 	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
 	const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
 	const { appState } = useRealtimeData()
-	console.log("TCL: AdminDashboard -> appState", appState)
 	const [viewingUserId, setViewingUserId] = React.useState('')
 	const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
+
 	// When user switches contest, we adjust the selected date to be within the contest dates
 	React.useEffect(() => {
 		if (!userSelectedContest) { return }

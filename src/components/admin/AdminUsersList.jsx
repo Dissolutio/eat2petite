@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap'
-import { AdminUserDetailLink } from '../layout/Links'
+import { AdminUserDetailLink } from '../navigation/Links'
 
 export default function AdminUsersList(props) {
 	const { users } = props

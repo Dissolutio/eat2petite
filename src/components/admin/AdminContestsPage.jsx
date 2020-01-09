@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, ListGroup, ListGroupItem } from 'reactstrap'
-import { AdminContestDetailLink, AdminCreateContestLink } from '../layout/Links'
+import { AdminContestDetailLink, AdminCreateContestLink } from '../navigation/Links'
 
 export default function AdminContestsPage({ contests, users, challenges }) {
   return (
@@ -31,6 +31,6 @@ function AdminContestsList(props) {
         })}
     </ListGroup>
   ) : (
-    <p>No Contests Found</p>
-  )
+      <p>No Contests Found</p>
+    )
 }
