@@ -1,12 +1,12 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import { meetAuthConditionOrRedirectHOC } from 'components/authentication/meetAuthConditionOrRedirectHOC'
+import { PrivateRoute, EmailVerifiedRoute, AdminRoute, RegistrationRoute } from 'components/navigation/AuthRoutes'
 
 import LandingPage from '../layout/LandingPage'
 import VerifyEmail from '../authentication/VerifyEmail'
-import SignUpForm from '../authentication/SignUpForm'
-import SignInForm from '../authentication/SignInForm'
+import RegisterForm from '../authentication/RegisterForm'
+import LoginForm from '../authentication/LoginForm'
 
 import { useDataContext } from '../../contexts/useDataContext'
 
@@ -25,69 +25,47 @@ import Page404NotFound from '../layout/Page404NotFound'
 
 import * as ROUTES from '../../routes'
 
-export default function AppRouter(props) {
-  const { authUser } = props
-  const signedInCondition = () => !!authUser
-  const notSignedInCondition = () => !authUser
-  const emailVerifiedCondition = () => !!me && me.emailVerified === true
-  const emailNotVerifiedCondition = () =>
-    signedInCondition() && authUser.emailVerified === false
-  const notAdminCondition = () => !!me && me.userRole !== `admin`
+export default function AppRouter({ user }) {
   const { loadFirebaseData, appData } = useDataContext()
   React.useEffect(() => {
     loadFirebaseData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authUser])
-  const { challenges, me, posts, users, contests } = appData
+  }, [user])
+  const { challenges, posts, users, contests } = appData
   return (
     <Switch>
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
       <Route
         exact
-        path={ROUTES.REGISTER}
-        component={meetAuthConditionOrRedirectHOC(
-          notSignedInCondition,
-          ROUTES.USER_DASHBOARD,
-        )(SignUpForm)}
+        path={ROUTES.VERIFY_EMAIL}
+        component={VerifyEmail}
       />
-      <Route
+      <RegistrationRoute
+        exact
+        path={ROUTES.REGISTER}
+        component={RegisterForm}
+      />
+      <RegistrationRoute
         exact
         path={ROUTES.LOGIN}
-        component={meetAuthConditionOrRedirectHOC(
-          notSignedInCondition,
-          ROUTES.USER_DASHBOARD,
-        )(SignInForm)}
+        component={LoginForm}
       />
-      <Route
+      <EmailVerifiedRoute
         exact
-        path={ROUTES.VERIFY_EMAIL}
-        component={meetAuthConditionOrRedirectHOC(
-          emailNotVerifiedCondition,
-          ROUTES.LOGIN,
-        )(VerifyEmail)}
+        path={ROUTES.ACCOUNT}
+        component={AccountPage}
       />
-      <Route
-        exact
-        path={ROUTES.USER_CHALLENGES}
-        render={() => <ChallengesPage challenges={challenges} />}
-      />
-      <Route
-        exact
-        path={ROUTES.USER_ACCOUNT}
-        component={meetAuthConditionOrRedirectHOC(
-          emailVerifiedCondition,
-          ROUTES.VERIFY_EMAIL,
-        )(AccountPage)}
-      />
-      <Route
+      <PrivateRoute
         exact
         path={ROUTES.USER_DASHBOARD}
-        component={meetAuthConditionOrRedirectHOC(
-          notAdminCondition,
-          ROUTES.ADMIN_DASHBOARD,
-        )(UserDashboard)}
+        component={UserDashboard}
       />
-      <Route
+      <PrivateRoute
+        exact
+        path={ROUTES.USER_CHALLENGES}
+        component={ChallengesPage}
+      />
+      <AdminRoute
         exact
         path={ROUTES.ADMIN_DASHBOARD}
         render={(props) => (
@@ -100,7 +78,7 @@ export default function AppRouter(props) {
           />
         )}
       />
-      <Route
+      <AdminRoute
         exact
         path={ROUTES.ADMIN_CONTESTS}
         render={() => (
@@ -111,15 +89,15 @@ export default function AppRouter(props) {
           />
         )}
       />
-      <Route
+      <AdminRoute
         exact
         path={ROUTES.ADMIN_CREATE_CONTEST}
         render={() => (
           <CreateContestForm users={users} challenges={challenges} />
         )}
       />
-      <Route
-        path={`${ROUTES.ADMIN_CONTESTS}:id`}
+      <AdminRoute
+        path={`${ROUTES.ADMIN_CONTESTS}/:id`}
         render={(props) => (
           <AdminContestDetail
             contests={contests}
@@ -129,20 +107,20 @@ export default function AppRouter(props) {
           />
         )}
       />
-      <Route
+      <AdminRoute
         exact
         path={ROUTES.ADMIN_CHALLENGES}
         render={(props) => (
-          <ChallengesPage admin={true} challenges={challenges} />
+          <ChallengesPage isAdmin={true} challenges={challenges} />
         )}
       />
-      <Route
+      <AdminRoute
         exact
         path={ROUTES.ADMIN_USERS}
-        render={(props) => <AdminUsersList users={users} />}
+        render={() => <AdminUsersList users={users} />}
       />
-      <Route
-        path={`${ROUTES.ADMIN_USERS}:id`}
+      <AdminRoute
+        path={`${ROUTES.ADMIN_USERS}/:id`}
         render={(props) => (
           <AdminUserDetail
             users={users}

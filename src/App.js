@@ -13,7 +13,7 @@ function App() {
 		<AppStyle>
 			<Header user={user} />
 			<PageStyle >
-				{initializing ? <LandingPage /> : <AppRouter authUser={user} />}
+				{initializing ? <LandingPage /> : <AppRouter user={user} />}
 			</PageStyle>
 		</AppStyle>
 	)

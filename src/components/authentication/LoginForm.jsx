@@ -10,7 +10,7 @@ import PasswordForgetForm from './PasswordForgetForm'
 
 import * as ROUTES from '../../routes'
 
-const SignInForm = props => {
+const LoginForm = props => {
 	const email = useInputValue('')
 	const password = useInputValue('')
 	const firebaseApp = useFirebaseContext()
@@ -61,4 +61,4 @@ const SignInForm = props => {
 	)
 }
 
-export default SignInForm
+export default LoginForm

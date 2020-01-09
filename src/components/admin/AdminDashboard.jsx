@@ -9,11 +9,11 @@ import AdminUserOverview from './AdminUserOverview'
 
 import { sortByMostCurrentStartDate } from 'modules/functions'
 
-export default function AdminDashboard(props) {
+export default function AdminDashboard() {
 	const [userSelectedContest, setUserSelectedContest] = useState()
 	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
 	const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
-	const { appState } = useRealtimeData()
+	const { appData } = useRealtimeData()
 	const [viewingUserId, setViewingUserId] = React.useState('')
 	const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
 
@@ -35,9 +35,10 @@ export default function AdminDashboard(props) {
 		setUserSelectedContest(contest)
 		setLocalContestId(contest.uid)
 	}
-	const { personalProfile, contests, challenges } = appState
-	const users = appState.adminUsers
-	const posts = appState.adminPosts
+	const { contests, challenges, initializing } = appData
+	// if (initializing) { return null }
+	const users = appData.adminUsers
+	const posts = appData.adminPosts
 	const contestsArray = contests && Object.values(contests)
 	// Auto select a contest
 	if (!hasAutoSelectedContest && contestsArray) {

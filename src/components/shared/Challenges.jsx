@@ -1,38 +1,61 @@
 import React, { useState } from 'react'
 import { Container, Collapse, Button, Row, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
 import EditChallengeForm from '../admin/forms/EditChallengeForm'
-export const ChallengesPage = ({ challenges, admin }) => {
+import { useRealtimeData } from 'contexts/useRealtimeData'
+
+export const ChallengesPage = ({ isAdmin }) => {
+	const { appData } = useRealtimeData()
+	const { challenges } = appData
 	return (
 		<Container>
-			<h2>All Challenges:</h2>
-			<ChallengeCardList admin={admin} challenges={challenges} />
+			<h2>Challenges</h2>
+			<ChallengeCardList isAdmin={isAdmin} challenges={challenges} />
 		</Container>
 	)
 }
-const ChallengeCardList = ({ challenges, admin }) => {
+const ChallengeCardList = ({ challenges, isAdmin }) => {
 	return (
 		<div>
 			{challenges && Object.values(challenges).map(challenge => {
 				return (
-					<ChallengeCollapseCard key={challenge.uid} admin={admin} challenge={challenge} />
+					<CollapseCard
+						buttonText={challenge.challengeName}
+						key={challenge.uid}
+					>
+						{isAdmin ?
+							<EditableChallengeCard
+								challenge={challenge}
+								isAdmin={isAdmin}
+							/>
+							:
+							<ChallengeCard
+								challenge={challenge}
+								isAdmin={isAdmin}
+							/>
+						}
+					</CollapseCard>
+
 				)
 			})}
 		</div>
 	)
 }
-export const ChallengeCollapseCard = ({ challenge, admin }) => {
+export const CollapseCard = ({ buttonText, children }) => {
 	const [isOpen, setIsOpen] = React.useState(false);
-	if (!challenge) { return null }
 	const toggle = () => setIsOpen(!isOpen);
 	return (
 		<div>
-			<Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }} block>{challenge.challengeName} {isOpen ? (<span>&#9650;</span>) : (<span>&#9660;</span>)}</Button>
+			<Button
+				color="primary"
+				onClick={toggle}
+				style={{ marginBottom: '1rem' }}
+				block
+			>
+				{buttonText}
+				{isOpen ? (<span>&#9650;</span>) : (<span>&#9660;</span>)}
+			</Button>
 			<Collapse isOpen={isOpen}>
-				{admin ?
-					<EditableChallengeCard challenge={challenge} />
-					:
-					<ChallengeCard challenge={challenge} />
-				}
+				{children}
 			</Collapse>
 		</div>
 	);

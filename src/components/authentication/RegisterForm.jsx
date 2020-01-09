@@ -5,7 +5,7 @@ import { Container, Alert, Button, Form, FormGroup, Label, Input, InputGroup, In
 import { useFirebaseContext } from '../../contexts/useFirebaseContext'
 import useInputValue from 'hooks/useInputValue'
 
-const SignUpForm = () => {
+const RegisterForm = () => {
   const firebaseApp = useFirebaseContext()
   const username = useInputValue('')
   const firstName = useInputValue('')
@@ -140,4 +140,4 @@ const SignUpForm = () => {
   )
 }
 
-export default withRouter(SignUpForm)
+export default withRouter(RegisterForm)

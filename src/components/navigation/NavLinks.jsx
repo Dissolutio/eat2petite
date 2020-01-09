@@ -24,7 +24,7 @@ const NavLinks = props => {
 		<>
 			<NavBarLink to={ROUTES.USER_DASHBOARD}>Dashboard</NavBarLink>
 			<NavBarLink to={ROUTES.USER_CHALLENGES}>Challenges</NavBarLink>
-			<NavBarLink to={ROUTES.USER_ACCOUNT}>Account</NavBarLink>
+			<NavBarLink to={ROUTES.ACCOUNT}>Account</NavBarLink>
 		</>
 	)
 	const AdminLinks = () => (
