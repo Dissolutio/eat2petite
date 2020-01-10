@@ -4,14 +4,14 @@ import { Container, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import { format, addDays } from 'date-fns'
 import { range } from 'lodash'
 
-import { useRealtimeData } from 'contexts/useRealtimeData'
+import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
 
 import useInputValue from 'hooks/useInputValue'
 import { ordinalSuffixOf } from 'modules/functions'
 import * as ROUTES from 'routes.js'
 
 const ContestCreateForm = (props) => {
-  const { createContest, enrollUserInContest } = useRealtimeData()
+  const { createContest, enrollUserInContest } = useRealtimeDataContext()
   const { users, challenges } = props
   const [numberOfChallenges, setNumberOfChallenges] = useState(6)
   const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'))

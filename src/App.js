@@ -7,13 +7,14 @@ import AppRouter from './components/navigation/AppRouter'
 import { PageStyle, AppStyle } from './components/layout/StyleWrappers'
 import LandingPage from './components/layout/LandingPage'
 
+// Auth initializes => render AppRouter => IF user => route to dashboard with useRealtimeDataContext hook => init database listeners
 function App() {
 	const { initializing, user } = useAuthUserContext()
 	return (
 		<AppStyle>
 			<Header user={user} />
 			<PageStyle >
-				{initializing ? <LandingPage /> : <AppRouter user={user} />}
+				{initializing ? <LandingPage /> : <AppRouter />}
 			</PageStyle>
 		</AppStyle>
 	)

@@ -52,16 +52,17 @@ export const useRealtimeDataContext = () => {
     const firebaseApp = useFirebaseContext()
     const { user } = useAuthUserContext()
     const [appData, dispatch] = useContext(RealtimeDataContext);
-    const personalProfileRef = firebaseApp.dbPersonalUser(user.uid)
-    const challengesRef = firebaseApp.dbChallenges()
-    const contestsRef = firebaseApp.dbContests()
-    const userPostsRef = firebaseApp.dbPostsByUserId(user.uid)
-    const userUsersRef = firebaseApp.dbPublicUsers()
-    const adminPostsRef = firebaseApp.dbPosts()
-    const adminUsersRef = firebaseApp.dbPrivateUsers()
 
     // ATTACH LISTENERS
     useEffect(() => {
+        if (!user) { return }
+        const personalProfileRef = firebaseApp.dbPersonalUser(user.uid)
+        const challengesRef = firebaseApp.dbChallenges()
+        const contestsRef = firebaseApp.dbContests()
+        const userPostsRef = firebaseApp.dbPostsByUserId(user.uid)
+        const userUsersRef = firebaseApp.dbPublicUsers()
+        const adminPostsRef = firebaseApp.dbPosts()
+        const adminUsersRef = firebaseApp.dbPrivateUsers()
         async function attachFirebaseRDSListeners() {
             personalProfileRef.on("value", snapshot => {
                 dispatch({

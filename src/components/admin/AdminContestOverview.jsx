@@ -21,8 +21,7 @@ const AdminContestOverview = (props) => {
     contestsArray,
   } = props
   const { startDate, endDate, enrolledUsers } = userSelectedContest
-
-  if (!userSelectedContest) {
+  if (!userSelectedContest || !users) {
     return null
   }
   function getPostForSelectedDateForUserId(userId) {
@@ -35,12 +34,13 @@ const AdminContestOverview = (props) => {
       Object.values(allUsersPosts)
         .filter((post) => post.contestId === userSelectedContest.uid)
         .find((post) =>
-          isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)),
+          isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard())),
         )
     )
   }
-  const enrolledUsersArray =
-    enrolledUsers && Object.keys(enrolledUsers).map((userId) => users[userId])
+  const enrolledUsersArray = enrolledUsers && Object.keys(enrolledUsers).map((userId) => {
+    return users[userId]
+  })
   return (
     <Container className='text-center'>
       <Container>
@@ -53,7 +53,7 @@ const AdminContestOverview = (props) => {
       </Container>
       <Container className='rounded p-3 m-2 text-center'>
         <h4 style={{ fontFamily: 'ABeeZee' }}>
-          {format(selectedDateInDashboard, 'P')}
+          {format(new Date(selectedDateInDashboard), 'P')}
         </h4>
         <p className='text-secondary'>
           {(currentChallenge && currentChallenge.challengeName) ||
@@ -94,6 +94,7 @@ const UsersGrid = ({
     <UsersGridStyle>
       {enrolledUsersArray &&
         enrolledUsersArray.map((user) => {
+          console.log("TCL: getPostForSelectedDateForUserId", getPostForSelectedDateForUserId)
           const post = getPostForSelectedDateForUserId(user.uid)
           return (
             <Button

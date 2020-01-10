@@ -40,13 +40,13 @@ export const EmailVerifiedRoute = ({ component: Component, ...rest }) => {
     );
 };
 
-export const AdminRoute = ({ render, ...rest }) => {
+export const AdminRoute = ({ component: Component, ...rest }) => {
     const { user } = useAuthUserContext()
     const isAdmin = () => !!user && user.userRole === `admin`
     return (
         <Route {...rest} render={props => (
             isAdmin() ?
-                render(props)
+                <Component {...props} />
                 : <Redirect to={`${ROUTES.USER_DASHBOARD}`} />
         )} />
     );

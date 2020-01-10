@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Container, Collapse, Button, Row, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
 import EditChallengeForm from '../admin/forms/EditChallengeForm'
-import { useRealtimeData } from 'contexts/useRealtimeData'
+import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
 
-export const ChallengesPage = ({ isAdmin }) => {
-	const { appData } = useRealtimeData()
-	const { challenges } = appData
+export const ChallengesPage = () => {
+	const { appData } = useRealtimeDataContext()
+	const { challenges, personalProfile } = appData
+	const isAdmin = (personalProfile && personalProfile.userRole === 'admin')
 	return (
 		<Container>
 			<h2>Challenges</h2>
@@ -40,7 +41,7 @@ const ChallengeCardList = ({ challenges, isAdmin }) => {
 		</div>
 	)
 }
-export const CollapseCard = ({ buttonText, children }) => {
+const CollapseCard = ({ buttonText, children }) => {
 	const [isOpen, setIsOpen] = React.useState(false);
 	const toggle = () => setIsOpen(!isOpen);
 	return (

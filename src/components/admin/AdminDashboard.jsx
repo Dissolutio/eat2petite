@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { isAfter } from 'date-fns'
 
-import { useUIContext } from 'contexts/useUIContext'
-import { useRealtimeData } from 'contexts/useRealtimeData'
+import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
 import { useLocalStorage } from 'hooks/useLocalStorage'
 import AdminContestOverview from './AdminContestOverview'
 import AdminUserOverview from './AdminUserOverview'
@@ -10,12 +9,18 @@ import AdminUserOverview from './AdminUserOverview'
 import { sortByMostCurrentStartDate } from 'modules/functions'
 
 export default function AdminDashboard() {
+
 	const [userSelectedContest, setUserSelectedContest] = useState()
 	const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
-	const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
-	const { appData } = useRealtimeData()
+	const [selectedDateInDashboard, setSelectedDateInDashboard] = useState(new Date())
 	const [viewingUserId, setViewingUserId] = React.useState('')
 	const [localContestId, setLocalContestId] = useLocalStorage('E2PSelectedContest', '')
+
+	const { appData } = useRealtimeDataContext()
+	const { contests, challenges } = appData
+	const users = appData.adminUsers
+	const posts = appData.adminPosts
+	const contestsArray = contests && Object.values(contests)
 
 	// When user switches contest, we adjust the selected date to be within the contest dates
 	React.useEffect(() => {
@@ -35,11 +40,6 @@ export default function AdminDashboard() {
 		setUserSelectedContest(contest)
 		setLocalContestId(contest.uid)
 	}
-	const { contests, challenges, initializing } = appData
-	// if (initializing) { return null }
-	const users = appData.adminUsers
-	const posts = appData.adminPosts
-	const contestsArray = contests && Object.values(contests)
 	// Auto select a contest
 	if (!hasAutoSelectedContest && contestsArray) {
 		const localContest = contests[localContestId]
@@ -52,6 +52,7 @@ export default function AdminDashboard() {
 			setHasAutoSelectedContest(true)
 		}
 	}
+	// Don't render until there IS a contest
 	if (!userSelectedContest) {
 		return (<p>No contests found!</p>)
 	}

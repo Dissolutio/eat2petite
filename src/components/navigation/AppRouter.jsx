@@ -11,7 +11,7 @@ import AdminDashboard from 'components/admin/AdminDashboard'
 import AdminContestsPage from 'components/admin/AdminContestsPage'
 import CreateContestForm from 'components/admin/CreateContestForm'
 import AdminContestDetail from 'components/admin/AdminContestDetail'
-import AdminUsersList from 'components/admin/AdminUsersList'
+import AdminUsersPage from 'components/admin/AdminUsersPage'
 import AdminUserDetail from 'components/admin/AdminUserDetail'
 import { ChallengesPage } from 'components/shared/Challenges'
 import AccountPage from 'components/layout/AccountPage'
@@ -24,7 +24,6 @@ export default function AppRouter() {
     <Switch>
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
       <Route exact path={ROUTES.VERIFY_EMAIL} component={VerifyEmail} />
-      <Route component={Page404NotFound} />
 
       <RegistrationRoute exact path={ROUTES.REGISTER} component={RegisterForm} />
       <RegistrationRoute exact path={ROUTES.LOGIN} component={LoginForm} />
@@ -39,8 +38,10 @@ export default function AppRouter() {
       <AdminRoute exact path={ROUTES.ADMIN_CHALLENGES} component={ChallengesPage} />
       <AdminRoute exact path={ROUTES.ADMIN_CONTESTS} component={AdminContestsPage} />
       <AdminRoute path={`${ROUTES.ADMIN_CONTESTS}/:id`} component={AdminContestDetail} />
-      <AdminRoute exact path={ROUTES.ADMIN_USERS} component={AdminUsersList} />
+      <AdminRoute exact path={ROUTES.ADMIN_USERS} component={AdminUsersPage} />
       <AdminRoute path={`${ROUTES.ADMIN_USERS}/:id`} component={AdminUserDetail} />
+      {/* 404 matches all paths, must be last */}
+      <Route component={Page404NotFound} />
     </Switch>
   )
 }

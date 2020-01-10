@@ -7,7 +7,7 @@ import { FirebaseContext, useFirebaseContext } from './contexts/useFirebaseConte
 import { AuthUserContext, useAuthListener } from './contexts/useAuthUserContext'
 import { UIContextProvider } from './contexts/useUIContext'
 import { DataContextProvider } from './contexts/useDataContext'
-import { RealtimeDataContextProvider } from './contexts/useRealtimeData'
+import { RealtimeDataContextProvider } from './contexts/useRealtimeDataContext'
 
 import App from './App'
 

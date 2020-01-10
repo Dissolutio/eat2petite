@@ -18,6 +18,10 @@ const UserContestOverview = (props) => {
     challenges,
     currentChallenge,
   } = props
+
+  if (!userSelectedContest || !userEnrolledContests || !me) {
+    return null
+  }
   const { startDate, endDate } = userSelectedContest
   const postsArr = posts ? Object.values(posts) : []
   const currentPost = () => {

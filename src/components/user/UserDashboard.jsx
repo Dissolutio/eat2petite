@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { isAfter } from 'date-fns'
 
-import { useUIContext } from 'contexts/useUIContext'
-import { useRealtimeData } from 'contexts/useRealtimeData'
+import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
 
 import UserContestOverview from './UserContestOverview'
 
@@ -10,14 +9,14 @@ import { sortByMostCurrentStartDate } from 'modules/functions'
 import { useLocalStorage } from 'hooks/useLocalStorage'
 
 const UserDashboard = (props) => {
+  const [userSelectedContest, setUserSelectedContest] = useState()
+  const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
+  const [selectedDateInDashboard, setSelectedDateInDashboard] = useState(new Date())
   const [localContestId, setLocalContestId] = useLocalStorage(
     'E2PSelectedContest',
     '',
   )
-  const [userSelectedContest, setUserSelectedContest] = useState()
-  const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
-  const { appData } = useRealtimeData()
-  const { selectedDateInDashboard, setSelectedDateInDashboard } = useUIContext()
+  const { appData } = useRealtimeDataContext()
   const { contests, challenges } = appData
   const posts = appData.userPosts
   const me = appData.personalProfile
@@ -44,12 +43,13 @@ const UserDashboard = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSelectedContest])
 
+
   const handleSelectedContestChange = (contest) => {
     setUserSelectedContest(contest)
     setLocalContestId(contest.uid)
   }
   const userEnrolledContests = () => {
-    return me &&
+    return me && contests &&
       me.contests &&
       Object.keys(me.contests).map((contestKey) => contests[contestKey])
   }

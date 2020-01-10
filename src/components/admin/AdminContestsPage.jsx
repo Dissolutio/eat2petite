@@ -1,8 +1,11 @@
 import React from 'react'
 import { Button, ListGroup, ListGroupItem } from 'reactstrap'
+import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
 import { AdminContestDetailLink, AdminCreateContestLink } from '../navigation/Links'
 
-export default function AdminContestsPage({ contests, users, challenges }) {
+export default function AdminContestsPage() {
+  const { appData } = useRealtimeDataContext()
+  const { contests } = appData
   return (
     <>
       <AdminContestsList contests={contests} />
@@ -12,9 +15,12 @@ export default function AdminContestsPage({ contests, users, challenges }) {
     </>
   )
 }
-function AdminContestsList(props) {
-  const { contests } = props
-  return contests ? (
+
+function AdminContestsList({ contests }) {
+  if (!contests) {
+    return (<p>No Contests Found</p>)
+  }
+  return (
     <ListGroup>
       <h3>Contests:</h3>
       {contests &&
@@ -30,7 +36,5 @@ function AdminContestsList(props) {
           )
         })}
     </ListGroup>
-  ) : (
-      <p>No Contests Found</p>
-    )
+  )
 }
