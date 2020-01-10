@@ -9,13 +9,13 @@ import { addCalculatedContestDataTo } from 'modules/adapters'
 const RealtimeDataContext = React.createContext([{}, () => { }])
 
 const initialState = {
-    personalProfile: {},
-    challenges: {},
-    contests: {},
-    userPosts: {},
-    userUsers: {},
-    adminPosts: {},
-    adminUsers: {},
+    personalProfile: null,
+    challenges: null,
+    contests: null,
+    userPosts: null,
+    userUsers: null,
+    adminPosts: null,
+    adminUsers: null,
 }
 function reducer(state, action) {
     switch (action.type) {
@@ -48,11 +48,10 @@ export const RealtimeDataContextProvider = (props) => {
     )
 }
 
-export const useRealtimeData = () => {
+export const useRealtimeDataContext = () => {
     const firebaseApp = useFirebaseContext()
     const { user } = useAuthUserContext()
     const [appData, dispatch] = useContext(RealtimeDataContext);
-    const [initializing, setInitializing] = React.useState(true)
     const personalProfileRef = firebaseApp.dbPersonalUser(user.uid)
     const challengesRef = firebaseApp.dbChallenges()
     const contestsRef = firebaseApp.dbContests()
@@ -63,52 +62,51 @@ export const useRealtimeData = () => {
 
     // ATTACH LISTENERS
     useEffect(() => {
-        setInitializing(false)
-        if (!user.uid) {
-            return
+        async function attachFirebaseRDSListeners() {
+            personalProfileRef.on("value", snapshot => {
+                dispatch({
+                    type: 'fetch_personal_profile',
+                    payload: snapshot.val()
+                })
+            })
+            challengesRef.on("value", snapshot => {
+                dispatch({
+                    type: 'fetch_challenges',
+                    payload: snapshot.val()
+                })
+            })
+            contestsRef.on("value", snapshot => {
+                dispatch({
+                    type: 'fetch_contests',
+                    payload: addCalculatedContestDataTo(snapshot.val())
+                })
+            })
+            userPostsRef.on("value", snapshot => {
+                dispatch({
+                    type: 'fetch_user_posts',
+                    payload: snapshot.val()
+                })
+            })
+            userUsersRef.on("value", snapshot => {
+                dispatch({
+                    type: 'fetch_user_users',
+                    payload: snapshot.val()
+                })
+            })
+            adminPostsRef.on("value", snapshot => {
+                dispatch({
+                    type: 'fetch_admin_posts',
+                    payload: snapshot.val()
+                })
+            })
+            adminUsersRef.on("value", snapshot => {
+                dispatch({
+                    type: 'fetch_admin_users',
+                    payload: snapshot.val()
+                })
+            })
         }
-        personalProfileRef.on("value", snapshot => {
-            dispatch({
-                type: 'fetch_personal_profile',
-                payload: snapshot.val()
-            })
-        })
-        challengesRef.on("value", snapshot => {
-            dispatch({
-                type: 'fetch_challenges',
-                payload: snapshot.val()
-            })
-        })
-        contestsRef.on("value", snapshot => {
-            dispatch({
-                type: 'fetch_contests',
-                payload: addCalculatedContestDataTo(snapshot.val())
-            })
-        })
-        userPostsRef.on("value", snapshot => {
-            dispatch({
-                type: 'fetch_user_posts',
-                payload: snapshot.val()
-            })
-        })
-        userUsersRef.on("value", snapshot => {
-            dispatch({
-                type: 'fetch_user_users',
-                payload: snapshot.val()
-            })
-        })
-        adminPostsRef.on("value", snapshot => {
-            dispatch({
-                type: 'fetch_admin_posts',
-                payload: snapshot.val()
-            })
-        })
-        adminUsersRef.on("value", snapshot => {
-            dispatch({
-                type: 'fetch_admin_users',
-                payload: snapshot.val()
-            })
-        })
+        attachFirebaseRDSListeners()
         return () => {
             personalProfileRef.off()
             challengesRef.off()
@@ -121,10 +119,10 @@ export const useRealtimeData = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const createContest = (contest, usersToEnroll) => {
+    function createContest(contest) {
         return firebaseApp.dbSaveNewContest(contest)
     }
-    const enrollUserInContest = (userId, contestId) => {
+    function enrollUserInContest(userId, contestId) {
         firebaseApp.dbEnrollUserInContest(userId, contestId)
     }
     function saveNewPost(forDate, forChallenge, forContestId) {
@@ -193,7 +191,6 @@ export const useRealtimeData = () => {
         return firebaseApp.dbUpdateUserPost(post)
     }
     return {
-        initializing,
         appData,
         createContest,
         enrollUserInContest,
