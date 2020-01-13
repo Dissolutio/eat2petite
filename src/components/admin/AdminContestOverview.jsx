@@ -34,7 +34,7 @@ const AdminContestOverview = (props) => {
       Object.values(allUsersPosts)
         .filter((post) => post.contestId === userSelectedContest.uid)
         .find((post) =>
-          isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard())),
+          isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard))
         )
     )
   }
