@@ -10,7 +10,7 @@ export default function ExcerciseChallengeInputs({ lightExcerciseDuration, mediu
                 <Input
                     name="lightExcerciseDuration"
                     type="number"
-                    {...lightExcerciseDuration}
+                    defaultValue={lightExcerciseDuration}
                 />
             </InputGroup>
             <InputGroup className='mb-2'>
