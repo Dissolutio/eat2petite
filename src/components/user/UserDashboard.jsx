@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { isAfter } from 'date-fns'
 
-import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
+import { useRealtimeDataContext } from 'contexts'
+import { useLocalStorage } from 'hooks'
+import { UserContestOverview } from 'components'
+import { sortByMostCurrentStartDate } from 'helpers'
 
-import UserContestOverview from './UserContestOverview'
-
-import { sortByMostCurrentStartDate } from 'modules/functions'
-import { useLocalStorage } from 'hooks/useLocalStorage'
-
-const UserDashboard = (props) => {
+export default function UserDashboard(props) {
   const [userSelectedContest, setUserSelectedContest] = useState()
   const [hasAutoSelectedContest, setHasAutoSelectedContest] = useState(false)
   const [selectedDateInDashboard, setSelectedDateInDashboard] = useState(new Date())
@@ -98,4 +96,4 @@ const UserDashboard = (props) => {
     )
   }
 }
-export default UserDashboard
+

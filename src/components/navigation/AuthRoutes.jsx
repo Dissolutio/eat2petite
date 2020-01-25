@@ -1,12 +1,13 @@
 
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useAuthUserContext } from 'contexts/useAuthUserContext'
-import * as ROUTES from 'routes.js'
+
+import { useAuthContext } from '../../contexts'
+import * as ROUTES from '../../routes.js'
 
 export const RegistrationRoute = ({ component: Component, restricted, ...rest }) => {
     // Reroutes to admin which has own redirect to user
-    const { user } = useAuthUserContext()
+    const { user } = useAuthContext()
     const isNotAlreadySignedIn = () => !user
     return (
         <Route {...rest} render={props => (
@@ -17,7 +18,7 @@ export const RegistrationRoute = ({ component: Component, restricted, ...rest })
     );
 };
 export const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { user } = useAuthUserContext()
+    const { user } = useAuthContext()
     const isSignedIn = () => !!user
     return (
         <Route {...rest} render={props => (
@@ -29,7 +30,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 export const EmailVerifiedRoute = ({ component: Component, ...rest }) => {
-    const { user } = useAuthUserContext()
+    const { user } = useAuthContext()
     const isVerified = () => !!user && !!user.emailVerified
     return (
         <Route {...rest} render={props => (
@@ -41,7 +42,7 @@ export const EmailVerifiedRoute = ({ component: Component, ...rest }) => {
 };
 
 export const AdminRoute = ({ component: Component, ...rest }) => {
-    const { user } = useAuthUserContext()
+    const { user } = useAuthContext()
     const isAdmin = () => !!user && user.userRole === `admin`
     return (
         <Route {...rest} render={props => (

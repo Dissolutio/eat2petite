@@ -1,7 +1,8 @@
 import React from 'react'
 import { Container, Card, ListGroup, ListGroupItem } from 'reactstrap'
-import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
-import EditUserDefaultTargetForm from './forms/EditUserDefaultTargetForm'
+
+import { useRealtimeDataContext } from 'contexts'
+import { EditUserDefaultTargetForm } from 'components'
 
 function AdminUserDetail(props) {
 	const { appData } = useRealtimeDataContext()

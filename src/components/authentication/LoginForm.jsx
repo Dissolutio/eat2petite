@@ -2,13 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Container, Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
-import { useFirebaseContext } from '../../contexts/useFirebaseContext'
-import useInputValue from 'hooks/useInputValue'
-
-import { SignInDevConsole } from '../shared/DevConsole'
-import PasswordForgetForm from './PasswordForgetForm'
-
-import * as ROUTES from '../../routes'
+import { useFirebaseContext } from 'contexts'
+import { useInputValue } from 'hooks'
+import { PasswordForgetForm, SignInDevConsole } from 'components'
+import * as ROUTES from 'routes'
 
 const LoginForm = props => {
 	const email = useInputValue('')

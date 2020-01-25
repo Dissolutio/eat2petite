@@ -2,31 +2,26 @@ import React from 'react'
 import { isToday } from 'date-fns'
 import { Button } from 'reactstrap'
 
-import WaterChallengeInputs from '../../shared/challenge-inputs/WaterChallengeInputs'
-import VegetableChallengeInputs from '../../shared/challenge-inputs/VegetableChallengeInputs'
-import ProteinChallengeInputs from '../../shared/challenge-inputs/ProteinChallengeInputs'
-import ExcerciseChallengeInputs from '../../shared/challenge-inputs/ExcerciseChallengeInputs'
-import CarbChallengeInputs from '../../shared/challenge-inputs/CarbChallengeInputs'
-import SugarSaltChallengeInputs from '../../shared/challenge-inputs/SugarSaltChallengeInputs'
+import {
+    WaterChallengeInputs,
+    VegetableChallengeInputs,
+    ProteinChallengeInputs,
+    ExcerciseChallengeInputs,
+    CarbChallengeInputs,
+    SugarSaltChallengeInputs,
+    WaterPostInfo,
+    VegetablePostInfo,
+    ProteinPostInfo,
+    ExcercisePostInfo,
+    CarbPostInfo,
+    SugarSaltPostInfo
+} from 'components'
 
-import WaterChallengeInfo from './post-info/WaterChallengeInfo'
-import VegetableChallengeInfo from './post-info/VegetableChallengeInfo'
-import ProteinChallengeInfo from './post-info/ProteinChallengeInfo'
-import ExcercisePostInfo from './post-info/ExcercisePostInfo'
-import CarbChallengeInfo from './post-info/CarbChallengeInfo'
-import SugarSaltPostInfo from './post-info/SugarSaltPostInfo'
 
-import { scorePost } from 'modules/functions'
+import { scorePost } from 'helpers'
 
-const SubmitButton = () => {
-    return (
-        <Button color='primary' type="submit" >
-            Update Post!
-            </Button>
-    )
-}
 
-const UserPostInputs = (props) => {
+export default function UserPostInputs(props) {
     const { currentPost, challengeId, selectedDateInDashboard } = props
     const {
         waterProgress,
@@ -52,7 +47,7 @@ const UserPostInputs = (props) => {
     if (challengeId === 'challenge1') {
         return (
             <>
-                <WaterChallengeInfo
+                <WaterPostInfo
                     waterProgress={waterProgress}
                     waterSuccess={waterSuccess}
                     currentPost={currentPost}
@@ -70,7 +65,7 @@ const UserPostInputs = (props) => {
     if (challengeId === 'challenge2') {
         return (
             <>
-                <VegetableChallengeInfo
+                <VegetablePostInfo
                     vegetableProgress={vegetableProgress}
                     vegetableSuccess={vegetableSuccess}
                     challengeId={challengeId}
@@ -87,7 +82,7 @@ const UserPostInputs = (props) => {
     if (challengeId === 'challenge3') {
         return (
             <>
-                <ProteinChallengeInfo
+                <ProteinPostInfo
                     proteinProgress={proteinProgress}
                     proteinSuccess={proteinSuccess}
                     selectedDateIsToday={selectedDateIsToday}
@@ -124,7 +119,7 @@ const UserPostInputs = (props) => {
     if (challengeId === 'challenge5') {
         return (
             <>
-                <CarbChallengeInfo
+                <CarbPostInfo
                     userUnderBudget={carbUnderBudget}
                     selectedDateIsToday={selectedDateIsToday}
                     currentPost={currentPost}
@@ -164,4 +159,10 @@ const UserPostInputs = (props) => {
         )
     }
 }
-export default UserPostInputs
+const SubmitButton = () => {
+    return (
+        <Button color='primary' type="submit" >
+            Update Post!
+        </Button>
+    )
+}

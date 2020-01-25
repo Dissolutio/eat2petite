@@ -1,7 +1,7 @@
 import React from 'react'
 import ProgressMsg from '../ProgressMsg'
 
-export default function ProteinChallengeInfo({ selectedDateIsToday, currentPost, challengeId, proteinProgress, proteinSuccess }) {
+export default function ProteinPostInfo({ selectedDateIsToday, currentPost, challengeId, proteinProgress, proteinSuccess }) {
     const goal = parseInt(currentPost.targets[challengeId].proteinConsumed)
     return (
         <>

@@ -2,9 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import useThunkReducer from 'react-hook-thunk-reducer';
 import { format, isSameDay } from 'date-fns'
 
-import { useFirebaseContext } from 'contexts/useFirebaseContext'
-import { useAuthUserContext } from 'contexts/useAuthUserContext'
-import { addCalculatedContestDataTo } from 'modules/adapters'
+import { useFirebaseContext, useAuthContext } from 'contexts'
+import { adaptContests } from 'helpers'
 
 const RealtimeDataContext = React.createContext([{}, () => { }])
 
@@ -38,7 +37,7 @@ function reducer(state, action) {
     }
 }
 
-export const RealtimeDataContextProvider = (props) => {
+const RealtimeDataContextProvider = (props) => {
     const [state, dispatch] = useThunkReducer(reducer, initialState);
 
     return (
@@ -48,9 +47,9 @@ export const RealtimeDataContextProvider = (props) => {
     )
 }
 
-export const useRealtimeDataContext = () => {
+const useRealtimeDataContext = () => {
     const firebaseApp = useFirebaseContext()
-    const { user } = useAuthUserContext()
+    const { user } = useAuthContext()
     const [appData, dispatch] = useContext(RealtimeDataContext);
 
     // ATTACH LISTENERS
@@ -79,7 +78,7 @@ export const useRealtimeDataContext = () => {
             contestsRef.on("value", snapshot => {
                 dispatch({
                     type: 'fetch_contests',
-                    payload: addCalculatedContestDataTo(snapshot.val())
+                    payload: adaptContests(snapshot.val())
                 })
             })
             userPostsRef.on("value", snapshot => {
@@ -191,12 +190,21 @@ export const useRealtimeDataContext = () => {
         console.log('Updating post', post)
         return firebaseApp.dbUpdateUserPost(post)
     }
+    function updateChallenge(updatedChallenge) {
+        return firebaseApp.dbUpdateChallenge(updatedChallenge)
+    }
+    function updateUserDefaultTargets(userId, newTargets) {
+        return firebaseApp.dbSetUserDefaultTargets(userId, newTargets)
+    }
     return {
         appData,
         createContest,
         enrollUserInContest,
         saveNewPost,
-        updateUserPost
+        updateUserPost,
+        updateChallenge,
+        updateUserDefaultTargets
     }
 }
 
+export { RealtimeDataContextProvider, useRealtimeDataContext }

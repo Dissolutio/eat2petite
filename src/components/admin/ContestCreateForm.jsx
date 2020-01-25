@@ -4,10 +4,10 @@ import { Container, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import { format, addDays } from 'date-fns'
 import { range } from 'lodash'
 
-import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
+import { useRealtimeDataContext } from 'contexts'
 
-import useInputValue from 'hooks/useInputValue'
-import { ordinalSuffixOf } from 'modules/functions'
+import { useInputValue } from 'hooks'
+import { ordinalSuffixOf } from 'helpers'
 import * as ROUTES from 'routes.js'
 
 const ContestCreateForm = (props) => {

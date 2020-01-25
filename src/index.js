@@ -2,12 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 
-import { Firebase } from './modules/firebase'
-import { FirebaseContext, useFirebaseContext } from './contexts/useFirebaseContext'
-import { AuthUserContext, useAuthListener } from './contexts/useAuthUserContext'
-import { UIContextProvider } from './contexts/useUIContext'
-import { DataContextProvider } from './contexts/useDataContext'
-import { RealtimeDataContextProvider } from './contexts/useRealtimeDataContext'
+import { Firebase } from './firebase'
+import {
+	FirebaseContext,
+	useFirebaseContext,
+	AuthContext,
+	useAuthListener,
+	RealtimeDataContextProvider,
+	UIContextProvider
+} from './contexts'
 
 import App from './App'
 
@@ -25,7 +28,7 @@ function FirebaseWrapper({ children }) {
 function AuthWrapper({ children }) {
 	const firebaseApp = useFirebaseContext()
 	const authState = useAuthListener(firebaseApp)
-	return <AuthUserContext.Provider value={authState}>{children}</AuthUserContext.Provider>
+	return <AuthContext.Provider value={authState}>{children}</AuthContext.Provider>
 }
 
 function AppWrapper() {
@@ -33,13 +36,11 @@ function AppWrapper() {
 		<FirebaseWrapper>
 			<AuthWrapper>
 				<UIContextProvider>
-					<DataContextProvider>
-						<RealtimeDataContextProvider>
-							<Router>
-								<App />
-							</Router>
-						</RealtimeDataContextProvider>
-					</DataContextProvider>
+					<RealtimeDataContextProvider>
+						<Router>
+							<App />
+						</Router>
+					</RealtimeDataContextProvider>
 				</UIContextProvider>
 			</AuthWrapper>
 		</FirebaseWrapper>

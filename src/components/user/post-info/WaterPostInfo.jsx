@@ -1,7 +1,7 @@
 import React from 'react'
 import ProgressMsg from '../ProgressMsg'
 
-export default function WaterChallengeInfo({ currentPost, selectedDateIsToday, challengeId, waterProgress, waterSuccess }) {
+export default function WaterPostInfo({ currentPost, selectedDateIsToday, challengeId, waterProgress, waterSuccess }) {
     const { quantityWaterDrank, quantityWaterDrankUnits } = currentPost.targets[challengeId]
     return (
         <>

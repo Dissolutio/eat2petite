@@ -1,14 +1,13 @@
 import React from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
-import { useDataContext } from '../../../contexts/useDataContext'
-import useInputValue from 'hooks/useInputValue'
-import useFormAlert from 'hooks/useFormAlert'
+import { useRealtimeDataContext } from 'contexts'
+import { useInputValue, useFormAlert } from 'hooks'
 
 export default function EditChallengeForm({ challenge }) {
     const challengeName = useInputValue(challenge.challengeName)
     const description = useInputValue(challenge.description)
-    const { updateChallenge } = useDataContext()
+    const { updateChallenge } = useRealtimeDataContext()
     const { fireAlert, CurrentAlertDisplay } = useFormAlert()
     const saveChallenge = event => {
         event.preventDefault()

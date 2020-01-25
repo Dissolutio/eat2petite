@@ -1,11 +1,11 @@
 import { format, addDays } from 'date-fns'
-export const samplePost = {
+
+const samplePost = {
   '-LsQNoes1_JZsqVuG5Mz': {
     uid: "-LsQNoes1_JZsqVuG5Mz",
     author: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
     challengeId: "challenge1",
     checkedInBonus: true,
-    // firstInput: null at first, added when user updates post
     contestId: "-LsQNkeDfSlA1Gql-XKM",
     createdAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
     lastEditedAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
@@ -71,7 +71,7 @@ export const samplePost = {
     }
   },
 }
-export const sampleChallenges = {
+const sampleChallenges = {
   challenge1: {
     challengeName: 'Water Challenge',
     uid: 'challenge1',
@@ -154,7 +154,7 @@ export const sampleChallenges = {
     },
   },
 }
-export const sampleContests = {
+const sampleContests = {
   contest1: {
     title: 'Eat-2-Petite Launch Contest',
     startDate: format(addDays(new Date(), -6), 'P'),
@@ -188,7 +188,7 @@ export const sampleContests = {
     },
   },
 }
-export const sampleUsers = {
+const sampleUsers = {
   'MtAwR5hQ18SpTXI5wEjbkzx5pLE3': {
     email: 'user_1@example.com',
     userRole: 'default',
@@ -234,8 +234,7 @@ export const sampleUsers = {
     userHeightInches: '8',
   },
 }
-
-export const samplePublicUsers = {
+const samplePublicUsers = {
   'MtAwR5hQ18SpTXI5wEjbkzx5pLE3': {
     userRole: 'default',
     uid: 'MtAwR5hQ18SpTXI5wEjbkzx5pLE3',
@@ -256,4 +255,11 @@ export const samplePublicUsers = {
     uid: 'iNgYAcuUyeVPO83DzReVtv6hWn03',
     username: 'dissolutio',
   },
+}
+export {
+  samplePost,
+  sampleChallenges,
+  sampleContests,
+  sampleUsers,
+  samplePublicUsers
 }

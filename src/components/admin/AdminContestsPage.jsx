@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button, ListGroup, ListGroupItem } from 'reactstrap'
-import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
-import { AdminContestDetailLink, AdminCreateContestLink } from '../navigation/Links'
+
+import { useRealtimeDataContext } from '../../contexts'
+import { AdminContestDetailLink, AdminCreateContestLink } from '../../components'
 
 export default function AdminContestsPage() {
   const { appData } = useRealtimeDataContext()

@@ -2,6 +2,7 @@ import React from 'react'
 import { Container } from 'reactstrap'
 import HeroImage from './HeroImage'
 import styled from 'styled-components'
+
 export default function LandingPage() {
 	return (
 		<>

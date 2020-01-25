@@ -1,10 +1,9 @@
 import React from 'react'
-import { useFirebaseContext } from '../../contexts/useFirebaseContext'
-import { useAuthUserContext } from '../../contexts/useAuthUserContext'
+import { useFirebaseContext, useAuthContext } from 'contexts'
 
 export default function AccountPage(props) {
 	const firebaseApp = useFirebaseContext()
-	const { user } = useAuthUserContext()
+	const { user } = useAuthContext()
 	return (
 		<div>
 			AccountPage! Where authenticated users view and edit their account info!

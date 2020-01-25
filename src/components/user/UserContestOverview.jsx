@@ -4,9 +4,9 @@ import { format, isSameDay } from 'date-fns'
 
 import SelectContestDropdown from '../shared/SelectContestDropdown'
 import DashboardCalendar from '../shared/DashboardCalendar'
-import ChallengePost from './post/ChallengePost'
+import ChallengePost from './ChallengePost'
 
-const UserContestOverview = (props) => {
+export default function UserContestOverview(props) {
   const {
     selectedDateInDashboard,
     handleSelectedContestChange,
@@ -81,4 +81,4 @@ const UserContestOverview = (props) => {
     </Container>
   )
 }
-export default UserContestOverview
+

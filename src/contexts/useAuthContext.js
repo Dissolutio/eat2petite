@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react'
 
-const AuthUserContext = React.createContext({
+const AuthContext = React.createContext({
 	initializing: true,
 	user: null,
 })
-const useAuthUserContext = () => {
-	const authState = useContext(AuthUserContext)
+const useAuthContext = () => {
+	const authState = useContext(AuthContext)
 	return authState
 }
 const useAuthListener = firebaseApp => {
@@ -50,4 +50,4 @@ const useAuthListener = firebaseApp => {
 	}, [])
 	return authState
 }
-export { AuthUserContext, useAuthUserContext, useAuthListener }
+export { AuthContext, useAuthContext, useAuthListener }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText, ListGroup, ListGroupItem } from 'reactstrap'
-import { AdminUserDetailLink } from '../navigation/Links'
-import { ordinalSuffixOf } from '../../modules/functions'
+import { AdminUserDetailLink } from '../../components'
+import { ordinalSuffixOf } from '../../helpers'
 
 export default function AdminContestDetail(props) {
 	const { contests, users, challenges } = props

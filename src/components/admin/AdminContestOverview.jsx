@@ -3,10 +3,8 @@ import { Container, Button } from 'reactstrap'
 import { format, isSameDay } from 'date-fns'
 import styled from 'styled-components'
 
-import DashboardCalendar from '../shared/DashboardCalendar'
-import SelectContestDropdown from '../shared/SelectContestDropdown'
-import { AdminDevConsole } from '../shared/DevConsole'
-import { lastInitial } from '../../modules/functions'
+import { DashboardCalendar, SelectContestDropdown } from '../../components'
+import { lastInitial } from '../../helpers'
 
 const AdminContestOverview = (props) => {
   const {
@@ -73,9 +71,6 @@ const AdminContestOverview = (props) => {
           maxDate={new Date(endDate)}
         />
       </Container>
-      {process.env.NODE_ENV === 'development' ? (
-        <AdminDevConsole></AdminDevConsole>
-      ) : null}
     </Container>
   )
 }

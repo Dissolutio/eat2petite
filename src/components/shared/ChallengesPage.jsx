@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Container, Collapse, Button, Row, Col, Card, CardHeader, CardBody, CardFooter, CardTitle, CardText } from 'reactstrap'
-import EditChallengeForm from '../admin/forms/EditChallengeForm'
-import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
 
-export const ChallengesPage = () => {
+import { EditChallengeForm } from 'components'
+import { useRealtimeDataContext } from 'contexts'
+
+export default function ChallengesPage() {
 	const { appData } = useRealtimeDataContext()
 	const { challenges, personalProfile } = appData
 	const isAdmin = (personalProfile && personalProfile.userRole === 'admin')

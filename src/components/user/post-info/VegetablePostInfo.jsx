@@ -1,7 +1,7 @@
 import React from 'react'
 import ProgressMsg from '../ProgressMsg'
 
-export default function VegetableChallengeInfo({ currentPost, selectedDateIsToday, challengeId, vegetableProgress, vegetableSuccess }) {
+export default function VegetablePostInfo({ currentPost, selectedDateIsToday, challengeId, vegetableProgress, vegetableSuccess }) {
     const goal = currentPost.targets[challengeId].servingsVegetablesEaten
     return (
         <>

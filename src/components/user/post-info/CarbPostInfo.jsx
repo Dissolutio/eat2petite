@@ -1,6 +1,6 @@
 import React from 'react'
 import ProgressMsg from '../ProgressMsg'
-export default function CarbChallengeInfo({ currentPost, selectedDateIsToday, challengeId, userUnderBudget }) {
+export default function CarbPostInfo({ currentPost, selectedDateIsToday, challengeId, userUnderBudget }) {
     const goalLimit = parseInt(currentPost.targets[challengeId].refinedCarbsConsumed)
     return (
         <>

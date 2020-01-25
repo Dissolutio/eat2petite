@@ -2,12 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import * as ROUTES from 'routes.js'
 
-export const AdminUserDetailLink = ({ id, children }) => (
+const AdminUserDetailLink = ({ id, children }) => (
   <Link to={`${ROUTES.ADMIN_USERS}/${id}`}>{children}</Link>
 )
-export const AdminContestDetailLink = ({ contestId, children }) => (
+const AdminContestDetailLink = ({ contestId, children }) => (
   <Link to={`${ROUTES.ADMIN_CONTESTS}/${contestId}`}>{children}</Link>
 )
-export const AdminCreateContestLink = ({ children }) => (
+const AdminCreateContestLink = ({ children }) => (
   <Link to={`${ROUTES.ADMIN_CREATE_CONTEST}`}>{children}</Link>
 )
+export {
+  AdminUserDetailLink,
+  AdminContestDetailLink,
+  AdminCreateContestLink
+}

@@ -1,5 +1,7 @@
 import { isAfter } from 'date-fns'
 
+export { adaptContests } from './contestsAdapter'
+
 export const ordinalSuffixOf = (i) => {
 	const j = i % 10,
 		k = i % 100;
@@ -26,9 +28,9 @@ export function lastInitial(string) {
 }
 
 export function flatten(objectToFlatten) {
-	return Object.values(objectToFlatten).reduce((reduction, current) => {
+	return Object.values(objectToFlatten).reduce((previous, current) => {
 		return {
-			...reduction,
+			...previous,
 			...current,
 		}
 	}, {})

@@ -1,21 +1,23 @@
 import React from 'react'
 import { Container, Form, FormGroup, Button } from 'reactstrap'
 
-import { useDataContext } from 'contexts/useDataContext'
-import useFormAlert from 'hooks/useFormAlert'
+import { useRealtimeDataContext } from 'contexts'
+import { useFormAlert } from 'hooks'
 
-import WaterChallengeInputs from 'components/shared/challenge-inputs/WaterChallengeInputs'
-import VegetableChallengeInputs from 'components/shared/challenge-inputs/VegetableChallengeInputs'
-import ProteinChallengeInputs from 'components/shared/challenge-inputs/ProteinChallengeInputs'
-import ExcerciseChallengeInputs from 'components/shared/challenge-inputs/ExcerciseChallengeInputs'
-import CarbChallengeInputs from 'components/shared/challenge-inputs/CarbChallengeInputs'
-import SugarSaltChallengeInputs from 'components/shared/challenge-inputs/SugarSaltChallengeInputs'
+import {
+  WaterChallengeInputs,
+  VegetableChallengeInputs,
+  ProteinChallengeInputs,
+  ExcerciseChallengeInputs,
+  CarbChallengeInputs,
+  SugarSaltChallengeInputs,
+} from 'components'
 
-import { flatten, buildNewTargetsFromEvent } from 'modules/functions'
+import { flatten, buildNewTargetsFromEvent } from 'helpers'
 
-function EditUserDefaultTargetForm(props) {
+export default function EditUserDefaultTargetForm(props) {
   const { user, challenges } = props
-  const { updateUserDefaultTargets } = useDataContext()
+  const { updateUserDefaultTargets } = useRealtimeDataContext()
   const { fireAlert, CurrentAlertDisplay } = useFormAlert()
 
   const userDefaultTargets = user.defaultTargets
@@ -79,4 +81,3 @@ function EditUserDefaultTargetForm(props) {
     return <Container>No User Found</Container>
   }
 }
-export default EditUserDefaultTargetForm

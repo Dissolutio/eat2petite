@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import { isAfter } from 'date-fns'
 
-import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
-import { useLocalStorage } from 'hooks/useLocalStorage'
-import AdminContestOverview from './AdminContestOverview'
-import AdminUserOverview from './AdminUserOverview'
-
-import { sortByMostCurrentStartDate } from 'modules/functions'
+import { useRealtimeDataContext } from '../../contexts'
+import { useLocalStorage } from '../../hooks'
+import { AdminContestOverview, AdminUserOverview } from '../../components'
+import { sortByMostCurrentStartDate } from '../../helpers'
 
 export default function AdminDashboard() {
 

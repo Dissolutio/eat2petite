@@ -1,7 +1,8 @@
 import React from 'react'
 import { Container, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap'
-import { AdminUserDetailLink } from '../navigation/Links'
-import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
+
+import { AdminUserDetailLink } from 'components'
+import { useRealtimeDataContext } from 'contexts'
 
 export default function AdminUsersPage() {
 	const { appData } = useRealtimeDataContext()

@@ -32,5 +32,5 @@ CSS variables are declared in `theme.css`, imported into `index.js` and then Sty
 
 ## Organization
 
-I have tried to keep reusable hooks, functions, and firebase API calls in the `src/modules` directory.
+I have tried to keep reusable hooks, functions, and firebase API calls in the `/modules` directory.
 Oft used auth-related forms such as the LoginForm, RegisterForm, CurrentUserReadout, and VerifyEmailForm are all kept in the `components/authentication/` directory. An admin user is routed to forms when viewing a post, challenge, or contest. A default user is routed to make posts but otherwise just read data. So there is otherwise in `components`  a `/user`, an `/admin`, a `/shared`, and a `/layout` directory. Layout is connected with routing, navigation, and general app layout and structutre. Then the UserRouter and AdminRouter takeover depending on the user's auth status.

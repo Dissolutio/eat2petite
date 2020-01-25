@@ -2,11 +2,13 @@ import React from 'react'
 import { Container, Form } from 'reactstrap'
 import { format, differenceInCalendarDays, isToday } from 'date-fns'
 
-import { useRealtimeDataContext } from 'contexts/useRealtimeDataContext'
+import { useRealtimeDataContext } from 'contexts'
 
-import UserPostInputs from './UserPostInputs'
-import UserDidCheckin from 'components/shared/UserDidCheckin'
-import LastEditedReadout from './LastEditedReadout'
+import {
+  UserPostInputs,
+  UserDidCheckin,
+  LastEditedReadout
+} from 'components'
 
 export default function ChallengePost(props) {
   const {

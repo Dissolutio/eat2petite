@@ -88,12 +88,3 @@ const PostDetailForSelectedDate = ({ post, currentChallenge }) => {
     }
     else return null
 }
-const PostFrame = ({ post, currentChallenge, content }) => {
-    return (
-        <div>
-            <h5>{currentChallenge.challengeName}</h5>
-            <UserDidCheckin checkInBonus={post.checkInBonus} />
-            {content}
-        </div>
-    )
-}

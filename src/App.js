@@ -1,20 +1,24 @@
 import React from 'react'
 
-import { useAuthUserContext } from 'contexts/useAuthUserContext'
+import { useAuthContext } from './contexts'
 
-import Header from './components/layout/Header'
-import AppRouter from './components/navigation/AppRouter'
-import { PageStyle, AppStyle } from './components/layout/StyleWrappers'
-import LandingPage from './components/layout/LandingPage'
+import {
+	Header,
+	AppRouter,
+	LoadingScreen,
+	PageStyle,
+	AppStyle,
+	LandingPage
+} from './components'
 
-// Auth initializes => render AppRouter => IF user => route to dashboard with useRealtimeDataContext hook => init database listeners
 function App() {
-	const { initializing, user } = useAuthUserContext()
+	const { initializing, user } = useAuthContext()
 	return (
 		<AppStyle>
 			<Header user={user} />
 			<PageStyle >
-				{initializing ? <LandingPage /> : <AppRouter />}
+				{/* {initializing ? <LandingPage /> : <AppRouter />} */}
+				<LoadingScreen />
 			</PageStyle>
 		</AppStyle>
 	)
