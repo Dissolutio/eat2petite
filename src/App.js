@@ -5,7 +5,6 @@ import { useAuthContext } from './contexts'
 import {
 	Header,
 	AppRouter,
-	LoadingScreen,
 	PageStyle,
 	AppStyle,
 	LandingPage
@@ -17,8 +16,7 @@ function App() {
 		<AppStyle>
 			<Header user={user} />
 			<PageStyle >
-				{/* {initializing ? <LandingPage /> : <AppRouter />} */}
-				<LoadingScreen />
+				{initializing ? <LandingPage /> : <AppRouter />}
 			</PageStyle>
 		</AppStyle>
 	)

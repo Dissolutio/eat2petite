@@ -3,12 +3,11 @@ export {
     AdminDashboard,
     AdminUsersPage,
     AdminContestsPage,
-    AdminUserOverview,
     AdminUserDetail,
     ContestCreateForm,
-    AdminContestOverview,
     EditChallengeForm,
     EditUserDefaultTargetForm,
+    UsersGrid
 } from './admin'
 
 export {

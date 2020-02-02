@@ -2,12 +2,12 @@ import React from 'react'
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 export default function SelectContestDropdown(props) {
+  const { contests, selectedContest, setSelectedContestId } = props
   const [dropdownOpen, setOpen] = React.useState(false)
-  const { contests, userSelectedContest, handleSelectedContestChange } = props
   const toggle = () => setOpen(!dropdownOpen)
-  const selectableContests = contests.filter(
-    (contest) => contest.uid !== userSelectedContest.uid,
-  )
+  const selectableContests = contests && selectedContest && contests.filter(contest => {
+    return contest.uid !== selectedContest.uid
+  })
   if (!selectableContests) {
     return null
   }
@@ -25,7 +25,7 @@ export default function SelectContestDropdown(props) {
           return (
             <DropdownItem
               key={contest.uid}
-              onClick={() => handleSelectedContestChange(contest)}>
+              onClick={() => setSelectedContestId(contest.uid)}>
               {contest.title}
             </DropdownItem>
           )
