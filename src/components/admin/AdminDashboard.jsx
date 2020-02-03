@@ -2,7 +2,10 @@ import React from 'react'
 import { format, isSameDay } from 'date-fns'
 import { Container, Button } from 'reactstrap'
 
-import { useRealtimeDataContext, useUIContext } from '../../contexts'
+import {
+	useRealtimeDataContext, useUIContext,
+	// AdminDBConsole
+} from '../../contexts'
 import { useKeepDateInContestRange } from '../../hooks'
 import {
 	DashboardCalendar,
@@ -43,15 +46,27 @@ export default function AdminDashboard() {
 	}
 	// Don't render until there IS a contest
 	if (!selectedContest) {
-		return (<p>No contests found!</p>)
+		return (
+			<>
+				{/* <AdminDBConsole /> */}
+				<p>No contests found!</p>
+			</>
+		)
 	}
 	// Get the challenge for the currently selected date
 	const currentChallengeId = selectedContest.getChallengeForDate(selectedDate)
 	const currentChallenge = challenges[currentChallengeId]
-	const allPostsArray = adminPosts && Object.values(adminPosts)
-	const postsForSelectedContest = allPostsArray && allPostsArray.filter(post => post.contestId === selectedContestId)
-	const postsForSpecificUser = postsForSelectedContest && postsForSelectedContest[viewingUserId]
-	const usersPostForSelectedDate = postsForSpecificUser && postsForSpecificUser.find(post => {
+	// Admin perspective
+	// function flattenPosts() {
+	// 	const postsByUser = Object.values(adminPosts)
+	// 	return postsByUser.reduce((prev, usersPosts) => {
+	// 		const usersPostsArr = Object.values(usersPosts)
+	// 		return [...prev, ...usersPostsArr]
+	// 	}, [])
+	// }
+	// const allPostsArray = adminPosts && flattenPosts()
+	const postsForUser = adminPosts && adminPosts[viewingUserId] && Object.values(adminPosts[viewingUserId])
+	const usersPostForSelectedDate = postsForUser && postsForUser.find(post => {
 		return isSameDay(new Date(post.postDate), new Date(selectedDate))
 	})
 	const viewingUser = viewingUserId && adminUsers[viewingUserId]
@@ -60,20 +75,22 @@ export default function AdminDashboard() {
 		return adminUsers[userId]
 	})
 	return (
-		<Container>
-			<h3 className='text-center'>{selectedContest.title}</h3>
-			<SelectContestDropdown
-				contests={contestsArray}
-				selectedContest={selectedContest}
-				setSelectedContestId={setSelectedContestId}
-			/>
+		<>
+			<Container className='text-center'>
+				<h1 >{selectedContest.title}</h1>
+				<SelectContestDropdown
+					contests={contestsArray}
+					selectedContest={selectedContest}
+					setSelectedContestId={setSelectedContestId}
+				/>
+			</Container>
 			{viewingUserId ?
 				(
 					<Container>
 						<Button style={{ backgroundColor: 'var(--E2P-ginger)' }} block onClick={() => setViewingUserId('')} >
 							<ArrowOutlineLeftZondicon width="10%" style={{ padding: '0.2rem', fill: 'var(--font-light)', maxWidth: '40px', }} />
 							<span>
-								Back to Contest
+								Back to All Users
 							</span>
 						</Button>
 						<Container className="border border-secondary rounded p-3 mt-2 mb-1 text-center">
@@ -113,10 +130,11 @@ export default function AdminDashboard() {
 					maxDate={new Date(selectedContest.endDate)}
 				/>
 			</Container>
-		</Container>
+		</>
 	)
 }
 const PostDetailForSelectedDate = ({ post, currentChallenge }) => {
+	console.log("TCL: PostDetailForSelectedDate -> post", post)
 	const challengeId = currentChallenge.uid
 	if (!post) {
 		return <div>No Post Found</div>

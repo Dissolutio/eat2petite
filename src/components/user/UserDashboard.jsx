@@ -1,30 +1,24 @@
 import React from 'react'
+import { format, isSameDay } from 'date-fns'
+import { Container, Button } from 'reactstrap'
 
 import { useRealtimeDataContext, useUIContext } from 'contexts'
-import { useKeepDateInContestRange } from '../../hooks'
+import { useKeepDateInContestRange } from 'hooks'
 import { UserContestOverview } from 'components'
 import { sortByMostCurrentStartDate } from 'helpers'
 
-export default function UserDashboard(props) {
+export default function UserDashboard() {
   const { appData } = useRealtimeDataContext()
+  const { contests, challenges, userPosts, personalProfile } = appData
   const {
     selectedDate,
     setSelectedDate,
     selectedContestId,
     setSelectedContestId,
   } = useUIContext()
-  const { contests, challenges, userPosts, personalProfile } = appData
+  const contestsArray = contests && Object.values(contests)
   const selectedContest = contests && contests[selectedContestId]
   useKeepDateInContestRange(selectedContest, selectedDate, setSelectedDate)
-
-  const userEnrolledContests = () => {
-    return (
-      me &&
-      contests &&
-      me.contests &&
-      Object.keys(me.contests).map((contestKey) => contests[contestKey])
-    )
-  }
   // Auto select a contest
   if (contestsArray && !selectedContest) {
     const sortedByStartDate = contestsArray.sort(sortByMostCurrentStartDate)
@@ -36,31 +30,36 @@ export default function UserDashboard(props) {
   }
   // Don't render until there IS a contest
   if (!selectedContest) {
-    return <p>No contests found!</p>
+    return (<p>No contests found!</p>)
   }
-  const currentChallenge =
-    challenges[userSelectedContest.getChallengeForDate(selectedDateInDashboard)]
   // Get the challenge for the currently selected date
   const currentChallengeId = selectedContest.getChallengeForDate(selectedDate)
   const currentChallenge = challenges[currentChallengeId]
-  const allPostsArray = adminPosts && Object.values(adminPosts)
-  const postsForSelectedContest =
-    allPostsArray &&
-    allPostsArray.filter((post) => post.contestId === selectedContestId)
-
-  if (userSelectedContest) {
+  // User perspective
+  const userEnrolledContests = () => {
     return (
-      <UserContestOverview
-        me={me}
-        userSelectedContest={userSelectedContest}
-        handleSelectedContestChange={handleSelectedContestChange}
-        selectedDateInDashboard={selectedDateInDashboard}
-        setSelectedDateInDashboard={setSelectedDateInDashboard}
-        userEnrolledContests={userEnrolledContests()}
-        currentChallenge={currentChallenge}
-        challenges={challenges}
-        posts={postsForSelectedContest}
-      />
+      personalProfile &&
+      contests &&
+      personalProfile.contests &&
+      Object.keys(personalProfile.contests).map((contestKey) => contests[contestKey])
     )
   }
+  const userPostsForContest = () => {
+    return userPosts && Object.values(userPosts)
+      .filter(post => (post.contestId === selectedContest.uid))
+  }
+  console.log("TCL: userPostsForContest -> userPostsForContest", userPostsForContest())
+  return (
+    <UserContestOverview
+      me={personalProfile}
+      userSelectedContest={selectedContest}
+      handleSelectedContestChange={setSelectedContestId}
+      selectedDateInDashboard={selectedDate}
+      setSelectedDateInDashboard={setSelectedDate}
+      userEnrolledContests={userEnrolledContests()}
+      currentChallenge={currentChallenge}
+      challenges={challenges}
+      posts={userPostsForContest()}
+    />
+  )
 }

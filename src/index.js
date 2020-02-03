@@ -9,7 +9,8 @@ import {
 	AuthContext,
 	useAuthListener,
 	RealtimeDataContextProvider,
-	UIContextProvider
+	UIContextProvider,
+	// AdminDbContextProvider,
 } from './contexts'
 
 import App from './App'
@@ -37,9 +38,11 @@ function AppWrapper() {
 			<AuthWrapper>
 				<UIContextProvider>
 					<RealtimeDataContextProvider>
+						{/* <AdminDbContextProvider> */}
 						<Router>
 							<App />
 						</Router>
+						{/* </AdminDbContextProvider> */}
 					</RealtimeDataContextProvider>
 				</UIContextProvider>
 			</AuthWrapper>

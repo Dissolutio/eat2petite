@@ -157,7 +157,7 @@ const sampleChallenges = {
 const sampleContests = {
   contest1: {
     title: 'Eat-2-Petite Launch Contest',
-    startDate: format(addDays(new Date(), -6), 'P'),
+    startDate: format(addDays(new Date(), -8), 'P'),
     uid: '-Lth91Tw1gaKMMbwFe54',
     daysPerChallenge: '3',
     enrolledUsers: {},
