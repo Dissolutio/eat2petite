@@ -12,7 +12,7 @@ import {
 
 export default function ChallengePost(props) {
   const {
-    userSelectedContest,
+    selectedContest,
     selectedDateInDashboard,
     me,
     currentChallenge,
@@ -33,7 +33,7 @@ export default function ChallengePost(props) {
     saveNewPost(
       selectedDateInDashboard,
       currentChallenge,
-      userSelectedContest.uid,
+      selectedContest.uid,
     )
     return <h1>Creating post for selected date...</h1>
   }

@@ -41,25 +41,27 @@ export default function UserDashboard() {
       personalProfile &&
       contests &&
       personalProfile.contests &&
-      Object.keys(personalProfile.contests).map((contestKey) => contests[contestKey])
+      Object.keys(personalProfile.contests)
+        .map((contestKey) => contests[contestKey])
     )
   }
-  const userPostsForContest = () => {
-    return userPosts && Object.values(userPosts)
-      .filter(post => (post.contestId === selectedContest.uid))
-  }
-  console.log("TCL: userPostsForContest -> userPostsForContest", userPostsForContest())
-  return (
-    <UserContestOverview
-      me={personalProfile}
-      userSelectedContest={selectedContest}
-      handleSelectedContestChange={setSelectedContestId}
-      selectedDateInDashboard={selectedDate}
-      setSelectedDateInDashboard={setSelectedDate}
-      userEnrolledContests={userEnrolledContests()}
-      currentChallenge={currentChallenge}
-      challenges={challenges}
-      posts={userPostsForContest()}
-    />
+  const userPostsArr = userPosts ? Object.values(userPosts) : []
+  const userPostsForSelectedContest = userPostsArr.filter(post => (post.contestId === selectedContestId))
+  const userPostForSelectedDate = userPostsForSelectedContest.find((post) =>
+    isSameDay(new Date(post.postDate), new Date(selectedDate)),
   )
+}
+return (
+  <UserContestOverview
+    me={personalProfile}
+    selectedContest={selectedContest}
+    handleSelectedContestChange={setSelectedContestId}
+    selectedDateInDashboard={selectedDate}
+    setSelectedDateInDashboard={setSelectedDate}
+    userEnrolledContests={userEnrolledContests()}
+    currentChallenge={currentChallenge}
+    challenges={challenges}
+    posts={userPostsForContest()}
+  />
+)
 }

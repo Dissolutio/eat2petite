@@ -5,7 +5,6 @@ import { format } from 'date-fns'
 
 const DashboardCalendar = props => {
   const { minDate, maxDate, selectedDate, setSelectedDateInDashboard, progressHighlightDateArr, successHighlightDateArr } = props
-  console.log("TCL: successHighlightDateArr", successHighlightDateArr)
   const dateChangeHandler = (date) => {
     setSelectedDateInDashboard(date)
   }

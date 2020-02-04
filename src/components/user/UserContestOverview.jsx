@@ -11,7 +11,7 @@ export default function UserContestOverview(props) {
     selectedDateInDashboard,
     handleSelectedContestChange,
     setSelectedDateInDashboard,
-    userSelectedContest,
+    selectedContest,
     userEnrolledContests,
     me,
     posts,
@@ -19,14 +19,14 @@ export default function UserContestOverview(props) {
     currentChallenge,
   } = props
 
-  if (!userSelectedContest || !userEnrolledContests || !me) {
+  if (!selectedContest || !userEnrolledContests || !me) {
     return null
   }
-  const { startDate, endDate } = userSelectedContest
+  const { startDate, endDate } = selectedContest
   const postsArr = posts ? Object.values(posts) : []
   const currentPost = () => {
     return postsArr
-      .filter((post) => post.contestId === userSelectedContest.uid)
+      .filter((post) => post.contestId === selectedContest.uid)
       .find((post) =>
         isSameDay(new Date(post.postDate), new Date(selectedDateInDashboard)),
       )
@@ -52,15 +52,15 @@ export default function UserContestOverview(props) {
   }
   return (
     <Container className='text-center'>
-      <h3>{userSelectedContest.title}</h3>
+      <h3>{selectedContest.title}</h3>
       <SelectContestDropdown
         handleSelectedContestChange={handleSelectedContestChange}
         contests={userEnrolledContests}
-        userSelectedContest={userSelectedContest}
+        selectedContest={selectedContest}
       />
       <ChallengePost
         selectedDateInDashboard={selectedDateInDashboard}
-        userSelectedContest={userSelectedContest}
+        selectedContest={selectedContest}
         contestStartDate={new Date(startDate)}
         contestEndDate={new Date(endDate)}
         currentPost={currentPost()}
