@@ -4,7 +4,7 @@ import { Container, Button } from 'reactstrap'
 
 import {
 	useRealtimeDataContext, useUIContext,
-	// AdminDBConsole
+	AdminDBConsole
 } from '../../contexts'
 import { useKeepDateInContestRange } from '../../hooks'
 import {
@@ -57,14 +57,6 @@ export default function AdminDashboard() {
 	const currentChallengeId = selectedContest.getChallengeForDate(selectedDate)
 	const currentChallenge = challenges[currentChallengeId]
 	// Admin perspective
-	// function flattenPosts() {
-	// 	const postsByUser = Object.values(adminPosts)
-	// 	return postsByUser.reduce((prev, usersPosts) => {
-	// 		const usersPostsArr = Object.values(usersPosts)
-	// 		return [...prev, ...usersPostsArr]
-	// 	}, [])
-	// }
-	// const allPostsArray = adminPosts && flattenPosts()
 	const postsForUser = adminPosts && adminPosts[viewingUserId] && Object.values(adminPosts[viewingUserId])
 	const usersPostForSelectedDate = postsForUser && postsForUser.find(post => {
 		return isSameDay(new Date(post.postDate), new Date(selectedDate))
@@ -130,6 +122,7 @@ export default function AdminDashboard() {
 					maxDate={new Date(selectedContest.endDate)}
 				/>
 			</Container>
+			<AdminDBConsole />
 		</>
 	)
 }
