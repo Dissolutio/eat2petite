@@ -1,14 +1,20 @@
 import React from 'react'
-import { format, isSameDay } from 'date-fns'
-import { Container, Button } from 'reactstrap'
+import { isSameDay } from 'date-fns'
+import { Container } from 'reactstrap'
 
 import { useRealtimeDataContext, useUIContext } from 'contexts'
 import { useKeepDateInContestRange } from 'hooks'
-import { UserContestOverview } from 'components'
-import { sortByMostCurrentStartDate } from 'helpers'
+import SelectContestDropdown from '../shared/SelectContestDropdown'
+import DashboardCalendar from '../shared/DashboardCalendar'
+import ChallengePost from './ChallengePost'
+import {
+  successHighlightDateArr,
+  progressHighlightDateArr,
+  sortByMostCurrentStartDate
+} from 'helpers'
 
 export default function UserDashboard() {
-  const { appData } = useRealtimeDataContext()
+  const { appData, saveNewPost } = useRealtimeDataContext()
   const { contests, challenges, userPosts, personalProfile } = appData
   const {
     selectedDate,
@@ -16,6 +22,8 @@ export default function UserDashboard() {
     selectedContestId,
     setSelectedContestId,
   } = useUIContext()
+  const [alreadyMakingPost, setAlreadyMakingPost] = React.useState(false)
+
   const contestsArray = contests && Object.values(contests)
   const selectedContest = contests && contests[selectedContestId]
   useKeepDateInContestRange(selectedContest, selectedDate, setSelectedDate)
@@ -46,22 +54,49 @@ export default function UserDashboard() {
     )
   }
   const userPostsArr = userPosts ? Object.values(userPosts) : []
-  const userPostsForSelectedContest = userPostsArr.filter(post => (post.contestId === selectedContestId))
-  const userPostForSelectedDate = userPostsForSelectedContest.find((post) =>
+  const userPostsForSelectedContest = userPostsArr && userPostsArr.filter(post => (post.contestId === selectedContestId))
+  const userPostForSelectedDate = userPostsForSelectedContest && userPostsForSelectedContest.find((post) =>
     isSameDay(new Date(post.postDate), new Date(selectedDate)),
   )
-}
-return (
-  <UserContestOverview
-    me={personalProfile}
-    selectedContest={selectedContest}
-    handleSelectedContestChange={setSelectedContestId}
-    selectedDateInDashboard={selectedDate}
-    setSelectedDateInDashboard={setSelectedDate}
-    userEnrolledContests={userEnrolledContests()}
-    currentChallenge={currentChallenge}
-    challenges={challenges}
-    posts={userPostsForContest()}
-  />
-)
+  // Rendering before posts are present means many new posts will be made in ChallengePost
+  if (!userPostForSelectedDate && currentChallenge && !alreadyMakingPost) {
+    setAlreadyMakingPost(true)
+    saveNewPost(
+      selectedDate,
+      currentChallenge,
+      selectedContestId
+    )
+    return <h1>Creating post for selected date...</h1>
+  }
+
+  return (
+    <Container className='text-center'>
+      <h3>{selectedContest.title}</h3>
+      <SelectContestDropdown
+        contests={userEnrolledContests()}
+        selectedContest={selectedContest}
+        setSelectedContestId={setSelectedContestId}
+      />
+      <ChallengePost
+        selectedDateInDashboard={selectedDate}
+        selectedContest={selectedContest}
+        contestStartDate={new Date(selectedContest.startDate)}
+        contestEndDate={new Date(selectedContest.endDate)}
+        currentPost={userPostForSelectedDate}
+        currentChallenge={currentChallenge}
+        challenges={challenges}
+        me={personalProfile}
+      />
+      <Container className='p-1'>
+        <DashboardCalendar
+          selectedDate={selectedDate}
+          setSelectedDateInDashboard={setSelectedDate}
+          minDate={new Date(selectedContest.startDate)}
+          maxDate={new Date(selectedContest.endDate)}
+          progressHighlightDateArr={progressHighlightDateArr(userPostsArr)}
+          successHighlightDateArr={successHighlightDateArr(userPostsArr)}
+        />
+      </Container>
+    </Container>
+  )
 }

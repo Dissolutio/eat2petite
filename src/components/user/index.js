@@ -1,4 +1,3 @@
-import UserContestOverview from './UserContestOverview'
 import UserDashboard from './UserDashboard'
 import ChallengePost from './ChallengePost'
 import LastEditedReadout from './LastEditedReadout'
@@ -15,7 +14,6 @@ import {
 } from './post-info'
 
 export {
-    UserContestOverview,
     UserDashboard,
     ChallengePost,
     LastEditedReadout,

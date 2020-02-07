@@ -1,7 +1,26 @@
-import { isAfter } from 'date-fns'
+import { format, isAfter } from 'date-fns'
 
 export { adaptContests } from './contestsAdapter'
 
+export function progressHighlightDateArr(userPostsArr) {
+	return (
+		userPostsArr &&
+		userPostsArr
+			.filter((post) => !!post.lastEditedAt)
+			.map((post) => format(new Date(post.postDate), 'MMMM d, yyyy'))
+	)
+}
+export function successHighlightDateArr(userPostsArr) {
+	function forSuccess(post) {
+		const targetsMet = post && post.targetsMet
+		return targetsMet && Object.values(targetsMet).some((item) => item)
+	}
+	function toFormattedDates(post) {
+		return format(new Date(post.postDate), 'MMMM d, yyyy')
+	}
+	const targetsMetDays = userPostsArr && userPostsArr.filter(forSuccess)
+	return targetsMetDays.map(toFormattedDates)
+}
 export const ordinalSuffixOf = (i) => {
 	const j = i % 10,
 		k = i % 100;

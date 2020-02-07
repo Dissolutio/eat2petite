@@ -1,4 +1,3 @@
-import AppRouter from './AppRouter'
 import NavLinks from './NavLinks'
 import {
     RegistrationRoute,
@@ -13,7 +12,6 @@ import {
 } from './Links'
 
 export {
-    AppRouter,
     NavLinks,
     RegistrationRoute,
     PrivateRoute,

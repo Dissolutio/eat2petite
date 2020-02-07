@@ -15,26 +15,19 @@ export default function ChallengePost(props) {
     selectedContest,
     selectedDateInDashboard,
     me,
-    currentChallenge,
     currentPost,
+    currentChallenge,
     challenges,
   } = props
   const { saveNewPost, updateUserPost } = useRealtimeDataContext()
-  const selectedDateIsFutureDate =
-    differenceInCalendarDays(new Date(), new Date(selectedDateInDashboard)) < 0
   const selectedDateIsToday = isToday(selectedDateInDashboard)
 
   // TODO: Render a placeholder form under these two conditions
+  if (!me || !challenges) return null
   if (!currentChallenge) {
     return <h5>No challenge for today!</h5>
   }
-  if (!currentPost && !selectedDateIsFutureDate) {
-
-    saveNewPost(
-      selectedDateInDashboard,
-      currentChallenge,
-      selectedContest.uid,
-    )
+  if (!currentPost) {
     return <h1>Creating post for selected date...</h1>
   }
 
