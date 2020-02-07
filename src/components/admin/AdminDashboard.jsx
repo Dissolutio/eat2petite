@@ -35,11 +35,13 @@ export default function AdminDashboard() {
 	const contestsArray = contests && Object.values(contests)
 	const selectedContest = contests && contests[selectedContestId]
 	useKeepDateInContestRange(selectedContest, selectedDate, setSelectedDate)
+	// No challenges? Then wait
+	if (!challenges) { return <div><h1>Loading Data</h1></div> }
 	// Auto select a contest
 	if (contestsArray && !selectedContest) {
 		const sortedByStartDate = contestsArray.sort(sortByMostCurrentStartDate)
 		const mostRecentlyStartedContest = sortedByStartDate[0]
-		const contestId = mostRecentlyStartedContest.uid
+		const contestId = mostRecentlyStartedContest && mostRecentlyStartedContest.uid
 		if (contestId) {
 			setSelectedContestId(contestId)
 		}
