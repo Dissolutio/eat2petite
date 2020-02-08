@@ -3,6 +3,7 @@ import useThunkReducer from 'react-hook-thunk-reducer';
 import { format, isSameDay } from 'date-fns'
 
 import { useFirebaseContext, useAuthContext } from 'contexts'
+import { postChallengeData } from '../sampleData'
 import { adaptContests } from 'helpers'
 
 const RealtimeDataContext = React.createContext([{}, () => { }])
@@ -33,7 +34,7 @@ function reducer(state, action) {
         case 'fetch_admin_users':
             return { ...state, adminUsers: action.payload };
         default:
-            throw new Error();
+            return state
     }
 }
 
@@ -127,7 +128,7 @@ const useRealtimeDataContext = () => {
     }
     function saveNewPost(forDate, forChallenge, forContestId) {
         const createdAt = (new Date()).toString()
-        const postDate = format(new Date(forDate), 'P')
+        const postDate = format(new Date(forDate), 'yyyy-MM-dd')
         const checkedInBonus = isSameDay(new Date(createdAt), new Date(postDate))
         const newPostTarget = (challengeId) => {
             const userTargetsForDate = appData.personalProfile.challengeTargetsForDates && appData.personalProfile.challengeTargetsForDates[`${format(new Date(forDate), 'yyyy-MM-dd')}`]
@@ -135,10 +136,11 @@ const useRealtimeDataContext = () => {
             const challengeDefaultTargets = challengeId && (appData.challenges[challengeId].defaultTarget)
             return userTargetsForDate || userDefaultTargets || challengeDefaultTargets
         }
+        const postUid = `${postDate}${forContestId}`
         const newPost = {
             author: appData.personalProfile.uid,
             userId: appData.personalProfile.uid,
-            uid: null,
+            uid: postUid,
             contestId: forContestId,
             challengeId: forChallenge.uid,
             postDate,
@@ -153,42 +155,14 @@ const useRealtimeDataContext = () => {
                 challenge5: newPostTarget('challenge5'),
                 challenge6: newPostTarget('challenge6'),
             },
-            data: {
-                challenge1: {
-                    quantityWaterDrank: 0,
-                    quantityWaterDrankUnits: "cups",
-                },
-                challenge2: {
-                    servingsVegetablesEaten: 0,
-                },
-                challenge3: {
-                    proteinConsumed: 0,
-                    proteinConsumedUnits: 'grams',
-                },
-                challenge4: {
-                    excerciseUnits: 'minutes',
-                    lightExcerciseDuration: 0,
-                    mediumExcerciseDuration: 0,
-                    heavyExcerciseDuration: 0,
-                },
-                challenge5: {
-                    refinedCarbsConsumed: 0,
-                    refinedCarbsConsumedUnits: 'calories',
-                },
-                challenge6: {
-                    quantitySugarConsumed: 0,
-                    quantitySaltConsumed: 0,
-                    quantitySugarConsumedUnits: 'grams',
-                    quantitySaltConsumedUnits: 'grams',
-                },
-            }
+            data: { ...postChallengeData }
         }
         console.log('Making a new post', newPost)
-        return firebaseApp.dbCreateUserPost(newPost)
+        return firebaseApp.dbSaveUserPost(newPost)
     }
     function updateUserPost(post) {
         console.log('Updating post', post)
-        return firebaseApp.dbUpdateUserPost(post)
+        return firebaseApp.dbSaveUserPost(post)
     }
     function updateChallenge(updatedChallenge) {
         return firebaseApp.dbUpdateChallenge(updatedChallenge)

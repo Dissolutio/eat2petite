@@ -1,12 +1,14 @@
 import React from 'react'
-import { isSameDay } from 'date-fns'
+import { format, isSameDay } from 'date-fns'
 import { Container } from 'reactstrap'
 
 import { useRealtimeDataContext, useUIContext } from 'contexts'
 import { useKeepDateInContestRange } from 'hooks'
-import SelectContestDropdown from '../shared/SelectContestDropdown'
-import DashboardCalendar from '../shared/DashboardCalendar'
-import ChallengePost from './ChallengePost'
+import {
+  SelectContestDropdown,
+  DashboardCalendar,
+  ChallengePost
+} from 'components'
 import {
   successHighlightDateArr,
   progressHighlightDateArr,
@@ -22,7 +24,6 @@ export default function UserDashboard() {
     selectedContestId,
     setSelectedContestId,
   } = useUIContext()
-  const [alreadyMakingPost, setAlreadyMakingPost] = React.useState(false)
 
   const contestsArray = contests && Object.values(contests)
   const selectedContest = contests && contests[selectedContestId]
@@ -54,20 +55,9 @@ export default function UserDashboard() {
     )
   }
   const userPostsArr = userPosts ? Object.values(userPosts) : []
-  const userPostsForSelectedContest = userPostsArr && userPostsArr.filter(post => (post.contestId === selectedContestId))
-  const userPostForSelectedDate = userPostsForSelectedContest && userPostsForSelectedContest.find((post) =>
-    isSameDay(new Date(post.postDate), new Date(selectedDate)),
-  )
-  // Rendering before posts are present means many new posts will be made in ChallengePost
-  if (!userPostForSelectedDate && currentChallenge && !alreadyMakingPost) {
-    setAlreadyMakingPost(true)
-    saveNewPost(
-      selectedDate,
-      currentChallenge,
-      selectedContestId
-    )
-    return <h1>Creating post for selected date...</h1>
-  }
+  // This is the format for post ID's, to prevent duplication
+  const currentPostId = `${format(new Date(selectedDate), 'yyyy-MM-dd')}${selectedContestId}`
+  const currentPost = userPosts[currentPostId]
 
   return (
     <Container className='text-center'>
@@ -78,11 +68,11 @@ export default function UserDashboard() {
         setSelectedContestId={setSelectedContestId}
       />
       <ChallengePost
-        selectedDateInDashboard={selectedDate}
+        selectedDate={selectedDate}
         selectedContest={selectedContest}
         contestStartDate={new Date(selectedContest.startDate)}
         contestEndDate={new Date(selectedContest.endDate)}
-        currentPost={userPostForSelectedDate}
+        currentPost={currentPost}
         currentChallenge={currentChallenge}
         challenges={challenges}
         me={personalProfile}

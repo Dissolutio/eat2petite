@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Form } from 'reactstrap'
-import { format, differenceInCalendarDays, isToday } from 'date-fns'
+import { format, isToday } from 'date-fns'
 
 import { useRealtimeDataContext } from 'contexts'
 
@@ -13,14 +13,14 @@ import {
 export default function ChallengePost(props) {
   const {
     selectedContest,
-    selectedDateInDashboard,
+    selectedDate,
     me,
     currentPost,
     currentChallenge,
     challenges,
   } = props
   const { saveNewPost, updateUserPost } = useRealtimeDataContext()
-  const selectedDateIsToday = isToday(selectedDateInDashboard)
+  const selectedDateIsToday = isToday(selectedDate)
 
   // TODO: Render a placeholder form under these two conditions
   if (!me || !challenges) return null
@@ -36,7 +36,7 @@ export default function ChallengePost(props) {
       const userTargetForDate =
         me.challengeTargetsForDates &&
         me.challengeTargetsForDates[
-        `${format(selectedDateInDashboard, 'yyyy-MM-dd')}`
+        `${format(selectedDate, 'yyyy-MM-dd')}`
         ]
       const currentPostHasTarget =
         currentPost && currentPost.targets[challengeId]
@@ -117,7 +117,7 @@ export default function ChallengePost(props) {
   return (
     <Container className='border border-primary rounded p-3 mt-4 mb-3 text-center'>
       <h6 style={{ fontFamily: 'ABeeZee, sans-serif', fontSize: '1.2rem' }}>
-        {format(selectedDateInDashboard, 'P')}
+        {format(selectedDate, 'P')}
       </h6>
       <h6>{currentChallenge.challengeName}</h6>
       {currentPost ? (

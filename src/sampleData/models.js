@@ -1,74 +1,47 @@
 import { format, addDays } from 'date-fns'
 
+export const postChallengeData = {
+  challenge1: {
+    quantityWaterDrank: 0,
+    quantityWaterDrankUnits: "cups",
+  },
+  challenge2: {
+    servingsVegetablesEaten: 0,
+  },
+  challenge3: {
+    proteinConsumed: 0,
+    proteinConsumedUnits: 'grams',
+  },
+  challenge4: {
+    excerciseUnits: 'minutes',
+    lightExcerciseDuration: 0,
+    mediumExcerciseDuration: 0,
+    heavyExcerciseDuration: 0,
+  },
+  challenge5: {
+    refinedCarbsConsumed: 0,
+    refinedCarbsConsumedUnits: 'calories',
+  },
+  challenge6: {
+    quantitySugarConsumed: 0,
+    quantitySaltConsumed: 0,
+    quantitySugarConsumedUnits: 'grams',
+    quantitySaltConsumedUnits: 'grams',
+  },
+}
 const samplePost = {
   '-LsQNoes1_JZsqVuG5Mz': {
     uid: "-LsQNoes1_JZsqVuG5Mz",
     author: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
-    challengeId: "challenge1",
+    challengeId: ["challenge1"],
     checkedInBonus: true,
     contestId: "-LsQNkeDfSlA1Gql-XKM",
     createdAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
     lastEditedAt: "Wed Oct 30 2019 01:38:42 GMT-0500 (Central Daylight Time)",
     userId: "MtAwR5hQ18SpTXI5wEjbkzx5pLE3",
     postDate: "10/30/2019",
-    targets: {
-      challenge1: {
-        quantityWaterDrank: 0,
-        quantityWaterDrankUnits: "cups",
-      },
-      challenge2: {
-        servingsVegetablesEaten: 0,
-      },
-      challenge3: {
-        proteinConsumed: 0,
-        proteinConsumedUnits: 'grams',
-      },
-      challenge4: {
-        excerciseUnits: 'minutes',
-        lightExcerciseDuration: 0,
-        mediumExcerciseDuration: 0,
-        heavyExcerciseDuration: 0,
-      },
-      challenge5: {
-        refinedCarbsConsumed: 0,
-        refinedCarbsConsumedUnits: 'calories',
-      },
-      challenge6: {
-        quantitySugarConsumed: 0,
-        quantitySaltConsumed: 0,
-        quantitySugarConsumedUnits: 'grams',
-        quantitySaltConsumedUnits: 'grams',
-      },
-    },
-    data: {
-      challenge1: {
-        quantityWaterDrank: 0,
-        quantityWaterDrankUnits: "cups",
-      },
-      challenge2: {
-        servingsVegetablesEaten: 0,
-      },
-      challenge3: {
-        proteinConsumed: 0,
-        proteinConsumedUnits: 'grams',
-      },
-      challenge4: {
-        excerciseUnits: 'minutes',
-        lightExcerciseDuration: 0,
-        mediumExcerciseDuration: 0,
-        heavyExcerciseDuration: 0,
-      },
-      challenge5: {
-        refinedCarbsConsumed: 0,
-        refinedCarbsConsumedUnits: 'calories',
-      },
-      challenge6: {
-        quantitySugarConsumed: 0,
-        quantitySaltConsumed: 0,
-        quantitySugarConsumedUnits: 'grams',
-        quantitySaltConsumedUnits: 'grams',
-      },
-    }
+    targets: { ...postChallengeData },
+    data: { ...postChallengeData },
   },
 }
 const sampleChallenges = {

@@ -116,16 +116,8 @@ class Firebase {
   // *** Posts API ***
   dbPosts = () => this.db.ref('posts')
   dbPostsByUserId = (uid) => this.db.ref(`/posts/${uid}`)
-  dbCreateUserPost = async (post) => {
-    const newPost = await this.dbPostsByUserId(post.userId).push().then(ref => {
-      const postToSave = { ...post, uid: ref.key }
-      ref.set(postToSave)
-      return postToSave
-    })
-    return newPost
-  }
-  dbUpdateUserPost = (post) => {
-    return this.db.ref(`posts/${post.userId}/${post.uid}`).update({ ...post })
+  dbSaveUserPost = (post) => {
+    return this.db.ref(`/posts/${post.userId}/${post.uid}`).set(post)
   }
 }
 

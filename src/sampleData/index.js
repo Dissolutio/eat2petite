@@ -1,7 +1,8 @@
 export {
+    postChallengeData,
     samplePost,
     sampleChallenges,
     sampleContests,
     sampleUsers,
     samplePublicUsers
-} from './sampleData'
+} from './models'
